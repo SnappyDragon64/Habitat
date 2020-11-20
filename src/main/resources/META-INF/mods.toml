@@ -1,0 +1,11 @@
+modLoader="javafml"
+loaderVersion="[35,)"
+license="All rights reserved"
+
+[[mods]]
+modId="test"
+version="${file.jarVersion}"
+displayName="Test"
+authors="SchnappDragon, Edmord17"
+description='''
+'''

@@ -1,0 +1,17 @@
+{
+  "rafflesia_cloud": {
+    "category": "block",
+    "subtitle": "test.subtitle.rafflesiaCloud",
+    "sounds": [ "test:rafflesia_cloud_sound_file" ]
+  },
+  "rafflesia_pop": {
+    "category": "block",
+    "subtitle": "test.subtitle.rafflesiaPop",
+    "sounds": [ "test:rafflesia_pop_sound_file" ]
+  },
+  "rafflesia_stew": {
+    "category": "block",
+    "subtitle": "test.subtitle.rafflesiaStew",
+    "sounds": [ "test:rafflesia_stew_sound_file" ]
+  }
+}

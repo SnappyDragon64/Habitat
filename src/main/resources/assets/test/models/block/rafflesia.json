@@ -1,0 +1,45 @@
+{
+  "credit": "Made with Blockbench",
+  "texture_size": [50, 30],
+  "textures": {
+    "0": "test:block/rafflesia",
+    "particle": "test:block/rafflesia"
+  },
+  "elements": [
+    {
+      "name": "body",
+      "from": [3, 0, 3],
+      "to": [13, 4, 13],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 2, 8]},
+      "faces": {
+        "north": {"uv": [3.2, 13.86667, 6.4, 16], "texture": "#0"},
+        "east": {"uv": [0, 13.86667, 3.2, 16], "texture": "#0"},
+        "south": {"uv": [9.6, 13.86667, 12.8, 16], "texture": "#0"},
+        "west": {"uv": [6.4, 13.86667, 9.6, 16], "texture": "#0"},
+        "up": {"uv": [6.4, 13.86667, 3.2, 8.53333], "texture": "#0"},
+        "down": {"uv": [9.6, 8.53333, 6.4, 13.86667], "texture": "#0"}
+      }
+    },
+    {
+      "name": "petals",
+      "from": [-2, 3, 0],
+      "to": [18, 3, 19],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 2, 8]},
+      "faces": {
+        "north": {"uv": [0, 0, 5, 0], "texture": "#missing"},
+        "east": {"uv": [0, 0, 4.75, 0], "texture": "#missing"},
+        "south": {"uv": [0, 0, 5, 0], "texture": "#missing"},
+        "west": {"uv": [0, 0, 4.75, 0], "texture": "#missing"},
+        "up": {"uv": [16, 10.13333, 9.6, 0], "texture": "#0"},
+        "down": {"uv": [16, 0, 9.6, 10.13333], "texture": "#0"}
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "funny plant",
+      "origin": [15, 8, 10],
+      "children": [0, 1]
+    }
+  ]
+}
