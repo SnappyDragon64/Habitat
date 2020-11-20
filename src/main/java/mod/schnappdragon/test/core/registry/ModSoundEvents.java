@@ -11,9 +11,9 @@ public class ModSoundEvents {
 
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Test.MOD_ID);
 
-    public static final RegistryObject<SoundEvent> RAFFLESIA_CLOUD = SOUND_EVENTS.register("rafflesia_cloud", () -> getSoundEvent("rafflesia_cloud"));
+    public static final RegistryObject<SoundEvent> RAFFLESIA_SPEW = SOUND_EVENTS.register("rafflesia_spew", () -> getSoundEvent("rafflesia_spew"));
     public static final RegistryObject<SoundEvent> RAFFLESIA_POP = SOUND_EVENTS.register("rafflesia_pop", () -> getSoundEvent("rafflesia_pop"));
-    public static final RegistryObject<SoundEvent> RAFFLESIA_STEW = SOUND_EVENTS.register("rafflesia_stew", () -> getSoundEvent("rafflesia_stew"));
+    public static final RegistryObject<SoundEvent> RAFFLESIA_SLURP = SOUND_EVENTS.register("rafflesia_slurp", () -> getSoundEvent("rafflesia_slurp"));
 
     private static SoundEvent getSoundEvent(String soundPath)
     {

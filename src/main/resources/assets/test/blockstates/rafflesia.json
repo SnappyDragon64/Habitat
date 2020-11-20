@@ -6,80 +6,20 @@
     "age=1": {
       "model": "test:block/rafflesia_1"
     },
-    "facing=east,cooldown=false,stew=false,age=2": {
-      "model": "test:block/rafflesia",
-      "y": 270
-    },
-    "facing=east,cooldown=true,stew=false,pollinated=false,age=2": {
-      "model": "test:block/rafflesia_cooldown",
-      "y": 270
-    },
-    "facing=east,cooldown=true,stew=false,pollinated=true,age=2": {
-      "model": "test:block/rafflesia_pollinated",
-      "y": 270
-    },
-    "facing=east,cooldown=false,stew=true,age=2": {
-      "model": "test:block/rafflesia_stew",
-      "y": 270
-    },
-    "facing=east,cooldown=true,stew=true,age=2": {
-      "model": "test:block/rafflesia_cooldown_stew",
-      "y": 270
-    },
-    "facing=north,cooldown=false,stew=false,age=2": {
-      "model": "test:block/rafflesia",
-      "y": 180
-    },
-    "facing=north,cooldown=true,stew=false,pollinated=false,age=2": {
-      "model": "test:block/rafflesia_cooldown",
-      "y": 180
-    },
-    "facing=north,cooldown=true,stew=false,pollinated=true,age=2": {
-      "model": "test:block/rafflesia_pollinated",
-      "y": 180
-    },
-    "facing=north,cooldown=false,stew=true,age=2": {
-      "model": "test:block/rafflesia_stew",
-      "y": 180
-    },
-    "facing=north,cooldown=true,stew=true,age=2": {
-      "model": "test:block/rafflesia_cooldown_stew",
-      "y": 180
-    },
-    "facing=south,cooldown=false,stew=false,age=2": {
+    "age=2,cooldown=false,stew=false": {
       "model": "test:block/rafflesia"
     },
-    "facing=south,cooldown=true,stew=false,pollinated=false,age=2": {
+    "age=2,cooldown=true,stew=false,pollinated=false": {
       "model": "test:block/rafflesia_cooldown"
     },
-    "facing=south,cooldown=true,stew=false,pollinated=true,age=2": {
+    "age=2,cooldown=true,stew=false,pollinated=true": {
       "model": "test:block/rafflesia_pollinated"
     },
-    "facing=south,cooldown=false,stew=true,age=2": {
+    "age=2,cooldown=false,stew=true": {
       "model": "test:block/rafflesia_stew"
     },
-    "facing=south,cooldown=true,stew=true,age=2": {
+    "age=2,cooldown=true,stew=true": {
       "model": "test:block/rafflesia_cooldown_stew"
-    },
-    "facing=west,cooldown=false,stew=false,age=2": {
-      "model": "test:block/rafflesia",
-      "y": 90
-    },
-    "facing=west,cooldown=true,stew=false,pollinated=false,age=2": {
-      "model": "test:block/rafflesia_cooldown",
-      "y": 90
-    },
-    "facing=west,cooldown=true,stew=false,pollinated=true,age=2": {
-      "model": "test:block/rafflesia_pollinated",
-      "y": 90
-    },
-    "facing=west,cooldown=false,stew=true,age=2": {
-      "model": "test:block/rafflesia_stew",
-      "y": 90
-    },
-    "facing=west,cooldown=true,stew=true,age=2": {
-      "model": "test:block/rafflesia_cooldown_stew",
-      "y": 90
     }
   }
 }
