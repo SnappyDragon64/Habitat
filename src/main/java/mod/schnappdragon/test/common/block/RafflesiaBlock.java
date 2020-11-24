@@ -49,9 +49,9 @@ import java.util.Collection;
 import java.util.Random;
 
 public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable {
-    protected static final VoxelShape AGE_0_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D); // PLACEHOLDER SHAPE
-    protected static final VoxelShape AGE_1_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D); // PLACEHOLDER SHAPE
-    protected static final VoxelShape DEFAULT_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D);
+    protected static final VoxelShape AGE_0_SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 4.0D, 10.0D);
+    protected static final VoxelShape AGE_1_SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D);
+    protected static final VoxelShape DEFAULT_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
     protected static final VoxelShape COOLDOWN_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_2;
@@ -149,7 +149,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
      * Cloud and Particle Helper Methods
      */
 
-    private void createCloud(World worldIn, BlockPos pos, ListNBT effects)
+    private void createCloud(World worldIn, BlockPos pos, BlockState state, ListNBT effects)
     {
         AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(worldIn, pos.getX() + 0.5, pos.getY() + 0.25, pos.getZ() + 0.5);
         cloud.setDuration(50);
@@ -172,7 +172,8 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
         worldIn.playSound(null, pos, ModSoundEvents.RAFFLESIA_SPEW.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
         worldIn.addEntity(cloud);
-        attemptPollination(worldIn, pos);
+        if (!state.get(STEW))
+            attemptPollination(worldIn, pos);
     }
 
     private IParticleData getParticle(ListNBT effects)
@@ -203,7 +204,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof RafflesiaTileEntity && !state.get(COOLDOWN) && !state.get(POLLINATED)) {
                 RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
-                createCloud(worldIn, pos, rafflesia.Effects);
+                createCloud(worldIn, pos, state, rafflesia.Effects);
                 worldIn.setBlockState(pos, state.with(COOLDOWN, true).with(STEW, false));
                 ListNBT Effects = new ListNBT();
                 CompoundNBT tag = new CompoundNBT();
@@ -272,7 +273,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
             worldIn.setBlockState(pos, state.with(AGE, state.get(AGE) + 1), 2);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
-        else if (state.get(COOLDOWN) && ForgeHooks.onCropsGrowPre(worldIn, pos, state,true)) {
+        else if (state.get(COOLDOWN) && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(2) == 0)) {
             cooldownReset(worldIn, random, pos, state);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
@@ -299,7 +300,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     private void cooldownReset(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
         if (state.get(POLLINATED)) {
-            ItemEntity item = new ItemEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, new ItemStack(ModItems.RAFFLESIA_SEED_POD.get()));
+            ItemEntity item = new ItemEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, new ItemStack(ModItems.RAFFLESIA_SEED.get()));
             item.setDefaultPickupDelay();
             worldIn.addEntity(item);
         }

@@ -12,6 +12,6 @@ public class ModItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Test.MOD_ID);
 
-    public static final RegistryObject<Item> RAFFLESIA_SEED_POD = ITEMS.register("rafflesia_seed_pod",
+    public static final RegistryObject<Item> RAFFLESIA_SEED = ITEMS.register("rafflesia_seed",
             () -> new BlockNamedItem(ModBlocks.RAFFLESIA_BLOCK.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
 }

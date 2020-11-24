@@ -43,7 +43,7 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onWandererTradesEvent(WandererTradesEvent event) {
-        event.getGenericTrades().add(new BasicTrade(3, new ItemStack(ModItems.RAFFLESIA_SEED_POD.get(), 1), 12, 10, 1));
+        event.getGenericTrades().add(new BasicTrade(3, new ItemStack(ModItems.RAFFLESIA_SEED.get(), 1), 12, 10, 1));
     }
 
     /*
@@ -58,7 +58,7 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onBlockEvent(BlockEvent event) {
-        if (event.getState().getBlock().matchesBlock(ModBlocks.RAFFLESIA_BLOCK.get()) && event.getState().get(AGE) < 2)  // For compatibility with mods with reverse-bonemeal & debug sticks.
+        if (event.getState().getBlock().matchesBlock(ModBlocks.RAFFLESIA_BLOCK.get()) && event.getState().get(AGE) < 2)
             event.getWorld().setBlockState(event.getPos(), event.getState().with(COOLDOWN, false).with(STEW, false).with(POLLINATED, false), 2);
     }
 }

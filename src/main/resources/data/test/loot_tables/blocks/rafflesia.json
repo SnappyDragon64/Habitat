@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "test:rafflesia_seed_pod"
+          "name": "test:rafflesia_seed"
         }
       ]
     }

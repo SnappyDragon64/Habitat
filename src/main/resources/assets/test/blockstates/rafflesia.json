@@ -1,25 +1,25 @@
 {
   "variants": {
     "age=0": {
-      "model": "test:block/rafflesia_0"
+      "model": "test:block/rafflesia_age_0"
     },
     "age=1": {
-      "model": "test:block/rafflesia_1"
+      "model": "test:block/rafflesia_age_1"
     },
     "age=2,cooldown=false,stew=false": {
-      "model": "test:block/rafflesia"
+      "model": "test:block/rafflesia_age_2"
     },
     "age=2,cooldown=true,stew=false,pollinated=false": {
-      "model": "test:block/rafflesia_cooldown"
+      "model": "test:block/cooldown_rafflesia_age_2"
     },
     "age=2,cooldown=true,stew=false,pollinated=true": {
-      "model": "test:block/rafflesia_pollinated"
+      "model": "test:block/cooldown_pollinated_rafflesia_age_2"
     },
     "age=2,cooldown=false,stew=true": {
-      "model": "test:block/rafflesia_stew"
+      "model": "test:block/suspicious_rafflesia_age_2"
     },
     "age=2,cooldown=true,stew=true": {
-      "model": "test:block/rafflesia_cooldown_stew"
+      "model": "test:block/cooldown_suspicious_rafflesia_age_2"
     }
   }
 }

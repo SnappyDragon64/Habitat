@@ -11,11 +11,10 @@ import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.Features;
-import net.minecraft.world.gen.placement.NoiseDependant;
+import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
 import net.minecraft.world.gen.placement.Placement;
 
 import static mod.schnappdragon.test.common.block.RafflesiaBlock.AGE;
-
 
 public class ModFeatures {
 
@@ -28,5 +27,5 @@ public class ModFeatures {
                     .zSpread(4)
                     .tries(2)
                     .build())
-                    .withPlacement(Features.Placements.PATCH_PLACEMENT).withPlacement(Placement.COUNT_NOISE.configure(new NoiseDependant(-0.8D, 5, 10))));
+                    .withPlacement(Features.Placements.PATCH_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(2, 0.3F, 1))));
 }

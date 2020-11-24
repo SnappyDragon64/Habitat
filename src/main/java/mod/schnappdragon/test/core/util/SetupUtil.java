@@ -13,7 +13,7 @@ public class SetupUtil {
      */
 
     public static void registerComposterChances() {
-        ComposterBlock.CHANCES.put(ModItems.RAFFLESIA_SEED_POD.get(), 0.3F);
+        ComposterBlock.CHANCES.put(ModItems.RAFFLESIA_SEED.get(), 0.3F);
     }
 
     /*
