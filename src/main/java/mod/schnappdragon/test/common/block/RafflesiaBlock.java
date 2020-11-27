@@ -16,7 +16,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.SuspiciousStewItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.particles.IParticleData;
@@ -36,11 +35,13 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -107,8 +108,13 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
      */
 
     @ParametersAreNonnullByDefault
+    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
+        return isValidGround(state, worldIn, pos.down());
+    }
+
+    @ParametersAreNonnullByDefault
     protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return state.isIn(ModTags.RAFFLESIA_PLANTABLE_ON);
+        return worldIn.getBlockState(pos).isIn(ModTags.RAFFLESIA_PLANTABLE_ON);
     }
 
     /*
@@ -225,7 +231,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
         if (!(state.get(AGE) == 2) && stack.getItem() == Items.BONE_MEAL) {
             return ActionResultType.PASS;
         }
-        if (!worldIn.isRemote && stack.getItem() instanceof SuspiciousStewItem && state.get(AGE) == 2) {
+        if (!worldIn.isRemote && stack.getItem() == Items.SUSPICIOUS_STEW && state.get(AGE) == 2) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof RafflesiaTileEntity && !state.get(STEW) && !state.get(POLLINATED)) {
                 RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
@@ -319,6 +325,11 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
         return getDefaultState();
     }
 
+    @Override
+    public PlantType getPlantType(IBlockReader world, BlockPos pos) {
+        return PlantType.get("jungle");
+    }
+
     /*
      * Block Flammability Methods
      */
@@ -331,5 +342,19 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     @Override
     public int getFireSpreadSpeed(BlockState state, IBlockReader worldIn, BlockPos pos, Direction face) {
         return 60;
+    }
+
+    /*
+     * Comparator Methods
+     */
+
+    @Override
+    public boolean hasComparatorInputOverride(BlockState state) {
+        return state.get(STEW);
+    }
+
+    @Override
+    public int getComparatorInputOverride(BlockState state, World worldIn, BlockPos pos) {
+        return state.get(STEW) ?  1 : 0;
     }
 }

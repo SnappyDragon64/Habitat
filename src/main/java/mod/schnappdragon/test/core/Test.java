@@ -34,6 +34,7 @@ public class Test {
     private void commonSetup(final FMLCommonSetupEvent event) {
         DeferredWorkQueue.runLater(() -> {
             SetupUtil.registerComposterChances();
+            SetupUtil.registerDispenserBehaviour();
             event.enqueueWork(ModFeatures::new);
         });
     }

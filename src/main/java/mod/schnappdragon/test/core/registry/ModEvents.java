@@ -32,8 +32,13 @@ public class ModEvents {
 
         if (entityIn instanceof CreatureEntity && !(entityIn instanceof MonsterEntity) || entityIn instanceof AbstractRaiderEntity || entityIn instanceof PiglinEntity || entityIn instanceof EndermanEntity) {
             CreatureEntity creatureIn = (CreatureEntity) event.getEntity();
-
-            creatureIn.goalSelector.addGoal(3, new AvoidRafflesiaGoal<>(creatureIn, 4, 1.0D, 1.2D));
+            int range = 8;
+            double speed = 1;
+            if (entityIn instanceof EndermanEntity)
+                range = 1;
+            else if (entityIn instanceof HoglinEntity || entityIn instanceof PiglinEntity || entityIn instanceof RavagerEntity)
+                speed = 0.5;
+            creatureIn.goalSelector.addGoal(3, new AvoidRafflesiaGoal<>(creatureIn, range, speed, 1.2D * speed));
         }
     }
 

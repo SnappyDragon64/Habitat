@@ -21,11 +21,11 @@ public class ModFeatures {
     public static final ConfiguredFeature<?, ?> RAFFLESIA_PATCH = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, Test.MOD_ID + ":" + "rafflesia_patch",
             Feature.RANDOM_PATCH.withConfiguration((new BlockClusterFeatureConfig.Builder(
                     new SimpleBlockStateProvider(ModBlocks.RAFFLESIA_BLOCK.get().getDefaultState().with(AGE, 2)),
-                    new SimpleBlockPlacer())).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK, Blocks.PODZOL))
+                    new SimpleBlockPlacer())).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
                     .xSpread(4)
                     .ySpread(4)
                     .zSpread(4)
                     .tries(2)
                     .build())
-                    .withPlacement(Features.Placements.PATCH_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(2, 0.3F, 1))));
+                    .withPlacement(Features.Placements.PATCH_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(2, 0.4F, 1))));
 }
