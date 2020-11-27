@@ -3,9 +3,9 @@ loaderVersion="[34,)"
 license="All rights reserved"
 
 [[mods]]
-modId="test"
+modId="bloom_and_gloom"
 version="${file.jarVersion}"
-displayName="Test"
+displayName="Bloom and Gloom"
 authors="SchnappDragon, Edmord17"
-description='''
+description='''Plant mod.
 '''

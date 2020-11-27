@@ -14,8 +14,8 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '0.1'
-group = 'mod.schnappdragon.test' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'test'
+group = 'mod.schnappdragon.bloom_and_gloom' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'bloom-and-gloom'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -120,7 +120,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "test",
+            "Specification-Title": "bloom_and_gloom",
             "Specification-Vendor": "SchnappDragon",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,

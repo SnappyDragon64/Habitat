@@ -1,0 +1,17 @@
+{
+  "rafflesia_spew": {
+    "category": "block",
+    "subtitle": "bloom_and_gloom.subtitle.rafflesiaSpew",
+    "sounds": [ "bloom_and_gloom:rafflesia_spew_sound_file" ]
+  },
+  "rafflesia_pop": {
+    "category": "block",
+    "subtitle": "bloom_and_gloom.subtitle.rafflesiaPop",
+    "sounds": [ "bloom_and_gloom:rafflesia_pop_sound_file" ]
+  },
+  "rafflesia_slurp": {
+    "category": "block",
+    "subtitle": "bloom_and_gloom.subtitle.rafflesiaSlurp",
+    "sounds": [ "bloom_and_gloom:rafflesia_slurp_sound_file" ]
+  }
+}
