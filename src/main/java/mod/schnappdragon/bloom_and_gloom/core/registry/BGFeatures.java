@@ -21,10 +21,11 @@ public class BGFeatures {
             Feature.RANDOM_PATCH.withConfiguration((new BlockClusterFeatureConfig.Builder(
                     new SimpleBlockStateProvider(BGBlocks.RAFFLESIA_BLOCK.get().getDefaultState().with(AGE, 2)),
                     new SimpleBlockPlacer())).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
-                    .xSpread(4)
-                    .ySpread(4)
-                    .zSpread(4)
+                    .xSpread(3)
+                    .ySpread(3)
+                    .zSpread(3)
                     .tries(2)
                     .build())
-                    .withPlacement(Features.Placements.PATCH_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(2, 0.4F, 1))));
+                    .withPlacement(Features.Placements.PATCH_PLACEMENT)
+                    .withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(3, 0.4F, 1))));
 }
