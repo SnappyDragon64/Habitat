@@ -4,7 +4,7 @@ import java.util.EnumSet;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import mod.schnappdragon.bloom_and_gloom.core.registry.ModBlocks;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.RandomPositionGenerator;
@@ -53,7 +53,7 @@ public class AvoidRafflesiaGoal<T extends LivingEntity> extends Goal {
 
     public boolean shouldExecute() {
         Optional<BlockPos> optionalBlockPos = BlockPos.getClosestMatchingPosition(this.entity.getPosition(), this.avoidDistance, 4, (pos) -> {
-            return this.entity.world.getBlockState(pos).isIn(ModBlocks.RAFFLESIA_BLOCK.get()) && (this.entity.world.getBlockState(pos).get(AGE) == 2);
+            return this.entity.world.getBlockState(pos).isIn(BGBlocks.RAFFLESIA_BLOCK.get()) && (this.entity.world.getBlockState(pos).get(AGE) == 2);
         });
 
         if (!optionalBlockPos.isPresent()) {

@@ -1,5 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.core;
 
+import mod.schnappdragon.bloom_and_gloom.common.world.gen.BGFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.registry.*;
 import mod.schnappdragon.bloom_and_gloom.core.util.SetupUtil;
 import net.minecraftforge.common.MinecraftForge;
@@ -23,10 +24,10 @@ public class BloomAndGloom {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
 
-        ModBlocks.BLOCKS.register(modEventBus);
-        ModItems.ITEMS.register(modEventBus);
-        ModTileEntities.TILE_ENTITIES.register(modEventBus);
-        ModSoundEvents.SOUND_EVENTS.register(modEventBus);
+        BGBlocks.BLOCKS.register(modEventBus);
+        BGItems.ITEMS.register(modEventBus);
+        BGTileEntities.TILE_ENTITIES.register(modEventBus);
+        BGSoundEvents.SOUND_EVENTS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -35,7 +36,7 @@ public class BloomAndGloom {
         DeferredWorkQueue.runLater(() -> {
             SetupUtil.registerComposterChances();
             SetupUtil.registerDispenserBehaviour();
-            event.enqueueWork(ModFeatures::new);
+            event.enqueueWork(BGFeatures::new);
         });
     }
 

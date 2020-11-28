@@ -2,10 +2,10 @@ package mod.schnappdragon.bloom_and_gloom.common.block;
 
 import com.google.common.collect.Lists;
 import mod.schnappdragon.bloom_and_gloom.common.tileentity.RafflesiaTileEntity;
-import mod.schnappdragon.bloom_and_gloom.core.registry.ModBlocks;
-import mod.schnappdragon.bloom_and_gloom.core.registry.ModItems;
-import mod.schnappdragon.bloom_and_gloom.core.registry.ModSoundEvents;
-import mod.schnappdragon.bloom_and_gloom.core.misc.ModTags;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
+import mod.schnappdragon.bloom_and_gloom.core.misc.BGTags;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -114,7 +114,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     @ParametersAreNonnullByDefault
     protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos).isIn(ModTags.RAFFLESIA_PLANTABLE_ON);
+        return worldIn.getBlockState(pos).isIn(BGTags.RAFFLESIA_PLANTABLE_ON);
     }
 
     /*
@@ -176,7 +176,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
             }
         }
 
-        worldIn.playSound(null, pos, ModSoundEvents.RAFFLESIA_SPEW.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+        worldIn.playSound(null, pos, BGSoundEvents.RAFFLESIA_SPEW.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
         worldIn.addEntity(cloud);
         if (!state.get(STEW))
             attemptPollination(worldIn, pos);
@@ -242,7 +242,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
                 worldIn.setBlockState(pos, state.with(STEW, true));
                 rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
                 player.setHeldItem(handIn, player.abilities.isCreativeMode ? stack : new ItemStack(Items.BOWL));
-                worldIn.playSound(null, pos, ModSoundEvents.RAFFLESIA_SLURP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+                worldIn.playSound(null, pos, BGSoundEvents.RAFFLESIA_SLURP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
                 return ActionResultType.SUCCESS;
             }
         }
@@ -256,7 +256,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     private void attemptPollination(World worldIn, BlockPos pos) {
         for(Direction direction : Direction.Plane.HORIZONTAL) {
             BlockState state = worldIn.getBlockState(pos.offset(direction));
-            if (state.getBlock().matchesBlock(ModBlocks.RAFFLESIA_BLOCK.get())) {
+            if (state.getBlock().matchesBlock(BGBlocks.RAFFLESIA_BLOCK.get())) {
                 Random rand = new Random();
                 if (!state.get(COOLDOWN) && !state.get(STEW) && rand.nextInt(10) == 0) {
                     worldIn.setBlockState(pos.offset(direction), state.with(POLLINATED, true).with(COOLDOWN, true));
@@ -306,13 +306,13 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     private void cooldownReset(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
         if (state.get(POLLINATED)) {
-            ItemEntity item = new ItemEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, new ItemStack(ModItems.RAFFLESIA_SEED.get()));
+            ItemEntity item = new ItemEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, new ItemStack(BGItems.RAFFLESIA_SEED.get()));
             item.setDefaultPickupDelay();
             worldIn.addEntity(item);
         }
 
         worldIn.setBlockState(pos, state.with(COOLDOWN, false).with(POLLINATED, false));
-        worldIn.playSound(null, pos, ModSoundEvents.RAFFLESIA_POP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+        worldIn.playSound(null, pos, BGSoundEvents.RAFFLESIA_POP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
     }
 
     /*

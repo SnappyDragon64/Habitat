@@ -5,7 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag.INamedTag;
 
-public class ModTags {
+public class BGTags {
 
     /*
      * Block Tags

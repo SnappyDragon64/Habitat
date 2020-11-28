@@ -1,9 +1,9 @@
 package mod.schnappdragon.bloom_and_gloom.core.util;
 
 import mod.schnappdragon.bloom_and_gloom.common.tileentity.RafflesiaTileEntity;
-import mod.schnappdragon.bloom_and_gloom.core.registry.ModBlocks;
-import mod.schnappdragon.bloom_and_gloom.core.registry.ModItems;
-import mod.schnappdragon.bloom_and_gloom.core.registry.ModSoundEvents;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DispenserBlock;
@@ -28,7 +28,7 @@ public class SetupUtil {
      */
 
     public static void registerComposterChances() {
-        ComposterBlock.CHANCES.put(ModItems.RAFFLESIA_SEED.get(), 0.3F);
+        ComposterBlock.CHANCES.put(BGItems.RAFFLESIA_SEED.get(), 0.3F);
     }
 
     public static void registerDispenserBehaviour() {
@@ -40,7 +40,7 @@ public class SetupUtil {
                 World worldIn = source.getWorld();
                 BlockPos pos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
                 BlockState state = worldIn.getBlockState(pos);
-                if (!worldIn.isRemote && state.isIn(ModBlocks.RAFFLESIA_BLOCK.get()) && state.get(AGE) == 2) {
+                if (!worldIn.isRemote && state.isIn(BGBlocks.RAFFLESIA_BLOCK.get()) && state.get(AGE) == 2) {
                     TileEntity tile = worldIn.getTileEntity(pos);
                     if (tile instanceof RafflesiaTileEntity && !state.get(STEW) && !state.get(POLLINATED)) {
                         RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
@@ -50,7 +50,7 @@ public class SetupUtil {
                         }
                         worldIn.setBlockState(pos, state.with(STEW, true));
                         rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
-                        worldIn.playSound(null, pos, ModSoundEvents.RAFFLESIA_SLURP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        worldIn.playSound(null, pos, BGSoundEvents.RAFFLESIA_SLURP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
                         stack = new ItemStack(Items.BOWL, 1);
                         this.setSuccessful(true);
                     }
@@ -67,6 +67,6 @@ public class SetupUtil {
      */
 
     public static void registerRenderLayers() {
-        RenderTypeLookup.setRenderLayer(ModBlocks.RAFFLESIA_BLOCK.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.RAFFLESIA_BLOCK.get(), RenderType.getCutout());
     }
 }

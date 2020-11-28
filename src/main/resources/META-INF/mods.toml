@@ -7,5 +7,4 @@ modId="bloom_and_gloom"
 version="${file.jarVersion}"
 displayName="Bloom and Gloom"
 authors="SchnappDragon, Edmord17"
-description='''Plant mod.
-'''
+description='''Plant mod that plans to add more flora to the overworld to make it feel lush. Currently adds rafflesias.'''

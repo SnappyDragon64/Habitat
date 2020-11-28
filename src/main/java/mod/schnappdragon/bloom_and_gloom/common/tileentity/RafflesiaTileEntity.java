@@ -1,6 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.common.tileentity;
 
-import mod.schnappdragon.bloom_and_gloom.core.registry.ModTileEntities;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGTileEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -15,7 +15,7 @@ public class RafflesiaTileEntity extends TileEntity {
     public ListNBT Effects = new ListNBT();
 
     public RafflesiaTileEntity() {
-        super(ModTileEntities.RAFFLESIA_TILE.get());
+        super(BGTileEntities.RAFFLESIA_TILE.get());
         CompoundNBT tag = new CompoundNBT();
         tag.putByte("EffectId", (byte) 19);
         tag.putInt("EffectDuration", 240);

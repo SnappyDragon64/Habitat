@@ -8,10 +8,10 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ModItems {
+public class BGItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BloomAndGloom.MOD_ID);
 
     public static final RegistryObject<Item> RAFFLESIA_SEED = ITEMS.register("rafflesia_seed",
-            () -> new BlockNamedItem(ModBlocks.RAFFLESIA_BLOCK.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
+            () -> new BlockNamedItem(BGBlocks.RAFFLESIA_BLOCK.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
 }
