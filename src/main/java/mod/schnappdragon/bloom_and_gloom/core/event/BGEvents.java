@@ -5,8 +5,10 @@ import mod.schnappdragon.bloom_and_gloom.common.entity.ai.goal.AvoidRafflesiaGoa
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.merchant.villager.WanderingTraderEntity;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.monster.piglin.PiglinEntity;
+import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,11 +27,11 @@ public class BGEvents {
     public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
         Entity entityIn = event.getEntity();
 
-        if (entityIn instanceof CreatureEntity && !(entityIn instanceof MonsterEntity) || entityIn instanceof AbstractRaiderEntity || entityIn instanceof PiglinEntity || entityIn instanceof EndermanEntity) {
+        if (entityIn instanceof CreatureEntity && !(entityIn instanceof MonsterEntity) && !(entityIn instanceof WaterMobEntity) || entityIn instanceof AbstractRaiderEntity || entityIn instanceof PiglinEntity || entityIn instanceof EndermanEntity) {
             CreatureEntity creatureIn = (CreatureEntity) event.getEntity();
             int range = 8;
             double speed = 1;
-            if (entityIn instanceof EndermanEntity)
+            if (entityIn instanceof EndermanEntity || entityIn instanceof WanderingTraderEntity)
                 range = 1;
             else if (entityIn instanceof HoglinEntity || entityIn instanceof PiglinEntity || entityIn instanceof RavagerEntity)
                 speed = 0.5;
