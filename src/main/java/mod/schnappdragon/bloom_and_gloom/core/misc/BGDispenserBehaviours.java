@@ -1,14 +1,10 @@
-package mod.schnappdragon.bloom_and_gloom.core.util;
+package mod.schnappdragon.bloom_and_gloom.core.misc;
 
 import mod.schnappdragon.bloom_and_gloom.common.tileentity.RafflesiaTileEntity;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
-import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.OptionalDispenseBehavior;
 import net.minecraft.item.ItemStack;
@@ -20,17 +16,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import static mod.schnappdragon.bloom_and_gloom.common.block.RafflesiaBlock.*;
+import static mod.schnappdragon.bloom_and_gloom.common.block.RafflesiaBlock.STEW;
 
-public class SetupUtil {
-
-    /*
-     * Common Setup Helper
-     */
-
-    public static void registerComposterChances() {
-        ComposterBlock.CHANCES.put(BGItems.RAFFLESIA_SEED.get(), 0.3F);
-    }
-
+public class BGDispenserBehaviours {
     public static void registerDispenserBehaviour() {
         DispenserBlock.registerDispenseBehavior(Items.SUSPICIOUS_STEW, new OptionalDispenseBehavior() {
             /**
@@ -60,13 +48,5 @@ public class SetupUtil {
                 return stack;
             }
         });
-    }
-
-    /*
-     * Client Setup Helper
-     */
-
-    public static void registerRenderLayers() {
-        RenderTypeLookup.setRenderLayer(BGBlocks.RAFFLESIA_BLOCK.get(), RenderType.getCutout());
     }
 }

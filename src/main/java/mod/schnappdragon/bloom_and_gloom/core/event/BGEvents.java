@@ -1,21 +1,13 @@
-package mod.schnappdragon.bloom_and_gloom.core.misc;
+package mod.schnappdragon.bloom_and_gloom.core.event;
 
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
 import mod.schnappdragon.bloom_and_gloom.common.entity.ai.goal.AvoidRafflesiaGoal;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
-import mod.schnappdragon.bloom_and_gloom.common.world.gen.BGFeatures;
-import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.monster.piglin.PiglinEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraftforge.common.BasicTrade;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.village.WandererTradesEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -46,23 +38,8 @@ public class BGEvents {
     }
 
     /*
-     * Villager Trades Events
-     */
-
-    @SubscribeEvent
-    public static void onWandererTradesEvent(WandererTradesEvent event) {
-        event.getGenericTrades().add(new BasicTrade(3, new ItemStack(BGItems.RAFFLESIA_SEED.get(), 1), 12, 10, 1));
-    }
-
-    /*
      * World Events
      */
-
-    @SubscribeEvent
-    public static void onBiomeLoadingEvent(BiomeLoadingEvent event) {
-        if (event.getCategory() == Biome.Category.JUNGLE)
-            event.getGeneration().getFeatures(GenerationStage.Decoration.VEGETAL_DECORATION).add(() -> BGFeatures.RAFFLESIA_PATCH);
-    }
 
     @SubscribeEvent
     public static void onBlockEvent(BlockEvent event) {

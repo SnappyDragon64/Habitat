@@ -1,8 +1,7 @@
-package mod.schnappdragon.bloom_and_gloom.common.world.gen;
+package mod.schnappdragon.bloom_and_gloom.core.registry;
 
 import com.google.common.collect.ImmutableSet;
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
-import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
@@ -18,7 +17,6 @@ import net.minecraft.world.gen.placement.Placement;
 import static mod.schnappdragon.bloom_and_gloom.common.block.RafflesiaBlock.AGE;
 
 public class BGFeatures {
-
     public static final ConfiguredFeature<?, ?> RAFFLESIA_PATCH = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "rafflesia_patch",
             Feature.RANDOM_PATCH.withConfiguration((new BlockClusterFeatureConfig.Builder(
                     new SimpleBlockStateProvider(BGBlocks.RAFFLESIA_BLOCK.get().getDefaultState().with(AGE, 2)),

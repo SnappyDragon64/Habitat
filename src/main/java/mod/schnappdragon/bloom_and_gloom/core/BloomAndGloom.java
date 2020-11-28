@@ -1,8 +1,10 @@
 package mod.schnappdragon.bloom_and_gloom.core;
 
-import mod.schnappdragon.bloom_and_gloom.common.world.gen.BGFeatures;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGFeatures;
+import mod.schnappdragon.bloom_and_gloom.core.misc.BGComposterChances;
+import mod.schnappdragon.bloom_and_gloom.core.misc.BGDispenserBehaviours;
+import mod.schnappdragon.bloom_and_gloom.core.misc.BGRenderLayers;
 import mod.schnappdragon.bloom_and_gloom.core.registry.*;
-import mod.schnappdragon.bloom_and_gloom.core.util.SetupUtil;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
@@ -34,15 +36,15 @@ public class BloomAndGloom {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         DeferredWorkQueue.runLater(() -> {
-            SetupUtil.registerComposterChances();
-            SetupUtil.registerDispenserBehaviour();
+            BGComposterChances.registerComposterChances();
+            BGDispenserBehaviours.registerDispenserBehaviour();
             event.enqueueWork(BGFeatures::new);
         });
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
         DeferredWorkQueue.runLater(() -> {
-            SetupUtil.registerRenderLayers();
+            BGRenderLayers.registerRenderLayers();
         });
     }
 }
