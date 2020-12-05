@@ -177,7 +177,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
             }
         }
 
-        worldIn.playSound(null, pos, BGSoundEvents.RAFFLESIA_SPEW.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+        worldIn.playSound(null, pos, BGSoundEvents.RAFFLESIA_SPEW.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
         worldIn.addEntity(cloud);
         if (!state.get(STEW))
             attemptPollination(worldIn, pos);
@@ -243,7 +243,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
                 worldIn.setBlockState(pos, state.with(STEW, true));
                 rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
                 player.setHeldItem(handIn, player.abilities.isCreativeMode ? stack : new ItemStack(Items.BOWL));
-                worldIn.playSound(null, pos, BGSoundEvents.RAFFLESIA_SLURP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+                worldIn.playSound(null, pos, BGSoundEvents.RAFFLESIA_SLURP.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
                 return ActionResultType.SUCCESS;
             }
         }
@@ -313,7 +313,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
         }
 
         worldIn.setBlockState(pos, state.with(COOLDOWN, false).with(POLLINATED, false));
-        worldIn.playSound(null, pos, BGSoundEvents.RAFFLESIA_POP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+        worldIn.playSound(null, pos, BGSoundEvents.RAFFLESIA_POP.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
     }
 
     /*
