@@ -30,6 +30,7 @@ public class BloomAndGloom {
         BGItems.ITEMS.register(modEventBus);
         BGTileEntities.TILE_ENTITIES.register(modEventBus);
         BGSoundEvents.SOUND_EVENTS.register(modEventBus);
+        BGEntities.ENTITIES.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
