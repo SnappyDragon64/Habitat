@@ -13,5 +13,5 @@ public class BGEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, BloomAndGloom.MOD_ID);
 
     public static final RegistryObject<EntityType<KabloomFruitEntity>> KABLOOM_FRUIT = ENTITIES.register("kabloom_fruit",
-            () -> EntityType.Builder.create(KabloomFruitEntity::new, EntityClassification.MISC).size(0.25f, 0.25f).build("kabloom_fruit"));
+            () -> EntityType.Builder.<KabloomFruitEntity>create(KabloomFruitEntity::new, EntityClassification.MISC).size(0.25f, 0.25f).build("kabloom_fruit"));
 }

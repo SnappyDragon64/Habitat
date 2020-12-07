@@ -77,7 +77,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
         } else if (state.get(AGE) > 1) {
             spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1 + worldIn.rand.nextInt(2) + ((state.get(AGE) == 3) ? 1 : 0)));
             // worldIn.playSound(null, pos, SoundEvents.ITEM_SWEET_BERRIES_PICK_FROM_BUSH, SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-            worldIn.setBlockState(pos, state.with(AGE, 2), 2);
+            worldIn.setBlockState(pos, state.with(AGE, 1), 2);
             return ActionResultType.SUCCESS;
         }
         else

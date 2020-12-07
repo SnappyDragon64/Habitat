@@ -1,5 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.core;
 
+import mod.schnappdragon.bloom_and_gloom.client.renderer.entity.BGEntityRendererRegister;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGComposterChances;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGDispenserBehaviours;
@@ -45,6 +46,7 @@ public class BloomAndGloom {
 
     private void clientSetup(final FMLClientSetupEvent event) {
         DeferredWorkQueue.runLater(() -> {
+            BGEntityRendererRegister.registerRenderers(event.getMinecraftSupplier());
             BGRenderLayers.registerRenderLayers();
         });
     }
