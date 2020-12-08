@@ -1,6 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.common.entity.projectile;
 
-import mod.schnappdragon.bloom_and_gloom.core.registry.BGEntities;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGEntityTypes;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -26,11 +26,11 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
     }
 
     public KabloomFruitEntity(World worldIn, LivingEntity throwerIn) {
-        super(BGEntities.KABLOOM_FRUIT.get(), throwerIn, worldIn);
+        super(BGEntityTypes.KABLOOM_FRUIT.get(), throwerIn, worldIn);
     }
 
     public KabloomFruitEntity(World worldIn, double x, double y, double z) {
-        super(BGEntities.KABLOOM_FRUIT.get(), x, y, z, worldIn);
+        super(BGEntityTypes.KABLOOM_FRUIT.get(), x, y, z, worldIn);
     }
 
     @Override

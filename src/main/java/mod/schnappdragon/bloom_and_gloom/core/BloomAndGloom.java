@@ -1,10 +1,10 @@
 package mod.schnappdragon.bloom_and_gloom.core;
 
-import mod.schnappdragon.bloom_and_gloom.client.renderer.entity.BGEntityRendererRegister;
+import mod.schnappdragon.bloom_and_gloom.client.renderer.entity.BGEntityRenderers;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGComposterChances;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGDispenserBehaviours;
-import mod.schnappdragon.bloom_and_gloom.core.misc.BGRenderLayers;
+import mod.schnappdragon.bloom_and_gloom.client.renderer.BGRenderLayers;
 import mod.schnappdragon.bloom_and_gloom.core.registry.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -31,24 +31,22 @@ public class BloomAndGloom {
         BGItems.ITEMS.register(modEventBus);
         BGTileEntities.TILE_ENTITIES.register(modEventBus);
         BGSoundEvents.SOUND_EVENTS.register(modEventBus);
-        BGEntities.ENTITIES.register(modEventBus);
+        BGEntityTypes.ENTITY_TYPES.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(BGFeatures::new);
+
         DeferredWorkQueue.runLater(() -> {
             BGComposterChances.registerComposterChances();
             BGDispenserBehaviours.registerDispenserBehaviour();
-            event.enqueueWork(BGFeatures::new);
         });
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        BGEntityRendererRegister.registerRenderers(event.getMinecraftSupplier());
-
-        DeferredWorkQueue.runLater(() -> {
-            BGRenderLayers.registerRenderLayers();
-        });
+        BGRenderLayers.registerRenderLayers();
+        BGEntityRenderers.registerRenderers(event.getMinecraftSupplier());
     }
 }
