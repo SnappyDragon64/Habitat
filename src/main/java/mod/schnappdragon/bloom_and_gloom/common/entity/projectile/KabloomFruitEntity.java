@@ -2,7 +2,6 @@ package mod.schnappdragon.bloom_and_gloom.common.entity.projectile;
 
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGEntities;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
@@ -14,6 +13,8 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -44,11 +45,8 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
 
     @Override
     protected void onImpact(RayTraceResult result) {
-        if (result.getType() == RayTraceResult.Type.ENTITY) {
-            Entity entity = ((EntityRayTraceResult) result).getEntity();
-            entity.attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), (float) 0);
-        }
-
+        Vector3d hitVec = result.getHitVec();
+        this.world.createExplosion(null, DamageSource.causeExplosionDamage((Explosion) null), null, hitVec.getX(), hitVec.getY(), hitVec.getZ(), 1.0F, false, Explosion.Mode.NONE);
         if (!this.world.isRemote) {
             this.world.setEntityState(this, (byte) 3);
             this.remove();

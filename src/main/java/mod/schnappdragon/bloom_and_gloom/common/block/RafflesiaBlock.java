@@ -259,7 +259,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
             BlockState state = worldIn.getBlockState(pos.offset(direction));
             if (state.getBlock().matchesBlock(BGBlocks.RAFFLESIA_BLOCK.get())) {
                 Random rand = new Random();
-                if (!state.get(COOLDOWN) && !state.get(STEW) && rand.nextInt(10) == 0) {
+                if (!state.get(STEW) && rand.nextInt(10) == 0) {
                     worldIn.setBlockState(pos.offset(direction), state.with(POLLINATED, true).with(COOLDOWN, true));
                 }
             }

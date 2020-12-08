@@ -28,9 +28,9 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     protected static final VoxelShape AGE_0_SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 4.0D, 10.0D);
     protected static final VoxelShape AGE_1_SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D);
     protected static final VoxelShape AGE_2_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
-    protected static final VoxelShape AGE_3_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
+    protected static final VoxelShape AGE_3_7_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
 
-    public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
     public KabloomBushBlock() {
         super(AbstractBlock.Properties
@@ -62,7 +62,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
             case 2:
                 return AGE_2_SHAPE;
             default:
-                return AGE_3_SHAPE;
+                return AGE_3_7_SHAPE;
         }
     }
 
@@ -72,12 +72,12 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     }
 
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!(state.get(AGE) == 3) && player.getHeldItem(handIn).getItem() == Items.BONE_MEAL) {
+        if (!(state.get(AGE) == 7) && player.getHeldItem(handIn).getItem() == Items.BONE_MEAL) {
             return ActionResultType.PASS;
-        } else if (state.get(AGE) > 1) {
-            spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1 + worldIn.rand.nextInt(2) + ((state.get(AGE) == 3) ? 1 : 0)));
+        } else if (state.get(AGE) == 7) {
+            spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
             // worldIn.playSound(null, pos, SoundEvents.ITEM_SWEET_BERRIES_PICK_FROM_BUSH, SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-            worldIn.setBlockState(pos, state.with(AGE, 1), 2);
+            worldIn.setBlockState(pos, state.with(AGE, 3), 2);
             return ActionResultType.SUCCESS;
         }
         else
@@ -89,24 +89,24 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
      */
 
     public boolean ticksRandomly(BlockState state) {
-        return state.get(AGE) < 4;
+        return state.get(AGE) <= 7;
     }
 
     @ParametersAreNonnullByDefault
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if (state.get(AGE) < 3 && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(5) == 0)) {
+        if (state.get(AGE) < 7 && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(5) == 0)) {
             worldIn.setBlockState(pos, state.with(AGE, state.get(AGE) + 1), 2);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
-        else if (state.get(AGE) == 3 && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(10) == 0)) {
-            worldIn.setBlockState(pos, state.with(AGE, 2), 2);
+        else if (state.get(AGE) == 7 && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(10) == 0)) {
+            worldIn.setBlockState(pos, state.with(AGE, 3), 2);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
     }
 
     @ParametersAreNonnullByDefault
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return state.get(AGE) < 3;
+        return state.get(AGE) < 7;
     }
 
     @ParametersAreNonnullByDefault
@@ -116,7 +116,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
 
     @ParametersAreNonnullByDefault
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        worldIn.setBlockState(pos, state.with(AGE, Math.min(3, state.get(AGE) + 1)), 2);
+        worldIn.setBlockState(pos, state.with(AGE, Math.min(7, state.get(AGE) + 1)), 2);
     }
 
     /*

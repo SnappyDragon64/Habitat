@@ -45,8 +45,9 @@ public class BloomAndGloom {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
+        BGEntityRendererRegister.registerRenderers(event.getMinecraftSupplier());
+
         DeferredWorkQueue.runLater(() -> {
-            BGEntityRendererRegister.registerRenderers(event.getMinecraftSupplier());
             BGRenderLayers.registerRenderLayers();
         });
     }

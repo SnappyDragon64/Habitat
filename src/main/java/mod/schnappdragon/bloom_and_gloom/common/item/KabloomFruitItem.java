@@ -15,6 +15,8 @@ public class KabloomFruitItem extends Item {
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
+        playerIn.getCooldownTracker().setCooldown(this, 20);
+
         if (!playerIn.abilities.isCreativeMode) {
             itemstack.shrink(1);
         }
