@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "bloom_and_gloom:block/kabloom_bush_age_0"
+    },
+    "age=1": {
+      "model": "bloom_and_gloom:block/kabloom_bush_age_1"
+    },
+    "age=2": {
+      "model": "bloom_and_gloom:block/kabloom_bush_age_2"
+    },
+    "age=3": {
+      "model": "bloom_and_gloom:block/kabloom_bush_age_3"
+    }
+  }
+}
