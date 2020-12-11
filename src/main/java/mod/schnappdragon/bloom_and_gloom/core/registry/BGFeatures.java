@@ -28,4 +28,17 @@ public class BGFeatures {
                     .build())
                     .withPlacement(Features.Placements.PATCH_PLACEMENT)
                     .withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(3, 0.4F, 1))));
+/*
+    public static final ConfiguredFeature<?, ?> KABLOOM_BUSH_PATCH = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "kabloom_bush_patch",
+            Feature.RANDOM_PATCH.withConfiguration((new BlockClusterFeatureConfig.Builder(
+                    new SimpleBlockStateProvider(BGBlocks.KABLOOM_BUSH_BLOCK.get().getDefaultState().with(AGE, 7)),
+                    new SimpleBlockPlacer())).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
+                    .xSpread(4)
+                    .ySpread(2)
+                    .zSpread(4)
+                    .tries(8)
+                    .build())
+                    .withPlacement(Features.Placements.PATCH_PLACEMENT)
+                    .withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 0.02F, 1))));
+ */
 }
