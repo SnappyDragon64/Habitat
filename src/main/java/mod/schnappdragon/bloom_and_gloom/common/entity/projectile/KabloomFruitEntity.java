@@ -1,24 +1,31 @@
 package mod.schnappdragon.bloom_and_gloom.common.entity.projectile;
 
+import mod.schnappdragon.bloom_and_gloom.core.misc.BGDamageSources;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGEntityTypes;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.EntityExplosionContext;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class KabloomFruitEntity extends ProjectileItemEntity {
     public KabloomFruitEntity(EntityType<? extends KabloomFruitEntity> entity, World world) {
@@ -37,25 +44,37 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
     @OnlyIn(Dist.CLIENT)
     public void handleStatusUpdate(byte id) {
         if (id == 3) {
-            for (int i = 0; i < 8; ++i) {
-                this.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, this.getItem()), this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
+            for(int i = 0; i < 8; ++i) {
+                this.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, this.getItem()), this.getPosX(), this.getPosY(), this.getPosZ(), ((double)this.rand.nextFloat() - 0.5D) * 0.08D, ((double)this.rand.nextFloat() - 0.5D) * 0.08D, ((double)this.rand.nextFloat() - 0.5D) * 0.08D);
             }
         }
     }
 
     @Override
+    @ParametersAreNonnullByDefault
     protected void onImpact(RayTraceResult result) {
-        Vector3d hitVec = result.getHitVec();
-        this.world.createExplosion(null, DamageSource.causeExplosionDamage((Explosion) null), null, hitVec.getX(), hitVec.getY(), hitVec.getZ(), 1.0F, false, Explosion.Mode.NONE);
+        Vector3d vec = result.getHitVec();
+
+        ItemEntity item = new ItemEntity(this.world, vec.getX() + 0.5F * this.world.getRandom().nextDouble(), vec.getY() + 0.5F * this.world.getRandom().nextDouble(), vec.getZ() + 0.5F * this.world.getRandom().nextDouble(), new ItemStack(BGItems.KABLOOM_SEEDS.get()));
+        item.setDefaultPickupDelay();
+        item.setInvulnerable(true);
+        if (this.func_234616_v_() instanceof PlayerEntity && !((PlayerEntity) this.func_234616_v_()).abilities.isCreativeMode)
+            this.world.addEntity(item);
+
+        createExplosion(vec.getX(), vec.getY(), vec.getZ());
+
         if (!this.world.isRemote) {
             this.world.setEntityState(this, (byte) 3);
+            item.setInvulnerable(false);
             this.remove();
         }
     }
 
-    @Override
-    protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
-        super.onEntityHit(p_213868_1_);
+    private void createExplosion(double x, double y, double z) {
+        Explosion kabloom = new Explosion(this.world, null, BGDamageSources.causeKabloomDamage(this, this.func_234616_v_()), null, x, y, z, 0.7F, false, Explosion.Mode.NONE);
+        kabloom.doExplosionA();
+        this.world.playSound(x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 1.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F, false);
+        this.world.addParticle(ParticleTypes.EXPLOSION, x, y, z, 1.0D, 0.0D, 0.0D);
     }
 
     @Override

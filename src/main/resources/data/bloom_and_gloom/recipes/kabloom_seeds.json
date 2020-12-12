@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "bloom_and_gloom:kabloom_fruit"
+    }
+  ],
+  "result": {
+    "item": "bloom_and_gloom:kabloom_seeds"
+  }
+}
