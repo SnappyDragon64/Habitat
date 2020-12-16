@@ -24,7 +24,7 @@ public class KabloomFruitItem extends Item {
         if (!worldIn.isRemote) {
             KabloomFruitEntity kabloomfruitentity = new KabloomFruitEntity(worldIn, playerIn);
             kabloomfruitentity.setItem(new ItemStack(BGItems.KABLOOM_FRUIT.get()));
-            kabloomfruitentity.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 0.6F, 1.0F);
+            kabloomfruitentity.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 0.5F, 0.9F);
             worldIn.addEntity(kabloomfruitentity);
         }
 

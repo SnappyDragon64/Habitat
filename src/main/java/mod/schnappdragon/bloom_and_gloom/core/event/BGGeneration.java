@@ -14,10 +14,8 @@ public class BGGeneration {
     @SubscribeEvent
     public static void addFeaturesToBiomes(BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.Category.JUNGLE)
-            event.getGeneration().getFeatures(GenerationStage.Decoration.VEGETAL_DECORATION).add(() -> BGFeatures.RAFFLESIA_PATCH);
-        /*
-            else if (event.getCategory() == Biome.Category.PLAINS)
-            event.getGeneration().getFeatures(GenerationStage.Decoration.VEGETAL_DECORATION).add(() -> BGFeatures.KABLOOM_BUSH_PATCH);
-            */
+            event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGFeatures.PATCH_RAFFLESIA);
+        else if (event.getCategory() == Biome.Category.PLAINS)
+            event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGFeatures.PATCH_KABLOOM_BUSH);
     }
 }

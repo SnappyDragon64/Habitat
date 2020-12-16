@@ -36,16 +36,15 @@ public class BloomAndGloom {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(BGFeatures::new);
-
-        DeferredWorkQueue.runLater(() -> {
+    private void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork((() -> {
+            BGFeatures.registerConfiguredFeatures();
             BGComposterChances.registerComposterChances();
             BGDispenserBehaviours.registerDispenserBehaviour();
-        });
+        }));
     }
 
-    private void clientSetup(final FMLClientSetupEvent event) {
+    private void clientSetup(FMLClientSetupEvent event) {
         BGRenderLayers.registerRenderLayers();
         BGEntityRenderers.registerRenderers(event.getMinecraftSupplier());
     }

@@ -1,11 +1,24 @@
 package mod.schnappdragon.bloom_and_gloom.common.block;
 
+import mod.schnappdragon.bloom_and_gloom.common.entity.projectile.KabloomFruitEntity;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.item.FallingBlockEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.item.HoeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.ShearsItem;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -14,13 +27,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.Explosion;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.PlantType;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
@@ -71,17 +85,58 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
         return true;
     }
 
+    /*
+     * Kabloom Bush Function Methods
+     */
+
+
+    @Override
+    @ParametersAreNonnullByDefault
+    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+        if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity) {
+            if (entityIn instanceof LivingEntity && state.get(AGE) > 0)
+                entityIn.setMotionMultiplier(state, new Vector3d(0.8F, 0.75D, 0.8F));
+            if (state.get(AGE) == 7) {
+                dropFruit(state, worldIn, pos, true);
+            }
+        }
+    }
+
+    @Override
+    @ParametersAreNonnullByDefault
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!(state.get(AGE) == 7) && player.getHeldItem(handIn).getItem() == Items.BONE_MEAL) {
             return ActionResultType.PASS;
         } else if (state.get(AGE) == 7) {
-            spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
-            // worldIn.playSound(null, pos, SoundEvents.ITEM_SWEET_BERRIES_PICK_FROM_BUSH, SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-            worldIn.setBlockState(pos, state.with(AGE, 3), 2);
+            if (player.getHeldItem(handIn).getItem() instanceof ShearsItem) {
+                spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
+                player.getHeldItem(handIn);
+                worldIn.setBlockState(pos, state.with(AGE, 3), 2);
+            }
+            else
+                dropFruit(state, worldIn, pos, true);
             return ActionResultType.SUCCESS;
         }
         else
             return ActionResultType.FAIL;
+    }
+
+    @Override
+    @ParametersAreNonnullByDefault
+    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (state.get(AGE) == 7) {
+            ItemStack held = player.getHeldItemMainhand();
+            if (held.getItem() instanceof HoeItem && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, held) > 0)
+                spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
+            else
+                dropFruit(state, worldIn, pos, false);
+        }
+    }
+
+    private void dropFruit(BlockState state, World worldIn, BlockPos pos, boolean replaceBush) {
+        if (replaceBush)
+            worldIn.setBlockState(pos, state.with(AGE, 3), 2);
+        worldIn.addEntity(new KabloomFruitEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F));
     }
 
     /*
@@ -99,7 +154,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
         else if (state.get(AGE) == 7 && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(10) == 0)) {
-            worldIn.setBlockState(pos, state.with(AGE, 3), 2);
+            dropFruit(state, worldIn, pos, true);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
     }
@@ -146,5 +201,15 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     @Override
     public int getFireSpreadSpeed(BlockState state, IBlockReader worldIn, BlockPos pos, Direction face) {
         return 60;
+    }
+
+    /*
+     * Pathfinding Method
+     */
+
+    @Nullable
+    @Override
+    public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
+        return (entity instanceof BeeEntity) ? PathNodeType.OPEN : PathNodeType.DAMAGE_OTHER;
     }
 }

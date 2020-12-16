@@ -8,11 +8,15 @@ import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGTags;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.AreaEffectCloudEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.monster.AbstractRaiderEntity;
+import net.minecraft.entity.monster.EndermanEntity;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.piglin.PiglinEntity;
+import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
@@ -21,6 +25,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.RedstoneParticleData;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.*;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
@@ -45,6 +50,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.Color;
 import java.util.Collection;
@@ -343,6 +349,16 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     @Override
     public int getFireSpreadSpeed(BlockState state, IBlockReader worldIn, BlockPos pos, Direction face) {
         return 60;
+    }
+
+    /*
+     * Pathfinding Method
+     */
+
+    @Nullable
+    @Override
+    public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
+        return (((entity instanceof CreatureEntity) && !(entity instanceof MonsterEntity) && !(entity instanceof WaterMobEntity)) || (entity instanceof AbstractRaiderEntity) || (entity instanceof PiglinEntity) || (entity instanceof EndermanEntity)) ? PathNodeType.DAMAGE_OTHER : PathNodeType.WALKABLE;
     }
 
     /*
