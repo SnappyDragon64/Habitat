@@ -1,6 +1,5 @@
 package mod.schnappdragon.bloom_and_gloom.common.entity.projectile;
 
-import mod.schnappdragon.bloom_and_gloom.common.entity.item.InvulnerableToKabloomExplosionItemEntity;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGDamageSources;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGEntityTypes;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
@@ -53,7 +52,7 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
     protected void onImpact(RayTraceResult result) {
         Vector3d vec = result.getHitVec();
 
-        ItemEntity item = new InvulnerableToKabloomExplosionItemEntity(this.world, vec.getX() + 0.5F * this.rand.nextDouble() * (this.rand.nextBoolean() ? 1 : -1), vec.getY() + 0.5F * this.rand.nextDouble(), vec.getZ() + 0.5F * this.rand.nextDouble() * (this.rand.nextBoolean() ? 1 : -1), new ItemStack(BGItems.KABLOOM_SEEDS.get()));
+        ItemEntity item = new ItemEntity(this.world, vec.getX() + 0.5F * this.rand.nextDouble() * (this.rand.nextBoolean() ? 1 : -1), vec.getY() + 0.5F * this.rand.nextDouble(), vec.getZ() + 0.5F * this.rand.nextDouble() * (this.rand.nextBoolean() ? 1 : -1), new ItemStack(BGItems.KABLOOM_SEEDS.get()));
         item.setDefaultPickupDelay();
         this.world.addEntity(item);
 

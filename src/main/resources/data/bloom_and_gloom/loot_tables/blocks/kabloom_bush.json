@@ -1,0 +1,65 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bloom_and_gloom:kabloom_fruit"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "bloom_and_gloom:kabloom_bush",
+          "properties": {
+            "age": "7"
+          }
+        },
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "item": "minecraft:shears"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bloom_and_gloom:kabloom_fruit"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "bloom_and_gloom:kabloom_bush",
+          "properties": {
+            "age": "7"
+          }
+        },
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "enchantments": [
+              {
+                "enchantment": "minecraft:silk_touch",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "function": "minecraft:explosion_decay"
+    }
+  ]
+}

@@ -14,10 +14,9 @@ import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.HoeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.ShearsItem;
+import net.minecraft.item.ToolItem;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -95,7 +94,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity) {
             if (entityIn instanceof LivingEntity && state.get(AGE) > 0)
-                entityIn.setMotionMultiplier(state, new Vector3d(0.8F, 0.75D, 0.8F));
+                entityIn.setMotionMultiplier(state, new Vector3d(0.9F, 0.85D, 0.9F));
             if (state.get(AGE) == 7) {
                 dropFruit(state, worldIn, pos, true);
             }
@@ -108,10 +107,14 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
         if (!(state.get(AGE) == 7) && player.getHeldItem(handIn).getItem() == Items.BONE_MEAL) {
             return ActionResultType.PASS;
         } else if (state.get(AGE) == 7) {
-            if (player.getHeldItem(handIn).getItem() instanceof ShearsItem) {
-                spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
-                player.getHeldItem(handIn);
-                worldIn.setBlockState(pos, state.with(AGE, 3), 2);
+            if (player.getHeldItem(handIn).getItem() == Items.SHEARS) {
+                if (!worldIn.isRemote) {
+                    spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
+                    player.getHeldItem(handIn).damageItem(1, player, (playerIn) -> {
+                        playerIn.sendBreakAnimation(handIn);
+                    });
+                    worldIn.setBlockState(pos, state.with(AGE, 3), 2);
+                }
             }
             else
                 dropFruit(state, worldIn, pos, true);
@@ -124,17 +127,20 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     @Override
     @ParametersAreNonnullByDefault
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (state.get(AGE) == 7) {
-            ItemStack held = player.getHeldItemMainhand();
-            if (held.getItem() instanceof HoeItem && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, held) > 0)
-                spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
-            else
-                dropFruit(state, worldIn, pos, false);
+        ItemStack held = player.getHeldItemMainhand();
+
+        if (state.get(AGE) == 7 && !player.abilities.isCreativeMode) {
+            if (held.getItem() != Items.SHEARS) {
+                if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, held) == 0 || !(held.getItem() instanceof ToolItem))
+                    dropFruit(state, worldIn, pos, false);
+            }
         }
+
+        super.onBlockHarvested(worldIn, pos, state, player);
     }
 
     private void dropFruit(BlockState state, World worldIn, BlockPos pos, boolean replaceBush) {
-        if (replaceBush)
+        if (replaceBush && !worldIn.isRemote)
             worldIn.setBlockState(pos, state.with(AGE, 3), 2);
         worldIn.addEntity(new KabloomFruitEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F));
     }
@@ -175,7 +181,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     }
 
     /*
-     * Plant Method
+     * Plant Methods
      */
 
     @Override
