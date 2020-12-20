@@ -50,7 +50,7 @@ public class BGDispenserBehaviours {
                         }
                         worldIn.setBlockState(pos, state.with(RafflesiaBlock.STEW, true));
                         rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
-                        worldIn.playSound(null, pos, BGSoundEvents.RAFFLESIA_SLURP.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        worldIn.playSound(null, pos, BGSoundEvents.BLOCK_RAFFLESIA_SLURP.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
                         stack = new ItemStack(Items.BOWL, 1);
                         this.setSuccessful(true);
                         return stack;
@@ -71,6 +71,7 @@ public class BGDispenserBehaviours {
                     item.setDefaultPickupDelay();
                     worldIn.addEntity(item);
                     worldIn.setBlockState(pos, state.with(KabloomBushBlock.AGE, 3));
+                    worldIn.playSound(null, pos, BGSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
                     if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
                         stack.setCount(0);
                     this.setSuccessful(true);

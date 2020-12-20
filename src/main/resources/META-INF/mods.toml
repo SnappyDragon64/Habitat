@@ -4,7 +4,7 @@ license="All rights reserved"
 
 [[mods]]
 modId="bloom_and_gloom"
-version="${file.jarVersion}"
+version="0.2"
 displayName="Bloom and Gloom"
 authors="SchnappDragon, Edmord17"
-description='''Plant mod that plans to add more flora to the overworld to make it feel lush. Currently adds rafflesias.'''
+description='''Plant mod that plans to add more flora to the overworld to make it feel lush. Currently adds rafflesias and kabloom bushes.'''

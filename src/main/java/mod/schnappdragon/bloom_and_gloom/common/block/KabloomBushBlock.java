@@ -2,6 +2,7 @@ package mod.schnappdragon.bloom_and_gloom.common.block;
 
 import mod.schnappdragon.bloom_and_gloom.common.entity.projectile.KabloomFruitEntity;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -114,6 +115,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
                         playerIn.sendBreakAnimation(handIn);
                     });
                     worldIn.setBlockState(pos, state.with(AGE, 3), 2);
+                    worldIn.playSound(null, pos, BGSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
                 }
             }
             else
@@ -140,8 +142,11 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     }
 
     private void dropFruit(BlockState state, World worldIn, BlockPos pos, boolean replaceBush) {
-        if (replaceBush && !worldIn.isRemote)
+        if (replaceBush && !worldIn.isRemote) {
             worldIn.setBlockState(pos, state.with(AGE, 3), 2);
+            worldIn.playSound(null, pos, BGSoundEvents.BLOCK_KABLOOM_BUSH_RUSTLE.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+        }
+
         worldIn.addEntity(new KabloomFruitEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F));
     }
 

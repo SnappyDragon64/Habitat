@@ -1,17 +1,27 @@
 {
-  "rafflesia_spew": {
+  "block_rafflesia_spew": {
     "category": "block",
     "subtitle": "bloom_and_gloom.subtitle.rafflesiaSpew",
-    "sounds": [ "bloom_and_gloom:rafflesia_spew_sound_file" ]
+    "sounds": [ "bloom_and_gloom:block_rafflesia_spew_sound_file" ]
   },
-  "rafflesia_pop": {
+  "block_rafflesia_pop": {
     "category": "block",
     "subtitle": "bloom_and_gloom.subtitle.rafflesiaPop",
-    "sounds": [ "bloom_and_gloom:rafflesia_pop_sound_file" ]
+    "sounds": [ "bloom_and_gloom:block_rafflesia_pop_sound_file" ]
   },
-  "rafflesia_slurp": {
+  "block_rafflesia_slurp": {
     "category": "block",
     "subtitle": "bloom_and_gloom.subtitle.rafflesiaSlurp",
-    "sounds": [ "bloom_and_gloom:rafflesia_slurp_sound_file" ]
+    "sounds": [ "bloom_and_gloom:block_rafflesia_slurp_sound_file" ]
+  },
+  "block_kabloom_bush_rustle": {
+    "category": "block",
+    "subtitle": "bloom_and_gloom.subtitle.kabloomBushRustle",
+    "sounds": [ "bloom_and_gloom:block_kabloom_bush_rustle_sound_file" ]
+  },
+  "block_kabloom_bush_shear": {
+    "category": "block",
+    "subtitle": "bloom_and_gloom.subtitle.kabloomBushShear",
+    "sounds": [ "bloom_and_gloom:block_kabloom_bush_shear_sound_file" ]
   }
 }

@@ -67,7 +67,7 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
     private void createExplosion(double x, double y, double z) {
         Explosion kabloom = new Explosion(this.world, null, BGDamageSources.causeKabloomDamage(this, this.func_234616_v_()), null, x, y, z, 0.7F, false, Explosion.Mode.NONE);
         kabloom.doExplosionA();
-        this.world.playSound(x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 0.7F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F, true);
+        this.world.playSound(x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 0.5F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.5F, true);
         this.world.addParticle(ParticleTypes.EXPLOSION, x, y, z, 1.0D, 0.0D, 0.0D);
     }
 
