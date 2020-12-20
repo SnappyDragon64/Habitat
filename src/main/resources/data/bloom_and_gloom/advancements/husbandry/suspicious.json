@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:husbandry/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:suspicious_stew"
+    },
+    "title": {
+      "translate": "bloom_and_gloom.advancements.husbandry.suspicious.title"
+    },
+    "description": {
+      "translate": "bloom_and_gloom.advancements.husbandry.suspicious.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "suspicious": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": {
+          "block": {
+            "block": "bloom_and_gloom:rafflesia",
+            "state": {
+              "age": 2,
+              "stew": false,
+              "pollinated": false
+            }
+          }
+        },
+        "item": {
+          "item": "minecraft:suspicious_stew"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "suspicious"
+    ]
+  ]
+}

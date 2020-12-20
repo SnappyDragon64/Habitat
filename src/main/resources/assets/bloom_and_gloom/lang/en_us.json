@@ -7,5 +7,11 @@
   "bloom_and_gloom.subtitle.rafflesiaPop": "Rafflesia pops",
   "bloom_and_gloom.subtitle.rafflesiaSlurp": "Rafflesia slurps",
 
-  "death.attack.bloom_and_gloom.kabloom": "%1$s went kabloom"
+  "death.attack.bloom_and_gloom.kabloom": "%1$s went kabloom",
+
+  "bloom_and_gloom.advancements.husbandry.suspicious.title": "Suspicious",
+  "bloom_and_gloom.advancements.husbandry.bloom_defused.title": "The Bloom Has Been Defused",
+
+  "bloom_and_gloom.advancements.husbandry.suspicious.description": "Feed suspicious stew to a rafflesia",
+  "bloom_and_gloom.advancements.husbandry.bloom_defused.description": "Shear a kabloom bush to harvest the fruit"
 }
