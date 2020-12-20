@@ -3,6 +3,7 @@ package mod.schnappdragon.bloom_and_gloom.common.entity.projectile;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGDamageSources;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGEntityTypes;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -13,7 +14,6 @@ import net.minecraft.network.IPacket;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
@@ -67,7 +67,7 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
     private void createExplosion(double x, double y, double z) {
         Explosion kabloom = new Explosion(this.world, null, BGDamageSources.causeKabloomDamage(this, this.func_234616_v_()), null, x, y, z, 0.7F, false, Explosion.Mode.NONE);
         kabloom.doExplosionA();
-        this.world.playSound(x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 0.5F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.5F, true);
+        this.world.playSound(x, y, z, BGSoundEvents.ENTITY_KABLOOM_FRUIT_EXPLODE.get(), SoundCategory.PLAYERS, 1.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F), true);
         this.world.addParticle(ParticleTypes.EXPLOSION, x, y, z, 1.0D, 0.0D, 0.0D);
     }
 

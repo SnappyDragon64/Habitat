@@ -11,6 +11,18 @@
     },
     "age=3": {
       "model": "bloom_and_gloom:block/kabloom_bush_age_3"
+    },
+    "age=4": {
+      "model": "bloom_and_gloom:block/kabloom_bush_age_4"
+    },
+    "age=5": {
+      "model": "bloom_and_gloom:block/kabloom_bush_age_5"
+    },
+    "age=6": {
+      "model": "bloom_and_gloom:block/kabloom_bush_age_6"
+    },
+    "age=7": {
+      "model": "bloom_and_gloom:block/kabloom_bush_age_7"
     }
   }
 }
