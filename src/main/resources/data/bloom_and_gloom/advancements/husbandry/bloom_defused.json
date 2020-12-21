@@ -21,10 +21,7 @@
       "conditions": {
         "location": {
           "block": {
-            "block": "bloom_and_gloom:kabloom_bush",
-            "state": {
-              "age": 7
-            }
+            "block": "bloom_and_gloom:kabloom_bush"
           }
         },
         "item": {
@@ -37,5 +34,10 @@
     [
       "bloom_defused"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloom_and_gloom:kabloom_seeds"
+    ]
+  }
 }

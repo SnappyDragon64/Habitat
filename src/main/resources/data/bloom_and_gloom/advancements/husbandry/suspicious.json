@@ -21,12 +21,7 @@
       "conditions": {
         "location": {
           "block": {
-            "block": "bloom_and_gloom:rafflesia",
-            "state": {
-              "age": 2,
-              "stew": false,
-              "pollinated": false
-            }
+            "block": "bloom_and_gloom:rafflesia"
           }
         },
         "item": {
