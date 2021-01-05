@@ -39,10 +39,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 public class KabloomBushBlock extends BushBlock implements IGrowable {
-    protected static final VoxelShape AGE_0_SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 4.0D, 10.0D);
-    protected static final VoxelShape AGE_1_SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D);
-    protected static final VoxelShape AGE_2_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
-    protected static final VoxelShape AGE_3_7_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
+    protected static final VoxelShape AGE_0_SHAPE = Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D);
+    protected static final VoxelShape AGE_1_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D);
+    protected static final VoxelShape AGE_2_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D);
+    protected static final VoxelShape AGE_3_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D);
+    protected static final VoxelShape AGE_4_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D);
+    protected static final VoxelShape AGE_5_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D);
+    protected static final VoxelShape AGE_6_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);
+    protected static final VoxelShape AGE_7_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D);
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
@@ -69,14 +73,22 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     @ParametersAreNonnullByDefault
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         switch(state.get(AGE)) {
-            case 0:
-                return AGE_0_SHAPE;
             case 1:
                 return AGE_1_SHAPE;
             case 2:
                 return AGE_2_SHAPE;
+            case 3:
+                return AGE_3_SHAPE;
+            case 4:
+                return AGE_4_SHAPE;
+            case 5:
+                return AGE_5_SHAPE;
+            case 6:
+                return AGE_6_SHAPE;
+            case 7:
+                return AGE_7_SHAPE;
             default:
-                return AGE_3_7_SHAPE;
+                return AGE_0_SHAPE;
         }
     }
 
@@ -94,8 +106,8 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     @ParametersAreNonnullByDefault
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity) {
-            if (entityIn instanceof LivingEntity && state.get(AGE) > 0)
-                entityIn.setMotionMultiplier(state, new Vector3d(0.9F, 0.85D, 0.9F));
+            if (entityIn instanceof LivingEntity && state.get(AGE) > 1)
+                entityIn.setMotionMultiplier(state, new Vector3d(0.95F, 0.9D, 0.95F));
             if (state.get(AGE) == 7) {
                 dropFruit(state, worldIn, pos, true);
             }

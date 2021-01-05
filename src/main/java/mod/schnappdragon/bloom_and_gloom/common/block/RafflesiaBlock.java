@@ -15,7 +15,6 @@ import net.minecraft.entity.monster.AbstractRaiderEntity;
 import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.piglin.PiglinEntity;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -93,7 +92,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     @ParametersAreNonnullByDefault
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        if(state.get(AGE) == 0)
+        if (state.get(AGE) == 0)
             return AGE_0_SHAPE;
         else if (state.get(AGE) == 1)
             return AGE_1_SHAPE;
