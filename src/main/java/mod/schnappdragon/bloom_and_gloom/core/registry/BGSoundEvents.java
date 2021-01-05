@@ -8,7 +8,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class BGSoundEvents {
-
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, BloomAndGloom.MOD_ID);
 
     public static final RegistryObject<SoundEvent> BLOCK_RAFFLESIA_SPEW = SOUND_EVENTS.register("block_rafflesia_spew", () -> getSoundEvent("block_rafflesia_spew"));

@@ -8,7 +8,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class BGTileEntities {
-
     public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, BloomAndGloom.MOD_ID);
 
     public static final RegistryObject<TileEntityType<RafflesiaTileEntity>> RAFFLESIA_TILE = TILE_ENTITIES.register("rafflesia",
