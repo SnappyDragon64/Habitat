@@ -2,6 +2,7 @@ package mod.schnappdragon.bloom_and_gloom.core;
 
 import mod.schnappdragon.bloom_and_gloom.client.renderer.entity.BGEntityRenderers;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGFeatures;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGConfiguredFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGComposterChances;
 import mod.schnappdragon.bloom_and_gloom.core.dispenser.BGDispenserBehaviours;
 import mod.schnappdragon.bloom_and_gloom.client.renderer.BGRenderLayers;
@@ -31,13 +32,14 @@ public class BloomAndGloom {
         BGTileEntities.TILE_ENTITIES.register(modEventBus);
         BGSoundEvents.SOUND_EVENTS.register(modEventBus);
         BGEntityTypes.ENTITY_TYPES.register(modEventBus);
+        BGFeatures.FEATURES.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork((() -> {
-            BGFeatures.registerConfiguredFeatures();
+            BGConfiguredFeatures.registerConfiguredFeatures();
             BGComposterChances.registerComposterChances();
             BGDispenserBehaviours.registerDispenserBehaviour();
         }));

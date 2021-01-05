@@ -1,42 +1,15 @@
 package mod.schnappdragon.bloom_and_gloom.core.registry;
 
-import com.google.common.collect.ImmutableSet;
-import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
-import mod.schnappdragon.bloom_and_gloom.common.block.RafflesiaBlock;
+import mod.schnappdragon.bloom_and_gloom.common.world.gen.features.SlimeChunkRandomPatchFeature;
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
-import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
-import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
-import net.minecraft.world.gen.placement.Placement;
+import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class BGFeatures {
-    public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.withConfiguration((new BlockClusterFeatureConfig.Builder(
-            new SimpleBlockStateProvider(BGBlocks.RAFFLESIA_BLOCK.get().getDefaultState().with(RafflesiaBlock.AGE, 2)),
-            new SimpleBlockPlacer())).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
-                    .xSpread(3)
-                    .ySpread(3)
-                    .zSpread(3)
-                    .tries(2)
-                    .build())
-                    .withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(3, 0.4F, 1)));
+    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, BloomAndGloom.MOD_ID);
 
-    public static final ConfiguredFeature<?, ?> PATCH_KABLOOM_BUSH = Feature.RANDOM_PATCH.withConfiguration((new BlockClusterFeatureConfig.Builder(
-            new SimpleBlockStateProvider(BGBlocks.KABLOOM_BUSH_BLOCK.get().getDefaultState().with(KabloomBushBlock.AGE, 7)),
-            new SimpleBlockPlacer())).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
-                    .xSpread(4)
-                    .ySpread(1)
-                    .zSpread(4)
-                    .tries(12)
-                    .build())
-                    .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
-                    .chance(500);
-
-    public static void registerConfiguredFeatures() {
-        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "rafflesia_patch", PATCH_RAFFLESIA);
-        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "kabloom_bush_patch", PATCH_KABLOOM_BUSH);
-    }
+    public final static RegistryObject<Feature<BlockClusterFeatureConfig>> SLIME_CHUNK_RANDOM_PATCH_FEATURE = FEATURES.register("slime_chunk_random_patch_feature", () -> new SlimeChunkRandomPatchFeature(BlockClusterFeatureConfig.field_236587_a_));
 }

@@ -1,7 +1,7 @@
 package mod.schnappdragon.bloom_and_gloom.core.event;
 
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
-import mod.schnappdragon.bloom_and_gloom.core.registry.BGFeatures;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGConfiguredFeatures;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
@@ -14,8 +14,8 @@ public class BGGeneration {
     @SubscribeEvent
     public static void addFeaturesToBiomes(BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.Category.JUNGLE)
-            event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGFeatures.PATCH_RAFFLESIA);
+            event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_RAFFLESIA);
         else if (event.getCategory() == Biome.Category.PLAINS)
-            event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGFeatures.PATCH_KABLOOM_BUSH);
+            event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_KABLOOM_BUSH);
     }
 }
