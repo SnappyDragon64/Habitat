@@ -9,8 +9,11 @@ import mod.schnappdragon.bloom_and_gloom.core.misc.BGTags;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;
+import net.minecraft.entity.item.BoatEntity;
 import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.item.TNTEntity;
+import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.monster.AbstractRaiderEntity;
 import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -212,7 +215,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     @Override
     @ParametersAreNonnullByDefault
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (!worldIn.isRemote && (entityIn instanceof LivingEntity || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity) && state.get(AGE) == 2) {
+        if (!worldIn.isRemote && (entityIn instanceof LivingEntity || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity || entityIn instanceof BoatEntity || entityIn instanceof TNTEntity || entityIn instanceof AbstractMinecartEntity) && state.get(AGE) == 2) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof RafflesiaTileEntity && !state.get(COOLDOWN) && !state.get(POLLINATED)) {
                 RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
