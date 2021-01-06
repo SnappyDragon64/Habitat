@@ -40,7 +40,7 @@ public class BGDispenserBehaviours {
                 World worldIn = source.getWorld();
                 BlockPos pos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
                 BlockState state = worldIn.getBlockState(pos);
-                if (!worldIn.isRemote && state.isIn(BGBlocks.RAFFLESIA_BLOCK.get()) && state.get(RafflesiaBlock.AGE) == 2) {
+                if (!worldIn.isRemote && state.isIn(BGBlocks.RAFFLESIA.get()) && state.get(RafflesiaBlock.AGE) == 2) {
                     TileEntity tile = worldIn.getTileEntity(pos);
                     if (tile instanceof RafflesiaTileEntity && !state.get(RafflesiaBlock.STEW) && !state.get(RafflesiaBlock.POLLINATED)) {
                         RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
@@ -66,7 +66,7 @@ public class BGDispenserBehaviours {
                 World worldIn = source.getWorld();
                 BlockPos pos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
                 BlockState state = worldIn.getBlockState(pos);
-                if (!worldIn.isRemote && state.isIn(BGBlocks.KABLOOM_BUSH_BLOCK.get()) && state.get(KabloomBushBlock.AGE) == 7) {
+                if (!worldIn.isRemote && state.isIn(BGBlocks.KABLOOM_BUSH.get()) && state.get(KabloomBushBlock.AGE) == 7) {
                     ItemEntity item = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
                     item.setDefaultPickupDelay();
                     worldIn.addEntity(item);

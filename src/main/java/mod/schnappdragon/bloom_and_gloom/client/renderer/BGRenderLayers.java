@@ -10,7 +10,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BGRenderLayers {
 
     public static void registerRenderLayers() {
-        RenderTypeLookup.setRenderLayer(BGBlocks.RAFFLESIA_BLOCK.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BGBlocks.KABLOOM_BUSH_BLOCK.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.RAFFLESIA.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.KABLOOM_BUSH.get(), RenderType.getCutout());
     }
 }

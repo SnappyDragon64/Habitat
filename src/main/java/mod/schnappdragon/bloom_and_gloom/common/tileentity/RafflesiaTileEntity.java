@@ -15,7 +15,7 @@ public class RafflesiaTileEntity extends TileEntity {
     public ListNBT Effects = new ListNBT();
 
     public RafflesiaTileEntity() {
-        super(BGTileEntities.RAFFLESIA_TILE.get());
+        super(BGTileEntities.RAFFLESIA.get());
         CompoundNBT tag = new CompoundNBT();
         tag.putByte("EffectId", (byte) 19);
         tag.putInt("EffectDuration", 240);

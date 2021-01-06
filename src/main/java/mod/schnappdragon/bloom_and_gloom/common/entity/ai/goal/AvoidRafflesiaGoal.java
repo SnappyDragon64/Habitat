@@ -53,7 +53,7 @@ public class AvoidRafflesiaGoal<T extends LivingEntity> extends Goal {
 
     public boolean shouldExecute() {
         Optional<BlockPos> optionalBlockPos = BlockPos.getClosestMatchingPosition(this.entity.getPosition(), this.avoidDistance, 4, (pos) -> {
-            return this.entity.world.getBlockState(pos).isIn(BGBlocks.RAFFLESIA_BLOCK.get()) && (this.entity.world.getBlockState(pos).get(AGE) == 2);
+            return this.entity.world.getBlockState(pos).isIn(BGBlocks.RAFFLESIA.get()) && (this.entity.world.getBlockState(pos).get(AGE) == 2);
         });
 
         if (!optionalBlockPos.isPresent()) {

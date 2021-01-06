@@ -15,7 +15,7 @@ import net.minecraft.world.gen.placement.Placement;
 
 public class BGConfiguredFeatures {
     public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.withConfiguration((new BlockClusterFeatureConfig.Builder(
-            new SimpleBlockStateProvider(BGBlocks.RAFFLESIA_BLOCK.get().getDefaultState().with(RafflesiaBlock.AGE, 2)),
+            new SimpleBlockStateProvider(BGBlocks.RAFFLESIA.get().getDefaultState().with(RafflesiaBlock.AGE, 2)),
             new SimpleBlockPlacer())).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
                     .xSpread(3)
                     .ySpread(3)
@@ -25,7 +25,7 @@ public class BGConfiguredFeatures {
                     .withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(3, 0.4F, 1)));
 
     public static final ConfiguredFeature<?, ?> PATCH_KABLOOM_BUSH = Feature.RANDOM_PATCH.withConfiguration((new BlockClusterFeatureConfig.Builder(
-            new SimpleBlockStateProvider(BGBlocks.KABLOOM_BUSH_BLOCK.get().getDefaultState().with(KabloomBushBlock.AGE, 7)),
+            new SimpleBlockStateProvider(BGBlocks.KABLOOM_BUSH.get().getDefaultState().with(KabloomBushBlock.AGE, 7)),
             new SimpleBlockPlacer())).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
                     .xSpread(4)
                     .ySpread(1)
