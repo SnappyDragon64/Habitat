@@ -12,5 +12,7 @@ public class BGRenderLayers {
     public static void registerRenderLayers() {
         RenderTypeLookup.setRenderLayer(BGBlocks.RAFFLESIA.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BGBlocks.KABLOOM_BUSH.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.SLIME_MOSS.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.WALL_SLIME_MOSS.get(), RenderType.getCutout());
     }
 }
