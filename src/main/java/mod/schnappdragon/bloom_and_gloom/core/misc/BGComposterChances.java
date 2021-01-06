@@ -10,5 +10,7 @@ public class BGComposterChances {
 
         ComposterBlock.CHANCES.put(BGItems.KABLOOM_SEEDS.get(), 0.3F);
         ComposterBlock.CHANCES.put(BGItems.KABLOOM_SEEDS.get(), 0.65F);
+
+        ComposterBlock.CHANCES.put(BGItems.SLIME_MOSS.get(), 0.85F);
     }
 }
