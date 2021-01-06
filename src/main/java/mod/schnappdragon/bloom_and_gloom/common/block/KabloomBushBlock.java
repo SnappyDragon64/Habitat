@@ -38,7 +38,6 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.PlantType;
 
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 public class KabloomBushBlock extends BushBlock implements IGrowable {
@@ -56,11 +55,12 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     public KabloomBushBlock() {
         super(AbstractBlock.Properties
                 .create(Material.PLANTS)
-                .hardnessAndResistance(0.0F, 0.0F)
+                .zeroHardnessAndResistance()
                 .sound(SoundType.PLANT)
                 .doesNotBlockMovement()
                 .notSolid()
-                .setAllowsSpawn((a,b,c,d) -> false));
+                .setAllowsSpawn((a,b,c,d) -> false)
+        );
 
         this.setDefaultState(
                 this.stateContainer.getBaseState()
@@ -73,7 +73,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
         builder.add(AGE);
     }
 
-    @ParametersAreNonnullByDefault
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         switch(state.get(AGE)) {
             case 1:
@@ -95,7 +94,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
         }
     }
 
-    @ParametersAreNonnullByDefault
     public boolean propagatesSkylightDown(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return true;
     }
@@ -106,7 +104,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
 
 
     @Override
-    @ParametersAreNonnullByDefault
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity || entityIn instanceof BoatEntity || entityIn instanceof TNTEntity || entityIn instanceof AbstractMinecartEntity) {
             if (entityIn instanceof LivingEntity && state.get(AGE) > 1)
@@ -118,7 +115,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     }
 
     @Override
-    @ParametersAreNonnullByDefault
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!(state.get(AGE) == 7) && player.getHeldItem(handIn).getItem() == Items.BONE_MEAL) {
             return ActionResultType.PASS;
@@ -142,7 +138,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     }
 
     @Override
-    @ParametersAreNonnullByDefault
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
         ItemStack held = player.getHeldItemMainhand();
 
@@ -173,7 +168,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
         return state.get(AGE) <= 7;
     }
 
-    @ParametersAreNonnullByDefault
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         if (state.get(AGE) < 7 && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(5) == 0)) {
             worldIn.setBlockState(pos, state.with(AGE, state.get(AGE) + 1), 2);
@@ -185,17 +179,14 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
         }
     }
 
-    @ParametersAreNonnullByDefault
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return state.get(AGE) < 7;
     }
 
-    @ParametersAreNonnullByDefault
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
         return true;
     }
 
-    @ParametersAreNonnullByDefault
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
         worldIn.setBlockState(pos, state.with(AGE, Math.min(7, state.get(AGE) + 1)), 2);
     }
@@ -205,7 +196,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
      */
 
     @Override
-    @ParametersAreNonnullByDefault
     public BlockState getPlant(IBlockReader world, BlockPos pos) {
         return getDefaultState();
     }
