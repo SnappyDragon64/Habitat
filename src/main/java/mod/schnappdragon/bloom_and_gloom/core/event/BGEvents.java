@@ -46,6 +46,6 @@ public class BGEvents {
     @SubscribeEvent
     public static void onBlockEvent(BlockEvent event) {
         if (event.getState().getBlock().matchesBlock(BGBlocks.RAFFLESIA.get()) && event.getState().get(AGE) < 2)
-            event.getWorld().setBlockState(event.getPos(), event.getState().with(COOLDOWN, false).with(STEW, false).with(POLLINATED, false), 2);
+            event.getWorld().setBlockState(event.getPos(), event.getState().with(ON_COOLDOWN, false).with(HAS_STEW, false).with(POLLINATED, false), 2);
     }
 }

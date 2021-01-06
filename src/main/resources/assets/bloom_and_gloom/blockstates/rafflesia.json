@@ -6,19 +6,19 @@
     "age=1": {
       "model": "bloom_and_gloom:block/rafflesia_age_1"
     },
-    "age=2,cooldown=false,stew=false": {
+    "age=2,on_cooldown=false,has_stew=false": {
       "model": "bloom_and_gloom:block/rafflesia_age_2"
     },
-    "age=2,cooldown=true,stew=false,pollinated=false": {
+    "age=2,on_cooldown=true,has_stew=false,pollinated=false": {
       "model": "bloom_and_gloom:block/cooldown_rafflesia_age_2"
     },
-    "age=2,cooldown=true,stew=false,pollinated=true": {
+    "age=2,on_cooldown=true,has_stew=false,pollinated=true": {
       "model": "bloom_and_gloom:block/cooldown_pollinated_rafflesia_age_2"
     },
-    "age=2,cooldown=false,stew=true": {
+    "age=2,on_cooldown=false,has_stew=true": {
       "model": "bloom_and_gloom:block/suspicious_rafflesia_age_2"
     },
-    "age=2,cooldown=true,stew=true": {
+    "age=2,on_cooldown=true,has_stew=true": {
       "model": "bloom_and_gloom:block/cooldown_suspicious_rafflesia_age_2"
     }
   }

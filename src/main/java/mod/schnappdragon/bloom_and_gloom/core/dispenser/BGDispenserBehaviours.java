@@ -42,13 +42,13 @@ public class BGDispenserBehaviours {
                 BlockState state = worldIn.getBlockState(pos);
                 if (!worldIn.isRemote && state.isIn(BGBlocks.RAFFLESIA.get()) && state.get(RafflesiaBlock.AGE) == 2) {
                     TileEntity tile = worldIn.getTileEntity(pos);
-                    if (tile instanceof RafflesiaTileEntity && !state.get(RafflesiaBlock.STEW) && !state.get(RafflesiaBlock.POLLINATED)) {
+                    if (tile instanceof RafflesiaTileEntity && !state.get(RafflesiaBlock.HAS_STEW) && !state.get(RafflesiaBlock.POLLINATED)) {
                         RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
                         CompoundNBT tag = stack.getTag();
                         if (tag != null && tag.contains("Effects", 9)) {
                             rafflesia.Effects = tag.getList("Effects", 10);
                         }
-                        worldIn.setBlockState(pos, state.with(RafflesiaBlock.STEW, true));
+                        worldIn.setBlockState(pos, state.with(RafflesiaBlock.HAS_STEW, true));
                         rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
                         worldIn.playSound(null, pos, BGSoundEvents.BLOCK_RAFFLESIA_SLURP.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
                         stack = new ItemStack(Items.BOWL, 1);
