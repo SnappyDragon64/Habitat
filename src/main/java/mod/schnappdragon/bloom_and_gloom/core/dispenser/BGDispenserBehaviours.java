@@ -4,7 +4,6 @@ import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.RafflesiaBlock;
 import mod.schnappdragon.bloom_and_gloom.common.entity.projectile.KabloomFruitEntity;
 import mod.schnappdragon.bloom_and_gloom.common.tileentity.RafflesiaTileEntity;
-import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
@@ -21,19 +20,12 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.Level;
-
-import java.lang.reflect.InvocationTargetException;
 
 public class BGDispenserBehaviours {
     public static IDispenseItemBehavior ShearsBehaviour;
 
     public static void registerDispenserBehaviour() {
-        try {
-            ShearsBehaviour = ExistingDispenseItemBehaviour.getShearsItemBehaviour();
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            BloomAndGloom.getLOGGER().log(Level.ERROR, "This will probably never happen.");
-        }
+        ShearsBehaviour = DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(Items.SHEARS);
 
         DispenserBlock.registerDispenseBehavior(Items.SUSPICIOUS_STEW, new OptionalDispenseBehavior() {
             protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
