@@ -22,5 +22,5 @@ public class BGItems {
     public static final RegistryObject<Item> KABLOOM_FRUIT = ITEMS.register("kabloom_fruit",
             () -> new KabloomFruitItem((new Item.Properties()).maxStackSize(16).group(ItemGroup.MISC)));
 
-    public static final RegistryObject<Item> SLIME_MOSS = ITEMS.register("slime_moss", () -> new WallOrFloorItem(BGBlocks.SLIME_MOSS.get(), BGBlocks.WALL_SLIME_MOSS.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
+    public static final RegistryObject<Item> SLIME_FERN = ITEMS.register("slime_fern", () -> new WallOrFloorItem(BGBlocks.SLIME_FERN.get(), BGBlocks.WALL_SLIME_FERN.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
 }
