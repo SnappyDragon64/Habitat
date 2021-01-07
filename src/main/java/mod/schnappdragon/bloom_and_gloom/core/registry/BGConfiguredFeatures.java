@@ -12,6 +12,7 @@ import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
 import net.minecraft.world.gen.placement.Placement;
+import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 
 public class BGConfiguredFeatures {
     public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.withConfiguration((new BlockClusterFeatureConfig.Builder(
@@ -30,10 +31,11 @@ public class BGConfiguredFeatures {
                     .xSpread(4)
                     .ySpread(1)
                     .zSpread(4)
-                    .tries(12)
+                    .tries(20)
                     .build())
                     .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
-                    .chance(500);
+                    .chance(200);
+
 
     public static void registerConfiguredFeatures() {
         Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "rafflesia_patch", PATCH_RAFFLESIA);

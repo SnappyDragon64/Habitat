@@ -24,7 +24,7 @@ public class BGEvents {
      */
 
     @SubscribeEvent
-    public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
+    public static void addAvoidRafflesiaGoal(EntityJoinWorldEvent event) {
         Entity entityIn = event.getEntity();
 
         if (entityIn instanceof CreatureEntity && !(entityIn instanceof MonsterEntity) && !(entityIn instanceof WaterMobEntity) || entityIn instanceof AbstractRaiderEntity || entityIn instanceof PiglinEntity || entityIn instanceof EndermanEntity) {
@@ -44,7 +44,7 @@ public class BGEvents {
      */
 
     @SubscribeEvent
-    public static void onBlockEvent(BlockEvent event) {
+    public static void fixRafflesiaBlockState(BlockEvent event) {
         if (event.getState().getBlock().matchesBlock(BGBlocks.RAFFLESIA.get()) && event.getState().get(AGE) < 2)
             event.getWorld().setBlockState(event.getPos(), event.getState().with(ON_COOLDOWN, false).with(HAS_STEW, false).with(POLLINATED, false), 2);
     }

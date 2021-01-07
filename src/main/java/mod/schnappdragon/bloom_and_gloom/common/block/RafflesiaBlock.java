@@ -141,17 +141,14 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
-        double d0 = (double) pos.getX() + 0.5;
-        double d1 = (double) pos.getZ() + 0.5;
+        double X = (double) pos.getX() + 0.5;
+        double Z = (double) pos.getZ() + 0.5;
 
         TileEntity tile = worldIn.getTileEntity(pos);
         if (tile instanceof RafflesiaTileEntity) {
             RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
-            if (rand.nextInt(128) == 0 && !state.get(ON_COOLDOWN) && state.get(AGE) == 2) {
-                worldIn.addParticle(getParticle(rafflesia.Effects), d0 + rand.nextDouble() / 3.0D, (double) pos.getY() + (0.8D - rand.nextDouble()), d1 + rand.nextDouble() / 3.0D, 0.0D, 0.05D, 0.0D);
-            }
-            if (state.get(POLLINATED)) {
-                worldIn.addParticle(getParticle(rafflesia.Effects), d0 + rand.nextDouble() / 3.0D, (double) pos.getY() + (0.8D - rand.nextDouble()), d1 + rand.nextDouble() / 3.0D, 0.0D, 0.05D, 0.0D);
+            if ((rand.nextInt(128) == 0 && !state.get(ON_COOLDOWN) || state.get(POLLINATED)) && state.get(AGE) == 2) {
+                worldIn.addParticle(getParticle(rafflesia.Effects), X + rand.nextDouble() / 3.0D * (rand.nextBoolean() ? 1 : -1), (double) pos.getY() + (0.8D - rand.nextDouble()), Z + rand.nextDouble() / 3.0D * (rand.nextBoolean() ? 1 : -1), 0.0D, 0.05D, 0.0D);
             }
         }
     }
