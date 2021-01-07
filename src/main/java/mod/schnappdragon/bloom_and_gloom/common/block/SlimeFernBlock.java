@@ -26,13 +26,13 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class SlimeMossBlock extends Block {
+public class SlimeFernBlock extends Block {
     private static final VoxelShape GROUNDED_SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D);
     private static final VoxelShape ON_CEILING_SHAPE = Block.makeCuboidShape(2.0D, 12.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
     public static final BooleanProperty ON_CEILING = BGBlockStateProperties.ON_CEILING;
 
-    public SlimeMossBlock(AbstractBlock.Properties properties) {
+    public SlimeFernBlock(AbstractBlock.Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(ON_CEILING, false));
     }
@@ -43,6 +43,10 @@ public class SlimeMossBlock extends Block {
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return state.get(ON_CEILING) ? ON_CEILING_SHAPE : GROUNDED_SHAPE;
+    }
+
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader worldIn, BlockPos pos) {
+        return true;
     }
 
     /*

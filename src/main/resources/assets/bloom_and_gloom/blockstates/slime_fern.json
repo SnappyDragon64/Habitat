@@ -1,10 +1,10 @@
 {
   "variants": {
     "on_ceiling=false": {
-      "model": "bloom_and_gloom:block/slime_moss"
+      "model": "bloom_and_gloom:block/slime_fern"
     },
     "on_ceiling=true": {
-      "model": "bloom_and_gloom:block/slime_moss",
+      "model": "bloom_and_gloom:block/slime_fern",
       "x": 180
     }
   }

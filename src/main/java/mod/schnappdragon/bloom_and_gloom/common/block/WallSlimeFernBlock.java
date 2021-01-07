@@ -24,12 +24,12 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public class WallSlimeMossBlock extends Block {
+public class WallSlimeFernBlock extends Block {
     private static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.makeCuboidShape(0.0D, 4.0D, 5.0D, 16.0D, 12.0D, 16.0D), Direction.SOUTH, Block.makeCuboidShape(0.0D, 4.0D, 0.0D, 16.0D, 12.0D, 11.0D), Direction.WEST, Block.makeCuboidShape(5.0D, 4.0D, 0.0D, 16.0D, 12.0D, 16.0D), Direction.EAST, Block.makeCuboidShape(0.0D, 4.0D, 0.0D, 11.0D, 12.0D, 16.0D)));
 
     public static final DirectionProperty HORIZONTAL_FACING = HorizontalBlock.HORIZONTAL_FACING;
 
-    public WallSlimeMossBlock(Properties properties) {
+    public WallSlimeFernBlock(Properties properties) {
         super(properties);
     }
 
@@ -39,6 +39,10 @@ public class WallSlimeMossBlock extends Block {
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return SHAPES.get(state.get(HORIZONTAL_FACING));
+    }
+
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader worldIn, BlockPos pos) {
+        return true;
     }
 
     /*
