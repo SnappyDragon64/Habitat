@@ -16,8 +16,8 @@ import net.minecraft.world.IWorldReader;
 import javax.annotation.Nullable;
 
 public class SlimeFernBlock extends AbstractSlimeFernBlock {
-    private static final VoxelShape GROUNDED_SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D);
-    private static final VoxelShape ON_CEILING_SHAPE = Block.makeCuboidShape(2.0D, 12.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+    private static final VoxelShape GROUNDED_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
+    private static final VoxelShape ON_CEILING_SHAPE = Block.makeCuboidShape(0.0D, 1.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
     public static final BooleanProperty ON_CEILING = BGBlockStateProperties.ON_CEILING;
 
@@ -42,13 +42,9 @@ public class SlimeFernBlock extends AbstractSlimeFernBlock {
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         for(Direction direction : context.getNearestLookingDirections()) {
             if (direction.getAxis() == Direction.Axis.Y) {
-                BlockState state = this.getDefaultState().with(ON_CEILING, (direction == Direction.UP));
-                if (state.isValidPosition(context.getWorld(), context.getPos())) {
-                    return state;
-                }
+                return this.getDefaultState().with(ON_CEILING, (direction == Direction.UP));
             }
         }
-
         return null;
     }
 
@@ -58,7 +54,8 @@ public class SlimeFernBlock extends AbstractSlimeFernBlock {
 
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
         Direction direction = getBlockConnected(state).getOpposite();
-        return Block.hasEnoughSolidSide(worldIn, pos.offset(direction), direction.getOpposite());
+        BlockState blockState = worldIn.getBlockState(pos.offset(direction));
+        return blockState.isSolidSide(worldIn, pos.offset(direction), direction.getOpposite());
     }
 
     protected static Direction getBlockConnected(BlockState state) {

@@ -1,16 +1,16 @@
 package mod.schnappdragon.bloom_and_gloom.common.block;
 
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGParticleTypes;
 import net.minecraft.block.*;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -35,42 +35,16 @@ public abstract class AbstractSlimeFernBlock extends Block implements IGrowable 
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        for (int i = 0; i < rand.nextInt(1) + 1; ++i) {
-            this.addHoneyParticle(worldIn, pos, stateIn);
+        VoxelShape voxelshape = this.getShape(stateIn, worldIn, pos, ISelectionContext.dummy());
+        Vector3d vector3d = voxelshape.getBoundingBox().getCenter();
+        double X = (double) pos.getX() + vector3d.x;
+        double Y = (double) pos.getY() + vector3d.y;
+        double Z = (double) pos.getZ() + vector3d.z;
+
+        for(int i = 0; i < 2; ++i) {
+            if (rand.nextBoolean())
+                worldIn.addParticle(BGParticleTypes.DRIPPING_SLIME.get(), X + rand.nextDouble() / 2.5D * (rand.nextBoolean() ? 1 : -1), Y - rand.nextDouble() / 5, Z + rand.nextDouble() / 2.5D * (rand.nextBoolean() ? 1 : -1), 0.0D, 0.0D, 0.0D);
         }
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    private void addHoneyParticle(World world, BlockPos pos, BlockState state) {
-        if (state.getFluidState().isEmpty() && !(world.rand.nextFloat() < 0.3F)) {
-            VoxelShape voxelshape = state.getCollisionShape(world, pos);
-            double d0 = voxelshape.getEnd(Direction.Axis.Y);
-            if (d0 >= 1.0D && !state.isIn(BlockTags.IMPERMEABLE)) {
-                double d1 = voxelshape.getStart(Direction.Axis.Y);
-                if (d1 > 0.0D) {
-                    this.addHoneyParticle(world, pos, voxelshape, (double)pos.getY() + d1 - 0.05D);
-                } else {
-                    BlockPos blockpos = pos.down();
-                    BlockState blockstate = world.getBlockState(blockpos);
-                    VoxelShape voxelshape1 = blockstate.getCollisionShape(world, blockpos);
-                    double d2 = voxelshape1.getEnd(Direction.Axis.Y);
-                    if ((d2 < 1.0D || !blockstate.hasOpaqueCollisionShape(world, blockpos)) && blockstate.getFluidState().isEmpty()) {
-                        this.addHoneyParticle(world, pos, voxelshape, (double)pos.getY() - 0.05D);
-                    }
-                }
-            }
-
-        }
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    private void addHoneyParticle(World world, BlockPos pos, VoxelShape shape, double y) {
-        this.addHoneyParticle(world, (double)pos.getX() + shape.getStart(Direction.Axis.X), (double)pos.getX() + shape.getEnd(Direction.Axis.X), (double)pos.getZ() + shape.getStart(Direction.Axis.Z), (double)pos.getZ() + shape.getEnd(Direction.Axis.Z), y);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    private void addHoneyParticle(World particleData, double x1, double x2, double z1, double z2, double y) {
-        particleData.addParticle(ParticleTypes.DRIPPING_HONEY, MathHelper.lerp(particleData.rand.nextDouble(), x1, x2), y, MathHelper.lerp(particleData.rand.nextDouble(), z1, z2), 0.0D, 0.0D, 0.0D);
     }
 
     /*
