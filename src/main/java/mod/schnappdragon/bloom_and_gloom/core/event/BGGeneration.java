@@ -17,5 +17,8 @@ public class BGGeneration {
             event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_RAFFLESIA);
         else if (event.getCategory() == Biome.Category.PLAINS)
             event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_KABLOOM_BUSH);
+
+        if (event.getCategory() != Biome.Category.NETHER && event.getCategory() != Biome.Category.THEEND && event.getCategory() != Biome.Category.NONE)
+            event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_SLIME_FERN);
     }
 }

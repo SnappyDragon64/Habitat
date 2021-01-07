@@ -36,9 +36,19 @@ public class BGConfiguredFeatures {
                     .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
                     .chance(200);
 
+    public static final ConfiguredFeature<?, ?> PATCH_SLIME_FERN = BGFeatures.SLIME_CHUNK_RANDOM_PATCH_FEATURE.get().withConfiguration((new BlockClusterFeatureConfig.Builder(
+            new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()), // BlockStateProvider is not used by the Feature
+            new SimpleBlockPlacer()))
+            .xSpread(5)
+            .ySpread(5)
+            .zSpread(5)
+            .tries(100)
+            .build())
+            .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 40)));
 
     public static void registerConfiguredFeatures() {
         Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "rafflesia_patch", PATCH_RAFFLESIA);
         Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "kabloom_bush_patch", PATCH_KABLOOM_BUSH);
+        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "slime_fern_patch", PATCH_SLIME_FERN);
     }
 }
