@@ -5,13 +5,14 @@
   "item.bloom_and_gloom.kabloom_seeds": "Kabloom Seeds",
   "item.bloom_and_gloom.kabloom_fruit": "Kabloom Fruit",
 
-  "bloom_and_gloom.subtitle.block.rafflesiaSpew": "Rafflesia spews",
-  "bloom_and_gloom.subtitle.block.rafflesiaPop": "Rafflesia pops",
-  "bloom_and_gloom.subtitle.block.rafflesiaSlurp": "Rafflesia slurps",
-  "bloom_and_gloom.subtitle.block.kabloomBushRustle": "Kabloom bush rustles",
-  "bloom_and_gloom.subtitle.block.kabloomBushShear": "Shears defuse",
+  "bloom_and_gloom.subtitle.block.rafflesia.spew": "Rafflesia spews",
+  "bloom_and_gloom.subtitle.block.rafflesia.pop": "Rafflesia pops",
+  "bloom_and_gloom.subtitle.block.rafflesia.slurp": "Rafflesia slurps",
+  "bloom_and_gloom.subtitle.block.kabloom_bush.rustle": "Kabloom bush rustles",
+  "bloom_and_gloom.subtitle.block.kabloom_bush.shear": "Shears defuse",
+  "bloom_and_gloom.subtitle.block.slime_fern.drip": "Slime drips",
 
-  "bloom_and_gloom.subtitle.entity.kabloomFruitExplosion": "Kabloom",
+  "bloom_and_gloom.subtitle.entity.kabloom_fruit.explosion": "Kabloom",
 
   "death.attack.bloom_and_gloom.kabloom": "%1$s went kabloom",
 

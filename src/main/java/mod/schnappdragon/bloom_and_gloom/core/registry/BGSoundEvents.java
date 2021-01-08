@@ -17,6 +17,8 @@ public class BGSoundEvents {
     public static final RegistryObject<SoundEvent> BLOCK_KABLOOM_BUSH_RUSTLE = SOUND_EVENTS.register("block_kabloom_bush_rustle", () -> getSoundEvent("block_kabloom_bush_rustle"));
     public static final RegistryObject<SoundEvent> BLOCK_KABLOOM_BUSH_SHEAR = SOUND_EVENTS.register("block_kabloom_bush_shear", () -> getSoundEvent("block_kabloom_bush_shear"));
 
+    public static final RegistryObject<SoundEvent> BLOCK_SLIME_FERN_DROP = SOUND_EVENTS.register("block_slime_fern_drip", () -> getSoundEvent("block_slime_fern_drip"));
+
     public static final RegistryObject<SoundEvent> ENTITY_KABLOOM_FRUIT_EXPLODE = SOUND_EVENTS.register("entity_kabloom_fruit_explode", () -> getSoundEvent("entity_kabloom_fruit_explode"));
 
     private static SoundEvent getSoundEvent(String soundPath)

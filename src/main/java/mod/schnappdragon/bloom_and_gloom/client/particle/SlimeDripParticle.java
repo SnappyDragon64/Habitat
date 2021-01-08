@@ -1,6 +1,7 @@
 package mod.schnappdragon.bloom_and_gloom.client.particle;
 
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGParticleTypes;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
 import net.minecraft.client.particle.DripParticle;
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleFactory;
@@ -11,7 +12,6 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -62,9 +62,8 @@ public class SlimeDripParticle {
             if (this.onGround) {
                 this.setExpired();
                 this.world.addParticle(this.particleData, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
-                //this.world.playSound(this.posX + 0.5D, this.posY, this.posZ + 0.5D, SoundEvents.BLOCK_BEEHIVE_DROP, SoundCategory.BLOCKS, 0.3F + this.world.rand.nextFloat() * 2.0F / 3.0F, 1.0F, false);
+                this.world.playSound(this.posX + 0.5D, this.posY, this.posZ + 0.5D, BGSoundEvents.BLOCK_SLIME_FERN_DROP.get(), SoundCategory.BLOCKS, 0.3F + this.world.rand.nextFloat() * 2.0F / 3.0F, 1.0F, false);
             }
-
         }
     }
 
