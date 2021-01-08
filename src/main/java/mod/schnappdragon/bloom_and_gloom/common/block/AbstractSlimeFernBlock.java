@@ -16,10 +16,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.PlantType;
 
 import java.util.Random;
 
-public abstract class AbstractSlimeFernBlock extends Block implements IGrowable {
+public abstract class AbstractSlimeFernBlock extends Block implements IGrowable, IPlantable {
 
     public AbstractSlimeFernBlock(AbstractBlock.Properties properties) {
         super(properties);
@@ -82,6 +84,20 @@ public abstract class AbstractSlimeFernBlock extends Block implements IGrowable 
 
     public PushReaction getPushReaction(BlockState state) {
         return PushReaction.DESTROY;
+    }
+
+    /*
+     * Plant Methods
+     */
+
+    @Override
+    public BlockState getPlant(IBlockReader world, BlockPos pos) {
+        return getDefaultState();
+    }
+
+    @Override
+    public PlantType getPlantType(IBlockReader world, BlockPos pos) {
+        return PlantType.CAVE;
     }
 
     /*

@@ -195,11 +195,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
      */
 
     @Override
-    public BlockState getPlant(IBlockReader world, BlockPos pos) {
-        return getDefaultState();
-    }
-
-    @Override
     public PlantType getPlantType(IBlockReader world, BlockPos pos) {
         return PlantType.PLAINS;
     }

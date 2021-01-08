@@ -312,13 +312,8 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     }
 
     /*
-     * Plant Method
+     * Plant Methods
      */
-
-    @Override
-    public BlockState getPlant(IBlockReader world, BlockPos pos) {
-        return getDefaultState();
-    }
 
     @Override
     public PlantType getPlantType(IBlockReader world, BlockPos pos) {
