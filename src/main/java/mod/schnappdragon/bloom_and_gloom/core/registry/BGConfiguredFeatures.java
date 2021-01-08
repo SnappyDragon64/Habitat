@@ -39,10 +39,10 @@ public class BGConfiguredFeatures {
     public static final ConfiguredFeature<?, ?> PATCH_SLIME_FERN = BGFeatures.SLIME_CHUNK_RANDOM_PATCH_FEATURE.get().withConfiguration((new BlockClusterFeatureConfig.Builder(
             new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()), // BlockStateProvider is not used by the Feature
             new SimpleBlockPlacer()))
-            .xSpread(5)
+            .xSpread(4)
             .ySpread(5)
-            .zSpread(5)
-            .tries(100)
+            .zSpread(4)
+            .tries(64)
             .build())
             .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 40)));
 

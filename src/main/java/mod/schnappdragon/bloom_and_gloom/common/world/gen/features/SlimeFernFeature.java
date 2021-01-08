@@ -51,27 +51,6 @@ public class SlimeFernFeature extends Feature<BlockClusterFeatureConfig> {
                             break;
                         }
                     }
-                    /*
-                    if (reader.getBlockState(blockpos$mutable.down()).isSolidSide(reader, blockpos$mutable, Direction.UP)) {
-                        config.blockPlacer.place(reader, blockpos$mutable, BGBlocks.SLIME_FERN.get().getDefaultState(), rand);
-                        ++i;
-                    } else if (reader.getBlockState(blockpos$mutable.north()).isSolidSide(reader, blockpos$mutable, Direction.SOUTH)) {
-                        config.blockPlacer.place(reader, blockpos$mutable, BGBlocks.WALL_SLIME_FERN.get().getDefaultState().with(WallSlimeFernBlock.HORIZONTAL_FACING, Direction.SOUTH), rand);
-                        ++i;
-                    } else if (reader.getBlockState(blockpos$mutable.east()).isSolidSide(reader, blockpos$mutable, Direction.WEST)) {
-                        config.blockPlacer.place(reader, blockpos$mutable, BGBlocks.WALL_SLIME_FERN.get().getDefaultState().with(WallSlimeFernBlock.HORIZONTAL_FACING, Direction.WEST), rand);
-                        ++i;
-                    } else if (reader.getBlockState(blockpos$mutable.south()).isSolidSide(reader, blockpos$mutable, Direction.NORTH)) {
-                        config.blockPlacer.place(reader, blockpos$mutable, BGBlocks.WALL_SLIME_FERN.get().getDefaultState().with(WallSlimeFernBlock.HORIZONTAL_FACING, Direction.NORTH), rand);
-                        ++i;
-                    } else if (reader.getBlockState(blockpos$mutable.west()).isSolidSide(reader, blockpos$mutable, Direction.EAST)) {
-                        config.blockPlacer.place(reader, blockpos$mutable, BGBlocks.WALL_SLIME_FERN.get().getDefaultState().with(WallSlimeFernBlock.HORIZONTAL_FACING, Direction.EAST), rand);
-                        ++i;
-                    } else if (reader.getBlockState(blockpos$mutable.up()).isSolidSide(reader, blockpos$mutable, Direction.DOWN)) {
-                        config.blockPlacer.place(reader, blockpos$mutable, BGBlocks.SLIME_FERN.get().getDefaultState().with(SlimeFernBlock.ON_CEILING, true), rand);
-                        ++i;
-                    }
-                     */
                 }
             }
             return i > 0;
