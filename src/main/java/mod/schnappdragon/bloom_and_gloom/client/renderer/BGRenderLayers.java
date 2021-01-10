@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.ModList;
 
 @OnlyIn(Dist.CLIENT)
 public class BGRenderLayers {
@@ -14,5 +15,9 @@ public class BGRenderLayers {
         RenderTypeLookup.setRenderLayer(BGBlocks.KABLOOM_BUSH.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BGBlocks.SLIME_FERN.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BGBlocks.WALL_SLIME_FERN.get(), RenderType.getCutout());
+
+        RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_RAFFLESIA.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_KABLOOM_BUSH.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_SLIME_FERN.get(), RenderType.getCutout());
     }
 }
