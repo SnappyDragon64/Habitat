@@ -41,7 +41,7 @@ public abstract class AbstractSlimeFernBlock extends Block implements IGrowable 
         double Y = (double) pos.getY() + vector3d.y;
         double Z = (double) pos.getZ() + vector3d.z;
 
-        if (rand.nextBoolean())
+        if (rand.nextInt(10) == 0)
             worldIn.addParticle(BGParticleTypes.DRIPPING_SLIME.get(), X + rand.nextDouble() / 2.5D * (rand.nextBoolean() ? 1 : -1), Y - rand.nextDouble() / 5, Z + rand.nextDouble() / 2.5D * (rand.nextBoolean() ? 1 : -1), 0.0D, 0.0D, 0.0D);
     }
 
