@@ -20,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 public class BloomAndGloom {
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "bloom_and_gloom";
+    public static final boolean DEV = false;
 
     public BloomAndGloom() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
