@@ -341,7 +341,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     @Nullable
     @Override
     public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
-        return (((entity instanceof CreatureEntity) && !(entity instanceof MonsterEntity) && !(entity instanceof WaterMobEntity)) || (entity instanceof AbstractRaiderEntity) || (entity instanceof PiglinEntity) || (entity instanceof EndermanEntity)) ? PathNodeType.DAMAGE_OTHER : PathNodeType.WALKABLE;
+        return (entity instanceof CreatureEntity && !(entity instanceof MonsterEntity) || (entity instanceof AbstractRaiderEntity) || (entity instanceof PiglinEntity) || (entity instanceof EndermanEntity)) ? PathNodeType.DAMAGE_OTHER : PathNodeType.WALKABLE;
     }
 
     /*
