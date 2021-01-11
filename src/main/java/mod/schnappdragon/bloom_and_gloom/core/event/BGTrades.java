@@ -15,5 +15,6 @@ public class BGTrades {
     public static void addWanderingTraderTrades(WandererTradesEvent event) {
         event.getGenericTrades().add(new BasicTrade(3, new ItemStack(BGItems.RAFFLESIA_SEED.get(), 1), 12, 10, 1));
         event.getGenericTrades().add(new BasicTrade(3, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1), 12, 10, 1));
+        event.getGenericTrades().add(new BasicTrade(1, new ItemStack(BGItems.SLIME_FERN.get(), 1), 12, 10, 1));
     }
 }
