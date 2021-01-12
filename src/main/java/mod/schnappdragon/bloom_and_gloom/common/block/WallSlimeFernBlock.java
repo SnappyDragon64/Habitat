@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 public class WallSlimeFernBlock extends AbstractSlimeFernBlock {
-    private static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.makeCuboidShape(0.0D, 4.0D, 3.0D, 16.0D, 12.0D, 16.0D), Direction.SOUTH, Block.makeCuboidShape(0.0D, 4.0D, 0.0D, 16.0D, 12.0D, 13.0D), Direction.WEST, Block.makeCuboidShape(3.0D, 4.0D, 0.0D, 16.0D, 12.0D, 16.0D), Direction.EAST, Block.makeCuboidShape(0.0D, 4.0D, 0.0D, 13.0D, 12.0D, 16.0D)));
+    private static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.makeCuboidShape(0.0D, 2.0D, 1.0D, 16.0D, 14.0D, 16.0D), Direction.SOUTH, Block.makeCuboidShape(0.0D, 2.0D, 0.0D, 16.0D, 14.0D, 15.0D), Direction.WEST, Block.makeCuboidShape(1.0D, 2.0D, 0.0D, 16.0D, 14.0D, 16.0D), Direction.EAST, Block.makeCuboidShape(0.0D, 2.0D, 0.0D, 15.0D, 14.0D, 16.0D)));
 
     public static final DirectionProperty HORIZONTAL_FACING = HorizontalBlock.HORIZONTAL_FACING;
 
