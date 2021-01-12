@@ -148,7 +148,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
         if (tile instanceof RafflesiaTileEntity) {
             RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
             if ((rand.nextInt(128) == 0 && !state.get(ON_COOLDOWN) || state.get(POLLINATED)) && state.get(AGE) == 2) {
-                worldIn.addParticle(getParticle(rafflesia.Effects), X + rand.nextDouble() / 3.0D * (rand.nextBoolean() ? 1 : -1), (double) pos.getY() + (0.8D - rand.nextDouble()), Z + rand.nextDouble() / 3.0D * (rand.nextBoolean() ? 1 : -1), 0.0D, 0.05D, 0.0D);
+                worldIn.addParticle(getParticle(rafflesia.Effects), X + rand.nextDouble() / 3.0D * (rand.nextBoolean() ? 1 : -1), (double) pos.getY() + rand.nextDouble(), Z + rand.nextDouble() / 3.0D * (rand.nextBoolean() ? 1 : -1), 0.0D, 0.05D, 0.0D);
             }
         }
     }

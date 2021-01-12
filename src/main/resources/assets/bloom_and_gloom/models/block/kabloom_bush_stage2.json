@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "bloom_and_gloom:block/rafflesia_age_0"
+    "cross": "bloom_and_gloom:block/kabloom_bush_stage2"
   }
 }

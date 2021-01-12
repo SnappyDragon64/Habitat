@@ -1,6 +1,6 @@
 {
   "parent": "bloom_and_gloom:block/cooldown_rafflesia",
   "textures": {
-    "rafflesia": "bloom_and_gloom:block/suspicious_rafflesia_age_2"
+    "rafflesia": "bloom_and_gloom:block/suspicious_rafflesia_stage2"
   }
 }
