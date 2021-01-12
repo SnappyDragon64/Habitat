@@ -8,14 +8,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.item.BoatEntity;
 import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
@@ -104,7 +102,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity || entityIn instanceof BoatEntity || entityIn instanceof TNTEntity || entityIn instanceof AbstractMinecartEntity) {
+        if (entityIn instanceof LivingEntity || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity || entityIn instanceof BoatEntity || entityIn instanceof TNTEntity || entityIn instanceof AbstractMinecartEntity) {
             if (entityIn instanceof LivingEntity && state.get(AGE) > 1)
                 entityIn.setMotionMultiplier(state, new Vector3d(0.95F, 0.9D, 0.95F));
             if (state.get(AGE) == 7) {
@@ -191,7 +189,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     }
 
     /*
-     * Plant Methods
+     * Plant Method
      */
 
     @Override
@@ -220,6 +218,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     @Nullable
     @Override
     public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
-        return (entity instanceof BeeEntity) ? PathNodeType.OPEN : PathNodeType.DAMAGE_OTHER;
+        return state.get(AGE) > 1 ? PathNodeType.DAMAGE_OTHER : null;
     }
 }

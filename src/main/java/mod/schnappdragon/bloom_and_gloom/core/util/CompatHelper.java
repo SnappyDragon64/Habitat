@@ -14,8 +14,6 @@ public class CompatHelper {
     }
 
     public static <I extends IForgeRegistryEntry<? super I>> RegistryObject<I> registerCompat(String modid, Supplier<RegistryObject<I>> register) {
-        if (ModList.get().isLoaded(modid) || BloomAndGloom.DEV)
-            return register.get();
-        return null;
+        return ModList.get().isLoaded(modid) || BloomAndGloom.DEV ? register.get() : null;
     }
 }

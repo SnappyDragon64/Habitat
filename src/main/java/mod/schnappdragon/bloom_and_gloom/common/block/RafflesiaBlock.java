@@ -312,7 +312,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     }
 
     /*
-     * Plant Methods
+     * Plant Method
      */
 
     @Override
@@ -332,16 +332,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     @Override
     public int getFireSpreadSpeed(BlockState state, IBlockReader worldIn, BlockPos pos, Direction face) {
         return 60;
-    }
-
-    /*
-     * Pathfinding Method
-     */
-
-    @Nullable
-    @Override
-    public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
-        return (entity instanceof CreatureEntity && !(entity instanceof MonsterEntity) || (entity instanceof AbstractRaiderEntity) || (entity instanceof PiglinEntity) || (entity instanceof EndermanEntity)) ? PathNodeType.DAMAGE_OTHER : PathNodeType.WALKABLE;
     }
 
     /*
