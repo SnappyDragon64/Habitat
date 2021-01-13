@@ -18,6 +18,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.ShearsItem;
 import net.minecraft.item.ToolItem;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.state.IntegerProperty;
@@ -116,7 +117,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
         if (!(state.get(AGE) == 7) && player.getHeldItem(handIn).getItem() == Items.BONE_MEAL) {
             return ActionResultType.PASS;
         } else if (state.get(AGE) == 7) {
-            if (player.getHeldItem(handIn).getItem() == Items.SHEARS) {
+            if (player.getHeldItem(handIn).getItem() instanceof ShearsItem) {
                 if (!worldIn.isRemote) {
                     spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
                     player.getHeldItem(handIn).damageItem(1, player, (playerIn) -> {
@@ -139,7 +140,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
         ItemStack held = player.getHeldItemMainhand();
 
         if (state.get(AGE) == 7 && !player.abilities.isCreativeMode) {
-            if (held.getItem() != Items.SHEARS) {
+            if (!(held.getItem() instanceof ShearsItem)) {
                 if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, held) == 0 || !(held.getItem() instanceof ToolItem))
                     dropFruit(state, worldIn, pos, false);
             }
