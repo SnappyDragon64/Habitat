@@ -219,6 +219,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     @Nullable
     @Override
     public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
-        return state.get(AGE) > 1 ? PathNodeType.DAMAGE_OTHER : null;
+        return state.get(AGE) > 1 ? PathNodeType.DANGER_OTHER : null;
     }
 }
