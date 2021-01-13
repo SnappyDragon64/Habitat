@@ -10,7 +10,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = BloomAndGloom.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BGParticleManager {
     @SubscribeEvent(priority = EventPriority.LOWEST)
