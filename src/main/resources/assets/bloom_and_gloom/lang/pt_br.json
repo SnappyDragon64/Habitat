@@ -1,0 +1,24 @@
+{
+  "block.bloom_and_gloom.slime_fern": "Samambaia de Slime",
+
+  "item.bloom_and_gloom.rafflesia_seed": "Semente de Rafflesia",
+  "item.bloom_and_gloom.kabloom_seeds": "Sementes de Kabloom",
+  "item.bloom_and_gloom.kabloom_fruit": "Fruta de Kabloom",
+
+  "bloom_and_gloom.subtitle.block.rafflesia.spew": "Rafflesia vomita",
+  "bloom_and_gloom.subtitle.block.rafflesia.pop": "Rafflesia estoura",
+  "bloom_and_gloom.subtitle.block.rafflesia.slurp": "Rafflesia sorve",
+  "bloom_and_gloom.subtitle.block.kabloom_bush.rustle": "Kabloom farfalha",
+  "bloom_and_gloom.subtitle.block.kabloom_bush.shear": "Tesouras desarmam",
+  "bloom_and_gloom.subtitle.block.slime_fern.drip": "Slime pinga",
+
+  "bloom_and_gloom.subtitle.entity.kabloom_fruit.explosion": "Kabloom",
+
+  "death.attack.bloom_and_gloom.kabloom": "%1$s foi kabloom",
+
+  "bloom_and_gloom.advancements.husbandry.suspicious.title": "Suspeito...",
+  "bloom_and_gloom.advancements.husbandry.bloom_defused.title": "A Flor Foi Desarmada",
+
+  "bloom_and_gloom.advancements.husbandry.suspicious.description": "Dê ensopado suspeito a uma Rafflesia",
+  "bloom_and_gloom.advancements.husbandry.bloom_defused.description": "Corte um arbusto kabloom para colher os frutos"
+}
