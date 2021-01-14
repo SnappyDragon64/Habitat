@@ -8,6 +8,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.item.BoatEntity;
@@ -40,14 +41,7 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class KabloomBushBlock extends BushBlock implements IGrowable {
-    protected static final VoxelShape AGE_0_SHAPE = Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D);
-    protected static final VoxelShape AGE_1_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D);
-    protected static final VoxelShape AGE_2_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D);
-    protected static final VoxelShape AGE_3_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D);
-    protected static final VoxelShape AGE_4_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D);
-    protected static final VoxelShape AGE_5_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D);
-    protected static final VoxelShape AGE_6_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);
-    protected static final VoxelShape AGE_7_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D);
+    protected static final VoxelShape[] SHAPES = {Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D)};
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
@@ -73,24 +67,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     }
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch(state.get(AGE)) {
-            case 1:
-                return AGE_1_SHAPE;
-            case 2:
-                return AGE_2_SHAPE;
-            case 3:
-                return AGE_3_SHAPE;
-            case 4:
-                return AGE_4_SHAPE;
-            case 5:
-                return AGE_5_SHAPE;
-            case 6:
-                return AGE_6_SHAPE;
-            case 7:
-                return AGE_7_SHAPE;
-            default:
-                return AGE_0_SHAPE;
-        }
+        return SHAPES[state.get(AGE)];
     }
 
     public boolean propagatesSkylightDown(BlockState state, IBlockReader worldIn, BlockPos pos) {
@@ -103,7 +80,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn instanceof LivingEntity || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity || entityIn instanceof BoatEntity || entityIn instanceof TNTEntity || entityIn instanceof AbstractMinecartEntity) {
+        if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity || entityIn instanceof BoatEntity || entityIn instanceof TNTEntity || entityIn instanceof AbstractMinecartEntity) {
             if (entityIn instanceof LivingEntity && state.get(AGE) > 1)
                 entityIn.setMotionMultiplier(state, new Vector3d(0.95F, 0.9D, 0.95F));
             if (state.get(AGE) == 7) {
@@ -219,6 +196,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     @Nullable
     @Override
     public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
-        return state.get(AGE) > 1 ? PathNodeType.DANGER_OTHER : null;
+        return PathNodeType.DANGER_OTHER;
     }
 }

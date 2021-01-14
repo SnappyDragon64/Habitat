@@ -23,6 +23,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.RedstoneParticleData;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.*;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
@@ -47,6 +48,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
+import javax.annotation.Nullable;
 import java.awt.Color;
 import java.util.Collection;
 import java.util.Random;
@@ -339,5 +341,15 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     @Override
     public int getComparatorInputOverride(BlockState state, World worldIn, BlockPos pos) {
         return state.get(HAS_STEW) ?  1 : 0;
+    }
+
+    /*
+     * Pathfinding Method
+     */
+
+    @Nullable
+    @Override
+    public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
+        return PathNodeType.DANGER_OTHER;
     }
 }
