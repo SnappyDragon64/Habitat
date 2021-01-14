@@ -28,7 +28,7 @@ public class SlimeDripParticle {
         public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             DripParticle.Dripping dripparticle$dripping = new DripParticle.Dripping(worldIn, x, y, z, Fluids.EMPTY, BGParticleTypes.FALLING_SLIME.get());
             dripparticle$dripping.particleGravity *= 0.01F;
-            dripparticle$dripping.maxAge = 1;
+            dripparticle$dripping.setMaxAge(1);
             dripparticle$dripping.setColor(0.423F, 0.785F, 0.427F);
             dripparticle$dripping.selectSpriteRandomly(this.spriteWithAge);
             return dripparticle$dripping;
@@ -77,7 +77,7 @@ public class SlimeDripParticle {
 
         public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             DripParticle dripparticle = new DripParticle.Landing(worldIn, x, y, z, Fluids.EMPTY);
-            dripparticle.maxAge = (int)(128.0D / (Math.random() * 0.8D + 0.2D));
+            dripparticle.setMaxAge((int)(128.0D / (Math.random() * 0.8D + 0.2D)));
             dripparticle.setColor(0.443F, 0.675F, 0.427F);
             dripparticle.selectSpriteRandomly(this.spriteSet);
             return dripparticle;
