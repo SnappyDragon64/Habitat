@@ -350,6 +350,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     @Nullable
     @Override
     public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
-        return PathNodeType.DANGER_OTHER;
+        return state.get(AGE) > 0 ? PathNodeType.DANGER_OTHER : null;
     }
 }
