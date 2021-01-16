@@ -7,7 +7,6 @@ import net.minecraft.util.DamageSource;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 public class KabloomSeedsItem extends BlockNamedItem {
-
     public KabloomSeedsItem(Block blockIn, Properties properties) {
         super(blockIn, properties);
     }

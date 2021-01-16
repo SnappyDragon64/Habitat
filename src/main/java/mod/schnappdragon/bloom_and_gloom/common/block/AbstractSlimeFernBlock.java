@@ -20,7 +20,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Random;
 
 public abstract class AbstractSlimeFernBlock extends Block implements IGrowable {
-
     public AbstractSlimeFernBlock(AbstractBlock.Properties properties) {
         super(properties);
     }

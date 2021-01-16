@@ -11,7 +11,6 @@ import java.util.function.Supplier;
 
 @OnlyIn(Dist.CLIENT)
 public class BGEntityRenderers {
-
     public static void registerRenderers(Supplier<Minecraft> minecraft) {
         RenderingRegistry.registerEntityRenderingHandler(BGEntityTypes.KABLOOM_FRUIT.get(),
                 rendererManager -> new SpriteRenderer<>(rendererManager, minecraft.get().getItemRenderer()));
