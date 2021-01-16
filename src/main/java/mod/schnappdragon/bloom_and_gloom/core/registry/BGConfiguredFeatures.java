@@ -37,7 +37,7 @@ public class BGConfiguredFeatures {
                     .chance(200);
 
     public static final ConfiguredFeature<?, ?> PATCH_SLIME_FERN = BGFeatures.SLIME_CHUNK_RANDOM_PATCH_FEATURE.get().withConfiguration((new BlockClusterFeatureConfig.Builder(
-            new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()), // BlockStateProvider is not used by the Feature
+            new SimpleBlockStateProvider(BGBlocks.SLIME_FERN.get().getDefaultState()),
             new SimpleBlockPlacer()))
             .xSpread(4)
             .ySpread(5)
