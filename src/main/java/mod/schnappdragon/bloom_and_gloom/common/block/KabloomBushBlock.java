@@ -148,10 +148,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
             worldIn.setBlockState(pos, state.with(AGE, state.get(AGE) + 1), 2);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
-        else if (state.get(AGE) == 7 && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(10) == 0)) {
-            dropFruit(state, worldIn, pos, true);
-            ForgeHooks.onCropsGrowPost(worldIn, pos, state);
-        }
     }
 
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
