@@ -25,10 +25,6 @@
       "to": [18, 0, 20],
       "rotation": {"angle": -22.5, "axis": "x", "origin": [8, -1, 6]},
       "faces": {
-        "north": {"uv": [0, 0, 0, 0], "texture": "#0"},
-        "east": {"uv": [0, 0, 0, 0], "texture": "#0"},
-        "south": {"uv": [0, 0, 0, 0], "texture": "#0"},
-        "west": {"uv": [0, 0, 0, 0], "texture": "#0"},
         "up": {"uv": [14.66667, 12, 8, 0], "texture": "#0"},
         "down": {"uv": [14.66667, 0, 8, 12], "texture": "#0"}
       }
@@ -38,10 +34,6 @@
       "to": [20, 0, 18],
       "rotation": {"angle": 22.5, "axis": "z", "origin": [6, -1, 8]},
       "faces": {
-        "north": {"uv": [0, 0, 0, 0], "texture": "#0"},
-        "east": {"uv": [0, 0, 0, 0], "texture": "#0"},
-        "south": {"uv": [0, 0, 0, 0], "texture": "#0"},
-        "west": {"uv": [0, 0, 0, 0], "texture": "#0"},
         "up": {"uv": [14.66667, 12, 8, 0], "rotation": 270, "texture": "#0"},
         "down": {"uv": [8, 0, 14.66667, 12], "rotation": 90, "texture": "#0"}
       }
@@ -51,10 +43,6 @@
       "to": [18, 0, 8],
       "rotation": {"angle": 22.5, "axis": "x", "origin": [8, -1, 10]},
       "faces": {
-        "north": {"uv": [0, 0, 0, 0], "texture": "#0"},
-        "east": {"uv": [0, 0, 0, 0], "texture": "#0"},
-        "south": {"uv": [0, 0, 0, 0], "texture": "#0"},
-        "west": {"uv": [0, 0, 0, 0], "texture": "#0"},
         "up": {"uv": [14.66667, 12, 8, 0], "rotation": 180, "texture": "#0"},
         "down": {"uv": [14.66667, 0, 8, 12], "rotation": 180, "texture": "#0"}
       }
@@ -64,10 +52,6 @@
       "to": [8, 0, 18],
       "rotation": {"angle": -22.5, "axis": "z", "origin": [10, -1, 8]},
       "faces": {
-        "north": {"uv": [0, 0, 0, 0], "texture": "#0"},
-        "east": {"uv": [0, 0, 0, 0], "texture": "#0"},
-        "south": {"uv": [0, 0, 0, 0], "texture": "#0"},
-        "west": {"uv": [0, 0, 0, 0], "texture": "#0"},
         "up": {"uv": [14.66667, 12, 8, 0], "rotation": 90, "texture": "#0"},
         "down": {"uv": [14.66667, 0, 8, 12], "rotation": 270, "texture": "#0"}
       }
