@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/flower_pot_cross",
   "textures": {
-    "plant": "bloom_and_gloom:block/kabloom_bush_stage0"
+    "plant": "bloom_and_gloom:block/potted_kabloom_bush"
   }
 }
