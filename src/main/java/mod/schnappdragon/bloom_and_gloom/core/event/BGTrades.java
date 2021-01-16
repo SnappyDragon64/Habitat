@@ -10,7 +10,6 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BloomAndGloom.MOD_ID)
 public class BGTrades {
-
     @SubscribeEvent
     public static void addWanderingTraderTrades(WandererTradesEvent event) {
         event.getGenericTrades().add(new BasicTrade(3, new ItemStack(BGItems.RAFFLESIA_SEED.get(), 1), 12, 10, 1));

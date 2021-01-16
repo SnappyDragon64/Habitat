@@ -40,11 +40,11 @@ public class BloomAndGloom {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork((() -> {
+        event.enqueueWork(() -> {
             BGConfiguredFeatures.registerConfiguredFeatures();
             BGComposterChances.registerComposterChances();
             BGDispenserBehaviours.registerDispenserBehaviour();
-        }));
+        });
     }
 
     private void clientSetup(FMLClientSetupEvent event) {

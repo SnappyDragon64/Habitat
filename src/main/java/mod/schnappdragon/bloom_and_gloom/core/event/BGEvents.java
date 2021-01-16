@@ -11,9 +11,8 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BloomAndGloom.MOD_ID)
 public class BGEvents {
-
     @SubscribeEvent
-    public static void addGoalToBee(EntityJoinWorldEvent event) {
+    public static void addPollinationGoalToBee(EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
         if (entity.getType() == EntityType.BEE) {
             BeeEntity bee = (BeeEntity) entity;

@@ -10,7 +10,6 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BloomAndGloom.MOD_ID)
 public class BGGeneration {
-
     @SubscribeEvent
     public static void addFeaturesToBiomes(BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.Category.JUNGLE)
