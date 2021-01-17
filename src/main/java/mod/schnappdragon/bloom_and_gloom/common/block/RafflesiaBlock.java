@@ -12,7 +12,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.BoatEntity;
 import net.minecraft.entity.item.FallingBlockEntity;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -296,11 +295,8 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     }
 
     private void cooldownReset(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        if (state.get(POLLINATED)) {
-            ItemEntity item = new ItemEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, new ItemStack(BGItems.RAFFLESIA_SEED.get()));
-            item.setDefaultPickupDelay();
-            worldIn.addEntity(item);
-        }
+        if (state.get(POLLINATED))
+            spawnAsEntity(worldIn, pos, new ItemStack(BGItems.RAFFLESIA_SEED.get()));
 
         worldIn.setBlockState(pos, state.with(ON_COOLDOWN, false).with(POLLINATED, false));
         worldIn.playSound(null, pos, BGSoundEvents.BLOCK_RAFFLESIA_POP.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
