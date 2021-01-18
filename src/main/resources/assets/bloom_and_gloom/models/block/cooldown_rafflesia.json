@@ -3,8 +3,9 @@
   "ambientocclusion": false,
   "texture_size": [48, 16],
   "textures": {
-    "0": "#rafflesia",
-    "particle": "#0"
+    "stem": "#rafflesia",
+    "petal": "bloom_and_gloom:block/rafflesia_petal",
+    "particle": "#stem"
   },
   "elements": [
     {
@@ -12,12 +13,12 @@
       "to": [13, 2, 13],
       "rotation": {"angle": 0, "axis": "y", "origin": [8, -1, 8]},
       "faces": {
-        "north": {"uv": [3.33333, 12, 6.66667, 14], "texture": "#0"},
-        "east": {"uv": [0, 12, 3.33333, 14], "texture": "#0"},
-        "south": {"uv": [10, 12, 13.33333, 14], "texture": "#0"},
-        "west": {"uv": [6.66667, 12, 10, 14], "texture": "#0"},
-        "up": {"uv": [3.33333, 12, 0, 2], "texture": "#0"},
-        "down": {"uv": [6.66667, 2, 3.33333, 12], "texture": "#0"}
+        "north": {"uv": [3.33333, 12, 6.66667, 14], "texture": "#stem"},
+        "east": {"uv": [0, 12, 3.33333, 14], "texture": "#stem"},
+        "south": {"uv": [10, 12, 13.33333, 14], "texture": "#stem"},
+        "west": {"uv": [6.66667, 12, 10, 14], "texture": "#stem"},
+        "up": {"uv": [6.66667, 12, 3.33333, 2], "texture": "#stem"},
+        "down": {"uv": [10, 2, 6.66667, 12], "texture": "#stem"}
       }
     },
     {
@@ -25,8 +26,8 @@
       "to": [18, -2, 20],
       "rotation": {"angle": -22.5, "axis": "x", "origin": [8, -3, 6]},
       "faces": {
-        "up": {"uv": [14.66667, 8, 8, 0], "texture": "#0"},
-        "down": {"uv": [14.66667, 0, 8, 8], "texture": "#0"}
+        "up": {"uv": [6.66667, 12, 0, 4], "texture": "#petal"},
+        "down": {"uv": [6.66667, 4, 0, 12], "texture": "#petal"}
       }
     },
     {
@@ -34,8 +35,8 @@
       "to": [20, -2, 18],
       "rotation": {"angle": 22.5, "axis": "z", "origin": [6, -3, 8]},
       "faces": {
-        "up": {"uv": [14.66667, 8, 8, 0], "rotation": 270, "texture": "#0"},
-        "down": {"uv": [8, 0, 14.66667, 8], "rotation": 90, "texture": "#0"}
+        "up": {"uv": [6.66667, 12, 0, 4], "rotation": 270, "texture": "#petal"},
+        "down": {"uv": [0, 4, 6.66667, 12], "rotation": 90, "texture": "#petal"}
       }
     },
     {
@@ -43,8 +44,8 @@
       "to": [18, -2, 4],
       "rotation": {"angle": 22.5, "axis": "x", "origin": [8, -3, 10]},
       "faces": {
-        "up": {"uv": [14.66667, 8, 8, 0], "rotation": 180, "texture": "#0"},
-        "down": {"uv": [14.66667, 0, 8, 8], "rotation": 180, "texture": "#0"}
+        "up": {"uv": [6.66667, 12, 0, 4], "rotation": 180, "texture": "#petal"},
+        "down": {"uv": [6.66667, 4, 0, 12], "rotation": 180, "texture": "#petal"}
       }
     },
     {
@@ -52,16 +53,9 @@
       "to": [4, -2, 18],
       "rotation": {"angle": -22.5, "axis": "z", "origin": [10, -3, 8]},
       "faces": {
-        "up": {"uv": [14.66667, 8, 8, 0], "rotation": 90, "texture": "#0"},
-        "down": {"uv": [14.66667, 0, 8, 8], "rotation": 270, "texture": "#0"}
+        "up": {"uv": [6.66667, 12, 0, 4], "rotation": 90, "texture": "#petal"},
+        "down": {"uv": [6.66667, 4, 0, 12], "rotation": 270, "texture": "#petal"}
       }
-    }
-  ],
-  "groups": [
-    {
-      "name": "funny plant",
-      "origin": [15, 8, 10],
-      "children": [0, 1, 2, 3, 4]
     }
   ]
 }
