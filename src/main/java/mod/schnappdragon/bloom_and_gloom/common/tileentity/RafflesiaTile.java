@@ -11,10 +11,10 @@ import net.minecraft.world.World;
 
 import javax.annotation.*;
 
-public class RafflesiaTileEntity extends TileEntity {
+public class RafflesiaTile extends TileEntity {
     public ListNBT Effects = new ListNBT();
 
-    public RafflesiaTileEntity() {
+    public RafflesiaTile() {
         super(BGTileEntityTypes.RAFFLESIA.get());
         CompoundNBT tag = new CompoundNBT();
         tag.putByte("EffectId", (byte) 19);
