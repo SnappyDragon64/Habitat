@@ -273,7 +273,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
         else if (state.get(ON_COOLDOWN) && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(2) == 0)) {
-            cooldownReset(worldIn, random, pos, state);
+            cooldownReset(worldIn, pos, state);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
     }
@@ -288,13 +288,13 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
         if (state.get(ON_COOLDOWN) && state.get(AGE) == 2)
-            cooldownReset(worldIn, rand, pos, state);
+            cooldownReset(worldIn, pos, state);
         else {
             worldIn.setBlockState(pos, state.with(AGE, Math.min(2, state.get(AGE) + 1)), 2);
         }
     }
 
-    private void cooldownReset(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
+    private void cooldownReset(ServerWorld worldIn, BlockPos pos, BlockState state) {
         if (state.get(POLLINATED))
             spawnAsEntity(worldIn, pos, new ItemStack(BGItems.RAFFLESIA_SEED.get()));
 
