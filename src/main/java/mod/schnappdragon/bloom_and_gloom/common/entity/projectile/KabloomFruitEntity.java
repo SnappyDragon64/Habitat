@@ -93,7 +93,7 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
         for (Entity entity : this.world.getEntitiesWithinAABBExcludingEntity(null, this.getBoundingBox().grow(0.75D))) {
             boolean flag = false;
 
-            for(int i = 0; i < 3; ++i) {
+            for(int i = 0; i < 2; ++i) {
                 RayTraceResult raytraceresult = this.world.rayTraceBlocks(new RayTraceContext(vector3d, new Vector3d(entity.getPosX(), entity.getPosYHeight(0.5D * (double) i), entity.getPosZ()), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
                 if (raytraceresult.getType() == RayTraceResult.Type.MISS) {
                     flag = true;
@@ -104,21 +104,21 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
             if (flag) {
                 float dmg = 0;
                 if (!entity.isImmuneToExplosions()) {
-                    double d5 = entity.getPosX() - this.getPosX();
-                    double d7 = entity.getPosYEye() - this.getPosY();
-                    double d9 = entity.getPosZ() - this.getPosZ();
-                    double d13 = MathHelper.sqrt(d5 * d5 + d7 * d7 + d9 * d9);
-                    if (d13 != 0.0D) {
-                        d5 = d5 / d13;
-                        d7 = d7 / d13;
-                        d9 = d9 / d13;
-                        double d10 = (this.getDistance(entity) > 1) ? 0.25D : 0.5D;
-                        dmg = 2.0F + 4.0F * ((float) d10);
-                        double d11 = dmg;
+                    double dx = entity.getPosX() - this.getPosX();
+                    double dy = entity.getPosYEye() - this.getPosY();
+                    double dz = entity.getPosZ() - this.getPosZ();
+                    double dres = MathHelper.sqrt(dx * dx + dy * dy + dz * dz);
+                    if (dres != 0.0D) {
+                        dx = dx / dres;
+                        dy = dy / dres;
+                        dz = dz / dres;
+                        double df = this.getDistance(entity) > 1 ? 0.25D : 0.5D;
+                        dmg = 2.0F + 4.0F * ((float) df);
+                        double dred = df;
                         if (entity instanceof LivingEntity) {
-                            d11 = ProtectionEnchantment.getBlastDamageReduction((LivingEntity) entity, d10);
+                            dred = ProtectionEnchantment.getBlastDamageReduction((LivingEntity) entity, df);
                         }
-                        entity.setMotion(entity.getMotion().add(d5 * d11, d7 * d11, d9 * d11));
+                        entity.setMotion(entity.getMotion().add(dx * dred, dy * dred, dz * dred));
                     }
                 }
 
