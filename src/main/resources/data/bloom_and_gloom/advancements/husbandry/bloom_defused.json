@@ -34,10 +34,5 @@
     [
       "bloom_defused"
     ]
-  ],
-  "rewards": {
-    "recipes": [
-      "bloom_and_gloom:kabloom_seeds"
-    ]
-  }
+  ]
 }

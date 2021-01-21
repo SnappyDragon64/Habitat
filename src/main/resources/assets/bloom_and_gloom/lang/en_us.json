@@ -4,6 +4,7 @@
   "item.bloom_and_gloom.rafflesia_seed": "Rafflesia Seed",
   "item.bloom_and_gloom.kabloom_seeds": "Kabloom Seeds",
   "item.bloom_and_gloom.kabloom_fruit": "Kabloom Fruit",
+  "item.bloom_and_gloom.cured_kabloom_fruit": "Cured Kabloom Fruit",
 
   "bloom_and_gloom.subtitle.block.rafflesia.spew": "Rafflesia spews",
   "bloom_and_gloom.subtitle.block.rafflesia.pop": "Rafflesia pops",
@@ -15,6 +16,8 @@
   "bloom_and_gloom.subtitle.entity.kabloom_fruit.explosion": "Kabloom",
 
   "death.attack.bloom_and_gloom.kabloom": "%1$s went kabloom",
+
+  "effect.bloom_and_gloom.blast_resistance": "Blast Resistance",
 
   "bloom_and_gloom.advancements.husbandry.suspicious.title": "Suspicious...",
   "bloom_and_gloom.advancements.husbandry.bloom_defused.title": "The Bloom Has Been Defused",

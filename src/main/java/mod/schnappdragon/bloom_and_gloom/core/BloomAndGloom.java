@@ -33,6 +33,7 @@ public class BloomAndGloom {
         BGTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
         BGSoundEvents.SOUND_EVENTS.register(modEventBus);
         BGEntityTypes.ENTITY_TYPES.register(modEventBus);
+        BGEffects.EFFECTS.register(modEventBus);
         BGFeatures.FEATURES.register(modEventBus);
         BGParticleTypes.PARTICLE_TYPES.register(modEventBus);
 
