@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -118,7 +119,17 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
                         if (entity instanceof LivingEntity) {
                             dred = ProtectionEnchantment.getBlastDamageReduction((LivingEntity) entity, df);
                         }
-                        entity.setMotion(entity.getMotion().add(dx * dred, dy * dred, dz * dred));
+
+                        boolean knockback = true;
+                        if (entity instanceof PlayerEntity) {
+                            PlayerEntity playerentity = (PlayerEntity)entity;
+                            if (playerentity.isSpectator() || (playerentity.isCreative() && playerentity.abilities.isFlying)) {
+                                knockback = false;
+                            }
+                        }
+
+                        if (knockback)
+                            entity.setMotion(entity.getMotion().add(dx * dred, dy * dred, dz * dred));
                     }
                 }
 
