@@ -48,7 +48,7 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
 
             for(int i = 0; i < 8; ++i) {
                 this.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, this.getItem()), this.getPosX(), this.getPosY(), this.getPosZ(), (this.rand.nextFloat() - 0.5D) * 0.08D, (this.rand.nextFloat() - 0.5D) * 0.8D, (this.rand.nextFloat() - 0.5D) * 0.08D);
-                this.world.addParticle(new RedstoneParticleData(0.50F, 0.8F, 0.53F, 1.0F), this.getPosX() + this.rand.nextDouble() / 2.0D * (rand.nextBoolean() ? 1 : -1), this.getPosY() + this.rand.nextDouble() / 2.0D * (rand.nextBoolean() ? 1 : -1), this.getPosZ() + this.rand.nextDouble() / 2.0D * (rand.nextBoolean() ? 1 : -1), 0.5D, 0.0D, 0.0D);
+                this.world.addParticle(new RedstoneParticleData(0.5F, 0.8F, 0.53F, 1.0F), this.getPosX() + this.rand.nextDouble() / 2.0D * (rand.nextBoolean() ? 1 : -1), this.getPosY() + this.rand.nextDouble() / 2.0D * (rand.nextBoolean() ? 1 : -1), this.getPosZ() + this.rand.nextDouble() / 2.0D * (rand.nextBoolean() ? 1 : -1), 0.5D, 0.0D, 0.0D);
             }
 
             this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 1.0D, 0.0D, 0.0D);
