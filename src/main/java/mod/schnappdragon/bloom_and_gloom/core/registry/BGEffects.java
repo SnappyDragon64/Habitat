@@ -11,6 +11,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class BGEffects {
     public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, BloomAndGloom.MOD_ID);
 
-    public static final RegistryObject<Effect> BLAST_RESISTANCE = EFFECTS.register("blast_resistance",
+    public static final RegistryObject<Effect> BLAST_ENDURANCE = EFFECTS.register("blast_endurance",
             () -> new BGEffect(EffectType.BENEFICIAL, 8440968));
 }

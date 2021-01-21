@@ -38,8 +38,8 @@ public class BGEvents {
 
     @SubscribeEvent
     public static void reduceExplosionDamage(LivingDamageEvent event) {
-        if (event.getEntityLiving().isPotionActive(BGEffects.BLAST_RESISTANCE.get()) && event.getSource().isExplosion()) {
-            int lvl = Math.min(event.getEntityLiving().getActivePotionEffect(BGEffects.BLAST_RESISTANCE.get()).getAmplifier(), 11);
+        if (event.getEntityLiving().isPotionActive(BGEffects.BLAST_ENDURANCE.get()) && event.getSource().isExplosion()) {
+            int lvl = Math.min(event.getEntityLiving().getActivePotionEffect(BGEffects.BLAST_ENDURANCE.get()).getAmplifier(), 11);
             float dmg = MathHelper.floor(event.getAmount() * (0.88F - 0.08F * lvl));
             int res = Math.round(event.getAmount() - dmg);
 
