@@ -114,7 +114,7 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
                         dy = dy / dres;
                         dz = dz / dres;
                         double df = this.getDistance(entity) > 1 ? 0.25D : 0.5D;
-                        dmg = 2.0F + 4.0F * ((float) df);
+                        dmg = 4.0F + 4.0F * ((float) df);
                         double dred = df;
                         if (entity instanceof LivingEntity) {
                             dred = ProtectionEnchantment.getBlastDamageReduction((LivingEntity) entity, df);
