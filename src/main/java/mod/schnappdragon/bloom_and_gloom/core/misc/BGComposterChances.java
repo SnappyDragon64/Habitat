@@ -8,8 +8,9 @@ public class BGComposterChances {
         ComposterBlock.CHANCES.put(BGItems.RAFFLESIA_SEED.get(), 0.3F);
 
         ComposterBlock.CHANCES.put(BGItems.KABLOOM_SEEDS.get(), 0.3F);
-        ComposterBlock.CHANCES.put(BGItems.KABLOOM_SEEDS.get(), 0.65F);
+        ComposterBlock.CHANCES.put(BGItems.KABLOOM_FRUIT.get(), 0.65F);
+        ComposterBlock.CHANCES.put(BGItems.CURED_KABLOOM_FRUIT.get(), 0.65F);
 
-        ComposterBlock.CHANCES.put(BGItems.SLIME_FERN.get(), 0.85F);
+        ComposterBlock.CHANCES.put(BGItems.SLIME_FERN.get(), 0.65F);
     }
 }
