@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "bloom_and_gloom:cured_kabloom_fruit"
+      "bloom_and_gloom:sugared_kabloom_fruit"
     ]
   },
   "criteria": {
@@ -15,11 +15,18 @@
           }
         ]
       }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloom_and_gloom:sugared_kabloom_fruit"
+      }
     }
   },
   "requirements": [
     [
-      "has_kabloom_fruit"
+      "has_kabloom_fruit",
+      "has_the_recipe"
     ]
   ]
 }
