@@ -44,7 +44,8 @@ public class BGConfiguredFeatures {
             .zSpread(4)
             .tries(64)
             .build())
-            .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 40)));
+            .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 40)))
+            .chance(3);
 
     public static void registerConfiguredFeatures() {
         Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "rafflesia_patch", PATCH_RAFFLESIA);
