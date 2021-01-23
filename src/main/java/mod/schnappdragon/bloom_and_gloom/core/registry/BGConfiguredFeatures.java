@@ -36,7 +36,7 @@ public class BGConfiguredFeatures {
                     .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
                     .chance(200);
 
-    public static final ConfiguredFeature<?, ?> PATCH_SLIME_FERN = BGFeatures.SLIME_CHUNK_RANDOM_PATCH_FEATURE.get().withConfiguration((new BlockClusterFeatureConfig.Builder(
+    public static final ConfiguredFeature<?, ?> PATCH_SLIME_FERN = BGFeatures.SLIME_FERN_FEATURE.get().withConfiguration((new BlockClusterFeatureConfig.Builder(
             new SimpleBlockStateProvider(BGBlocks.SLIME_FERN.get().getDefaultState()),
             new SimpleBlockPlacer()))
             .xSpread(4)
