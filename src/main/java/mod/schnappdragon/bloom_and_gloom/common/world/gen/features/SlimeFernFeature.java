@@ -39,10 +39,12 @@ public class SlimeFernFeature extends Feature<BlockClusterFeatureConfig> {
                     for (Direction dir : directions) {
                         if (reader.getBlockState(blockpos$mutable.offset(dir)).isSolidSide(reader, blockpos$mutable, dir.getOpposite())) {
                             BlockState state = config.stateProvider.getBlockState(rand, blockpos$mutable);
-                            if (dir == Direction.UP)
-                                state = state.with(SlimeFernBlock.ON_CEILING, true);
-                            else if (dir != Direction.DOWN)
-                                state = BGBlocks.WALL_SLIME_FERN.get().getDefaultState().with(WallSlimeFernBlock.HORIZONTAL_FACING, dir.getOpposite());
+                            if (state.getBlock() == BGBlocks.SLIME_FERN.get()) {
+                                if (dir == Direction.UP)
+                                    state = state.with(SlimeFernBlock.ON_CEILING, true);
+                                else if (dir != Direction.DOWN)
+                                    state = BGBlocks.WALL_SLIME_FERN.get().getDefaultState().with(WallSlimeFernBlock.HORIZONTAL_FACING, dir.getOpposite());
+                            }
 
                             config.blockPlacer.place(reader, blockpos$mutable, state, rand);
                             ++i;
