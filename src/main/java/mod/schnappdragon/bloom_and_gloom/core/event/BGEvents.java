@@ -44,7 +44,7 @@ public class BGEvents {
 
             int lvl = Math.min(livingEntity.getActivePotionEffect(BGEffects.BLAST_ENDURANCE.get()).getAmplifier(), 11);
             float dmg = MathHelper.floor(event.getAmount() * (0.88F - 0.08F * lvl));
-            int res = Math.round(event.getAmount() - dmg);
+            int res = (int) (event.getAmount() - dmg);
 
             event.setAmount(dmg);
 
