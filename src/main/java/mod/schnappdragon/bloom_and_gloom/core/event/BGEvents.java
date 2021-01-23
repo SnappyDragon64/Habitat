@@ -33,27 +33,25 @@ public class BGEvents {
     }
 
     /*
-     * Used to reduce explosion damage if livingentity has blast resistance.
+     * Used to reduce explosion damage if livingentity has blast endurance.
      */
 
     @SubscribeEvent
     public static void reduceExplosionDamage(LivingDamageEvent event) {
         if (event.getEntityLiving().isPotionActive(BGEffects.BLAST_ENDURANCE.get()) && event.getSource().isExplosion()) {
-            int lvl = Math.min(event.getEntityLiving().getActivePotionEffect(BGEffects.BLAST_ENDURANCE.get()).getAmplifier(), 11);
+            LivingEntity livingEntity = event.getEntityLiving();
+            DamageSource source = event.getSource();
+
+            int lvl = Math.min(livingEntity.getActivePotionEffect(BGEffects.BLAST_ENDURANCE.get()).getAmplifier(), 11);
             float dmg = MathHelper.floor(event.getAmount() * (0.88F - 0.08F * lvl));
             int res = Math.round(event.getAmount() - dmg);
 
-            if (res > 0) {
-                event.setAmount(dmg);
+            event.setAmount(dmg);
 
-                LivingEntity livingEntity = event.getEntityLiving();
-                DamageSource source = event.getSource();
-
-                if (livingEntity instanceof ServerPlayerEntity) {
-                    ((ServerPlayerEntity) livingEntity).addStat(Stats.DAMAGE_RESISTED, res * 10);
-                } else if (source.getTrueSource() instanceof ServerPlayerEntity) {
-                    ((ServerPlayerEntity) source.getTrueSource()).addStat(Stats.DAMAGE_DEALT_RESISTED, res * 10);
-                }
+            if (livingEntity instanceof ServerPlayerEntity) {
+                ((ServerPlayerEntity) livingEntity).addStat(Stats.DAMAGE_RESISTED, res * 10);
+            } else if (source.getTrueSource() instanceof ServerPlayerEntity) {
+                ((ServerPlayerEntity) source.getTrueSource()).addStat(Stats.DAMAGE_DEALT_RESISTED, res * 10);
             }
         }
     }
