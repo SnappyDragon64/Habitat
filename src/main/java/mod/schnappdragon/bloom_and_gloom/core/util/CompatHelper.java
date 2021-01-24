@@ -8,12 +8,16 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import java.util.function.Supplier;
 
 public class CompatHelper {
+    private static boolean modLoadedOrDev(String modid) {
+        return ModList.get().isLoaded(modid) || BloomAndGloom.DEV;
+    }
+
     public static void registerCompat(String modid, Runnable register) {
-        if (ModList.get().isLoaded(modid) || BloomAndGloom.DEV)
+        if (modLoadedOrDev(modid))
             register.run();
     }
 
     public static <I extends IForgeRegistryEntry<? super I>> RegistryObject<I> registerCompat(String modid, Supplier<RegistryObject<I>> register) {
-        return ModList.get().isLoaded(modid) || BloomAndGloom.DEV ? register.get() : null;
+        return modLoadedOrDev(modid) ? register.get() : null;
     }
 }

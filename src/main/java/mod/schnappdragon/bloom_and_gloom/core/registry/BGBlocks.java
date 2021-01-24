@@ -20,9 +20,8 @@ public class BGBlocks {
 
     public static final RegistryObject<Block> RAFFLESIA = BLOCKS.register("rafflesia", RafflesiaBlock::new);
     public static final RegistryObject<Block> KABLOOM_BUSH = BLOCKS.register("kabloom_bush", KabloomBushBlock::new);
-
-    public static final RegistryObject<Block> SLIME_FERN = BLOCKS.register("slime_fern", () -> new SlimeFernBlock(AbstractBlock.Properties.create(Material.PLANTS).zeroHardnessAndResistance().sound(SoundType.PLANT).doesNotBlockMovement().notSolid()));
-    public static final RegistryObject<Block> WALL_SLIME_FERN = BLOCKS.register("wall_slime_fern", () -> new WallSlimeFernBlock(AbstractBlock.Properties.create(Material.PLANTS).zeroHardnessAndResistance().sound(SoundType.PLANT).doesNotBlockMovement().notSolid()));
+    public static final RegistryObject<Block> SLIME_FERN = BLOCKS.register("slime_fern", SlimeFernBlock::new);
+    public static final RegistryObject<Block> WALL_SLIME_FERN = BLOCKS.register("wall_slime_fern", WallSlimeFernBlock::new);
 
     public static final RegistryObject<Block> POTTED_RAFFLESIA = CompatHelper.registerCompat("quark", () -> BLOCKS.register("potted_rafflesia", () -> new FlowerPotBlock(RAFFLESIA.get(), AbstractBlock.Properties.create(Material.MISCELLANEOUS).zeroHardnessAndResistance().notSolid())));
     public static final RegistryObject<Block> POTTED_KABLOOM_BUSH = CompatHelper.registerCompat("quark", () -> BLOCKS.register("potted_kabloom_bush", () -> new FlowerPotBlock(KABLOOM_BUSH.get(), AbstractBlock.Properties.create(Material.MISCELLANEOUS).zeroHardnessAndResistance().notSolid())));

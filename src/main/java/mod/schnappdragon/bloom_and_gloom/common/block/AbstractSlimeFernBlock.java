@@ -2,6 +2,7 @@ package mod.schnappdragon.bloom_and_gloom.common.block;
 
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGParticleTypes;
 import net.minecraft.block.*;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -20,8 +21,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Random;
 
 public abstract class AbstractSlimeFernBlock extends Block implements IGrowable {
-    public AbstractSlimeFernBlock(AbstractBlock.Properties properties) {
-        super(properties);
+    public AbstractSlimeFernBlock() {
+        super(AbstractBlock.Properties
+                .create(Material.PLANTS)
+                .zeroHardnessAndResistance()
+                .sound(SoundType.PLANT)
+                .doesNotBlockMovement()
+                .notSolid());
     }
 
     public boolean propagatesSkylightDown(BlockState state, IBlockReader worldIn, BlockPos pos) {
