@@ -1,6 +1,27 @@
 {
-  "parent": "minecraft:block/coral_wall_fan",
+  "ambientocclusion": false,
   "textures": {
-    "fan": "bloom_and_gloom:block/slime_fern"
-  }
+    "particle": "bloom_and_gloom:block/slime_fern",
+    "fern": "bloom_and_gloom:block/slime_fern"
+  },
+  "elements": [
+    {   "from": [ 0, 8, 0 ],
+      "to": [ 16, 8, 16 ],
+      "rotation": { "origin": [ 8, 8, 14 ], "axis": "x", "angle": 22.5, "rescale": true },
+      "shade": false,
+      "faces": {
+        "up": { "uv": [ 0, 0, 16, 16 ], "texture": "#fern" },
+        "down": { "uv": [ 16, 16, 0, 0 ], "texture": "#fern" }
+      }
+    },
+    {   "from": [ 0, 8, 0 ],
+      "to": [ 16, 8, 16 ],
+      "rotation": { "origin": [ 8, 8, 14 ], "axis": "x", "angle": -22.5, "rescale": true },
+      "shade": false,
+      "faces": {
+        "up": { "uv": [ 0, 0, 16, 16 ], "texture": "#fern" },
+        "down": { "uv": [ 16, 16, 0, 0 ], "texture": "#fern" }
+      }
+    }
+  ]
 }

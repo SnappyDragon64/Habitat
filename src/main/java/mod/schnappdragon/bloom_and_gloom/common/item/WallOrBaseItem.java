@@ -23,20 +23,20 @@ public class WallOrBaseItem extends BlockItem {
 
     @Nullable
     protected BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState blockstate = this.wallBlock.getStateForPlacement(context);
-        BlockState blockstate1 = null;
-        IWorldReader iworldreader = context.getWorld();
-        BlockPos blockpos = context.getPos();
+        BlockState state = this.wallBlock.getStateForPlacement(context);
+        BlockState state1 = null;
+        IWorldReader world = context.getWorld();
+        BlockPos pos = context.getPos();
 
-        for(Direction direction : context.getNearestLookingDirections()) {
-            BlockState blockstate2 = direction == Direction.DOWN || direction == Direction.UP ? this.getBlock().getStateForPlacement(context) : blockstate;
-            if (blockstate2 != null && blockstate2.isValidPosition(iworldreader, blockpos)) {
-                blockstate1 = blockstate2;
+        for(Direction dir : context.getNearestLookingDirections()) {
+            BlockState state2 = dir == Direction.DOWN || dir == Direction.UP ? this.getBlock().getStateForPlacement(context) : state;
+            if (state2 != null && state2.isValidPosition(world, pos)) {
+                state1 = state2;
                 break;
             }
         }
 
-        return blockstate1 != null && iworldreader.placedBlockCollides(blockstate1, blockpos, ISelectionContext.dummy()) ? blockstate1 : null;
+        return state1 != null && world.placedBlockCollides(state1, pos, ISelectionContext.dummy()) ? state1 : null;
     }
 
     public void addToBlockToItemMap(Map<Block, Item> blockToItemMap, Item itemIn) {

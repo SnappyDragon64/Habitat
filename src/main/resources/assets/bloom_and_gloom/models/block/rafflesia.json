@@ -1,11 +1,10 @@
 {
   "credit": "Made with Blockbench",
   "ambientocclusion": false,
-  "texture_size": [48, 16],
   "textures": {
-    "stem": "#rafflesia",
     "petal": "bloom_and_gloom:block/rafflesia_petal",
-    "particle": "#stem"
+    "stem": "#rafflesia",
+    "particle": "#rafflesia"
   },
   "elements": [
     {
@@ -26,8 +25,8 @@
       "to": [18, 0, 20],
       "rotation": {"angle": -22.5, "axis": "x", "origin": [8, -1, 6]},
       "faces": {
-        "up": {"uv": [6.66667, 16, 0, 4], "texture": "#petal"},
-        "down": {"uv": [6.66667, 4, 0, 16], "texture": "#petal"}
+        "up": {"uv": [10, 16, 0, 4], "texture": "#petal"},
+        "down": {"uv": [10, 4, 0, 16], "texture": "#petal"}
       }
     },
     {
@@ -35,8 +34,8 @@
       "to": [20, 0, 18],
       "rotation": {"angle": 22.5, "axis": "z", "origin": [6, -1, 8]},
       "faces": {
-        "up": {"uv": [6.66667, 16, 0, 4], "rotation": 270, "texture": "#petal"},
-        "down": {"uv": [0, 4, 6.66667, 16], "rotation": 90, "texture": "#petal"}
+        "up": {"uv": [10, 16, 0, 4], "rotation": 270, "texture": "#petal"},
+        "down": {"uv": [0, 4, 10, 16], "rotation": 90, "texture": "#petal"}
       }
     },
     {
@@ -44,8 +43,8 @@
       "to": [18, 0, 8],
       "rotation": {"angle": 22.5, "axis": "x", "origin": [8, -1, 10]},
       "faces": {
-        "up": {"uv": [6.66667, 16, 0, 4], "rotation": 180, "texture": "#petal"},
-        "down": {"uv": [6.66667, 4, 0, 16], "rotation": 180, "texture": "#petal"}
+        "up": {"uv": [10, 16, 0, 4], "rotation": 180, "texture": "#petal"},
+        "down": {"uv": [10, 4, 0, 16], "rotation": 180, "texture": "#petal"}
       }
     },
     {
@@ -53,8 +52,8 @@
       "to": [8, 0, 18],
       "rotation": {"angle": -22.5, "axis": "z", "origin": [10, -1, 8]},
       "faces": {
-        "up": {"uv": [6.66667, 16, 0, 4], "rotation": 90, "texture": "#petal"},
-        "down": {"uv": [6.66667, 4, 0, 16], "rotation": 270, "texture": "#petal"}
+        "up": {"uv": [10, 16, 0, 4], "rotation": 90, "texture": "#petal"},
+        "down": {"uv": [10, 4, 0, 16], "rotation": 270, "texture": "#petal"}
       }
     }
   ]

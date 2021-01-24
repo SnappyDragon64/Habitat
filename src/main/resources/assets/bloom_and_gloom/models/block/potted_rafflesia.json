@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"ambientocclusion": false,
 	"textures": {
-		"plant": "bloom_and_gloom:block/potted_rafflesia",
 		"particle": "block/flower_pot",
-		"flowerpot": "block/flower_pot"
+		"flowerpot": "block/flower_pot",
+		"plant": "bloom_and_gloom:block/potted_rafflesia"
 	},
 	"elements": [
 		{
