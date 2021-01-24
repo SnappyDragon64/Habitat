@@ -43,25 +43,21 @@ public class WallSlimeFernBlock extends AbstractSlimeFernBlock {
      */
 
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        Direction direction = state.get(HORIZONTAL_FACING);
-        BlockPos blockpos = pos.offset(direction.getOpposite());
-        BlockState blockstate = worldIn.getBlockState(blockpos);
-        return blockstate.isSolidSide(worldIn, blockpos, direction);
+        Direction dir = state.get(HORIZONTAL_FACING);
+        BlockPos pos1 = pos.offset(dir.getOpposite());
+        BlockState state1 = worldIn.getBlockState(pos1);
+        return state1.isSolidSide(worldIn, pos1, dir);
     }
 
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState blockstate = this.getDefaultState();
-        IWorldReader iworldreader = context.getWorld();
-        BlockPos blockpos = context.getPos();
-        Direction[] adirection = context.getNearestLookingDirections();
+        BlockState state = this.getDefaultState();
 
-        for(Direction direction : adirection) {
-            if (direction.getAxis().isHorizontal()) {
-                Direction direction1 = direction.getOpposite();
-                blockstate = blockstate.with(HORIZONTAL_FACING, direction1);
-                if (blockstate.isValidPosition(iworldreader, blockpos)) {
-                    return blockstate;
+        for(Direction dir : context.getNearestLookingDirections()) {
+            if (dir.getAxis().isHorizontal()) {
+                state = state.with(HORIZONTAL_FACING, dir.getOpposite());
+                if (state.isValidPosition(context.getWorld(), context.getPos())) {
+                    return state;
                 }
             }
         }

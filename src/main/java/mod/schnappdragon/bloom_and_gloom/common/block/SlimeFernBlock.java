@@ -40,9 +40,9 @@ public class SlimeFernBlock extends AbstractSlimeFernBlock {
 
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        for(Direction direction : context.getNearestLookingDirections()) {
-            if (direction.getAxis() == Direction.Axis.Y) {
-                return this.getDefaultState().with(ON_CEILING, (direction == Direction.UP));
+        for(Direction dir : context.getNearestLookingDirections()) {
+            if (dir.getAxis() == Direction.Axis.Y) {
+                return this.getDefaultState().with(ON_CEILING, (dir == Direction.UP));
             }
         }
         return null;
@@ -53,9 +53,9 @@ public class SlimeFernBlock extends AbstractSlimeFernBlock {
     }
 
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        Direction direction = getBlockConnected(state).getOpposite();
-        BlockState blockState = worldIn.getBlockState(pos.offset(direction));
-        return blockState.isSolidSide(worldIn, pos.offset(direction), direction.getOpposite());
+        Direction dir = getBlockConnected(state).getOpposite();
+        BlockState state1 = worldIn.getBlockState(pos.offset(dir));
+        return state1.isSolidSide(worldIn, pos.offset(dir), dir.getOpposite());
     }
 
     protected static Direction getBlockConnected(BlockState state) {
