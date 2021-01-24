@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -47,10 +46,8 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
         if (id == 3) {
             this.world.playSound(this.getPosX(), this.getPosY(), this.getPosZ(), BGSoundEvents.ENTITY_KABLOOM_FRUIT_EXPLODE.get(), SoundCategory.PLAYERS, 1.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F), true);
 
-            for(int i = 0; i < 8; ++i) {
+            for(int i = 0; i < 8; ++i)
                 this.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, this.getItem()), this.getPosX(), this.getPosY(), this.getPosZ(), (this.rand.nextFloat() - 0.5D) * 0.08D, (this.rand.nextFloat() - 0.5D) * 0.8D, (this.rand.nextFloat() - 0.5D) * 0.08D);
-                this.world.addParticle(new RedstoneParticleData(0.5F, 0.8F, 0.53F, 1.0F), this.getPosX() + this.rand.nextDouble() / 2.0D * (rand.nextBoolean() ? 1 : -1), this.getPosY() + this.rand.nextDouble() / 2.0D * (rand.nextBoolean() ? 1 : -1), this.getPosZ() + this.rand.nextDouble() / 2.0D * (rand.nextBoolean() ? 1 : -1), 0.5D, 0.0D, 0.0D);
-            }
 
             this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 1.0D, 0.0D, 0.0D);
         }
