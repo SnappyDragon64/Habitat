@@ -9,7 +9,8 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class RafflesiaTileEntity extends TileEntity {
     public ListNBT Effects = new ListNBT();

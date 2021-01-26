@@ -1,7 +1,9 @@
 package mod.schnappdragon.bloom_and_gloom.common.block;
 
 import mod.schnappdragon.bloom_and_gloom.common.state.properties.BGBlockStateProperties;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;

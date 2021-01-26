@@ -2,7 +2,8 @@ package mod.schnappdragon.bloom_and_gloom.common.entity.ai.goal;
 
 import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.state.IntegerProperty;
