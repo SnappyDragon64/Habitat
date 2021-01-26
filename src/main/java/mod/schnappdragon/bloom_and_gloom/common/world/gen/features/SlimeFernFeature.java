@@ -25,12 +25,12 @@ public class SlimeFernFeature extends Feature<BlockClusterFeatureConfig> {
         ChunkPos chunkPos = new ChunkPos(pos);
         if (SharedSeedRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, reader.getSeed(), 987234911L).nextInt(10) == 0) {
             int i = 0;
-            pos.add(7, 0, 7);
+            BlockPos pos1 = pos.add(7, 0, 7);
             BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
             Direction[] directions = new Direction[]{Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP};
 
             for (int j = 0; j < config.tryCount; ++j) {
-                blockpos$mutable.setAndOffset(pos, rand.nextInt(config.xSpread + 1) - rand.nextInt(config.xSpread + 1), rand.nextInt(config.ySpread + 1) - rand.nextInt(config.ySpread + 1), rand.nextInt(config.zSpread + 1) - rand.nextInt(config.zSpread + 1));
+                blockpos$mutable.setAndOffset(pos1, rand.nextInt(config.xSpread + 1) - rand.nextInt(config.xSpread + 1), rand.nextInt(config.ySpread + 1) - rand.nextInt(config.ySpread + 1), rand.nextInt(config.zSpread + 1) - rand.nextInt(config.zSpread + 1));
 
                 if ((reader.isAirBlock(blockpos$mutable) || config.isReplaceable && reader.getBlockState(blockpos$mutable).getMaterial().isReplaceable())) {
                     for (Direction dir : directions) {
