@@ -53,8 +53,12 @@ public class BGConfiguredFeatures {
             .chance(4);
 
     public static void registerConfiguredFeatures() {
-        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "rafflesia_patch", PATCH_RAFFLESIA);
-        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "kabloom_bush_patch", PATCH_KABLOOM_BUSH);
-        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "slime_fern_patch", PATCH_SLIME_FERN);
+        register("rafflesia_patch", PATCH_RAFFLESIA);
+        register("kabloom_bush_patch", PATCH_KABLOOM_BUSH);
+        register("slime_fern_patch", PATCH_SLIME_FERN);
+    }
+
+    private static void register(String identifier, ConfiguredFeature<?, ?> configuredFeature) {
+        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + identifier, configuredFeature);
     }
 }

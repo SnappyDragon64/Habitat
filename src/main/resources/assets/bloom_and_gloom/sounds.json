@@ -1,30 +1,30 @@
 {
-  "block_rafflesia_spew": {
+  "block.rafflesia.spew": {
     "category": "block",
     "subtitle": "bloom_and_gloom.subtitle.block.rafflesia.spew",
     "sounds": [ "bloom_and_gloom:block/rafflesia/spew" ]
   },
-  "block_rafflesia_pop": {
+  "block.rafflesia.pop": {
     "category": "block",
     "subtitle": "bloom_and_gloom.subtitle.block.rafflesia.pop",
     "sounds": [ "bloom_and_gloom:block/rafflesia/pop" ]
   },
-  "block_rafflesia_slurp": {
+  "block.rafflesia.slurp": {
     "category": "block",
     "subtitle": "bloom_and_gloom.subtitle.block.rafflesia.slurp",
     "sounds": [ "bloom_and_gloom:block/rafflesia/slurp" ]
   },
-  "block_kabloom_bush_rustle": {
+  "block.kabloom_bush.rustle": {
     "category": "block",
     "subtitle": "bloom_and_gloom.subtitle.block.kabloom_bush.rustle",
     "sounds": [ "bloom_and_gloom:block/kabloom_bush/rustle" ]
   },
-  "block_kabloom_bush_shear": {
+  "block.kabloom_bush.shear": {
     "category": "block",
     "subtitle": "bloom_and_gloom.subtitle.block.kabloom_bush.shear",
     "sounds": [ "bloom_and_gloom:block/kabloom_bush/shear" ]
   },
-  "block_slime_fern_drip": {
+  "block.slime_fern.drip": {
     "category": "block",
     "subtitle": "bloom_and_gloom.subtitle.block.slime_fern.drip",
     "sounds": [
@@ -36,7 +36,7 @@
       "minecraft:block/beehive/drip6"
     ]
   },
-  "entity_kabloom_fruit_explode": {
+  "entity.kabloom_fruit.explode": {
     "category": "player",
     "subtitle": "bloom_and_gloom.subtitle.entity.kabloom_fruit.explosion",
     "sounds": [ "bloom_and_gloom:entity/kabloom_fruit/explode" ]
