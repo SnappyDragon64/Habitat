@@ -5,18 +5,14 @@ import mod.schnappdragon.bloom_and_gloom.common.block.SlimeFernBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.WallSlimeFernBlock;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.RandomPatchFeature;
 
 import java.util.Random;
 
