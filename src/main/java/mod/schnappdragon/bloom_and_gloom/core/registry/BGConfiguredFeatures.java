@@ -18,36 +18,36 @@ public class BGConfiguredFeatures {
     public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(
             new SimpleBlockStateProvider(BGBlocks.RAFFLESIA.get().getDefaultState().with(RafflesiaBlock.AGE, 2)),
             new SimpleBlockPlacer())
-                    .whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
-                    .xSpread(3)
-                    .ySpread(3)
-                    .zSpread(3)
-                    .tries(2)
-                    .build())
-                    .withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(3, 0.4F, 1)));
+            .whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
+            .xSpread(3)
+            .ySpread(3)
+            .zSpread(3)
+            .tries(2)
+            .build())
+            .withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(3, 0.4F, 1)));
 
     public static final ConfiguredFeature<?, ?> PATCH_KABLOOM_BUSH = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(
             new SimpleBlockStateProvider(BGBlocks.KABLOOM_BUSH.get().getDefaultState().with(KabloomBushBlock.AGE, 7)),
             new SimpleBlockPlacer())
-                    .whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
-                    .xSpread(4)
-                    .ySpread(1)
-                    .zSpread(4)
-                    .tries(20)
-                    .build())
-                    .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
-                    .chance(200);
+            .whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
+            .xSpread(4)
+            .ySpread(1)
+            .zSpread(4)
+            .tries(20)
+            .build())
+            .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
+            .chance(200);
 
     public static final ConfiguredFeature<?, ?> PATCH_SLIME_FERN = BGFeatures.SLIME_FERN_FEATURE.get().withConfiguration(new BlockClusterFeatureConfig.Builder(
             new SimpleBlockStateProvider(BGBlocks.SLIME_FERN.get().getDefaultState()),
             new SimpleBlockPlacer())
-                    .xSpread(4)
-                    .ySpread(5)
-                    .zSpread(4)
-                    .tries(64)
-                    .build())
-                    .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 40)))
-                    .chance(3);
+            .xSpread(4)
+            .ySpread(5)
+            .zSpread(4)
+            .tries(64)
+            .build())
+            .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 40)))
+            .chance(4);
 
     public static void registerConfiguredFeatures() {
         Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, BloomAndGloom.MOD_ID + ":" + "rafflesia_patch", PATCH_RAFFLESIA);
