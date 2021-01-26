@@ -11,5 +11,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class BGFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, BloomAndGloom.MOD_ID);
 
-    public final static RegistryObject<Feature<BlockClusterFeatureConfig>> SLIME_FERN_FEATURE = FEATURES.register("slime_fern_feature", () -> new SlimeFernFeature(BlockClusterFeatureConfig.field_236587_a_));
+    public final static RegistryObject<Feature<BlockClusterFeatureConfig>> SLIME_FERN_FEATURE = FEATURES.register("slime_fern_feature",
+            () -> new SlimeFernFeature(BlockClusterFeatureConfig.field_236587_a_));
 }

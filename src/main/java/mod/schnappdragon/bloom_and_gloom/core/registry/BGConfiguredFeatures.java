@@ -23,11 +23,11 @@ public class BGConfiguredFeatures {
             new SimpleBlockPlacer())
             .whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
             .xSpread(3)
-            .ySpread(3)
+            .ySpread(1)
             .zSpread(3)
             .tries(2)
             .build())
-            .withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(3, 0.4F, 1)));
+            .withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(1, 0.4F, 1)));
 
     public static final ConfiguredFeature<?, ?> PATCH_KABLOOM_BUSH = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(
             new SimpleBlockStateProvider(BGBlocks.KABLOOM_BUSH.get().getDefaultState().with(KabloomBushBlock.AGE, 7)),
