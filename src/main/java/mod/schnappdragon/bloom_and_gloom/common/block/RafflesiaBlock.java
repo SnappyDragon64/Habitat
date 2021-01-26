@@ -2,7 +2,7 @@ package mod.schnappdragon.bloom_and_gloom.common.block;
 
 import com.google.common.collect.Lists;
 import mod.schnappdragon.bloom_and_gloom.common.state.properties.BGBlockStateProperties;
-import mod.schnappdragon.bloom_and_gloom.common.tileentity.RafflesiaTile;
+import mod.schnappdragon.bloom_and_gloom.common.tileentity.RafflesiaTileEntity;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
@@ -126,7 +126,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     }
 
     public TileEntity createTileEntity(BlockState state, IBlockReader worldIn) {
-        return new RafflesiaTile();
+        return new RafflesiaTileEntity();
     }
 
     /*
@@ -139,8 +139,8 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
         double Z = (double) pos.getZ() + 0.5;
 
         TileEntity tile = worldIn.getTileEntity(pos);
-        if (tile instanceof RafflesiaTile) {
-            RafflesiaTile rafflesia = (RafflesiaTile) tile;
+        if (tile instanceof RafflesiaTileEntity) {
+            RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
             if ((rand.nextInt(128) == 0 && !state.get(ON_COOLDOWN) || state.get(POLLINATED)) && state.get(AGE) == 2) {
                 worldIn.addParticle(getParticle(rafflesia.Effects), X + rand.nextDouble() / 3.0D * (rand.nextBoolean() ? 1 : -1), (double) pos.getY() + rand.nextDouble(), Z + rand.nextDouble() / 3.0D * (rand.nextBoolean() ? 1 : -1), 0.0D, 0.05D, 0.0D);
             }
@@ -203,8 +203,8 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (!worldIn.isRemote && (entityIn instanceof LivingEntity || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity || entityIn instanceof BoatEntity || entityIn instanceof TNTEntity || entityIn instanceof AbstractMinecartEntity) && state.get(AGE) == 2) {
             TileEntity tile = worldIn.getTileEntity(pos);
-            if (tile instanceof RafflesiaTile && !state.get(ON_COOLDOWN) && !state.get(POLLINATED)) {
-                RafflesiaTile rafflesia = (RafflesiaTile) tile;
+            if (tile instanceof RafflesiaTileEntity && !state.get(ON_COOLDOWN) && !state.get(POLLINATED)) {
+                RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
                 createCloud(worldIn, pos, state, rafflesia.Effects);
                 worldIn.setBlockState(pos, state.with(ON_COOLDOWN, true).with(HAS_STEW, false));
                 ListNBT Effects = new ListNBT();
@@ -227,8 +227,8 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
         }
         if (!worldIn.isRemote && stack.getItem() == Items.SUSPICIOUS_STEW && state.get(AGE) == 2) {
             TileEntity tile = worldIn.getTileEntity(pos);
-            if (tile instanceof RafflesiaTile && !state.get(HAS_STEW) && !state.get(POLLINATED)) {
-                RafflesiaTile rafflesia = (RafflesiaTile) tile;
+            if (tile instanceof RafflesiaTileEntity && !state.get(HAS_STEW) && !state.get(POLLINATED)) {
+                RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
                 CompoundNBT tag = stack.getTag();
                 if (tag != null && tag.contains("Effects", 9)) {
                     rafflesia.Effects = tag.getList("Effects", 10);

@@ -3,7 +3,7 @@ package mod.schnappdragon.bloom_and_gloom.core.dispenser;
 import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.RafflesiaBlock;
 import mod.schnappdragon.bloom_and_gloom.common.entity.projectile.KabloomFruitEntity;
-import mod.schnappdragon.bloom_and_gloom.common.tileentity.RafflesiaTile;
+import mod.schnappdragon.bloom_and_gloom.common.tileentity.RafflesiaTileEntity;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
@@ -34,8 +34,8 @@ public class BGDispenserBehaviours {
                 BlockState state = worldIn.getBlockState(pos);
                 if (!worldIn.isRemote && state.isIn(BGBlocks.RAFFLESIA.get()) && state.get(RafflesiaBlock.AGE) == 2) {
                     TileEntity tile = worldIn.getTileEntity(pos);
-                    if (tile instanceof RafflesiaTile && !state.get(RafflesiaBlock.HAS_STEW) && !state.get(RafflesiaBlock.POLLINATED)) {
-                        RafflesiaTile rafflesia = (RafflesiaTile) tile;
+                    if (tile instanceof RafflesiaTileEntity && !state.get(RafflesiaBlock.HAS_STEW) && !state.get(RafflesiaBlock.POLLINATED)) {
+                        RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
                         CompoundNBT tag = stack.getTag();
                         if (tag != null && tag.contains("Effects", 9)) {
                             rafflesia.Effects = tag.getList("Effects", 10);
