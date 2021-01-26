@@ -47,7 +47,7 @@ public class BGConfiguredFeatures {
             .xSpread(4)
             .ySpread(5)
             .zSpread(4)
-            .tries(64)
+            .tries(40)
             .build())
             .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 40)))
             .chance(4);
