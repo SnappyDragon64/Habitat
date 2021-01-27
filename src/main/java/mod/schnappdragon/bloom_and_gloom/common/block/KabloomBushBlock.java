@@ -60,9 +60,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
                 .setAllowsSpawn((a,b,c,d) -> false)
         );
 
-        this.setDefaultState(
-                this.stateContainer.getBaseState()
-                        .with(AGE, 0)
+        this.setDefaultState(this.stateContainer.getBaseState().with(AGE, 0)
         );
     }
 

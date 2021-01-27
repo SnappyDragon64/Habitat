@@ -84,8 +84,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
                 .setAllowsSpawn((a,b,c,d) -> false)
         );
 
-        this.setDefaultState(
-                this.stateContainer.getBaseState()
+        this.setDefaultState(this.stateContainer.getBaseState()
                         .with(AGE, 0)
                         .with(ON_COOLDOWN, false)
                         .with(HAS_STEW, false)
@@ -145,8 +144,8 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
-        double X = (double) pos.getX() + 0.5;
-        double Z = (double) pos.getZ() + 0.5;
+        double X = (double) pos.getX() + 0.5D;
+        double Z = (double) pos.getZ() + 0.5D;
 
         TileEntity tile = worldIn.getTileEntity(pos);
         if (tile instanceof RafflesiaTileEntity) {
@@ -163,9 +162,9 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     private void createCloud(World worldIn, BlockPos pos, BlockState state, ListNBT effects)
     {
-        AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(worldIn, pos.getX() + 0.5, pos.getY() + 0.25, pos.getZ() + 0.5);
+        AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(worldIn, pos.getX() + 0.5D, pos.getY() + 0.25D, pos.getZ() + 0.5D);
         cloud.setDuration(50);
-        cloud.setRadius(1F);
+        cloud.setRadius(1.0F);
         cloud.setParticleData(getParticle(effects));
 
         for(int i = 0; i < effects.size(); ++i) {
@@ -261,8 +260,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
         for(Direction direction : Direction.Plane.HORIZONTAL) {
             BlockState state = worldIn.getBlockState(pos.offset(direction));
             if (state.getBlock().matchesBlock(BGBlocks.RAFFLESIA.get())) {
-                Random rand = new Random();
-                if (!state.get(HAS_STEW) && rand.nextInt(10) == 0) {
+                if (!state.get(HAS_STEW) && worldIn.rand.nextInt(10) == 0) {
                     worldIn.setBlockState(pos.offset(direction), state.with(POLLINATED, true).with(ON_COOLDOWN, true));
                 }
             }
