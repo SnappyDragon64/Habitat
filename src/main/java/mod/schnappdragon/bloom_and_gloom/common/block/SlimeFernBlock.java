@@ -57,7 +57,7 @@ public class SlimeFernBlock extends AbstractSlimeFernBlock {
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
         Direction dir = getBlockConnected(state).getOpposite();
         BlockState state1 = worldIn.getBlockState(pos.offset(dir));
-        return state1.isSolidSide(worldIn, pos.offset(dir), dir.getOpposite());
+        return state1.isSolidSide(worldIn, pos.offset(dir), dir.getOpposite()) || state1.isIn(Blocks.FARMLAND);
     }
 
     protected static Direction getBlockConnected(BlockState state) {
