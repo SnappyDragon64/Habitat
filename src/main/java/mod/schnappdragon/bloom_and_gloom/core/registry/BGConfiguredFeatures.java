@@ -15,24 +15,21 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
 import net.minecraft.world.gen.placement.Placement;
-import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 
 public class BGConfiguredFeatures {
     public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(
             new SimpleBlockStateProvider(BGBlocks.RAFFLESIA.get().getDefaultState().with(RafflesiaBlock.AGE, 2)),
             new SimpleBlockPlacer())
-            .whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
-            .xSpread(3)
+            .xSpread(6)
             .ySpread(1)
-            .zSpread(3)
+            .zSpread(6)
             .tries(2)
             .build())
-            .withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(1, 0.4F, 1)));
+            .withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(1, 0.25F, 1)));
 
     public static final ConfiguredFeature<?, ?> PATCH_KABLOOM_BUSH = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(
             new SimpleBlockStateProvider(BGBlocks.KABLOOM_BUSH.get().getDefaultState().with(KabloomBushBlock.AGE, 7)),
             new SimpleBlockPlacer())
-            .whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
             .xSpread(4)
             .ySpread(1)
             .zSpread(4)
@@ -47,9 +44,9 @@ public class BGConfiguredFeatures {
             .xSpread(4)
             .ySpread(5)
             .zSpread(4)
-            .tries(40)
+            .tries(60)
             .build())
-            .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 40)))
+            .range(40)
             .chance(4);
 
     public static void registerConfiguredFeatures() {
