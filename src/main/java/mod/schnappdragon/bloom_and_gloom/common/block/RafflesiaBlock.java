@@ -6,7 +6,7 @@ import mod.schnappdragon.bloom_and_gloom.common.tileentity.RafflesiaTileEntity;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
-import mod.schnappdragon.bloom_and_gloom.core.misc.BGTags;
+import mod.schnappdragon.bloom_and_gloom.core.misc.BGBlockTags;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -123,7 +123,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     }
 
     protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos).isIn(BGTags.RAFFLESIA_PLANTABLE_ON);
+        return worldIn.getBlockState(pos).isIn(BGBlockTags.RAFFLESIA_PLANTABLE_ON);
     }
 
     /*

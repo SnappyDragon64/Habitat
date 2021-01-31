@@ -5,11 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag.INamedTag;
 
-public class BGTags {
-
-    /*
-     * Block Tags
-     */
-
+public class BGBlockTags {
     public static final INamedTag<Block> RAFFLESIA_PLANTABLE_ON = BlockTags.makeWrapperTag(BloomAndGloom.MOD_ID + ":rafflesia_plantable_on");
 }

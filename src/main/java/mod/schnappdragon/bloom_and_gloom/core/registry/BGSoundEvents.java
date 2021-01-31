@@ -21,8 +21,7 @@ public class BGSoundEvents {
 
     public static final RegistryObject<SoundEvent> ENTITY_KABLOOM_FRUIT_EXPLODE = register("entity.kabloom_fruit.explode");
 
-    private static RegistryObject<SoundEvent> register(String name)
-    {
+    private static RegistryObject<SoundEvent> register(String name) {
         return SOUND_EVENTS.register(name, () -> new SoundEvent((new ResourceLocation(BloomAndGloom.MOD_ID, name))));
     }
 }

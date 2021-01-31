@@ -1,5 +1,6 @@
-package mod.schnappdragon.bloom_and_gloom.core.registry;
+package mod.schnappdragon.bloom_and_gloom.core.misc;
 
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGEffects;
 import net.minecraft.item.Food;
 import net.minecraft.potion.EffectInstance;
 

@@ -4,6 +4,7 @@ import mod.schnappdragon.bloom_and_gloom.common.item.KabloomFruitItem;
 import mod.schnappdragon.bloom_and_gloom.common.item.KabloomSeedsItem;
 import mod.schnappdragon.bloom_and_gloom.common.item.WallOrBaseItem;
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
+import mod.schnappdragon.bloom_and_gloom.core.misc.BGFoods;
 import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
