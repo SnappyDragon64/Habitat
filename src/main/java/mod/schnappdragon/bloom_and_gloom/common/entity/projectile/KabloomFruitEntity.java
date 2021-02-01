@@ -56,6 +56,8 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
     @Override
     protected void onImpact(RayTraceResult result) {
         Vector3d vec = result.getHitVec();
+        super.onImpact(result);
+
         if (this.world.getGameRules().get(GameRules.DO_ENTITY_DROPS).get()) {
             ItemEntity item = new ItemEntity(this.world, vec.getX() + 0.5F * this.rand.nextDouble() * (this.rand.nextBoolean() ? 1 : -1), vec.getY() + 0.5F * this.rand.nextDouble(), vec.getZ() + 0.5F * this.rand.nextDouble() * (this.rand.nextBoolean() ? 1 : -1), new ItemStack(BGItems.KABLOOM_SEEDS.get()));
             item.setDefaultPickupDelay();
