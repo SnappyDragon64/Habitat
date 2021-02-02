@@ -119,12 +119,8 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
         ItemStack held = player.getHeldItemMainhand();
 
-        if (state.get(AGE) == 7 && !player.abilities.isCreativeMode) {
-            if (!(held.getItem() instanceof ShearsItem)) {
-                if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, held) == 0 || !(held.getItem() instanceof ToolItem))
-                    dropFruit(state, worldIn, pos, false);
-            }
-        }
+        if (state.get(AGE) == 7 && !player.abilities.isCreativeMode && !(held.getItem() instanceof ShearsItem) && (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, held) == 0 || !(held.getItem() instanceof ToolItem)))
+            dropFruit(state, worldIn, pos, false);
 
         super.onBlockHarvested(worldIn, pos, state, player);
     }
