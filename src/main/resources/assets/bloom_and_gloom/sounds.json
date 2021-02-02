@@ -37,12 +37,12 @@
     ]
   },
   "entity.kabloom_fruit.throw": {
-    "category": "player",
+    "category": "entity",
     "subtitle": "bloom_and_gloom.subtitle.entity.kabloom_fruit.throw",
     "sounds": [ "minecraft:random/bow" ]
   },
   "entity.kabloom_fruit.explode": {
-    "category": "player",
+    "category": "entity",
     "subtitle": "bloom_and_gloom.subtitle.entity.kabloom_fruit.explosion",
     "sounds": [ "bloom_and_gloom:entity/kabloom_fruit/explode" ]
   }

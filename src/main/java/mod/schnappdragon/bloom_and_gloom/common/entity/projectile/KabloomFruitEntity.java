@@ -44,7 +44,7 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
     @OnlyIn(Dist.CLIENT)
     public void handleStatusUpdate(byte id) {
         if (id == 3) {
-            this.world.playSound(this.getPosX(), this.getPosY(), this.getPosZ(), BGSoundEvents.ENTITY_KABLOOM_FRUIT_EXPLODE.get(), SoundCategory.PLAYERS, 1.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F), true);
+            this.world.playSound(this.getPosX(), this.getPosY(), this.getPosZ(), BGSoundEvents.ENTITY_KABLOOM_FRUIT_EXPLODE.get(), SoundCategory.NEUTRAL, 1.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F), true);
 
             for(int i = 0; i < 8; ++i)
                 this.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, this.getItem()), this.getPosX(), this.getPosY(), this.getPosZ(), (this.rand.nextFloat() - 0.5D) * 0.08D, (this.rand.nextFloat() - 0.5D) * 0.8D, (this.rand.nextFloat() - 0.5D) * 0.08D);
@@ -55,8 +55,8 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
 
     @Override
     protected void onImpact(RayTraceResult result) {
-        Vector3d vec = result.getHitVec();
         super.onImpact(result);
+        Vector3d vec = result.getHitVec();
 
         if (this.world.getGameRules().get(GameRules.DO_ENTITY_DROPS).get()) {
             ItemEntity item = new ItemEntity(this.world, vec.getX() + 0.5F * this.rand.nextDouble() * (this.rand.nextBoolean() ? 1 : -1), vec.getY() + 0.5F * this.rand.nextDouble(), vec.getZ() + 0.5F * this.rand.nextDouble() * (this.rand.nextBoolean() ? 1 : -1), new ItemStack(BGItems.KABLOOM_SEEDS.get()));
