@@ -6,6 +6,8 @@
   "item.bloom_and_gloom.kabloom_fruit": "Kabloom Fruit",
   "item.bloom_and_gloom.sugared_kabloom_fruit": "Sugared Kabloom Fruit",
 
+  "entity.bloom_and_gloom.kabloom_fruit": "Thrown Kabloom Fruit",
+
   "bloom_and_gloom.subtitle.block.rafflesia.spew": "Rafflesia spews",
   "bloom_and_gloom.subtitle.block.rafflesia.pop": "Rafflesia pops",
   "bloom_and_gloom.subtitle.block.rafflesia.slurp": "Rafflesia slurps",
@@ -13,6 +15,7 @@
   "bloom_and_gloom.subtitle.block.kabloom_bush.shear": "Shears defuse",
   "bloom_and_gloom.subtitle.block.slime_fern.drip": "Slime drips",
 
+  "bloom_and_gloom.subtitle.entity.kabloom_fruit.throw": "Kabloom Fruit flies",
   "bloom_and_gloom.subtitle.entity.kabloom_fruit.explosion": "Kabloom",
 
   "death.attack.bloom_and_gloom.kabloom": "%1$s went kabloom",

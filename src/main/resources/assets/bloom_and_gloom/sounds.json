@@ -36,6 +36,11 @@
       "minecraft:block/beehive/drip6"
     ]
   },
+  "entity.kabloom_fruit.throw": {
+    "category": "player",
+    "subtitle": "bloom_and_gloom.subtitle.entity.kabloom_fruit.throw",
+    "sounds": [ "minecraft:random/bow" ]
+  },
   "entity.kabloom_fruit.explode": {
     "category": "player",
     "subtitle": "bloom_and_gloom.subtitle.entity.kabloom_fruit.explosion",

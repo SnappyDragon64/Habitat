@@ -2,12 +2,14 @@ package mod.schnappdragon.bloom_and_gloom.common.item;
 
 import mod.schnappdragon.bloom_and_gloom.common.entity.projectile.KabloomFruitEntity;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 public class KabloomFruitItem extends Item {
@@ -17,6 +19,7 @@ public class KabloomFruitItem extends Item {
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
+        worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), BGSoundEvents.ENTITY_KABLOOM_FRUIT_THROW.get(), SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
         playerIn.getCooldownTracker().setCooldown(this, 20);
 
         if (!playerIn.abilities.isCreativeMode) {
