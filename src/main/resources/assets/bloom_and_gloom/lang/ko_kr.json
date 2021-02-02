@@ -4,6 +4,7 @@
   "item.bloom_and_gloom.rafflesia_seed": "라플레시아 씨앗",
   "item.bloom_and_gloom.kabloom_seeds": "펑피움 씨앗",
   "item.bloom_and_gloom.kabloom_fruit": "펑피움 과일",
+  "item.bloom_and_gloom.sugared_kabloom_fruit": "설탕 친 펑피움 과일",
 
   "bloom_and_gloom.subtitle.block.rafflesia.spew": "라플레시아가 뿜어냄",
   "bloom_and_gloom.subtitle.block.rafflesia.pop": "라플레시아가 튀어나옴",
@@ -15,6 +16,8 @@
   "bloom_and_gloom.subtitle.entity.kabloom_fruit.explosion": "펑피움!",
 
   "death.attack.bloom_and_gloom.kabloom": "%1$s이(가) 펑 피었습니다",
+
+  "effect.bloom_and_gloom.blast_endurance": "폭발 견딤",
 
   "bloom_and_gloom.advancements.husbandry.suspicious.title": "수상한데...",
   "bloom_and_gloom.advancements.husbandry.bloom_defused.title": "꽃이 해체되었습니다",
