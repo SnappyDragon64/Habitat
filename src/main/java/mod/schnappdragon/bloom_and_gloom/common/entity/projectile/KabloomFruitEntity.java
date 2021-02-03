@@ -8,6 +8,7 @@ import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
@@ -112,11 +113,12 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
                         dx = dx / dres;
                         dy = dy / dres;
                         dz = dz / dres;
-                        double df = this.getDistance(entity) > 1 ? 0.25D : 0.5D;
+                        double df = this.getDistance(entity) > 1.0F ? 0.25D : 0.5D;
                         dmg = 4.0F + 4.0F * ((float) df);
                         double dred = df;
                         if (entity instanceof LivingEntity) {
-                            dred = ProtectionEnchantment.getBlastDamageReduction((LivingEntity) entity, df);
+                            LivingEntity livingEntity = (LivingEntity) entity;
+                            dred = ProtectionEnchantment.getBlastDamageReduction(livingEntity, df) * (1.0D - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                         }
 
                         boolean knockback = true;
