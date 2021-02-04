@@ -6,6 +6,8 @@
   "item.bloom_and_gloom.kabloom_fruit": "펑피움 과일",
   "item.bloom_and_gloom.sugared_kabloom_fruit": "설탕 친 펑피움 과일",
 
+  "entity.bloom_and_gloom.kabloom_fruit": "던진 펑피움",
+
   "bloom_and_gloom.subtitle.block.rafflesia.spew": "라플레시아가 뿜어냄",
   "bloom_and_gloom.subtitle.block.rafflesia.pop": "라플레시아가 튀어나옴",
   "bloom_and_gloom.subtitle.block.rafflesia.slurp": "라플레시아가 후루룩 마심",
@@ -13,7 +15,8 @@
   "bloom_and_gloom.subtitle.block.kabloom_bush.shear": "가위로 해체함",
   "bloom_and_gloom.subtitle.block.slime_fern.drip": "슬라임 점액이 떨어짐",
 
-  "bloom_and_gloom.subtitle.entity.kabloom_fruit.explosion": "펑피움!",
+  "bloom_and_gloom.subtitle.entity.kabloom_fruit.throw": "펑피움 파리",
+  "bloom_and_gloom.subtitle.entity.kabloom_fruit.explosion": "펑피움",
 
   "death.attack.bloom_and_gloom.kabloom": "%1$s이(가) 펑 피었습니다",
 

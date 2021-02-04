@@ -4,6 +4,9 @@
   "item.bloom_and_gloom.rafflesia_seed": "Semilla de Rafflesia",
   "item.bloom_and_gloom.kabloom_seeds": "Semillas de Kabloom",
   "item.bloom_and_gloom.kabloom_fruit": "Fruta de Kabloom",
+  "item.bloom_and_gloom.sugared_kabloom_fruit": "Fruta de Kabloom Azucarada",
+
+  "entity.bloom_and_gloom.kabloom_fruit": "Fruta de Kabloom Tirada",
 
   "bloom_and_gloom.subtitle.block.rafflesia.spew": "Rafflesia escupe",
   "bloom_and_gloom.subtitle.block.rafflesia.pop": "Rafflesia suelta",
@@ -12,9 +15,12 @@
   "bloom_and_gloom.subtitle.block.kabloom_bush.shear": "Tijeras desactivan",
   "bloom_and_gloom.subtitle.block.slime_fern.drip": "Helecho de Slime gotea",
 
+  "bloom_and_gloom.subtitle.entity.kabloom_fruit.throw": "Moscas de la Fruta de Kabloom",
   "bloom_and_gloom.subtitle.entity.kabloom_fruit.explosion": "Kabloom",
 
   "death.attack.bloom_and_gloom.kabloom": "%1$s hizo kabloom",
+
+  "effect.bloom_and_gloom.blast_endurance": "Resistencia Explosión",
 
   "bloom_and_gloom.advancements.husbandry.suspicious.title": "Sospechoso...",
   "bloom_and_gloom.advancements.husbandry.bloom_defused.title": "Bloomba desactivada",
