@@ -14,6 +14,7 @@ import net.minecraft.block.BushBlock;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -76,12 +77,12 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     public RafflesiaBlock() {
         super(AbstractBlock.Properties
-                .create(Material.PLANTS)
+                .create(Material.PLANTS, MaterialColor.RED)
                 .zeroHardnessAndResistance()
                 .sound(SoundType.PLANT)
+                .tickRandomly()
                 .doesNotBlockMovement()
                 .notSolid()
-                .setAllowsSpawn((a,b,c,d) -> false)
         );
 
         this.setDefaultState(this.stateContainer.getBaseState()
@@ -308,15 +309,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
         worldIn.setBlockState(pos, state.with(ON_COOLDOWN, false).with(POLLINATED, false));
         worldIn.playSound(null, pos, BGSoundEvents.BLOCK_RAFFLESIA_POP.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-    }
-
-    /*
-     * Plant Method
-     */
-
-    @Override
-    public PlantType getPlantType(IBlockReader world, BlockPos pos) {
-        return PlantType.get("jungle");
     }
 
     /*

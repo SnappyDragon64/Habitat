@@ -55,9 +55,9 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
                 .create(Material.PLANTS)
                 .zeroHardnessAndResistance()
                 .sound(SoundType.PLANT)
+                .tickRandomly()
                 .doesNotBlockMovement()
                 .notSolid()
-                .setAllowsSpawn((a,b,c,d) -> false)
         );
 
         this.setDefaultState(this.stateContainer.getBaseState().with(AGE, 0)
