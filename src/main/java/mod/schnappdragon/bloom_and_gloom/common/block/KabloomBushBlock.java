@@ -60,8 +60,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
                 .notSolid()
         );
 
-        this.setDefaultState(this.stateContainer.getBaseState().with(AGE, 0)
-        );
+        this.setDefaultState(this.stateContainer.getBaseState().with(AGE, 0));
     }
 
     @Override
@@ -71,10 +70,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return SHAPES[state.get(AGE)];
-    }
-
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return true;
     }
 
     /*

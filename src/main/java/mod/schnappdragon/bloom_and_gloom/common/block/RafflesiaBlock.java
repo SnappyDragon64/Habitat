@@ -111,10 +111,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
         }
     }
 
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return true;
-    }
-
     /*
      * Position Validity Method
      */
