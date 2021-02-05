@@ -79,9 +79,9 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!(state.get(AGE) == 7) && player.getHeldItem(handIn).getItem() == Items.BONE_MEAL) {
+        if (!(state.get(AGE) == 7) && player.getHeldItem(handIn).getItem() == Items.BONE_MEAL)
             return ActionResultType.PASS;
-        } else if (state.get(AGE) == 7) {
+        if (state.get(AGE) == 7) {
             if (player.getHeldItem(handIn).getItem() instanceof ShearsItem) {
                 if (!worldIn.isRemote) {
                     spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
