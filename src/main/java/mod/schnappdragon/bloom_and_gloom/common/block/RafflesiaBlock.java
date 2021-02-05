@@ -101,7 +101,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     }
 
     /*
-     * Position Validity Method
+     * Position Validity Methods
      */
 
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
