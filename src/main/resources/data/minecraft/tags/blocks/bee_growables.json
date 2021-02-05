@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
-    "bloom_and_gloom:kabloom_bush"
+    "bloom_and_gloom:kabloom_bush",
+    "bloom_and_gloom:pink_ball_cactus_seedling",
+    "bloom_and_gloom:red_ball_cactus_seedling",
+    "bloom_and_gloom:orange_ball_cactus_seedling",
+    "bloom_and_gloom:yellow_ball_cactus_seedling",
+    "bloom_and_gloom:pink_ball_cactus",
+    "bloom_and_gloom:red_ball_cactus",
+    "bloom_and_gloom:orange_ball_cactus",
+    "bloom_and_gloom:yellow_ball_cactus"
   ]
 }

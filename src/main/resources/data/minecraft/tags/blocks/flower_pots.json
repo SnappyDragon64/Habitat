@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "bloom_and_gloom:potted_rafflesia",
+      "required": false
+    },
+    {
+      "id": "bloom_and_gloom:potted_kabloom_bush",
+      "required": false
+    },
+    "bloom_and_gloom:potted_slime_fern"
+  ]
+}

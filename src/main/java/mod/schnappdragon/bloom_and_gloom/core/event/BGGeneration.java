@@ -20,6 +20,7 @@ public class BGGeneration {
 
         if (BiomeDictionary.hasType(biomeRegistryKey, BiomeDictionary.Type.OVERWORLD)) {
             event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, BGConfiguredFeatures.PATCH_SLIME_FERN);
+            event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.FAIRY_RING);
 
             if (event.getCategory() == Biome.Category.JUNGLE && !event.getName().getPath().contains("bamboo"))
                 event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_RAFFLESIA);

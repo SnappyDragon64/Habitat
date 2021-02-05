@@ -1,6 +1,7 @@
 package mod.schnappdragon.bloom_and_gloom.core.registry;
 
 import mod.schnappdragon.bloom_and_gloom.common.block.*;
+import mod.schnappdragon.bloom_and_gloom.common.misc.BallCactusColor;
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
 import mod.schnappdragon.bloom_and_gloom.core.util.CompatHelper;
 import net.minecraft.block.AbstractBlock;
@@ -25,4 +26,17 @@ public class BGBlocks {
     public static final RegistryObject<Block> SLIME_FERN = BLOCKS.register("slime_fern", () -> new SlimeFernBlock(AbstractBlock.Properties.create(Material.PLANTS).zeroHardnessAndResistance().sound(SoundType.PLANT).doesNotBlockMovement().notSolid()));
     public static final RegistryObject<Block> WALL_SLIME_FERN = BLOCKS.register("wall_slime_fern", () -> new WallSlimeFernBlock(AbstractBlock.Properties.create(Material.PLANTS).zeroHardnessAndResistance().sound(SoundType.PLANT).doesNotBlockMovement().notSolid()));
     public static final RegistryObject<Block> POTTED_SLIME_FERN = BLOCKS.register("potted_slime_fern", () -> new FlowerPotBlock(SLIME_FERN.get(), AbstractBlock.Properties.create(Material.MISCELLANEOUS).zeroHardnessAndResistance().notSolid()));
+
+    public  static final  RegistryObject<Block> PINK_BALL_CACTUS_SEEDLING = BLOCKS.register("pink_ball_cactus_seedling", () -> new BallCactusSeedlingBlock(BallCactusColor.PINK, AbstractBlock.Properties.create(Material.CACTUS).zeroHardnessAndResistance().sound(SoundType.PLANT).notSolid().tickRandomly()));
+    public  static final  RegistryObject<Block> PINK_BALL_CACTUS = BLOCKS.register("pink_ball_cactus", () -> new BallCactusBlock(BallCactusColor.PINK, AbstractBlock.Properties.create(Material.CACTUS).zeroHardnessAndResistance().sound(SoundType.PLANT).notSolid().tickRandomly()));
+    public  static final  RegistryObject<Block> FLOWERING_PINK_BALL_CACTUS= BLOCKS.register("flowering_pink_ball_cactus", () -> new FloweringBallCactusBlock(BallCactusColor.PINK,AbstractBlock.Properties.create(Material.CACTUS).zeroHardnessAndResistance().sound(SoundType.PLANT).notSolid()));
+    public  static final  RegistryObject<Block> RED_BALL_CACTUS_SEEDLING = BLOCKS.register("red_ball_cactus_seedling", () -> new BallCactusSeedlingBlock(BallCactusColor.RED, AbstractBlock.Properties.create(Material.CACTUS).zeroHardnessAndResistance().sound(SoundType.PLANT).notSolid().tickRandomly()));
+    public  static final  RegistryObject<Block> RED_BALL_CACTUS = BLOCKS.register("red_ball_cactus", () -> new BallCactusBlock(BallCactusColor.RED, AbstractBlock.Properties.create(Material.CACTUS).zeroHardnessAndResistance().sound(SoundType.PLANT).notSolid().tickRandomly()));
+    public  static final  RegistryObject<Block> FLOWERING_RED_BALL_CACTUS= BLOCKS.register("flowering_red_ball_cactus", () -> new FloweringBallCactusBlock(BallCactusColor.RED,AbstractBlock.Properties.create(Material.CACTUS).zeroHardnessAndResistance().sound(SoundType.PLANT).notSolid()));
+    public  static final  RegistryObject<Block> ORANGE_BALL_CACTUS_SEEDLING = BLOCKS.register("orange_ball_cactus_seedling", () -> new BallCactusSeedlingBlock(BallCactusColor.ORANGE, AbstractBlock.Properties.create(Material.CACTUS).zeroHardnessAndResistance().sound(SoundType.PLANT).notSolid().tickRandomly()));
+    public  static final  RegistryObject<Block> ORANGE_BALL_CACTUS = BLOCKS.register("orange_ball_cactus", () -> new BallCactusBlock(BallCactusColor.ORANGE, AbstractBlock.Properties.create(Material.CACTUS).zeroHardnessAndResistance().sound(SoundType.PLANT).notSolid().tickRandomly()));
+    public  static final  RegistryObject<Block> FLOWERING_ORANGE_BALL_CACTUS= BLOCKS.register("flowering_orange_ball_cactus", () -> new FloweringBallCactusBlock(BallCactusColor.ORANGE,AbstractBlock.Properties.create(Material.CACTUS).zeroHardnessAndResistance().sound(SoundType.PLANT).notSolid()));
+    public  static final  RegistryObject<Block> YELLOW_BALL_CACTUS_SEEDLING = BLOCKS.register("yellow_ball_cactus_seedling", () -> new BallCactusSeedlingBlock(BallCactusColor.YELLOW, AbstractBlock.Properties.create(Material.CACTUS).zeroHardnessAndResistance().sound(SoundType.PLANT).notSolid().tickRandomly()));
+    public  static final  RegistryObject<Block> YELLOW_BALL_CACTUS = BLOCKS.register("yellow_ball_cactus", () -> new BallCactusBlock(BallCactusColor.YELLOW, AbstractBlock.Properties.create(Material.CACTUS).zeroHardnessAndResistance().sound(SoundType.PLANT).notSolid().tickRandomly()));
+    public  static final  RegistryObject<Block> FLOWERING_YELLOW_BALL_CACTUS= BLOCKS.register("flowering_yellow_ball_cactus", () -> new FloweringBallCactusBlock(BallCactusColor.YELLOW,AbstractBlock.Properties.create(Material.CACTUS).zeroHardnessAndResistance().sound(SoundType.PLANT).notSolid()));
 }

@@ -1,5 +1,7 @@
 package mod.schnappdragon.bloom_and_gloom.common.entity.ai.goal;
 
+import mod.schnappdragon.bloom_and_gloom.common.block.BallCactusBlock;
+import mod.schnappdragon.bloom_and_gloom.common.block.BallCactusSeedlingBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import net.minecraft.block.Block;
@@ -42,6 +44,7 @@ public class BGFindPollinationTargetGoal extends Goal {
                 BlockState blockstate = this.bee.world.getBlockState(blockpos);
                 Block block = blockstate.getBlock();
                 boolean flag = false;
+                boolean cactusFlag = false;
                 IntegerProperty integerproperty = null;
                 if (block.isIn(BlockTags.BEE_GROWABLES)) {
                     if (block == BGBlocks.KABLOOM_BUSH.get()) {
@@ -52,10 +55,28 @@ public class BGFindPollinationTargetGoal extends Goal {
                         }
                     }
 
+                    if (block instanceof BallCactusSeedlingBlock) {
+                        BallCactusSeedlingBlock seedling = (BallCactusSeedlingBlock) block;
+                        this.bee.world.setBlockState(blockpos, seedling.getColor().getBallCactus().getDefaultState());
+                        cactusFlag = true;
+                    }
+
+                    if (block instanceof BallCactusBlock) {
+                        BallCactusBlock cactus = (BallCactusBlock) block;
+                        this.bee.world.setBlockState(blockpos, cactus.getColor().getFloweringBallCactus().getDefaultState());
+                        cactusFlag = true;
+                    }
+
                     if (flag) {
                         this.bee.world.playEvent(2005, blockpos, 0);
                         this.bee.world.setBlockState(blockpos, blockstate.with(integerproperty, blockstate.get(integerproperty) + 1));
                         this.bee.addCropCounter();
+                    }
+
+                    if (cactusFlag) {
+                        this.bee.world.playEvent(2005, blockpos, 0);
+                        this.bee.addCropCounter();
+                        break;
                     }
                 }
             }

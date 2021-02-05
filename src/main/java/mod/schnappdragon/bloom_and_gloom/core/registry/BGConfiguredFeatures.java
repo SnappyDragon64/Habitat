@@ -9,10 +9,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
-import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.Features;
+import net.minecraft.world.gen.feature.*;
 
 public class BGConfiguredFeatures {
     public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(
@@ -50,10 +47,14 @@ public class BGConfiguredFeatures {
             .range(40)
             .chance(4);
 
+    public static final ConfiguredFeature<?, ?> FAIRY_RING = BGFeatures.FAIRY_RING_FEATURE.get().withConfiguration(new NoFeatureConfig())
+            .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT);
+
     public static void registerConfiguredFeatures() {
         register("rafflesia_patch", PATCH_RAFFLESIA);
         register("kabloom_bush_patch", PATCH_KABLOOM_BUSH);
         register("slime_fern_patch", PATCH_SLIME_FERN);
+        register("fairy_ring", FAIRY_RING);
     }
 
     private static void register(String identifier, ConfiguredFeature<?, ?> configuredFeature) {

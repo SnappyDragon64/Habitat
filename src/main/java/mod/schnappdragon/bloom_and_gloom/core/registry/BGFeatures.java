@@ -1,9 +1,11 @@
 package mod.schnappdragon.bloom_and_gloom.core.registry;
 
+import mod.schnappdragon.bloom_and_gloom.common.world.gen.features.FairyRingFeature;
 import mod.schnappdragon.bloom_and_gloom.common.world.gen.features.SlimeFernFeature;
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
 import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -13,4 +15,7 @@ public class BGFeatures {
 
     public final static RegistryObject<Feature<BlockClusterFeatureConfig>> SLIME_FERN_FEATURE = FEATURES.register("slime_fern_feature",
             () -> new SlimeFernFeature(BlockClusterFeatureConfig.field_236587_a_));
+
+    public final static RegistryObject<Feature<NoFeatureConfig>> FAIRY_RING_FEATURE = FEATURES.register("fairy_ring_feature",
+            () -> new FairyRingFeature(NoFeatureConfig.field_236558_a_));
 }
