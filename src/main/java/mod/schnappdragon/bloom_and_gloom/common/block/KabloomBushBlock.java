@@ -79,25 +79,20 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!(state.get(AGE) == 7) && player.getHeldItem(handIn).getItem() == Items.BONE_MEAL)
-            return ActionResultType.PASS;
         if (state.get(AGE) == 7) {
             if (player.getHeldItem(handIn).getItem() instanceof ShearsItem) {
-                if (!worldIn.isRemote) {
-                    spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
-                    player.getHeldItem(handIn).damageItem(1, player, (playerIn) -> {
-                        playerIn.sendBreakAnimation(handIn);
-                    });
-                    worldIn.setBlockState(pos, state.with(AGE, 3), 2);
-                    worldIn.playSound(null, pos, BGSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-                }
+                spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
+                player.getHeldItem(handIn).damageItem(1, player, (playerIn) -> {
+                    playerIn.sendBreakAnimation(handIn);
+                });
+                worldIn.setBlockState(pos, state.with(AGE, 3), 2);
+                worldIn.playSound(null, pos, BGSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
             }
             else
                 dropFruit(state, worldIn, pos, true);
-            return ActionResultType.SUCCESS;
+            return ActionResultType.func_233537_a_(worldIn.isRemote);
         }
-        else
-            return ActionResultType.FAIL;
+        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
     }
 
     @Override

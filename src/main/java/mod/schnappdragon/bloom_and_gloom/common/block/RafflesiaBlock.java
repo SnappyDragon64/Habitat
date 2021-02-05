@@ -217,9 +217,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         ItemStack stack = player.getHeldItem(handIn);
-        if (!(state.get(AGE) == 2) && stack.getItem() == Items.BONE_MEAL) {
-            return ActionResultType.PASS;
-        }
+
         if (!worldIn.isRemote && stack.getItem() == Items.SUSPICIOUS_STEW && state.get(AGE) == 2) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof RafflesiaTileEntity && !state.get(HAS_STEW) && !state.get(POLLINATED)) {
@@ -235,7 +233,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
                 return ActionResultType.SUCCESS;
             }
         }
-        return ActionResultType.FAIL;
+        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
     }
 
     /*
