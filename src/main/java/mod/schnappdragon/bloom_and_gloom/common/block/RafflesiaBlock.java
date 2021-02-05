@@ -12,9 +12,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -55,7 +52,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
 import javax.annotation.Nullable;
@@ -75,15 +71,8 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     public static final BooleanProperty POLLINATED = BGBlockStateProperties.POLLINATED;
 
 
-    public RafflesiaBlock() {
-        super(AbstractBlock.Properties
-                .create(Material.PLANTS, MaterialColor.RED)
-                .zeroHardnessAndResistance()
-                .sound(SoundType.PLANT)
-                .tickRandomly()
-                .doesNotBlockMovement()
-                .notSolid()
-        );
+    public RafflesiaBlock(AbstractBlock.Properties properties) {
+        super(properties);
 
         this.setDefaultState(this.stateContainer.getBaseState()
                         .with(AGE, 0)

@@ -5,8 +5,6 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -25,17 +23,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Random;
 
 public abstract class AbstractSlimeFernBlock extends Block implements IGrowable {
-    public AbstractSlimeFernBlock() {
-        super(AbstractBlock.Properties
-                .create(Material.PLANTS)
-                .zeroHardnessAndResistance()
-                .sound(SoundType.PLANT)
-                .doesNotBlockMovement()
-                .notSolid());
-    }
-
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return true;
+    public AbstractSlimeFernBlock(AbstractBlock.Properties properties) {
+        super(properties);
     }
 
     /*

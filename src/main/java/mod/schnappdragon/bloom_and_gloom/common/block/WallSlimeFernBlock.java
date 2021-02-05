@@ -2,10 +2,7 @@ package mod.schnappdragon.bloom_and_gloom.common.block;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.*;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -25,8 +22,8 @@ public class WallSlimeFernBlock extends AbstractSlimeFernBlock {
 
     public static final DirectionProperty HORIZONTAL_FACING = HorizontalBlock.HORIZONTAL_FACING;
 
-    public WallSlimeFernBlock() {
-        super();
+    public WallSlimeFernBlock(AbstractBlock.Properties properties) {
+        super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH));
     }
 

@@ -8,8 +8,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -50,16 +48,8 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
-    public KabloomBushBlock() {
-        super(AbstractBlock.Properties
-                .create(Material.PLANTS)
-                .zeroHardnessAndResistance()
-                .sound(SoundType.PLANT)
-                .tickRandomly()
-                .doesNotBlockMovement()
-                .notSolid()
-        );
-
+    public KabloomBushBlock(AbstractBlock.Properties properties) {
+        super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(AGE, 0));
     }
 

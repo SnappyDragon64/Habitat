@@ -1,6 +1,7 @@
 package mod.schnappdragon.bloom_and_gloom.common.block;
 
 import mod.schnappdragon.bloom_and_gloom.common.state.properties.BGBlockStateProperties;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -23,8 +24,8 @@ public class SlimeFernBlock extends AbstractSlimeFernBlock {
 
     public static final BooleanProperty ON_CEILING = BGBlockStateProperties.ON_CEILING;
 
-    public SlimeFernBlock() {
-        super();
+    public SlimeFernBlock(AbstractBlock.Properties properties) {
+        super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(ON_CEILING, false));
     }
 
