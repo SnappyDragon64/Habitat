@@ -1,5 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.core.registry;
 
+import mod.schnappdragon.bloom_and_gloom.common.item.BallCactusFlowerItem;
 import mod.schnappdragon.bloom_and_gloom.common.item.KabloomFruitItem;
 import mod.schnappdragon.bloom_and_gloom.common.item.KabloomSeedsItem;
 import mod.schnappdragon.bloom_and_gloom.common.item.WallOrBaseItem;
@@ -30,13 +31,13 @@ public class BGItems {
             () -> new WallOrBaseItem(BGBlocks.SLIME_FERN.get(), BGBlocks.WALL_SLIME_FERN.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
 
     public static final RegistryObject<Item> PINK_BALL_CACTUS_FLOWER = ITEMS.register("pink_ball_cactus_flower",
-            () -> new BlockNamedItem(BGBlocks.PINK_BALL_CACTUS_SEEDLING.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
+            () -> new BallCactusFlowerItem(BGBlocks.PINK_BALL_CACTUS_SEEDLING.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
     public static final RegistryObject<Item> RED_BALL_CACTUS_FLOWER = ITEMS.register("red_ball_cactus_flower",
-            () -> new BlockNamedItem(BGBlocks.RED_BALL_CACTUS_SEEDLING.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
+            () -> new BallCactusFlowerItem(BGBlocks.RED_BALL_CACTUS_SEEDLING.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
     public static final RegistryObject<Item> ORANGE_BALL_CACTUS_FLOWER = ITEMS.register("orange_ball_cactus_flower",
-            () -> new BlockNamedItem(BGBlocks.ORANGE_BALL_CACTUS_SEEDLING.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
+            () -> new BallCactusFlowerItem(BGBlocks.ORANGE_BALL_CACTUS_SEEDLING.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
     public static final RegistryObject<Item> YELLOW_BALL_CACTUS_FLOWER = ITEMS.register("yellow_ball_cactus_flower",
-            () -> new BlockNamedItem(BGBlocks.YELLOW_BALL_CACTUS_SEEDLING.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
+            () -> new BallCactusFlowerItem(BGBlocks.YELLOW_BALL_CACTUS_SEEDLING.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
 
     public static final RegistryObject<Item> PINK_BALL_CACTUS = ITEMS.register("pink_ball_cactus",
             () -> new BlockItem(BGBlocks.PINK_BALL_CACTUS.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));

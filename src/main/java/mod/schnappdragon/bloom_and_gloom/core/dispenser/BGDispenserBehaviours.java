@@ -1,5 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.core.dispenser;
 
+import mod.schnappdragon.bloom_and_gloom.common.block.FloweringBallCactusBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.RafflesiaBlock;
 import mod.schnappdragon.bloom_and_gloom.common.entity.projectile.KabloomFruitEntity;
@@ -62,15 +63,30 @@ public class BGDispenserBehaviours {
                 World worldIn = source.getWorld();
                 BlockPos pos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
                 BlockState state = worldIn.getBlockState(pos);
-                if (!worldIn.isRemote && state.isIn(BGBlocks.KABLOOM_BUSH.get()) && state.get(KabloomBushBlock.AGE) == 7) {
-                    ItemEntity item = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
-                    item.setDefaultPickupDelay();
-                    worldIn.addEntity(item);
-                    worldIn.setBlockState(pos, state.with(KabloomBushBlock.AGE, 3));
-                    worldIn.playSound(null, pos, BGSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-                    if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
-                        stack.setCount(0);
-                    this.setSuccessful(true);
+                if (!worldIn.isRemote) {
+                    if (state.isIn(BGBlocks.KABLOOM_BUSH.get()) && state.get(KabloomBushBlock.AGE) == 7) {
+                        ItemEntity item = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
+                        item.setDefaultPickupDelay();
+                        worldIn.addEntity(item);
+                        worldIn.setBlockState(pos, state.with(KabloomBushBlock.AGE, 3));
+                        worldIn.playSound(null, pos, BGSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+                        if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
+                            stack.setCount(0);
+                        this.setSuccessful(true);
+                    }
+                    else if (state.getBlock() instanceof FloweringBallCactusBlock) {
+                        FloweringBallCactusBlock cactus = (FloweringBallCactusBlock) state.getBlock();
+                        ItemEntity item = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(cactus.getColor().getFlower(), 1));
+                        item.setDefaultPickupDelay();
+                        worldIn.addEntity(item);
+                        worldIn.setBlockState(pos, cactus.getColor().getBallCactus().getDefaultState());
+                        worldIn.playSound(null, pos, BGSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+                        if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
+                            stack.setCount(0);
+                        this.setSuccessful(true);
+                    }
+                    else
+                        return ShearsBehaviour.dispense(source, stack);
                 }
                 else
                     return ShearsBehaviour.dispense(source, stack);

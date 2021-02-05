@@ -9,6 +9,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
 import net.minecraft.world.gen.feature.*;
 
 public class BGConfiguredFeatures {
@@ -47,13 +48,30 @@ public class BGConfiguredFeatures {
             .range(40)
             .chance(4);
 
+    public static final ConfiguredFeature<?, ?> PATCH_BALL_CACTUS = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(
+            new WeightedBlockStateProvider()
+            .addWeightedBlockstate(BGBlocks.FLOWERING_PINK_BALL_CACTUS.get().getDefaultState(), 1)
+            .addWeightedBlockstate(BGBlocks.FLOWERING_RED_BALL_CACTUS.get().getDefaultState(), 1)
+            .addWeightedBlockstate(BGBlocks.FLOWERING_ORANGE_BALL_CACTUS.get().getDefaultState(), 1)
+            .addWeightedBlockstate(BGBlocks.FLOWERING_YELLOW_BALL_CACTUS.get().getDefaultState(), 1),
+            SimpleBlockPlacer.PLACER)
+            .xSpread(5)
+            .ySpread(1)
+            .zSpread(5)
+            .tries(16)
+            .build())
+            .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
+            .chance(32);
+
     public static final ConfiguredFeature<?, ?> FAIRY_RING = BGFeatures.FAIRY_RING_FEATURE.get().withConfiguration(new NoFeatureConfig())
-            .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT);
+            .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
+            .chance(16);
 
     public static void registerConfiguredFeatures() {
         register("rafflesia_patch", PATCH_RAFFLESIA);
         register("kabloom_bush_patch", PATCH_KABLOOM_BUSH);
         register("slime_fern_patch", PATCH_SLIME_FERN);
+        register("ball_cactus_patch", PATCH_BALL_CACTUS);
         register("fairy_ring", FAIRY_RING);
     }
 

@@ -2,6 +2,7 @@ package mod.schnappdragon.bloom_and_gloom.common.misc;
 
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -13,7 +14,7 @@ public enum BallCactusColor {
 
     private final String color;
 
-    private BallCactusColor(String colorIn) {
+    BallCactusColor(String colorIn) {
         this.color = colorIn;
     }
 
@@ -23,5 +24,9 @@ public enum BallCactusColor {
 
     public Block getFloweringBallCactus() {
         return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(BloomAndGloom.MOD_ID, "flowering_" + this.color + "_ball_cactus"));
+    }
+
+    public Item getFlower() {
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(BloomAndGloom.MOD_ID, this.color + "_ball_cactus_flower"));
     }
 }

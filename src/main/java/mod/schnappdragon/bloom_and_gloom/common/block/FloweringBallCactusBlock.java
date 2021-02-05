@@ -1,13 +1,11 @@
 package mod.schnappdragon.bloom_and_gloom.common.block;
 
 import mod.schnappdragon.bloom_and_gloom.common.misc.BallCactusColor;
-import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.ShearsItem;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -15,17 +13,18 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
 public class FloweringBallCactusBlock extends AbstractBallCactusBlock {
-
     public FloweringBallCactusBlock(BallCactusColor color, AbstractBlock.Properties properties) {
         super(color, properties);
     }
 
+    /*
+     * Shearing Method
+     */
+
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (player.getHeldItem(handIn).getItem() == Items.BONE_MEAL)
-            return ActionResultType.PASS;
         if (player.getHeldItem(handIn).getItem() instanceof ShearsItem) {
-            spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
+            spawnAsEntity(worldIn, pos, new ItemStack(color.getFlower(), 1));
             player.getHeldItem(handIn).damageItem(1, player, (playerIn) -> {
                 playerIn.sendBreakAnimation(handIn);
             });
