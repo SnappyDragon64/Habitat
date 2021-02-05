@@ -46,7 +46,6 @@ public class BGConfiguredFeatures {
             .ySpread(5)
             .zSpread(4)
             .tries(60)
-            .whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK))
             .build())
             .range(40)
             .chance(4);
