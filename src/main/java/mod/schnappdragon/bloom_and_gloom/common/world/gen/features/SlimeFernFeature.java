@@ -17,8 +17,8 @@ import net.minecraft.world.gen.feature.Feature;
 import java.util.Random;
 
 public class SlimeFernFeature extends Feature<BlockClusterFeatureConfig> {
-    public SlimeFernFeature(Codec<BlockClusterFeatureConfig> p_i231979_1_) {
-        super(p_i231979_1_);
+    public SlimeFernFeature(Codec<BlockClusterFeatureConfig> codec) {
+        super(codec);
     }
 
     public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, BlockClusterFeatureConfig config) {
