@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "flowering=false": {
+      "model": "bloom_and_gloom:block/ball_cactus"
+    },
+    "flowering=true": {
+      "model": "bloom_and_gloom:block/flowering_pink_ball_cactus"
+    }
+  }
+}

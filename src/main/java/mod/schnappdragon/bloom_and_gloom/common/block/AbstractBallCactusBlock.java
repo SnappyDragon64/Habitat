@@ -21,16 +21,11 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public abstract class AbstractBallCactusBlock extends BushBlock {
-    protected static final VoxelShape SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D);
     protected final BallCactusColor color;
 
     public AbstractBallCactusBlock(BallCactusColor color, AbstractBlock.Properties properties) {
         super(properties);
         this.color = color;
-    }
-
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return SHAPE;
     }
 
     public BallCactusColor getColor() {
@@ -41,10 +36,12 @@ public abstract class AbstractBallCactusBlock extends BushBlock {
      * Position Validity Methods
      */
 
+    @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
         return isValidGround(state, worldIn, pos.down());
     }
 
+    @Override
     protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_PLANTABLE_ON);
     }
@@ -54,8 +51,15 @@ public abstract class AbstractBallCactusBlock extends BushBlock {
      */
 
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn.getType() != EntityType.BEE)
-            entityIn.attackEntityFrom(DamageSource.CACTUS, 1.0F);
+        if (entityIn.getType() != EntityType.BEE) {
+            if (state.getBlock() instanceof BallCactusSeedlingBlock) {
+                if (state.get(BallCactusSeedlingBlock.GERMINATED)) {
+                    entityIn.attackEntityFrom(DamageSource.CACTUS, 1.0F);
+                }
+            }
+            else
+                entityIn.attackEntityFrom(DamageSource.CACTUS, 1.0F);
+        }
     }
 
     /*

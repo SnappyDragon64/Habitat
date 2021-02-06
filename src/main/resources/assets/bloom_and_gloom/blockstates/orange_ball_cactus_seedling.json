@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "germinated=false": {
+      "model": "bloom_and_gloom:block/orange_ball_cactus_seedling"
+    },
+    "germinated=true": {
+      "model": "bloom_and_gloom:block/germinated_ball_cactus_seedling"
+    }
+  }
+}

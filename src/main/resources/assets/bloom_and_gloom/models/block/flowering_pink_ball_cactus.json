@@ -1,0 +1,6 @@
+{
+  "parent": "bloom_and_gloom:block/flowering_ball_cactus",
+  "textures": {
+    "flower": "bloom_and_gloom:block/pink_ball_cactus_flower"
+  }
+}

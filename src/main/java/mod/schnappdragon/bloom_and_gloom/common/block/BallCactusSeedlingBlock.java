@@ -8,6 +8,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -30,8 +31,23 @@ public class BallCactusSeedlingBlock extends AbstractBallCactusBlock implements 
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return SHAPE;
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return state.get(GERMINATED) ? VoxelShapes.empty() : SHAPE;
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader reader, BlockPos pos) {
+        return state.get(GERMINATED) ? VoxelShapes.empty() : SHAPE;
+    }
+
+    @Override
+    public VoxelShape getRaytraceShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+        return super.getRaytraceShape(state, worldIn, pos);
+    }
+
+    @Override
+    protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
+        return state.isIn(Blocks.CACTUS) || super.isValidGround(state, worldIn, pos);
     }
 
     /*
@@ -43,7 +59,7 @@ public class BallCactusSeedlingBlock extends AbstractBallCactusBlock implements 
     }
 
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if (ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(10) == 0)) {
+        if (notOnCactus(worldIn, pos) && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(10) == 0)) {
             if (state.get(GERMINATED))
                 worldIn.setBlockState(pos, color.getBallCactus().getDefaultState());
             else
@@ -53,11 +69,11 @@ public class BallCactusSeedlingBlock extends AbstractBallCactusBlock implements 
     }
 
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return true;
+        return notOnCactus((World) worldIn, pos);
     }
 
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return true;
+        return notOnCactus(worldIn, pos);
     }
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
@@ -65,5 +81,9 @@ public class BallCactusSeedlingBlock extends AbstractBallCactusBlock implements 
             worldIn.setBlockState(pos, color.getBallCactus().getDefaultState());
         else
             worldIn.setBlockState(pos, state.with(GERMINATED, true));
+    }
+
+    private boolean notOnCactus(World worldIn, BlockPos pos) {
+        return !worldIn.getBlockState(pos.down()).isIn(Blocks.CACTUS);
     }
 }
