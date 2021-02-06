@@ -13,4 +13,7 @@ public class BGEffects {
 
     public static final RegistryObject<Effect> BLAST_ENDURANCE = EFFECTS.register("blast_endurance",
             () -> new BGEffect(EffectType.BENEFICIAL, 8440968));
+
+    public static final RegistryObject<Effect> PRICKLING = EFFECTS.register("prickling",
+            () -> new BGEffect(EffectType.BENEFICIAL, 5794588));
 }

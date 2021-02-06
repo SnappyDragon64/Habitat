@@ -3,6 +3,10 @@
   "block.bloom_and_gloom.kabloom_bush": "Kabloom Bush",
   "block.bloom_and_gloom.slime_fern": "Slime Fern",
   "block.bloom_and_gloom.wal_slime_fern": "Slime Fern",
+  "block.bloom_and_gloom.pink_ball_cactus_seedling": "Pink Ball Cactus Seedling",
+  "block.bloom_and_gloom.red_ball_cactus_seedling": "Red Ball Cactus Seedling",
+  "block.bloom_and_gloom.orange_ball_cactus_seedling": "Orange Ball Cactus Seedling",
+  "block.bloom_and_gloom.yellow_ball_cactus_seedling": "Yellow Ball Cactus Seedling",
   "block.bloom_and_gloom.pink_ball_cactus": "Pink Ball Cactus",
   "block.bloom_and_gloom.red_ball_cactus": "Red Ball Cactus",
   "block.bloom_and_gloom.orange_ball_cactus": "Orange Ball Cactus",
@@ -16,6 +20,7 @@
   "item.bloom_and_gloom.red_ball_cactus_flower": "Red Ball Cactus Flower",
   "item.bloom_and_gloom.orange_ball_cactus_flower": "Orange Ball Cactus Flower",
   "item.bloom_and_gloom.yellow_ball_cactus_flower": "Yellow Ball Cactus Flower",
+  "item.bloom_and_gloom.roasted_cactus": "Roasted Cactus",
 
   "entity.bloom_and_gloom.kabloom_fruit": "Thrown Kabloom Fruit",
 

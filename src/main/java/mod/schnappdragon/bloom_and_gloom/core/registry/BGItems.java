@@ -38,7 +38,6 @@ public class BGItems {
             () -> new BallCactusFlowerItem(BGBlocks.ORANGE_BALL_CACTUS_SEEDLING.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
     public static final RegistryObject<Item> YELLOW_BALL_CACTUS_FLOWER = ITEMS.register("yellow_ball_cactus_flower",
             () -> new BallCactusFlowerItem(BGBlocks.YELLOW_BALL_CACTUS_SEEDLING.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
-
     public static final RegistryObject<Item> PINK_BALL_CACTUS = ITEMS.register("pink_ball_cactus",
             () -> new BlockItem(BGBlocks.PINK_BALL_CACTUS.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> RED_BALL_CACTUS = ITEMS.register("red_ball_cactus",
@@ -47,4 +46,6 @@ public class BGItems {
             () -> new BlockItem(BGBlocks.ORANGE_BALL_CACTUS.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> YELLOW_BALL_CACTUS = ITEMS.register("yellow_ball_cactus",
             () -> new BlockItem(BGBlocks.YELLOW_BALL_CACTUS.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
+    public static final RegistryObject<Item> ROASTED_CACTUS = ITEMS.register("roasted_cactus",
+            () -> new Item((new Item.Properties()).group(ItemGroup.FOOD).food(BGFoods.ROASTED_CACTUS)));
 }

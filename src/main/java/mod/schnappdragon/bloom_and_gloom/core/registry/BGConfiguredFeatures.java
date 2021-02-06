@@ -1,6 +1,7 @@
 package mod.schnappdragon.bloom_and_gloom.core.registry;
 
 import com.google.common.collect.ImmutableSet;
+import mod.schnappdragon.bloom_and_gloom.common.block.BallCactusBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.RafflesiaBlock;
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
@@ -50,28 +51,76 @@ public class BGConfiguredFeatures {
 
     public static final ConfiguredFeature<?, ?> PATCH_BALL_CACTUS = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(
             new WeightedBlockStateProvider()
-            .addWeightedBlockstate(BGBlocks.FLOWERING_PINK_BALL_CACTUS.get().getDefaultState(), 1)
-            .addWeightedBlockstate(BGBlocks.FLOWERING_RED_BALL_CACTUS.get().getDefaultState(), 1)
-            .addWeightedBlockstate(BGBlocks.FLOWERING_ORANGE_BALL_CACTUS.get().getDefaultState(), 1)
-            .addWeightedBlockstate(BGBlocks.FLOWERING_YELLOW_BALL_CACTUS.get().getDefaultState(), 1),
+            .addWeightedBlockstate(BGBlocks.PINK_BALL_CACTUS.get().getDefaultState().with(BallCactusBlock.FLOWERING, true), 1)
+            .addWeightedBlockstate(BGBlocks.RED_BALL_CACTUS.get().getDefaultState().with(BallCactusBlock.FLOWERING, true), 1)
+            .addWeightedBlockstate(BGBlocks.ORANGE_BALL_CACTUS.get().getDefaultState().with(BallCactusBlock.FLOWERING, true), 1)
+            .addWeightedBlockstate(BGBlocks.YELLOW_BALL_CACTUS.get().getDefaultState().with(BallCactusBlock.FLOWERING, true), 1),
             SimpleBlockPlacer.PLACER)
             .xSpread(5)
             .ySpread(1)
             .zSpread(5)
-            .tries(16)
+            .tries(12)
             .build())
             .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
-            .chance(32);
+            .chance(512);
+
+    public static final ConfiguredFeature<?, ?> PATCH_PINK_BALL_CACTUS = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(
+            new SimpleBlockStateProvider(BGBlocks.PINK_BALL_CACTUS.get().getDefaultState().with(BallCactusBlock.FLOWERING, true)),
+            SimpleBlockPlacer.PLACER)
+            .xSpread(4)
+            .ySpread(1)
+            .zSpread(4)
+            .tries(8)
+            .build())
+            .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
+            .chance(128);
+
+    public static final ConfiguredFeature<?, ?> PATCH_RED_BALL_CACTUS = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(
+            new SimpleBlockStateProvider(BGBlocks.RED_BALL_CACTUS.get().getDefaultState().with(BallCactusBlock.FLOWERING, true)),
+            SimpleBlockPlacer.PLACER)
+            .xSpread(4)
+            .ySpread(1)
+            .zSpread(4)
+            .tries(8)
+            .build())
+            .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
+            .chance(128);
+
+    public static final ConfiguredFeature<?, ?> PATCH_ORANGE_BALL_CACTUS = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(
+            new SimpleBlockStateProvider(BGBlocks.ORANGE_BALL_CACTUS.get().getDefaultState().with(BallCactusBlock.FLOWERING, true)),
+            SimpleBlockPlacer.PLACER)
+            .xSpread(4)
+            .ySpread(1)
+            .zSpread(4)
+            .tries(8)
+            .build())
+            .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
+            .chance(128);
+
+    public static final ConfiguredFeature<?, ?> PATCH_YELLOW_BALL_CACTUS = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(
+            new SimpleBlockStateProvider(BGBlocks.YELLOW_BALL_CACTUS.get().getDefaultState().with(BallCactusBlock.FLOWERING, true)),
+            SimpleBlockPlacer.PLACER)
+            .xSpread(4)
+            .ySpread(1)
+            .zSpread(4)
+            .tries(8)
+            .build())
+            .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
+            .chance(128);
 
     public static final ConfiguredFeature<?, ?> FAIRY_RING = BGFeatures.FAIRY_RING_FEATURE.get().withConfiguration(new NoFeatureConfig())
             .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
-            .chance(16);
+            .chance(10);
 
     public static void registerConfiguredFeatures() {
         register("rafflesia_patch", PATCH_RAFFLESIA);
         register("kabloom_bush_patch", PATCH_KABLOOM_BUSH);
         register("slime_fern_patch", PATCH_SLIME_FERN);
         register("ball_cactus_patch", PATCH_BALL_CACTUS);
+        register("pink_ball_cactus_patch", PATCH_PINK_BALL_CACTUS);
+        register("red_ball_cactus_patch", PATCH_RED_BALL_CACTUS);
+        register("orange_ball_cactus_patch", PATCH_ORANGE_BALL_CACTUS);
+        register("yellow_ball_cactus_patch", PATCH_YELLOW_BALL_CACTUS);
         register("fairy_ring", FAIRY_RING);
     }
 

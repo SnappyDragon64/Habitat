@@ -40,15 +40,15 @@ public class BGFindPollinationTargetGoal extends Goal {
     public void tick() {
         if (this.bee.getRNG().nextInt(30) == 0) {
             for(int i = 1; i <= 2; ++i) {
-                BlockPos blockpos = this.bee.getPosition().down(i);
-                BlockState blockstate = this.bee.world.getBlockState(blockpos);
-                Block block = blockstate.getBlock();
+                BlockPos pos = this.bee.getPosition().down(i);
+                BlockState state = this.bee.world.getBlockState(pos);
+                Block block = state.getBlock();
                 boolean flag = false;
                 boolean cactusFlag = false;
                 IntegerProperty integerproperty = null;
                 if (block.isIn(BlockTags.BEE_GROWABLES)) {
                     if (block == BGBlocks.KABLOOM_BUSH.get()) {
-                        int k = blockstate.get(KabloomBushBlock.AGE);
+                        int k = state.get(KabloomBushBlock.AGE);
                         if (k < 7) {
                             flag = true;
                             integerproperty = KabloomBushBlock.AGE;
@@ -57,24 +57,26 @@ public class BGFindPollinationTargetGoal extends Goal {
 
                     if (block instanceof BallCactusSeedlingBlock) {
                         BallCactusSeedlingBlock seedling = (BallCactusSeedlingBlock) block;
-                        this.bee.world.setBlockState(blockpos, seedling.getColor().getBallCactus().getDefaultState());
+                        if (state.get(BallCactusSeedlingBlock.GERMINATED))
+                            this.bee.world.setBlockState(pos, seedling.getColor().getBallCactus().getDefaultState());
+                        else
+                            this.bee.world.setBlockState(pos, state.with(BallCactusSeedlingBlock.GERMINATED, true));
                         cactusFlag = true;
                     }
 
                     if (block instanceof BallCactusBlock) {
-                        BallCactusBlock cactus = (BallCactusBlock) block;
-                        this.bee.world.setBlockState(blockpos, cactus.getColor().getFloweringBallCactus().getDefaultState());
+                        this.bee.world.setBlockState(pos, state.with(BallCactusBlock.FLOWERING, true));
                         cactusFlag = true;
                     }
 
                     if (flag) {
-                        this.bee.world.playEvent(2005, blockpos, 0);
-                        this.bee.world.setBlockState(blockpos, blockstate.with(integerproperty, blockstate.get(integerproperty) + 1));
+                        this.bee.world.playEvent(2005, pos, 0);
+                        this.bee.world.setBlockState(pos, state.with(integerproperty, state.get(integerproperty) + 1));
                         this.bee.addCropCounter();
                     }
 
                     if (cactusFlag) {
-                        this.bee.world.playEvent(2005, blockpos, 0);
+                        this.bee.world.playEvent(2005, pos, 0);
                         this.bee.addCropCounter();
                         break;
                     }

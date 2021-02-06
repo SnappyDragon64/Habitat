@@ -21,7 +21,6 @@ import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.ShearsItem;
 import net.minecraft.item.ToolItem;
 import net.minecraft.pathfinding.PathNodeType;
@@ -45,7 +44,6 @@ import java.util.Random;
 
 public class KabloomBushBlock extends BushBlock implements IGrowable {
     protected static final VoxelShape[] SHAPES = {Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D)};
-
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
     public KabloomBushBlock(AbstractBlock.Properties properties) {
@@ -119,7 +117,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
      */
 
     public boolean ticksRandomly(BlockState state) {
-        return state.get(AGE) <= 7;
+        return state.get(AGE) < 7;
     }
 
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {

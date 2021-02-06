@@ -1,6 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.core.dispenser;
 
-import mod.schnappdragon.bloom_and_gloom.common.block.FloweringBallCactusBlock;
+import mod.schnappdragon.bloom_and_gloom.common.block.BallCactusBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.RafflesiaBlock;
 import mod.schnappdragon.bloom_and_gloom.common.entity.projectile.KabloomFruitEntity;
@@ -8,6 +8,7 @@ import mod.schnappdragon.bloom_and_gloom.common.tileentity.RafflesiaTileEntity;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IBlockSource;
@@ -65,21 +66,16 @@ public class BGDispenserBehaviours {
                 BlockState state = worldIn.getBlockState(pos);
                 if (!worldIn.isRemote) {
                     if (state.isIn(BGBlocks.KABLOOM_BUSH.get()) && state.get(KabloomBushBlock.AGE) == 7) {
-                        ItemEntity item = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(BGItems.KABLOOM_FRUIT.get(), 1));
-                        item.setDefaultPickupDelay();
-                        worldIn.addEntity(item);
+                        Block.spawnAsEntity(worldIn, pos, new ItemStack(BGItems.KABLOOM_FRUIT.get()));
                         worldIn.setBlockState(pos, state.with(KabloomBushBlock.AGE, 3));
                         worldIn.playSound(null, pos, BGSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
                         if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
                             stack.setCount(0);
                         this.setSuccessful(true);
                     }
-                    else if (state.getBlock() instanceof FloweringBallCactusBlock) {
-                        FloweringBallCactusBlock cactus = (FloweringBallCactusBlock) state.getBlock();
-                        ItemEntity item = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(cactus.getColor().getFlower(), 1));
-                        item.setDefaultPickupDelay();
-                        worldIn.addEntity(item);
-                        worldIn.setBlockState(pos, cactus.getColor().getBallCactus().getDefaultState());
+                    else if (state.getBlock() instanceof BallCactusBlock && state.get(BallCactusBlock.FLOWERING)) {
+                        Block.spawnAsEntity(worldIn, pos, new ItemStack(((BallCactusBlock) state.getBlock()).getColor().getFlower()));
+                        worldIn.setBlockState(pos, state.with(BallCactusBlock.FLOWERING, false));
                         worldIn.playSound(null, pos, BGSoundEvents.BLOCK_FLOWERING_BALL_CACTUS_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
                         if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
                             stack.setCount(0);
