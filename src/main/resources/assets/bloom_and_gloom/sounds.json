@@ -36,6 +36,11 @@
       "minecraft:block/beehive/drip6"
     ]
   },
+  "block.flowering_ball_cactus.shear": {
+    "category": "block",
+    "subtitle": "bloom_and_gloom.subtitle.block.flowering_ball_cactus.shear",
+    "sounds": [ "bloom_and_gloom:block/flowering_ball_cactus/shear" ]
+  },
   "entity.kabloom_fruit.throw": {
     "category": "entity",
     "subtitle": "bloom_and_gloom.subtitle.entity.kabloom_fruit.throw",

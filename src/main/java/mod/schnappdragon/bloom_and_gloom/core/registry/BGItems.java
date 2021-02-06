@@ -24,8 +24,8 @@ public class BGItems {
             () -> new KabloomSeedsItem(BGBlocks.KABLOOM_BUSH.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
     public static final RegistryObject<Item> KABLOOM_FRUIT = ITEMS.register("kabloom_fruit",
             () -> new KabloomFruitItem((new Item.Properties()).maxStackSize(16).group(ItemGroup.MISC)));
-    public static final RegistryObject<Item> SUGARED_KABLOOM_FRUIT = ITEMS.register("sugared_kabloom_fruit",
-            () -> new Item((new Item.Properties()).group(ItemGroup.FOOD).food(BGFoods.SUGARED_KABLOOM_FRUIT)));
+    public static final RegistryObject<Item> CANDIED_KABLOOM_FRUIT = ITEMS.register("candied_kabloom_fruit",
+            () -> new Item((new Item.Properties()).group(ItemGroup.FOOD).food(BGFoods.CANDIED_KABLOOM_FRUIT)));
 
     public static final RegistryObject<Item> SLIME_FERN = ITEMS.register("slime_fern",
             () -> new WallOrBaseItem(BGBlocks.SLIME_FERN.get(), BGBlocks.WALL_SLIME_FERN.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));

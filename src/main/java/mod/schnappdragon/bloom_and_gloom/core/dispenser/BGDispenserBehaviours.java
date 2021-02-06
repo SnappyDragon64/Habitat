@@ -80,7 +80,7 @@ public class BGDispenserBehaviours {
                         item.setDefaultPickupDelay();
                         worldIn.addEntity(item);
                         worldIn.setBlockState(pos, cactus.getColor().getBallCactus().getDefaultState());
-                        worldIn.playSound(null, pos, BGSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+                        worldIn.playSound(null, pos, BGSoundEvents.BLOCK_FLOWERING_BALL_CACTUS_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
                         if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
                             stack.setCount(0);
                         this.setSuccessful(true);

@@ -11,7 +11,7 @@
   "item.bloom_and_gloom.rafflesia_seed": "Rafflesia Seed",
   "item.bloom_and_gloom.kabloom_seeds": "Kabloom Seeds",
   "item.bloom_and_gloom.kabloom_fruit": "Kabloom Fruit",
-  "item.bloom_and_gloom.sugared_kabloom_fruit": "Sugared Kabloom Fruit",
+  "item.bloom_and_gloom.candied_kabloom_fruit": "Candied Kabloom Fruit",
   "item.bloom_and_gloom.pink_ball_cactus_flower": "Pink Ball Cactus Flower",
   "item.bloom_and_gloom.red_ball_cactus_flower": "Red Ball Cactus Flower",
   "item.bloom_and_gloom.orange_ball_cactus_flower": "Orange Ball Cactus Flower",
@@ -25,6 +25,7 @@
   "bloom_and_gloom.subtitle.block.kabloom_bush.rustle": "Kabloom bush rustles",
   "bloom_and_gloom.subtitle.block.kabloom_bush.shear": "Shears defuse",
   "bloom_and_gloom.subtitle.block.slime_fern.drip": "Slime drips",
+  "bloom_and_gloom.subtitle.block.flowering_ball_cactus.shear": "Shears pluck",
 
   "bloom_and_gloom.subtitle.entity.kabloom_fruit.throw": "Kabloom Fruit flies",
   "bloom_and_gloom.subtitle.entity.kabloom_fruit.explosion": "Kabloom",

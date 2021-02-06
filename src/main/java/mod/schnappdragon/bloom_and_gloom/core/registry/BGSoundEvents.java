@@ -19,6 +19,8 @@ public class BGSoundEvents {
 
     public static final RegistryObject<SoundEvent> BLOCK_SLIME_FERN_DROP = register("block.slime_fern.drip");
 
+    public static final RegistryObject<SoundEvent> BLOCK_FLOWERING_BALL_CACTUS_SHEAR = register("block.flowering_ball_cactus.shear");
+
     public static final RegistryObject<SoundEvent> ENTITY_KABLOOM_FRUIT_THROW = register("entity.kabloom_fruit.throw");
     public static final RegistryObject<SoundEvent> ENTITY_KABLOOM_FRUIT_EXPLODE = register("entity.kabloom_fruit.explode");
 
