@@ -2,27 +2,49 @@ package mod.schnappdragon.bloom_and_gloom.common.block;
 
 import mod.schnappdragon.bloom_and_gloom.common.misc.BallCactusColor;
 import mod.schnappdragon.bloom_and_gloom.common.state.properties.BGBlockStateProperties;
+import mod.schnappdragon.bloom_and_gloom.core.misc.BGBlockTags;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGEffects;
 import net.minecraft.block.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.Effects;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BallCactusSeedlingBlock extends AbstractBallCactusBlock implements IGrowable {
+public class BallCactusSeedlingBlock extends FlowerBlock implements IGrowable {
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 3.0D, 11.0D);
     public static final BooleanProperty GERMINATED = BGBlockStateProperties.GERMINATED;
+    private final BallCactusColor color;
 
-    public BallCactusSeedlingBlock(BallCactusColor color, AbstractBlock.Properties properties) {
-        super(color, properties);
+    public BallCactusSeedlingBlock(BallCactusColor color, Properties properties) {
+        super(Effects.REGENERATION, 5, properties);
+        this.color = color;
         this.setDefaultState(this.stateContainer.getBaseState().with(GERMINATED, false));
+    }
+
+    public BallCactusColor getColor() {
+        return color;
+    }
+
+    @Override
+    public Effect getStewEffect() {
+        return BGEffects.PRICKLING.get();
     }
 
     @Override
@@ -41,13 +63,32 @@ public class BallCactusSeedlingBlock extends AbstractBallCactusBlock implements 
     }
 
     @Override
+    public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+        return SHAPE;
+    }
+
+    @Override
     public VoxelShape getRaytraceShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return super.getRaytraceShape(state, worldIn, pos);
+        return SHAPE;
+    }
+
+    @Override
+    public OffsetType getOffsetType() {
+        return OffsetType.NONE;
+    }
+
+    /*
+     * Position Validity Methods
+     */
+
+    @Override
+    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
+        return isValidGround(state, worldIn, pos.down());
     }
 
     @Override
     protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return state.isIn(Blocks.CACTUS) || super.isValidGround(state, worldIn, pos);
+        return worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_FLOWER_PLACEABLE_ON) || worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_PLANTABLE_ON);
     }
 
     /*
@@ -59,7 +100,7 @@ public class BallCactusSeedlingBlock extends AbstractBallCactusBlock implements 
     }
 
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if (notOnCactus(worldIn, pos) && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(10) == 0)) {
+        if (canGrow(worldIn, pos) && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(10) == 0)) {
             if (state.get(GERMINATED))
                 worldIn.setBlockState(pos, color.getBallCactus().getDefaultState());
             else
@@ -69,11 +110,11 @@ public class BallCactusSeedlingBlock extends AbstractBallCactusBlock implements 
     }
 
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return notOnCactus((World) worldIn, pos);
+        return canGrow((World) worldIn, pos);
     }
 
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return notOnCactus(worldIn, pos);
+        return canGrow(worldIn, pos);
     }
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
@@ -83,7 +124,28 @@ public class BallCactusSeedlingBlock extends AbstractBallCactusBlock implements 
             worldIn.setBlockState(pos, state.with(GERMINATED, true));
     }
 
-    private boolean notOnCactus(World worldIn, BlockPos pos) {
-        return !worldIn.getBlockState(pos.down()).isIn(Blocks.CACTUS);
+    private boolean canGrow(World worldIn, BlockPos pos) {
+        return !worldIn.getBlockState(pos.down()).isIn(BGBlockTags.BALL_CACTUS_FLOWER_PLACEABLE_ON);
+    }
+
+    /*
+     * Entity Collision Method
+     */
+
+    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+        if (entityIn.getType() != EntityType.BEE) {
+            if (state.get(BallCactusSeedlingBlock.GERMINATED))
+                entityIn.attackEntityFrom(DamageSource.CACTUS, 1.0F);
+        }
+    }
+
+    /*
+     * Pathfinding Method
+     */
+
+    @Nullable
+    @Override
+    public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
+        return state.get(GERMINATED) ? PathNodeType.DAMAGE_CACTUS : null;
     }
 }

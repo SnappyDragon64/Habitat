@@ -8,6 +8,7 @@ import net.minecraft.tags.ITag.INamedTag;
 public class BGBlockTags {
     public static final INamedTag<Block> RAFFLESIA_PLANTABLE_ON = makeTag("rafflesia_plantable_on");
     public static final INamedTag<Block> BALL_CACTUS_PLANTABLE_ON = makeTag("ball_cactus_plantable_on");
+    public static final INamedTag<Block> BALL_CACTUS_FLOWER_PLACEABLE_ON = makeTag("ball_cactus_flower_placeable_on");
 
     private static INamedTag<Block> makeTag(String id) {
         return BlockTags.makeWrapperTag(BloomAndGloom.MOD_ID + ":" + id);

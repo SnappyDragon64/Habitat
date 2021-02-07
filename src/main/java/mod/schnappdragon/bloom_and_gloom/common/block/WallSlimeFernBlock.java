@@ -22,7 +22,7 @@ public class WallSlimeFernBlock extends AbstractSlimeFernBlock {
 
     public static final DirectionProperty HORIZONTAL_FACING = HorizontalBlock.HORIZONTAL_FACING;
 
-    public WallSlimeFernBlock(AbstractBlock.Properties properties) {
+    public WallSlimeFernBlock(Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH));
     }

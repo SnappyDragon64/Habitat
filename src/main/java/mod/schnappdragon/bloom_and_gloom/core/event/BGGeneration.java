@@ -29,9 +29,9 @@ public class BGGeneration {
 
             if (event.getCategory() == Biome.Category.DESERT || event.getCategory() == Biome.Category.MESA)
                 event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_BALL_CACTUS)
+                        .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_ORANGE_BALL_CACTUS)
                         .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_PINK_BALL_CACTUS)
                         .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_RED_BALL_CACTUS)
-                        .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_ORANGE_BALL_CACTUS)
                         .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_YELLOW_BALL_CACTUS);
 
             if (event.getCategory() == Biome.Category.FOREST)

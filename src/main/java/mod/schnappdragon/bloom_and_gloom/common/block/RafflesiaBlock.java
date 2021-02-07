@@ -71,7 +71,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     public static final BooleanProperty POLLINATED = BGBlockStateProperties.POLLINATED;
 
 
-    public RafflesiaBlock(AbstractBlock.Properties properties) {
+    public RafflesiaBlock(Properties properties) {
         super(properties);
 
         this.setDefaultState(this.stateContainer.getBaseState()

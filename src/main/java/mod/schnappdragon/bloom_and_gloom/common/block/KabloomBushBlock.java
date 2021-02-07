@@ -3,7 +3,6 @@ package mod.schnappdragon.bloom_and_gloom.common.block;
 import mod.schnappdragon.bloom_and_gloom.common.entity.projectile.KabloomFruitEntity;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
@@ -46,7 +45,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     protected static final VoxelShape[] SHAPES = {Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D)};
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
-    public KabloomBushBlock(AbstractBlock.Properties properties) {
+    public KabloomBushBlock(Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(AGE, 0));
     }

@@ -24,7 +24,7 @@ public class SlimeFernBlock extends AbstractSlimeFernBlock {
 
     public static final BooleanProperty ON_CEILING = BGBlockStateProperties.ON_CEILING;
 
-    public SlimeFernBlock(AbstractBlock.Properties properties) {
+    public SlimeFernBlock(Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(ON_CEILING, false));
     }

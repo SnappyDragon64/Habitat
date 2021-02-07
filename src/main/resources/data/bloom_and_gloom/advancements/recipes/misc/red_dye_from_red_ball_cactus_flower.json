@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "minecraft:red_dye_from_red_ball_cactus_flower"
+      "bloom_and_gloom:red_dye_from_red_ball_cactus_flower"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:red_ball_cactus_flower"
+            "item": "bloom_and_gloom:red_ball_cactus_flower"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "minecraft:red_dye_from_red_ball_cactus_flower"
+        "recipe": "bloom_and_gloom:red_dye_from_red_ball_cactus_flower"
       }
     }
   },
