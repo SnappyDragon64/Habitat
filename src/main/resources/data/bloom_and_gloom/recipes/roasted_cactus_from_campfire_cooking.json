@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "tag": "bloom_and_gloom:ball_cacti"
+  },
+  "result": "bloom_and_gloom:roasted_cactus",
+  "experience": 0.35,
+  "cookingtime": 200
+}

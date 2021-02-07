@@ -6,8 +6,7 @@ import mod.schnappdragon.bloom_and_gloom.common.tileentity.RafflesiaTileEntity;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
-import mod.schnappdragon.bloom_and_gloom.core.misc.BGBlockTags;
-import net.minecraft.block.AbstractBlock;
+import mod.schnappdragon.bloom_and_gloom.core.tags.BGBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
@@ -70,15 +69,9 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     public static final BooleanProperty HAS_STEW = BGBlockStateProperties.HAS_STEW;
     public static final BooleanProperty POLLINATED = BGBlockStateProperties.POLLINATED;
 
-
     public RafflesiaBlock(Properties properties) {
         super(properties);
-
-        this.setDefaultState(this.stateContainer.getBaseState()
-                        .with(AGE, 0)
-                        .with(ON_COOLDOWN, false)
-                        .with(HAS_STEW, false)
-                        .with(POLLINATED, false)
+        this.setDefaultState(this.stateContainer.getBaseState().with(AGE, 0).with(ON_COOLDOWN, false).with(HAS_STEW, false).with(POLLINATED, false)
         );
     }
 

@@ -1,4 +1,4 @@
-package mod.schnappdragon.bloom_and_gloom.core.misc;
+package mod.schnappdragon.bloom_and_gloom.core.tags;
 
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
 import net.minecraft.block.Block;

@@ -2,7 +2,7 @@ package mod.schnappdragon.bloom_and_gloom.common.block;
 
 import mod.schnappdragon.bloom_and_gloom.common.misc.BallCactusColor;
 import mod.schnappdragon.bloom_and_gloom.common.state.properties.BGBlockStateProperties;
-import mod.schnappdragon.bloom_and_gloom.core.misc.BGBlockTags;
+import mod.schnappdragon.bloom_and_gloom.core.tags.BGBlockTags;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
