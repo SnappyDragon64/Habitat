@@ -23,11 +23,11 @@ import net.minecraftforge.common.ForgeHooks;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BallCactusSeedlingBlock extends BushBlock implements IGrowable {
+public class GrowingBallCactusBlock extends BushBlock implements IGrowable {
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 3.0D, 11.0D);
     private final BallCactusColor color;
 
-    public BallCactusSeedlingBlock(BallCactusColor color, Properties properties) {
+    public GrowingBallCactusBlock(BallCactusColor color, Properties properties) {
         super(properties);
         this.color = color;
     }

@@ -65,7 +65,7 @@ public class BallCactusFlowerBlock extends BGFlowerBlock implements IGrowable {
 
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         if (canGrow(worldIn, pos) && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(10) == 0)) {
-            worldIn.setBlockState(pos, color.getBallCactusSeedling().getDefaultState());
+            worldIn.setBlockState(pos, color.getGrowingBallCactus().getDefaultState());
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
     }
@@ -79,7 +79,7 @@ public class BallCactusFlowerBlock extends BGFlowerBlock implements IGrowable {
     }
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        worldIn.setBlockState(pos, color.getBallCactusSeedling().getDefaultState());
+        worldIn.setBlockState(pos, color.getGrowingBallCactus().getDefaultState());
     }
 
     private boolean canGrow(World worldIn, BlockPos pos) {

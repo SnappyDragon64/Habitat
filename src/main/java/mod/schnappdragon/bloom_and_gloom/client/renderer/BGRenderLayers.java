@@ -20,10 +20,10 @@ public class BGRenderLayers {
         RenderTypeLookup.setRenderLayer(BGBlocks.WALL_SLIME_FERN.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_SLIME_FERN.get(), RenderType.getCutout());
 
-        RenderTypeLookup.setRenderLayer(BGBlocks.ORANGE_BALL_CACTUS_SEEDLING.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BGBlocks.PINK_BALL_CACTUS_SEEDLING.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BGBlocks.RED_BALL_CACTUS_SEEDLING.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(BGBlocks.YELLOW_BALL_CACTUS_SEEDLING.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.ORANGE_BALL_CACTUS_FLOWER.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.PINK_BALL_CACTUS_FLOWER.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.RED_BALL_CACTUS_FLOWER.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.YELLOW_BALL_CACTUS_FLOWER.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BGBlocks.ORANGE_BALL_CACTUS.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BGBlocks.PINK_BALL_CACTUS.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BGBlocks.RED_BALL_CACTUS.get(), RenderType.getCutout());

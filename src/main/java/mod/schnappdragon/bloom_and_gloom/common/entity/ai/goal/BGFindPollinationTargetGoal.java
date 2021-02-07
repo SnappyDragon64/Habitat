@@ -2,7 +2,7 @@ package mod.schnappdragon.bloom_and_gloom.common.entity.ai.goal;
 
 import mod.schnappdragon.bloom_and_gloom.common.block.BallCactusBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.BallCactusFlowerBlock;
-import mod.schnappdragon.bloom_and_gloom.common.block.BallCactusSeedlingBlock;
+import mod.schnappdragon.bloom_and_gloom.common.block.GrowingBallCactusBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import net.minecraft.block.Block;
@@ -58,13 +58,13 @@ public class BGFindPollinationTargetGoal extends Goal {
 
                     if (block instanceof BallCactusFlowerBlock) {
                         BallCactusFlowerBlock flower = (BallCactusFlowerBlock) block;
-                        this.bee.world.setBlockState(pos, flower.getColor().getBallCactusSeedling().getDefaultState());
+                        this.bee.world.setBlockState(pos, flower.getColor().getGrowingBallCactus().getDefaultState());
                         cactusFlag = true;
                     }
 
-                    if (block instanceof BallCactusSeedlingBlock) {
-                        BallCactusSeedlingBlock flower = (BallCactusSeedlingBlock) block;
-                        this.bee.world.setBlockState(pos, flower.getColor().getBallCactus().getDefaultState());
+                    if (block instanceof GrowingBallCactusBlock) {
+                        GrowingBallCactusBlock cactus = (GrowingBallCactusBlock) block;
+                        this.bee.world.setBlockState(pos, cactus.getColor().getBallCactus().getDefaultState());
                         cactusFlag = true;
                     }
 
@@ -82,7 +82,6 @@ public class BGFindPollinationTargetGoal extends Goal {
                     if (cactusFlag) {
                         this.bee.world.playEvent(2005, pos, 0);
                         this.bee.addCropCounter();
-                        break;
                     }
                 }
             }

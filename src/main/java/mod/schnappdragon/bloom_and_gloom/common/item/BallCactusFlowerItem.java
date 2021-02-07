@@ -1,10 +1,10 @@
 package mod.schnappdragon.bloom_and_gloom.common.item;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.BlockNamedItem;
+import net.minecraft.item.BlockItem;
 import net.minecraft.util.DamageSource;
 
-public class BallCactusFlowerItem extends BlockNamedItem {
+public class BallCactusFlowerItem extends BlockItem {
     public BallCactusFlowerItem(Block blockIn, Properties properties) {
         super(blockIn, properties);
     }
