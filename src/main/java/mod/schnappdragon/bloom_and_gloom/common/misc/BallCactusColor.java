@@ -22,6 +22,10 @@ public enum BallCactusColor {
         return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(BloomAndGloom.MOD_ID, this.color + "_ball_cactus"));
     }
 
+    public Block getBallCactusSeedling() {
+        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(BloomAndGloom.MOD_ID, this.color + "_ball_cactus_seedling"));
+    }
+
     public Item getFlower() {
         return ForgeRegistries.ITEMS.getValue(new ResourceLocation(BloomAndGloom.MOD_ID, this.color + "_ball_cactus_flower"));
     }

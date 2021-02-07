@@ -1,6 +1,7 @@
 package mod.schnappdragon.bloom_and_gloom.common.entity.ai.goal;
 
 import mod.schnappdragon.bloom_and_gloom.common.block.BallCactusBlock;
+import mod.schnappdragon.bloom_and_gloom.common.block.BallCactusFlowerBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.BallCactusSeedlingBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
@@ -55,12 +56,15 @@ public class BGFindPollinationTargetGoal extends Goal {
                         }
                     }
 
+                    if (block instanceof BallCactusFlowerBlock) {
+                        BallCactusFlowerBlock flower = (BallCactusFlowerBlock) block;
+                        this.bee.world.setBlockState(pos, flower.getColor().getBallCactusSeedling().getDefaultState());
+                        cactusFlag = true;
+                    }
+
                     if (block instanceof BallCactusSeedlingBlock) {
-                        BallCactusSeedlingBlock seedling = (BallCactusSeedlingBlock) block;
-                        if (state.get(BallCactusSeedlingBlock.GERMINATED))
-                            this.bee.world.setBlockState(pos, seedling.getColor().getBallCactus().getDefaultState());
-                        else
-                            this.bee.world.setBlockState(pos, state.with(BallCactusSeedlingBlock.GERMINATED, true));
+                        BallCactusSeedlingBlock flower = (BallCactusSeedlingBlock) block;
+                        this.bee.world.setBlockState(pos, flower.getColor().getBallCactus().getDefaultState());
                         cactusFlag = true;
                     }
 
