@@ -1,8 +1,6 @@
 {
   "replace": false,
   "values": [
-    "bloom_and_gloom:kabloom_bush",
-    "#bloom_and_gloom:ball_cactus_flowers",
     "#bloom_and_gloom:growing_ball_cacti",
     "#bloom_and_gloom:ball_cacti"
   ]
