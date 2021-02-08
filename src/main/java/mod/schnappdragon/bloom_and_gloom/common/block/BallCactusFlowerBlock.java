@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
 import net.minecraft.potion.Effect;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -52,7 +53,7 @@ public class BallCactusFlowerBlock extends BGFlowerBlock implements IGrowable {
 
     @Override
     protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_FLOWER_PLACEABLE_ON) || worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_PLANTABLE_ON);
+        return (Block.hasEnoughSolidSide((IWorldReader) worldIn, pos, Direction.UP) && worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_FLOWER_PLACEABLE_ON)) || worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_PLANTABLE_ON);
     }
 
     /*

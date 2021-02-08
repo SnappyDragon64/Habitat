@@ -2,7 +2,12 @@ package mod.schnappdragon.bloom_and_gloom.common.block;
 
 import mod.schnappdragon.bloom_and_gloom.common.misc.BallCactusColor;
 import net.minecraft.block.*;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -13,6 +18,21 @@ import java.util.Random;
 public class BallCactusBlock extends AbstractBallCactusBlock implements IGrowable {
     public BallCactusBlock(BallCactusColor color, Properties properties) {
         super(color, properties);
+    }
+
+    /*
+     * Flower Adding Method
+     */
+
+    @Override
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (player.getHeldItem(handIn).getItem() == getColor().getFlower()) {
+            player.getHeldItem(handIn).shrink(1);
+            worldIn.setBlockState(pos, getColor().getFloweringBallCactus().getDefaultState(), 2);
+            worldIn.playSound(null, pos, SoundType.PLANT.getPlaceSound(), SoundCategory.BLOCKS, SoundType.PLANT.getVolume() + 1.0F / 2.0F, SoundType.PLANT.getPitch() * 0.8F);
+            return ActionResultType.func_233537_a_(worldIn.isRemote);
+        }
+        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
     }
 
     /*
