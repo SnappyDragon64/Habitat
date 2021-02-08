@@ -16,7 +16,7 @@
         "south": {"uv": [0, 0, 5, 6], "texture": "#cactus"},
         "west": {"uv": [0, 0, 5, 6], "texture": "#cactus"},
         "up": {"uv": [0, 6, 5, 16], "texture": "#cactus"},
-        "down": {"uv": [5, 6, 10, 16], "texture": "#cactus"}
+        "down": {"uv": [5, 6, 10, 16], "texture": "#cactus", "cullface": "down"}
       }
     }
   ]
