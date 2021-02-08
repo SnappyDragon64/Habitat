@@ -27,7 +27,8 @@ public class BallCactusBlock extends AbstractBallCactusBlock implements IGrowabl
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (player.getHeldItem(handIn).getItem() == getColor().getFlower()) {
-            player.getHeldItem(handIn).shrink(1);
+            if (!player.abilities.isCreativeMode)
+                player.getHeldItem(handIn).shrink(1);
             worldIn.setBlockState(pos, getColor().getFloweringBallCactus().getDefaultState(), 2);
             worldIn.playSound(null, pos, SoundType.PLANT.getPlaceSound(), SoundCategory.BLOCKS, SoundType.PLANT.getVolume() + 1.0F / 2.0F, SoundType.PLANT.getPitch() * 0.8F);
             return ActionResultType.func_233537_a_(worldIn.isRemote);

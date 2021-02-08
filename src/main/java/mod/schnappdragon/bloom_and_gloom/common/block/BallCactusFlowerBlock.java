@@ -53,7 +53,7 @@ public class BallCactusFlowerBlock extends BGFlowerBlock implements IGrowable {
 
     @Override
     protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return (Block.hasEnoughSolidSide((IWorldReader) worldIn, pos, Direction.UP) && worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_FLOWER_PLACEABLE_ON)) || worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_PLANTABLE_ON);
+        return (Block.hasEnoughSolidSide((IWorldReader) worldIn, pos.down(), Direction.UP) && worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_FLOWER_PLACEABLE_ON)) || worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_PLANTABLE_ON);
     }
 
     /*
