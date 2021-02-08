@@ -69,7 +69,8 @@ public class BGFindPollinationTargetGoal extends Goal {
                     }
 
                     if (block instanceof BallCactusBlock) {
-                        this.bee.world.setBlockState(pos, state.with(BallCactusBlock.FLOWERING, true));
+                        BallCactusBlock cactus = (BallCactusBlock) block;
+                        this.bee.world.setBlockState(pos, cactus.getColor().getFloweringBallCactus().getDefaultState());
                         cactusFlag = true;
                     }
 

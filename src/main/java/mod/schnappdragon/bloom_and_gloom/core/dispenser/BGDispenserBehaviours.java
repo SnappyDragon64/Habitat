@@ -1,6 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.core.dispenser;
 
-import mod.schnappdragon.bloom_and_gloom.common.block.BallCactusBlock;
+import mod.schnappdragon.bloom_and_gloom.common.block.FloweringBallCactusBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.RafflesiaBlock;
 import mod.schnappdragon.bloom_and_gloom.common.entity.projectile.KabloomFruitEntity;
@@ -16,7 +16,6 @@ import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.OptionalDispenseBehavior;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -73,9 +72,10 @@ public class BGDispenserBehaviours {
                             stack.setCount(0);
                         this.setSuccessful(true);
                     }
-                    else if (state.getBlock() instanceof BallCactusBlock && state.get(BallCactusBlock.FLOWERING)) {
-                        Block.spawnAsEntity(worldIn, pos, new ItemStack(((BallCactusBlock) state.getBlock()).getColor().getFlower()));
-                        worldIn.setBlockState(pos, state.with(BallCactusBlock.FLOWERING, false));
+                    else if (state.getBlock() instanceof FloweringBallCactusBlock) {
+                        FloweringBallCactusBlock cactus = (FloweringBallCactusBlock) state.getBlock();
+                        Block.spawnAsEntity(worldIn, pos, new ItemStack(cactus.getColor().getFlower()));
+                        worldIn.setBlockState(pos, cactus.getColor().getBallCactus().getDefaultState());
                         worldIn.playSound(null, pos, BGSoundEvents.BLOCK_FLOWERING_BALL_CACTUS_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
                         if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
                             stack.setCount(0);
