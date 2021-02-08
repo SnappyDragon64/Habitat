@@ -9,6 +9,15 @@
           "name": "bloom_and_gloom:yellow_ball_cactus"
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bloom_and_gloom:yellow_ball_cactus_flower"
+        }
+      ]
     }
   ],
   "functions": [

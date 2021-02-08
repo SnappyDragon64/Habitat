@@ -9,24 +9,6 @@
           "name": "bloom_and_gloom:orange_ball_cactus"
         }
       ]
-    },
-    {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "bloom_and_gloom:orange_ball_cactus_flower"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "bloom_and_gloom:orange_ball_cactus",
-          "properties": {
-            "flowering": true
-          }
-        }
-      ]
     }
   ],
   "functions": [
