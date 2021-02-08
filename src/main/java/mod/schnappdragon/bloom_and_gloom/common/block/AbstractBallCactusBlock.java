@@ -35,17 +35,11 @@ public abstract class AbstractBallCactusBlock extends BushBlock {
     }
 
     /*
-     * Position Validity Methods
+     * Position Validity Method
      */
 
-    @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return isValidGround(state, worldIn, pos.down());
-    }
-
-    @Override
-    protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_PLANTABLE_ON);
+        return worldIn.getBlockState(pos.down()).isIn(BGBlockTags.BALL_CACTUS_PLANTABLE_ON);
     }
 
     /*

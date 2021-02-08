@@ -28,5 +28,13 @@ public class BGRenderLayers {
         RenderTypeLookup.setRenderLayer(BGBlocks.FLOWERING_PINK_BALL_CACTUS.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BGBlocks.FLOWERING_RED_BALL_CACTUS.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BGBlocks.FLOWERING_YELLOW_BALL_CACTUS.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_ORANGE_BALL_CACTUS_FLOWER.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_PINK_BALL_CACTUS_FLOWER.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_RED_BALL_CACTUS_FLOWER.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_YELLOW_BALL_CACTUS_FLOWER.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_ORANGE_BALL_CACTUS.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_PINK_BALL_CACTUS.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_RED_BALL_CACTUS.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_YELLOW_BALL_CACTUS.get(), RenderType.getCutout());
     }
 }

@@ -6,7 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
 import net.minecraft.potion.Effect;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -43,17 +42,11 @@ public class BallCactusFlowerBlock extends BGFlowerBlock implements IGrowable {
     }
 
     /*
-     * Position Validity Methods
+     * Position Validity Method
      */
 
-    @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return isValidGround(state, worldIn, pos.down());
-    }
-
-    @Override
-    protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return (Block.hasEnoughSolidSide((IWorldReader) worldIn, pos.down(), Direction.UP) && worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_FLOWER_PLACEABLE_ON)) || worldIn.getBlockState(pos).isIn(BGBlockTags.BALL_CACTUS_PLANTABLE_ON);
+        return worldIn.getBlockState(pos.down()).isIn(BGBlockTags.BALL_CACTUS_FLOWER_PLACEABLE_ON) || worldIn.getBlockState(pos.down()).isIn(BGBlockTags.BALL_CACTUS_PLANTABLE_ON);
     }
 
     /*
@@ -65,10 +58,8 @@ public class BallCactusFlowerBlock extends BGFlowerBlock implements IGrowable {
     }
 
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if (canGrow(worldIn, pos) && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(10) == 0)) {
+        if (canGrow(worldIn, pos) && random.nextInt(10) == 0)
             worldIn.setBlockState(pos, color.getGrowingBallCactus().getDefaultState());
-            ForgeHooks.onCropsGrowPost(worldIn, pos, state);
-        }
     }
 
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {

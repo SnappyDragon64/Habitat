@@ -41,10 +41,8 @@ public class GrowingBallCactusBlock extends AbstractBallCactusBlock implements I
     }
 
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if (ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(10) == 0)) {
+        if (random.nextInt(10) == 0)
             worldIn.setBlockState(pos, getColor().getBallCactus().getDefaultState());
-            ForgeHooks.onCropsGrowPost(worldIn, pos, state);
-        }
     }
 
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
