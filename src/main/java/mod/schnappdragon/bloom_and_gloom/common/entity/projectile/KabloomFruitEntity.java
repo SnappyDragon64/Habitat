@@ -134,7 +134,8 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
                     }
                 }
 
-                entity.attackEntityFrom(BGDamageSources.causeKabloomDamage(this, this.func_234616_v_()), dmg);
+                if (entity instanceof LivingEntity)
+                    entity.attackEntityFrom(BGDamageSources.causeKabloomDamage(this, this.func_234616_v_()), dmg);
             }
         }
     }

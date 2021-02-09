@@ -1,8 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.core.registry;
 
-import mod.schnappdragon.bloom_and_gloom.common.item.BallCactusFlowerItem;
 import mod.schnappdragon.bloom_and_gloom.common.item.KabloomFruitItem;
-import mod.schnappdragon.bloom_and_gloom.common.item.KabloomSeedsItem;
 import mod.schnappdragon.bloom_and_gloom.common.item.WallOrBaseItem;
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGFoods;
@@ -21,7 +19,7 @@ public class BGItems {
             () -> new BlockNamedItem(BGBlocks.RAFFLESIA.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
 
     public static final RegistryObject<Item> KABLOOM_SEEDS = ITEMS.register("kabloom_seeds",
-            () -> new KabloomSeedsItem(BGBlocks.KABLOOM_BUSH.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
+            () -> new BlockNamedItem(BGBlocks.KABLOOM_BUSH.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
     public static final RegistryObject<Item> KABLOOM_FRUIT = ITEMS.register("kabloom_fruit",
             () -> new KabloomFruitItem((new Item.Properties()).maxStackSize(16).group(ItemGroup.MISC)));
     public static final RegistryObject<Item> CANDIED_KABLOOM_FRUIT = ITEMS.register("candied_kabloom_fruit",
@@ -31,13 +29,13 @@ public class BGItems {
             () -> new WallOrBaseItem(BGBlocks.SLIME_FERN.get(), BGBlocks.WALL_SLIME_FERN.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
 
     public static final RegistryObject<Item> ORANGE_BALL_CACTUS_FLOWER = ITEMS.register("orange_ball_cactus_flower",
-            () -> new BallCactusFlowerItem(BGBlocks.ORANGE_BALL_CACTUS_FLOWER.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
+            () -> new BlockItem(BGBlocks.ORANGE_BALL_CACTUS_FLOWER.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> PINK_BALL_CACTUS_FLOWER = ITEMS.register("pink_ball_cactus_flower",
-            () -> new BallCactusFlowerItem(BGBlocks.PINK_BALL_CACTUS_FLOWER.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
+            () -> new BlockItem(BGBlocks.PINK_BALL_CACTUS_FLOWER.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> RED_BALL_CACTUS_FLOWER = ITEMS.register("red_ball_cactus_flower",
-            () -> new BallCactusFlowerItem(BGBlocks.RED_BALL_CACTUS_FLOWER.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
+            () -> new BlockItem(BGBlocks.RED_BALL_CACTUS_FLOWER.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> YELLOW_BALL_CACTUS_FLOWER = ITEMS.register("yellow_ball_cactus_flower",
-            () -> new BallCactusFlowerItem(BGBlocks.YELLOW_BALL_CACTUS_FLOWER.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
+            () -> new BlockItem(BGBlocks.YELLOW_BALL_CACTUS_FLOWER.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> ORANGE_BALL_CACTUS = ITEMS.register("orange_ball_cactus",
             () -> new BlockItem(BGBlocks.ORANGE_BALL_CACTUS.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> PINK_BALL_CACTUS = ITEMS.register("pink_ball_cactus",

@@ -5,6 +5,7 @@ import mod.schnappdragon.bloom_and_gloom.core.tags.BGBlockTags;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
@@ -47,7 +48,7 @@ public abstract class AbstractBallCactusBlock extends BushBlock {
      */
 
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn.getType() != EntityType.BEE) {
+        if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE) {
             entityIn.attackEntityFrom(DamageSource.CACTUS, 1.0F);
         }
     }
