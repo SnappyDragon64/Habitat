@@ -9,6 +9,6 @@ import javax.annotation.Nullable;
 
 public class BGDamageSources {
     public static DamageSource causeKabloomDamage(KabloomFruitEntity kabloom, @Nullable Entity indirectEntityIn) {
-        return new IndirectEntityDamageSource("bloom_and_gloom.kabloom", kabloom, indirectEntityIn).setExplosion();
+        return new IndirectEntityDamageSource("bloom_and_gloom.kabloom", kabloom, indirectEntityIn);
     }
 }
