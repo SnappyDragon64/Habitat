@@ -9,7 +9,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.item.BoatEntity;
+import net.minecraft.entity.item.EnderCrystalEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
@@ -134,7 +137,7 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
                     }
                 }
 
-                if (entity instanceof LivingEntity)
+                if (entity instanceof LivingEntity || entity instanceof BoatEntity || entity instanceof AbstractMinecartEntity || entity instanceof EnderCrystalEntity)
                     entity.attackEntityFrom(BGDamageSources.causeKabloomDamage(this, this.func_234616_v_()), dmg);
             }
         }
