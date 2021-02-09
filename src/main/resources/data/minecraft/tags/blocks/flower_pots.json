@@ -9,6 +9,14 @@
       "id": "bloom_and_gloom:potted_kabloom_bush",
       "required": false
     },
-    "bloom_and_gloom:potted_slime_fern"
+    "bloom_and_gloom:potted_slime_fern",
+    "bloom_and_gloom:potted_orange_ball_cactus_flower",
+    "bloom_and_gloom:potted_pink_ball_cactus_flower",
+    "bloom_and_gloom:potted_red_ball_cactus_flower",
+    "bloom_and_gloom:potted_yellow_ball_cactus_flower",
+    "bloom_and_gloom:potted_orange_ball_cactus",
+    "bloom_and_gloom:potted_pink_ball_cactus",
+    "bloom_and_gloom:potted_red_ball_cactus",
+    "bloom_and_gloom:potted_yellow_ball_cactus"
   ]
 }
