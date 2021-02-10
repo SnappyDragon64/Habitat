@@ -15,13 +15,13 @@ public class BGTrades {
         event.getGenericTrades().add(new BasicTrade(3, new ItemStack(BGItems.RAFFLESIA_SEED.get()), 12, 10, 1));
         event.getGenericTrades().add(new BasicTrade(3, new ItemStack(BGItems.KABLOOM_FRUIT.get()), 12, 10, 1));
         event.getGenericTrades().add(new BasicTrade(1, new ItemStack(BGItems.SLIME_FERN.get()), 12, 10, 1));
-        event.getGenericTrades().add(new BasicTrade(1, new ItemStack(BGItems.ORANGE_BALL_CACTUS_FLOWER.get()), 12, 10, 1));
-        event.getGenericTrades().add(new BasicTrade(1, new ItemStack(BGItems.PINK_BALL_CACTUS_FLOWER.get()), 12, 10, 1));
-        event.getGenericTrades().add(new BasicTrade(1, new ItemStack(BGItems.RED_BALL_CACTUS_FLOWER.get()), 12, 10, 1));
-        event.getGenericTrades().add(new BasicTrade(1, new ItemStack(BGItems.YELLOW_BALL_CACTUS_FLOWER.get()), 12, 10, 1));
-        event.getGenericTrades().add(new BasicTrade(2, new ItemStack(BGItems.ORANGE_BALL_CACTUS.get()), 5, 10, 1));
-        event.getGenericTrades().add(new BasicTrade(2, new ItemStack(BGItems.PINK_BALL_CACTUS.get()), 5, 10, 1));
-        event.getGenericTrades().add(new BasicTrade(2, new ItemStack(BGItems.RED_BALL_CACTUS.get()), 5, 10, 1));
-        event.getGenericTrades().add(new BasicTrade(2, new ItemStack(BGItems.YELLOW_BALL_CACTUS.get()), 5, 10, 1));
+        event.getGenericTrades().add(new BasicTrade(2, new ItemStack(BGItems.ORANGE_BALL_CACTUS_FLOWER.get()), 8, 10, 1));
+        event.getGenericTrades().add(new BasicTrade(2, new ItemStack(BGItems.PINK_BALL_CACTUS_FLOWER.get()), 8, 10, 1));
+        event.getGenericTrades().add(new BasicTrade(2, new ItemStack(BGItems.RED_BALL_CACTUS_FLOWER.get()), 8, 10, 1));
+        event.getGenericTrades().add(new BasicTrade(2, new ItemStack(BGItems.YELLOW_BALL_CACTUS_FLOWER.get()), 8, 10, 1));
+        event.getGenericTrades().add(new BasicTrade(3, new ItemStack(BGItems.ORANGE_BALL_CACTUS.get()), 5, 10, 1));
+        event.getGenericTrades().add(new BasicTrade(3, new ItemStack(BGItems.PINK_BALL_CACTUS.get()), 5, 10, 1));
+        event.getGenericTrades().add(new BasicTrade(3, new ItemStack(BGItems.RED_BALL_CACTUS.get()), 5, 10, 1));
+        event.getGenericTrades().add(new BasicTrade(3, new ItemStack(BGItems.YELLOW_BALL_CACTUS.get()), 5, 10, 1));
     }
 }
