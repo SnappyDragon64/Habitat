@@ -28,7 +28,7 @@ public class ParticleEmittingBlock extends Block {
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        if (rand.nextInt(8) == 0) {
+        if (rand.nextInt(5) == 0) {
             VoxelShape voxelshape = this.getShape(stateIn, worldIn, pos, ISelectionContext.dummy());
             Vector3d vector3d = voxelshape.getBoundingBox().getCenter();
             double X = (double) pos.getX() + vector3d.x;

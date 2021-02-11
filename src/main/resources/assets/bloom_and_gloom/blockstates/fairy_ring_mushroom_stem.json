@@ -5,7 +5,7 @@
         "north": "true"
       },
       "apply": {
-        "model": "bloom_and_gloom:block/mushroom_stem"
+        "model": "bloom_and_gloom:block/fairy_ring_mushroom_stem"
       }
     },
     {
@@ -13,7 +13,7 @@
         "east": "true"
       },
       "apply": {
-        "model": "bloom_and_gloom:block/mushroom_stem",
+        "model": "bloom_and_gloom:block/fairy_ring_mushroom_stem",
         "y": 90,
         "uvlock": true
       }
@@ -23,7 +23,7 @@
         "south": "true"
       },
       "apply": {
-        "model": "bloom_and_gloom:block/mushroom_stem",
+        "model": "bloom_and_gloom:block/fairy_ring_mushroom_stem",
         "y": 180,
         "uvlock": true
       }
@@ -33,7 +33,7 @@
         "west": "true"
       },
       "apply": {
-        "model": "bloom_and_gloom:block/mushroom_stem",
+        "model": "bloom_and_gloom:block/fairy_ring_mushroom_stem",
         "y": 270,
         "uvlock": true
       }
@@ -43,7 +43,7 @@
         "up": "true"
       },
       "apply": {
-        "model": "bloom_and_gloom:block/mushroom_stem",
+        "model": "bloom_and_gloom:block/fairy_ring_mushroom_stem",
         "x": 270,
         "uvlock": true
       }
@@ -53,7 +53,7 @@
         "down": "true"
       },
       "apply": {
-        "model": "bloom_and_gloom:block/mushroom_stem",
+        "model": "bloom_and_gloom:block/fairy_ring_mushroom_stem",
         "x": 90,
         "uvlock": true
       }

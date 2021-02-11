@@ -51,7 +51,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
 
     @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return state.isOpaqueCube(worldIn, pos.down());
+        return worldIn.getBlockState(pos.down()).isSolid();
     }
 
     /*
@@ -59,9 +59,9 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
      */
 
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        if (rand.nextInt(8) == 0) {
-            VoxelShape voxelshape = this.getShape(stateIn, worldIn, pos, ISelectionContext.dummy());
+    public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
+        if (rand.nextInt(5) == 0 && !state.get(DUSTED)) {
+            VoxelShape voxelshape = this.getShape(state, worldIn, pos, ISelectionContext.dummy());
             Vector3d vector3d = voxelshape.getBoundingBox().getCenter();
             double X = (double) pos.getX() + vector3d.x;
             double Y = (double) pos.getY() + vector3d.y;
