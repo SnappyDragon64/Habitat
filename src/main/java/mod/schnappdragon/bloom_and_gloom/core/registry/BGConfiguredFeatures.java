@@ -22,7 +22,8 @@ public class BGConfiguredFeatures {
 
     public static final ConfiguredFeature<?, ?> PATCH_BALL_CACTUS = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(new WeightedBlockStateProvider().addWeightedBlockstate(BGBlocks.FLOWERING_ORANGE_BALL_CACTUS.get().getDefaultState(), 3).addWeightedBlockstate(BGBlocks.FLOWERING_PINK_BALL_CACTUS.get().getDefaultState(), 3).addWeightedBlockstate(BGBlocks.FLOWERING_RED_BALL_CACTUS.get().getDefaultState(), 2).addWeightedBlockstate(BGBlocks.FLOWERING_YELLOW_BALL_CACTUS.get().getDefaultState(), 1), SimpleBlockPlacer.PLACER).xSpread(5).ySpread(1).zSpread(5).tries(5).build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(20);
 
-    public static final ConfiguredFeature<?, ?> FAIRY_RING = BGFeatures.FAIRY_RING_FEATURE.get().withConfiguration(new NoFeatureConfig()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(10);
+    public static final ConfiguredFeature<?, ?> FAIRY_RING = BGFeatures.FAIRY_RING_FEATURE.get().withConfiguration(new NoFeatureConfig()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(500);
+    public static final ConfiguredFeature<?, ?> FAIRY_RING_MUSHROOM_ISLANDS = BGFeatures.FAIRY_RING_FEATURE.get().withConfiguration(new NoFeatureConfig()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(100);
 
     public static void registerConfiguredFeatures() {
         register("rafflesia_patch", PATCH_RAFFLESIA);
@@ -30,6 +31,7 @@ public class BGConfiguredFeatures {
         register("slime_fern_patch", PATCH_SLIME_FERN);
         register("ball_cactus_patch", PATCH_BALL_CACTUS);
         register("fairy_ring", FAIRY_RING);
+        register("fairy_ring_mushroom_islands", FAIRY_RING_MUSHROOM_ISLANDS);
     }
 
     private static void register(String identifier, ConfiguredFeature<?, ?> configuredFeature) {

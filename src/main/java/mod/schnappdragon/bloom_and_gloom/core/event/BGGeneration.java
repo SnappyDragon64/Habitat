@@ -24,14 +24,19 @@ public class BGGeneration {
             if (event.getCategory() == Biome.Category.JUNGLE && !event.getName().getPath().contains("bamboo"))
                 event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_RAFFLESIA);
 
-            if (event.getCategory() == Biome.Category.PLAINS)
+            if (event.getCategory() == Biome.Category.PLAINS) {
                 event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_KABLOOM_BUSH);
+                event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.FAIRY_RING);
+            }
+
+            if (event.getCategory() == Biome.Category.FOREST)
+                event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.FAIRY_RING);
 
             if (event.getCategory() == Biome.Category.DESERT || event.getCategory() == Biome.Category.MESA)
                 event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.PATCH_BALL_CACTUS);
 
-            if (event.getCategory() == Biome.Category.FOREST)
-                event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.FAIRY_RING);
+            if (event.getCategory() == Biome.Category.MUSHROOM)
+                event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BGConfiguredFeatures.FAIRY_RING_MUSHROOM_ISLANDS);
         }
     }
 }

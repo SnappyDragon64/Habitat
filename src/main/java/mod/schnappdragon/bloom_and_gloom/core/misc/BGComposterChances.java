@@ -22,5 +22,10 @@ public class BGComposterChances {
         ComposterBlock.CHANCES.put(BGItems.RED_BALL_CACTUS.get(), 0.5F);
         ComposterBlock.CHANCES.put(BGItems.YELLOW_BALL_CACTUS.get(), 0.5F);
         ComposterBlock.CHANCES.put(BGItems.ROASTED_CACTUS.get(), 0.5F);
+
+        ComposterBlock.CHANCES.put(BGItems.FAIRY_RING_MUSHROOM.get(), 0.65F);
+        ComposterBlock.CHANCES.put(BGItems.FAIRY_RING_MUSHROOM_BLOCK.get(), 0.65F);
+        ComposterBlock.CHANCES.put(BGItems.FAIRY_RING_MUSHROOM_STEM.get(), 0.65F);
+        ComposterBlock.CHANCES.put(BGItems.FAIRYLIGHT.get(), 0.65F);
     }
 }

@@ -53,6 +53,6 @@ public class BGItems {
             () -> new BlockItem(BGBlocks.FAIRY_RING_MUSHROOM_BLOCK.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_STEM = ITEMS.register("fairy_ring_mushroom_stem",
             () -> new BlockItem(BGBlocks.FAIRY_RING_MUSHROOM_STEM.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
-    public static final RegistryObject<Item> FAIRY_SHROOMLIGHT = ITEMS.register("fairylight",
+    public static final RegistryObject<Item> FAIRYLIGHT = ITEMS.register("fairylight",
             () -> new BlockItem(BGBlocks.FAIRYLIGHT.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
 }

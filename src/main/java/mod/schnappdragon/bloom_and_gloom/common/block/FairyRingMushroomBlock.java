@@ -31,7 +31,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
-    protected static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 6.0D, 11.0D);
+    protected static final VoxelShape[] SHAPE = {Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 14.0D, 10.0D), Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 15.0D, 13.0D), Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)};
+
     public static final IntegerProperty MUSHROOMS = BGBlockStateProperties.MUSHROOMS_1_4;
     public static final BooleanProperty DUSTED = BGBlockStateProperties.DUSTED;
 
@@ -46,7 +47,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
     }
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return SHAPE;
+        return SHAPE[state.get(MUSHROOMS) - 1];
     }
 
     @Override
@@ -106,13 +107,8 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
      */
 
     @Override
-    public boolean canProvidePower(BlockState state) {
-        return state.get(DUSTED);
-    }
-
-    @Override
     public int getWeakPower(BlockState state, IBlockReader worldIn, BlockPos pos, Direction side) {
-        return state.get(MUSHROOMS);
+        return state.get(DUSTED) ? state.get(MUSHROOMS) : 0;
     }
 
     /*

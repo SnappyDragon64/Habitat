@@ -13,12 +13,9 @@ public class FairyRingSporeParticle extends SpriteTexturedParticle {
     private FairyRingSporeParticle(ClientWorld world, double x, double y, double z, double motionX, double motionY, double motionZ, IAnimatedSprite spriteSetWithAge) {
         super(world, x, y, z);
         this.spriteSetWithAge = spriteSetWithAge;
-        this.maxAge = (int) (20 + rand.nextDouble() * 20);
-        this.particleGravity = 0.001F;
-        float f = this.rand.nextFloat() * 0.6F + 0.4F;
-        this.particleRed = f;
-        this.particleGreen = f;
-        this.particleBlue = f;
+        this.maxAge = (int) (40 + rand.nextDouble() * 20);
+        this.particleGravity = 0.0001F;
+        this.particleRed = this.rand.nextFloat() * 0.6F;
         this.motionX = motionX;
         this.motionY = motionY;
         this.motionZ = motionZ;
