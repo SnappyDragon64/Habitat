@@ -27,19 +27,19 @@ public abstract class AbstractSlimeFernBlock extends Block implements IGrowable 
     }
 
     /*
-     * Particle Animation Methods
+     * Particle Animation Method
      */
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        VoxelShape voxelshape = this.getShape(stateIn, worldIn, pos, ISelectionContext.dummy());
-        Vector3d vector3d = voxelshape.getBoundingBox().getCenter();
-        double X = (double) pos.getX() + vector3d.x;
-        double Y = (double) pos.getY() + vector3d.y;
-        double Z = (double) pos.getZ() + vector3d.z;
-
-        if (rand.nextInt(10) == 0)
+        if (rand.nextInt(10) == 0) {
+            VoxelShape voxelshape = this.getShape(stateIn, worldIn, pos, ISelectionContext.dummy());
+            Vector3d vector3d = voxelshape.getBoundingBox().getCenter();
+            double X = (double) pos.getX() + vector3d.x;
+            double Y = (double) pos.getY() + vector3d.y;
+            double Z = (double) pos.getZ() + vector3d.z;
             worldIn.addParticle(BGParticleTypes.DRIPPING_SLIME.get(), X + rand.nextDouble() / 2.5D * (rand.nextBoolean() ? 1 : -1), Y - rand.nextDouble() / 5, Z + rand.nextDouble() / 2.5D * (rand.nextBoolean() ? 1 : -1), 0.0D, 0.0D, 0.0D);
+        }
     }
 
     /*

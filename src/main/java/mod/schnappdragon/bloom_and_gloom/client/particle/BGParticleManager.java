@@ -16,5 +16,6 @@ public class BGParticleManager {
         Minecraft.getInstance().particles.registerFactory(BGParticleTypes.DRIPPING_SLIME.get(), SlimeDripParticle.DrippingSlimeFactory::new);
         Minecraft.getInstance().particles.registerFactory(BGParticleTypes.FALLING_SLIME.get(), SlimeDripParticle.FallingSlimeFactory::new);
         Minecraft.getInstance().particles.registerFactory(BGParticleTypes.LANDING_SLIME.get(), SlimeDripParticle.LandingSlimeFactory::new);
+        Minecraft.getInstance().particles.registerFactory(BGParticleTypes.FAIRY_RING_SPORE.get(), FairyRingSporeParticle.Factory::new);
     }
 }

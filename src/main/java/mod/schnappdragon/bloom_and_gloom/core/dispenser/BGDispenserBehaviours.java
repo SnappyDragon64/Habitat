@@ -1,5 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.core.dispenser;
 
+import mod.schnappdragon.bloom_and_gloom.common.block.FairyRingMushroomBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.FloweringBallCactusBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.RafflesiaBlock;
@@ -77,6 +78,14 @@ public class BGDispenserBehaviours {
                         Block.spawnAsEntity(worldIn, pos, new ItemStack(cactus.getColor().getFlower()));
                         worldIn.setBlockState(pos, cactus.getColor().getBallCactus().getDefaultState());
                         worldIn.playSound(null, pos, BGSoundEvents.BLOCK_FLOWERING_BALL_CACTUS_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+                        if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
+                            stack.setCount(0);
+                        this.setSuccessful(true);
+                    }
+                    else if (state.isIn(BGBlocks.FAIRY_RING_MUSHROOM.get()) && state.get(FairyRingMushroomBlock.MUSHROOMS) > 1) {
+                        Block.spawnAsEntity(worldIn, pos, new ItemStack(state.getBlock()));
+                        worldIn.setBlockState(pos, state.with(FairyRingMushroomBlock.MUSHROOMS, state.get(FairyRingMushroomBlock.MUSHROOMS) - 1));
+                        worldIn.playSound(null, pos, BGSoundEvents.BLOCK_FAIRY_RING_MUSHROOM_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
                         if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
                             stack.setCount(0);
                         this.setSuccessful(true);

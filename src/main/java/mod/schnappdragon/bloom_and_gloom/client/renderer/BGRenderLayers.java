@@ -36,5 +36,7 @@ public class BGRenderLayers {
         RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_PINK_BALL_CACTUS.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_RED_BALL_CACTUS.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BGBlocks.POTTED_YELLOW_BALL_CACTUS.get(), RenderType.getCutout());
+
+        RenderTypeLookup.setRenderLayer(BGBlocks.FAIRY_RING_MUSHROOM.get(), RenderType.getCutout());
     }
 }

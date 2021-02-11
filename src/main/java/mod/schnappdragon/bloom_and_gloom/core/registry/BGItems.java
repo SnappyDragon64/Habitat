@@ -46,4 +46,13 @@ public class BGItems {
             () -> new BlockItem(BGBlocks.YELLOW_BALL_CACTUS.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> ROASTED_CACTUS = ITEMS.register("roasted_cactus",
             () -> new Item((new Item.Properties()).group(ItemGroup.FOOD).food(BGFoods.ROASTED_CACTUS)));
+
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM = ITEMS.register("fairy_ring_mushroom",
+            () -> new BlockItem(BGBlocks.FAIRY_RING_MUSHROOM.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BLOCK = ITEMS.register("fairy_ring_mushroom_block",
+            () -> new BlockItem(BGBlocks.FAIRY_RING_MUSHROOM_BLOCK.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_STEM = ITEMS.register("fairy_ring_mushroom_Stem",
+            () -> new BlockItem(BGBlocks.FAIRY_RING_MUSHROOM_STEM.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
+    public static final RegistryObject<Item> FAIRY_SHROOMLIGHT = ITEMS.register("fairylight",
+            () -> new BlockItem(BGBlocks.FAIRYLIGHT.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
 }

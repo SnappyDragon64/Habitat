@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "bloom_and_gloom:block/one_fairy_ring_mushroom"
+  }
+}

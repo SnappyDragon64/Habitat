@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "bloom_and_gloom:block/one_dusted_fairy_ring_mushroom"
+  }
+}

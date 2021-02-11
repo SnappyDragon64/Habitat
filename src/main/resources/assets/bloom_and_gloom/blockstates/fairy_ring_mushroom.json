@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "mushrooms=1,dusted=false": {
+      "model": "bloom_and_gloom:block/one_fairy_ring_mushroom"
+    },
+    "mushrooms=1,dusted=true": {
+      "model": "bloom_and_gloom:block/one_dusted_fairy_ring_mushroom"
+    },
+    "mushrooms=2,dusted=false": {
+      "model": "bloom_and_gloom:block/two_fairy_ring_mushrooms"
+    },
+    "mushrooms=2,dusted=true": {
+      "model": "bloom_and_gloom:block/two_dusted_fairy_ring_mushrooms"
+    },
+    "mushrooms=3,dusted=false": {
+      "model": "bloom_and_gloom:block/three_fairy_ring_mushrooms"
+    },
+    "mushrooms=3,dusted=true": {
+      "model": "bloom_and_gloom:block/three_dusted_fairy_ring_mushrooms"
+    },
+    "mushrooms=4,dusted=false": {
+      "model": "bloom_and_gloom:block/four_fairy_ring_mushrooms"
+    },
+    "mushrooms=4,dusted=true": {
+      "model": "bloom_and_gloom:block/four_dusted_fairy_ring_mushrooms"
+    }
+  }
+}
