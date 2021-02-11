@@ -23,7 +23,7 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
 
     public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
         if (reader.getBlockState(pos.down()).isIn(Blocks.GRASS_BLOCK)) {
-            int spread = 2 + (rand.nextInt(10) == 0 ? 1 : (rand.nextInt(6) == 0) ? -1 : 0);
+            int spread = rand.nextInt(10) > 7 ? 1 : 3;
 
             ArrayList<BlockPos.Mutable> ring = new ArrayList<>();
             ArrayList<BlockPos.Mutable> circle = new ArrayList<>();
@@ -33,7 +33,7 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
                     BlockPos.Mutable blockpos$mutable = pos.add(i, 0, j).toMutable();
                     double distance = MathHelper.sqrt(pos.distanceSq(blockpos$mutable));
 
-                    if (distance >= spread & distance < spread + 1) {
+                    if (distance >= spread && distance < spread + 1) {
                         if ((reader.getBlockState(blockpos$mutable).getMaterial().isReplaceable() || reader.isAirBlock(blockpos$mutable)) && reader.getBlockState(blockpos$mutable.down()).isIn(Blocks.GRASS_BLOCK))
                             ring.add(blockpos$mutable);
                         else

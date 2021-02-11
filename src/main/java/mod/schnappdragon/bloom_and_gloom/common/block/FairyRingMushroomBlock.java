@@ -3,6 +3,7 @@ package mod.schnappdragon.bloom_and_gloom.common.block;
 import java.util.Random;
 
 import mod.schnappdragon.bloom_and_gloom.common.state.properties.BGBlockStateProperties;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGConfiguredFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGParticleTypes;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
@@ -26,6 +27,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -129,7 +131,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
     }
 
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return !state.get(DUSTED) && (state.get(MUSHROOMS) != 4 || (double) rand.nextFloat() < 0.4D);
+        return !state.get(DUSTED) && (state.get(MUSHROOMS) != 4 || rand.nextFloat() < 0.1F);
     }
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
@@ -141,9 +143,9 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
 
     private void growHugeMushroom(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
         world.removeBlock(pos, false);
-        //ConfiguredFeature<?, ?> configuredfeature = BGConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM;
+        ConfiguredFeature<?, ?> configuredfeature = BGConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM;
 
-        //if (!configuredfeature.generate(world, world.getChunkProvider().getChunkGenerator(), rand, pos))
-        world.setBlockState(pos, state, 3);
+        if (!configuredfeature.generate(world, world.getChunkProvider().getChunkGenerator(), rand, pos))
+            world.setBlockState(pos, state, 3);
     }
 }

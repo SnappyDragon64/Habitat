@@ -1,11 +1,11 @@
 package mod.schnappdragon.bloom_and_gloom.core.registry;
 
 import com.google.common.collect.ImmutableSet;
-import mod.schnappdragon.bloom_and_gloom.common.block.BallCactusBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.KabloomBushBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.RafflesiaBlock;
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.HugeMushroomBlock;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
@@ -24,6 +24,7 @@ public class BGConfiguredFeatures {
 
     public static final ConfiguredFeature<?, ?> FAIRY_RING = BGFeatures.FAIRY_RING_FEATURE.get().withConfiguration(new NoFeatureConfig()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(500);
     public static final ConfiguredFeature<?, ?> FAIRY_RING_MUSHROOM_ISLANDS = BGFeatures.FAIRY_RING_FEATURE.get().withConfiguration(new NoFeatureConfig()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(100);
+    public static final ConfiguredFeature<?, ?> HUGE_FAIRY_RING_MUSHROOM = BGFeatures.HUGE_FAIRY_RING_MUSHROOM_FEATURE.get().withConfiguration(new BigMushroomFeatureConfig(new SimpleBlockStateProvider(BGBlocks.FAIRY_RING_MUSHROOM_BLOCK.get().getDefaultState().with(HugeMushroomBlock.DOWN, false)), new SimpleBlockStateProvider(BGBlocks.FAIRY_RING_MUSHROOM_STEM.get().getDefaultState().with(HugeMushroomBlock.UP, false).with(HugeMushroomBlock.DOWN, false)), 2));
 
     public static void registerConfiguredFeatures() {
         register("rafflesia_patch", PATCH_RAFFLESIA);
@@ -32,6 +33,7 @@ public class BGConfiguredFeatures {
         register("ball_cactus_patch", PATCH_BALL_CACTUS);
         register("fairy_ring", FAIRY_RING);
         register("fairy_ring_mushroom_islands", FAIRY_RING_MUSHROOM_ISLANDS);
+        register("huge_fairy_ring_mushroom", HUGE_FAIRY_RING_MUSHROOM);
     }
 
     private static void register(String identifier, ConfiguredFeature<?, ?> configuredFeature) {
