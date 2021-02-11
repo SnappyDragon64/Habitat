@@ -1,9 +1,8 @@
 package mod.schnappdragon.bloom_and_gloom.common.block;
 
-import mod.schnappdragon.bloom_and_gloom.core.registry.BGParticleTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.BasicParticleType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -13,11 +12,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class ParticleEmittingBlock extends Block {
-    private final IParticleData particle;
+    private final Supplier<BasicParticleType> particle;
 
-    public ParticleEmittingBlock(IParticleData particle, Properties properties) {
+    public ParticleEmittingBlock(Supplier<BasicParticleType> particle, Properties properties) {
         super(properties);
         this.particle = particle;
     }
@@ -37,7 +37,7 @@ public class ParticleEmittingBlock extends Block {
             boolean dirX = rand.nextBoolean();
             boolean dirY = rand.nextBoolean();
             boolean dirZ = rand.nextBoolean();
-            worldIn.addParticle(particle, X + rand.nextDouble() / 4 * (dirX ? 1 : -1) + (dirX ? 0.5D : -0.5D), Y - rand.nextDouble() / 4 * (dirY ? 1 : -1) + (dirY ? 0.5D : -0.5D), Z + rand.nextDouble() / 4 * (dirZ ? 1 : -1) + (dirZ ? 0.5D : -0.5D), 0.0D, 0.0D, 0.0D);
+            worldIn.addParticle(particle.get(), X + rand.nextDouble() / 4 * (dirX ? 1 : -1) + (dirX ? 0.5D : -0.5D), Y - rand.nextDouble() / 4 * (dirY ? 1 : -1) + (dirY ? 0.5D : -0.5D), Z + rand.nextDouble() / 4 * (dirZ ? 1 : -1) + (dirZ ? 0.5D : -0.5D), 0.0D, 0.0D, 0.0D);
         }
     }
 }
