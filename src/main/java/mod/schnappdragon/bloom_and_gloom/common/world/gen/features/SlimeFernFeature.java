@@ -13,6 +13,7 @@ import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraftforge.common.Tags;
 
 import java.util.Random;
 
@@ -34,7 +35,7 @@ public class SlimeFernFeature extends Feature<BlockClusterFeatureConfig> {
 
                 if ((reader.isAirBlock(blockpos$mutable) || config.isReplaceable && reader.getBlockState(blockpos$mutable).getMaterial().isReplaceable())) {
                     for (Direction dir : directions) {
-                        if (reader.getBlockState(blockpos$mutable.offset(dir)).isSolidSide(reader, blockpos$mutable, dir.getOpposite())) {
+                        if (reader.getBlockState(blockpos$mutable.offset(dir)).isSolidSide(reader, blockpos$mutable, dir.getOpposite()) && reader.getBlockState(blockpos$mutable.offset(dir)).isIn(Tags.Blocks.STONE)) {
                             BlockState state = config.stateProvider.getBlockState(rand, blockpos$mutable);
 
                             if (state.getBlock() == BGBlocks.SLIME_FERN.get()) {
