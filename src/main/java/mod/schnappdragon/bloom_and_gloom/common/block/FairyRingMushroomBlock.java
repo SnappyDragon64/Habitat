@@ -93,7 +93,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
             worldIn.playSound(null, pos, SoundType.PLANT.getPlaceSound(), SoundCategory.BLOCKS, SoundType.PLANT.getVolume() + 1.0F / 2.0F, SoundType.PLANT.getPitch() * 0.8F);
             return ActionResultType.func_233537_a_(worldIn.isRemote);
         }
-        if (player.getHeldItem(handIn).getItem() == Items.REDSTONE && state.get(MUSHROOMS) < 4 && !state.get(DUSTED)) {
+        if (player.getHeldItem(handIn).getItem() == Items.REDSTONE && !state.get(DUSTED)) {
             if (!player.abilities.isCreativeMode)
                 player.getHeldItem(handIn).shrink(1);
             worldIn.setBlockState(pos, state.with(DUSTED, true), 2);
