@@ -3,7 +3,6 @@ package mod.schnappdragon.bloom_and_gloom.common.block;
 import java.util.Random;
 
 import mod.schnappdragon.bloom_and_gloom.common.state.properties.BGBlockStateProperties;
-import mod.schnappdragon.bloom_and_gloom.core.registry.BGConfiguredFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGParticleTypes;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGSoundEvents;
@@ -27,15 +26,13 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 6.0D, 11.0D);
-    public static final IntegerProperty MUSHROOMS = BGBlockStateProperties.MUSHROOMS;
+    public static final IntegerProperty MUSHROOMS = BGBlockStateProperties.MUSHROOMS_1_4;
     public static final BooleanProperty DUSTED = BGBlockStateProperties.DUSTED;
 
     public FairyRingMushroomBlock(Properties properties) {
