@@ -15,6 +15,7 @@ import net.minecraft.item.ShearsItem;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -131,7 +132,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
     }
 
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return !state.get(DUSTED) && (state.get(MUSHROOMS) != 4 || rand.nextFloat() < 0.1F);
+        return !state.get(DUSTED) && (state.get(MUSHROOMS) != 4 || rand.nextFloat() < (worldIn.getBlockState(pos.down()).isIn(BlockTags.MUSHROOM_GROW_BLOCK) ? 0.8F : 0.1F));
     }
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
