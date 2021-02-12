@@ -9,7 +9,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.HugeMushroomBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
 import net.minecraft.world.gen.feature.AbstractBigMushroomFeature;
@@ -40,17 +39,32 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
                 this.setBlockState(world, blockpos$mutable, config.stemProvider.getBlockState(rand, pos));
             }
 
-            if (i <= MathHelper.ceil((float) i0 / 7)) {
+            if (i <= i0 - 5) {
                 for (Direction dir : Direction.Plane.HORIZONTAL) {
-                    if (rand.nextInt(3) == 0) {
+                    if (i < i0 - 6 && rand.nextInt(2) == 0) {
                         tryPlacing(world, config.stemProvider.getBlockState(rand, pos).getBlock().getDefaultState(), blockpos$mutable, dir, false);
                         if (rand.nextInt(2) == 0)
                             tryPlacing(world, config.stemProvider.getBlockState(rand, pos).getBlock().getDefaultState(), blockpos$mutable, dir, true);
-                    }
-                    else if (i == 0 && rand.nextInt(2) == 0) {
+                    } else if (rand.nextInt(2) == 0) {
                         tryPlacing(world, blockStateProvider.getBlockState(rand, pos), blockpos$mutable, dir, false);
-                        if (rand.nextInt(2) == 0)
+                        if (rand.nextInt(3) < 2)
                             tryPlacing(world, blockStateProvider.getBlockState(rand, pos), blockpos$mutable, dir, true);
+                    }
+                }
+            }
+
+            if (i > i0 - 6) {
+                for (Direction dir : Direction.Plane.HORIZONTAL) {
+                    if (rand.nextInt(1) == 0) {
+                        int chance = rand.nextInt(2);
+                        if (chance == 0) {
+                            tryPlacing(world, BGBlocks.FAIRYLIGHT.get().getDefaultState(), blockpos$mutable, dir, false);
+                            break;
+                        }
+                        else if (chance == 1) {
+                            tryPlacing(world, BGBlocks.FAIRYLIGHT.get().getDefaultState(), blockpos$mutable, dir, true);
+                            break;
+                        }
                     }
                 }
             }

@@ -34,7 +34,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
-    protected static final VoxelShape[] SHAPE = {Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 14.0D, 10.0D), Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 15.0D, 13.0D), Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)};
+    protected static final VoxelShape[] SHAPE = {Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 13.0D, 10.0D), Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 14.0D, 13.0D), Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)};
 
     public static final IntegerProperty MUSHROOMS = BGBlockStateProperties.MUSHROOMS_1_4;
     public static final BooleanProperty DUSTED = BGBlockStateProperties.DUSTED;
@@ -55,7 +55,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
 
     @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.down()).isSolid();
+        return worldIn.getBlockState(pos.down()).isSolid() && worldIn.getBlockState(pos.down()).isSolidSide(worldIn, pos.up(), Direction.DOWN);
     }
 
     /*
@@ -132,7 +132,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
     }
 
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return !state.get(DUSTED) && (state.get(MUSHROOMS) != 4 || rand.nextFloat() < (worldIn.getBlockState(pos.down()).isIn(BlockTags.MUSHROOM_GROW_BLOCK) ? 0.8F : 0.1F));
+        return !state.get(DUSTED) && (state.get(MUSHROOMS) != 4 || rand.nextFloat() < (worldIn.getBlockState(pos.down()).isIn(BlockTags.MUSHROOM_GROW_BLOCK) ? 0.8F : 0.2F));
     }
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
