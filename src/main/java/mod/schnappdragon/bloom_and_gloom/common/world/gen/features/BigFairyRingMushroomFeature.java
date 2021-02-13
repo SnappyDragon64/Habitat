@@ -9,6 +9,7 @@ import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import net.minecraft.block.HugeMushroomBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
@@ -56,6 +57,25 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
                     }
                     if (breakFlag)
                         break;
+                }
+            }
+        }
+
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                if (x != 0 || z != 0) {
+                    int len = rand.nextInt(3) < 2 ? MathHelper.ceil((float) rand.nextInt(i0 - 6) / 2) : 0;
+                    blockpos$mutable.setAndOffset(pos, x, -1, z);
+
+                    for (int i = 0; i < len + 1; ++i) {
+                        blockpos$mutable.move(Direction.UP, 1);
+                        if (world.getBlockState(blockpos$mutable).canBeReplacedByLogs(world, blockpos$mutable)) {
+                            if (i < len)
+                                this.setBlockState(world, blockpos$mutable, config.stemProvider.getBlockState(rand, pos).getBlock().getDefaultState());
+                            else if (rand.nextInt(3) == 0)
+                                this.setBlockState(world, blockpos$mutable, blockStateProvider.getBlockState(rand, pos));
+                        }
+                    }
                 }
             }
         }
