@@ -132,7 +132,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
     }
 
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return !state.get(DUSTED) && (state.get(MUSHROOMS) != 4 || rand.nextFloat() < (worldIn.getBlockState(pos.down()).isIn(BlockTags.MUSHROOM_GROW_BLOCK) ? 0.8F : 0.2F));
+        return !state.get(DUSTED) && (state.get(MUSHROOMS) != 4 || rand.nextFloat() < (worldIn.getBlockState(pos.down()).isIn(BlockTags.MUSHROOM_GROW_BLOCK) ? 0.8F : 0.4F));
     }
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
