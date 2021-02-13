@@ -2,18 +2,15 @@ package mod.schnappdragon.bloom_and_gloom.common.world.gen.features;
 
 import com.mojang.serialization.Codec;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 import mod.schnappdragon.bloom_and_gloom.common.block.FairyRingMushroomBlock;
-import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.HugeMushroomBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
 import net.minecraft.world.gen.feature.AbstractBigMushroomFeature;
 import net.minecraft.world.gen.feature.BigMushroomFeatureConfig;
@@ -36,19 +33,7 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
     @Override
     protected void func_227210_a_(IWorld world, Random rand, BlockPos pos, BigMushroomFeatureConfig config, int i0, BlockPos.Mutable blockpos$mutable) {
         WeightedBlockStateProvider blockStateProvider = new WeightedBlockStateProvider().addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState(), 1).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 2), 2).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 3), 3).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 4), 3);
-        HashMap<Direction, Integer> dirLengthMap = new HashMap<>();
-        HashMap<Integer, Direction> indexDirMap = new HashMap<>();
-        ArrayList<Integer> cornerLength = new ArrayList<>();
-        int index1 = 0;
-
-        for (Direction dir : Direction.Plane.HORIZONTAL) {
-            indexDirMap.put(index1, dir);
-            dirLengthMap.put(dir, rand.nextBoolean() ? rand.nextInt(i0) - 8 : 0);
-            BloomAndGloom.getLOGGER().info("1 " + dirLengthMap.get(dir) + "\n");
-            index1++;
-        }
-        for (int i = 0; i < 4; ++i)
-            cornerLength.add((int) (((float) dirLengthMap.get(indexDirMap.get(i)) + dirLengthMap.get(indexDirMap.get(i < 3 ? i + 1 : 0))) / 2) + rand.nextInt(2) - 1);
+        SimpleBlockStateProvider fairylightProvider = new SimpleBlockStateProvider(BGBlocks.FAIRYLIGHT.get().getDefaultState());
 
         for (int i = 0; i < i0; ++i) {
             blockpos$mutable.setPos(pos).move(Direction.UP, i);
@@ -56,48 +41,23 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
                 this.setBlockState(world, blockpos$mutable, config.stemProvider.getBlockState(rand, pos));
             }
 
-            int index2 = 0;
-            for (Integer l : dirLengthMap.values()) {
-                BloomAndGloom.getLOGGER().info("2 " + l + "\n");
-                if (i <= l + 1) {
-                    Direction dir = indexDirMap.get(index2);
-                    if (i < 1 + 1)
-                        tryPlacing(world, config.stemProvider.getBlockState(rand, pos).getBlock().getDefaultState(), blockpos$mutable, dir, false, false);
-                    else if (rand.nextBoolean())
-                        tryPlacing(world, blockStateProvider.getBlockState(rand, pos), blockpos$mutable, dir, false, false);
-
-                    int cornerLen = cornerLength.get(index2);
-                    if (i < cornerLen + 1) {
-                        if (i < cornerLen)
-                            tryPlacing(world, config.stemProvider.getBlockState(rand, pos).getBlock().getDefaultState(), blockpos$mutable, dir, true, false);
-                        else if (rand.nextBoolean())
-                            tryPlacing(world, blockStateProvider.getBlockState(rand, pos), blockpos$mutable, dir, true, false);
-                    }
-                }
-                index2++;
-            }
-
+            boolean breakFlag = false;
             if (i > i0 - 6) {
-                for (Direction dir : Direction.Plane.HORIZONTAL) {
-                    if (rand.nextInt(5) == 0) {
-                        tryPlacing(world, BGBlocks.FAIRYLIGHT.get().getDefaultState(), blockpos$mutable, dir, false, true);
-                        break;
-                    } else if (rand.nextInt(5) == 0) {
-                        tryPlacing(world, BGBlocks.FAIRYLIGHT.get().getDefaultState(), blockpos$mutable, dir, true, true);
-                        break;
+                for (int x = -1; x <= 1; x++) {
+                    for (int z = -1; z <= 1; z++) {
+                        if ((x != 0 || z != 0) && rand.nextInt(12) == 0) {
+                            BlockPos.Mutable lightPos = new BlockPos.Mutable().setAndOffset(blockpos$mutable, x, 0, z);
+                            if (world.getBlockState(lightPos).canBeReplacedByLeaves(world, lightPos) && !world.getBlockState(lightPos.down()).isIn(fairylightProvider.getBlockState(rand, pos).getBlock())) {
+                                this.setBlockState(world, lightPos, fairylightProvider.getBlockState(rand, pos));
+                                breakFlag = true;
+                                break;
+                            }
+                        }
                     }
+                    if (breakFlag)
+                        break;
                 }
             }
-        }
-    }
-
-    protected void tryPlacing(IWorld world, BlockState state, BlockPos.Mutable blockpos$mutable, Direction dir, boolean rotateY, boolean isLight) {
-        BlockPos pos = blockpos$mutable.offset(dir);
-        if (rotateY)
-            pos = pos.offset(dir.rotateY());
-
-        if (world.getBlockState(pos).getMaterial().isReplaceable() && (isLight && world.getBlockState(pos.down()).getBlock() != BGBlocks.FAIRYLIGHT.get() || world.getBlockState(pos.down()).isSolid())) {
-            this.setBlockState(world, pos, state);
         }
     }
 
