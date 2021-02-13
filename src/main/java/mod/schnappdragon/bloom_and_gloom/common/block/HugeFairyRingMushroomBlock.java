@@ -37,7 +37,7 @@ public class HugeFairyRingMushroomBlock extends HugeMushroomBlock {
             boolean dirX = rand.nextBoolean();
             boolean dirY = rand.nextBoolean();
             boolean dirZ = rand.nextBoolean();
-            worldIn.addParticle(spore.get(), X + rand.nextDouble() / 4 * (dirX ? 1 : -1) + (dirX ? 0.5D : -0.5D), Y - rand.nextDouble() / 4 * (dirY ? 1 : -1) + (dirY ? 0.5D : -0.5D), Z + rand.nextDouble() / 4 * (dirZ ? 1 : -1) + (dirZ ? 0.5D : -0.5D), rand.nextGaussian() * 0.02D, 0.0D, rand.nextGaussian() * 0.02D);
+            worldIn.addParticle(spore.get(), X + rand.nextDouble() / 4 * (dirX ? 1 : -1) + (dirX ? 0.5D : -0.5D), Y + rand.nextDouble() / 4 * (dirY ? 1 : -1) + (dirY ? 0.5D : -0.5D), Z + rand.nextDouble() / 4 * (dirZ ? 1 : -1) + (dirZ ? 0.5D : -0.5D), rand.nextGaussian() * 0.01D, 0.0D, rand.nextGaussian() * 0.01D);
         }
     }
 }

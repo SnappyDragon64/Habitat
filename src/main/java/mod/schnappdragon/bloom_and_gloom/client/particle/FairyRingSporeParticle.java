@@ -19,6 +19,7 @@ public class FairyRingSporeParticle extends SpriteTexturedParticle {
         this.particleRed = f;
         this.particleGreen = f * 0.98F;
         this.particleBlue = f * 0.98F;
+        this.particleScale *= 0.8F;
         this.motionX = motionX;
         this.motionY = motionY;
         this.motionZ = motionZ;

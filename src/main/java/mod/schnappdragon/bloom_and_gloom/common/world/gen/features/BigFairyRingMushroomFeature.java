@@ -69,7 +69,7 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
 
                     for (int i = 0; i < len + 1; ++i) {
                         blockpos$mutable.move(Direction.UP, 1);
-                        if (world.getBlockState(blockpos$mutable).canBeReplacedByLogs(world, blockpos$mutable)) {
+                        if (world.getBlockState(blockpos$mutable).canBeReplacedByLogs(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.down()).isOpaqueCube(world, blockpos$mutable.down())) {
                             if (i < len)
                                 this.setBlockState(world, blockpos$mutable, config.stemProvider.getBlockState(rand, pos).getBlock().getDefaultState());
                             else if (rand.nextInt(3) == 0)

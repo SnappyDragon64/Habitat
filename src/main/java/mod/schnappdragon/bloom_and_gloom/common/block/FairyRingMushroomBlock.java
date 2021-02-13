@@ -55,7 +55,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
 
     @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.down()).isSolid() && worldIn.getBlockState(pos.down()).isSolidSide(worldIn, pos.up(), Direction.DOWN);
+        return worldIn.getBlockState(pos.down()).isOpaqueCube(worldIn, pos.down());
     }
 
     /*
@@ -70,7 +70,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
             double X = (double) pos.getX() + vector3d.x;
             double Y = (double) pos.getY() + vector3d.y;
             double Z = (double) pos.getZ() + vector3d.z;
-            worldIn.addParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), X + rand.nextDouble() / 2 * (rand.nextBoolean() ? 1 : -1), Y - rand.nextDouble() / 2 * (rand.nextBoolean() ? 1 : -1), Z + rand.nextDouble() / 2 * (rand.nextBoolean() ? 1 : -1), rand.nextGaussian() * 0.02D, 0.0D, rand.nextGaussian() * 0.02D);
+            worldIn.addParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), X + rand.nextDouble() / 2 * (rand.nextBoolean() ? 1 : -1), Y + rand.nextDouble() / 2 * (rand.nextBoolean() ? 1 : -1), Z + rand.nextDouble() / 2 * (rand.nextBoolean() ? 1 : -1), rand.nextGaussian() * 0.01D, 0.0D, rand.nextGaussian() * 0.01D);
         }
     }
 
