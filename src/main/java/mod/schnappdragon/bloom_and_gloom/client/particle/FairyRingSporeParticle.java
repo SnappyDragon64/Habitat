@@ -42,6 +42,10 @@ public class FairyRingSporeParticle extends SpriteTexturedParticle {
         return IParticleRenderType.PARTICLE_SHEET_LIT;
     }
 
+    public int getBrightnessForRender(float partialTick) {
+        return 240;
+    }
+
     @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory<BasicParticleType> {
         private final IAnimatedSprite spriteSet;

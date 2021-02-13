@@ -64,13 +64,13 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
-        if (rand.nextInt(5) == 0 && !state.get(DUSTED)) {
+        if (!state.get(DUSTED) && rand.nextInt(10 - state.get(MUSHROOMS)) == 0) {
             VoxelShape voxelshape = this.getShape(state, worldIn, pos, ISelectionContext.dummy());
             Vector3d vector3d = voxelshape.getBoundingBox().getCenter();
             double X = (double) pos.getX() + vector3d.x;
             double Y = (double) pos.getY() + vector3d.y;
             double Z = (double) pos.getZ() + vector3d.z;
-            worldIn.addParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), X + rand.nextDouble() / 2 * (rand.nextBoolean() ? 1 : -1), Y - rand.nextDouble() / 2 * (rand.nextBoolean() ? 1 : -1), Z + rand.nextDouble() / 2 * (rand.nextBoolean() ? 1 : -1), 0.0D, 0.0D, 0.0D);
+            worldIn.addParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), X + rand.nextDouble() / 2 * (rand.nextBoolean() ? 1 : -1), Y - rand.nextDouble() / 2 * (rand.nextBoolean() ? 1 : -1), Z + rand.nextDouble() / 2 * (rand.nextBoolean() ? 1 : -1), rand.nextGaussian() * 0.02D, 0.0D, rand.nextGaussian() * 0.02D);
         }
     }
 
