@@ -52,7 +52,7 @@ public class BGEffectEvents {
             if (!source.isMagicDamage() && !source.isExplosion() && source.getImmediateSource() instanceof LivingEntity) {
                 LivingEntity attacker = (LivingEntity) source.getImmediateSource();
                 LivingEntity livingEntity = event.getEntityLiving();
-                attacker.attackEntityFrom(DamageSource.causeThornsDamage(livingEntity), 1.0F + livingEntity.getActivePotionEffect(BGEffects.BLAST_ENDURANCE.get()).getAmplifier());
+                attacker.attackEntityFrom(DamageSource.causeThornsDamage(livingEntity), 1.0F + livingEntity.getActivePotionEffect(BGEffects.PRICKLING.get()).getAmplifier());
             }
         }
     }
