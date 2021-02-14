@@ -34,6 +34,7 @@ public class BloomAndGloom {
         BGSoundEvents.SOUND_EVENTS.register(modEventBus);
         BGEntityTypes.ENTITY_TYPES.register(modEventBus);
         BGEffects.EFFECTS.register(modEventBus);
+        BGRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         BGFeatures.FEATURES.register(modEventBus);
         BGParticleTypes.PARTICLE_TYPES.register(modEventBus);
 
