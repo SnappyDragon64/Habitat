@@ -33,7 +33,7 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
 
     @Override
     protected void func_227210_a_(IWorld world, Random rand, BlockPos pos, BigMushroomFeatureConfig config, int i0, BlockPos.Mutable blockpos$mutable) {
-        WeightedBlockStateProvider blockStateProvider = new WeightedBlockStateProvider().addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState(), 1).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 2), 2).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 3), 3).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 4), 3);
+        WeightedBlockStateProvider mushroomProvider = new WeightedBlockStateProvider().addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState(), 1).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 2), 2).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 3), 3).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 4), 3);
         SimpleBlockStateProvider fairylightProvider = new SimpleBlockStateProvider(BGBlocks.FAIRYLIGHT.get().getDefaultState());
 
         for (int i = 0; i < i0; ++i) {
@@ -71,9 +71,9 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
                         blockpos$mutable.move(Direction.UP, 1);
                         if (world.getBlockState(blockpos$mutable).canBeReplacedByLogs(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.down()).isOpaqueCube(world, blockpos$mutable.down())) {
                             if (i < len)
-                                this.setBlockState(world, blockpos$mutable, config.stemProvider.getBlockState(rand, pos).getBlock().getDefaultState());
+                                this.setBlockState(world, blockpos$mutable, config.stemProvider.getBlockState(rand, pos).with(HugeMushroomBlock.UP, true));
                             else if (rand.nextInt(3) == 0)
-                                this.setBlockState(world, blockpos$mutable, blockStateProvider.getBlockState(rand, pos));
+                                this.setBlockState(world, blockpos$mutable, mushroomProvider.getBlockState(rand, pos));
                         }
                     }
                 }

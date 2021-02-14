@@ -56,10 +56,10 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
                     reader.setBlockState(blockpos$mutable.up(), Blocks.AIR.getDefaultState(), 2);
             }
 
-            WeightedBlockStateProvider blockStateProvider = new WeightedBlockStateProvider().addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState(), 1).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 2), 2).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 3), 3).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 4), 3);
+            WeightedBlockStateProvider mushroomProvider = new WeightedBlockStateProvider().addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState(), 1).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 2), 2).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 3), 3).addWeightedBlockstate(BGBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 4), 3);
 
             for (BlockPos.Mutable blockpos$mutable : ring) {
-                reader.setBlockState(blockpos$mutable, blockStateProvider.getBlockState(rand, blockpos$mutable), 2);
+                reader.setBlockState(blockpos$mutable, mushroomProvider.getBlockState(rand, blockpos$mutable), 2);
                 if (reader.getBlockState(blockpos$mutable.up()).getMaterial().isReplaceable())
                     reader.setBlockState(blockpos$mutable.up(), Blocks.AIR.getDefaultState(), 2);
             }
