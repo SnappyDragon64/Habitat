@@ -1,6 +1,6 @@
-package mod.schnappdragon.bloom_and_gloom.core.capabilities.classes;
+package mod.schnappdragon.bloom_and_gloom.api.capabilities.classes;
 
-import mod.schnappdragon.bloom_and_gloom.core.capabilities.interfaces.IConsumedFairyRingMushroom;
+import mod.schnappdragon.bloom_and_gloom.api.capabilities.interfaces.IConsumedFairyRingMushroom;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;

@@ -1,7 +1,7 @@
 package mod.schnappdragon.bloom_and_gloom.core;
 
 import mod.schnappdragon.bloom_and_gloom.client.renderer.entity.BGEntityRenderers;
-import mod.schnappdragon.bloom_and_gloom.core.capabilities.BGCapabilities;
+import mod.schnappdragon.bloom_and_gloom.api.capabilities.CapabilityHandler;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGConfiguredFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGComposterChances;
@@ -43,7 +43,7 @@ public class BloomAndGloom {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        BGCapabilities.registerCapabilities();
+        CapabilityHandler.registerCapabilities();
 
         event.enqueueWork(() -> {
             BGConfiguredFeatures.registerConfiguredFeatures();

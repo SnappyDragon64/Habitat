@@ -1,13 +1,13 @@
-package mod.schnappdragon.bloom_and_gloom.core.capabilities;
+package mod.schnappdragon.bloom_and_gloom.api.capabilities;
 
-import mod.schnappdragon.bloom_and_gloom.core.capabilities.classes.ConsumedFairyRingMushroom;
-import mod.schnappdragon.bloom_and_gloom.core.capabilities.interfaces.IConsumedFairyRingMushroom;
+import mod.schnappdragon.bloom_and_gloom.api.capabilities.classes.ConsumedFairyRingMushroom;
+import mod.schnappdragon.bloom_and_gloom.api.capabilities.interfaces.IConsumedFairyRingMushroom;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
 import java.util.concurrent.Callable;
 
-public class BGCapabilities {
+public class CapabilityHandler {
     public static void registerCapabilities() {
         register(IConsumedFairyRingMushroom.class, ConsumedFairyRingMushroom.STORAGE, ConsumedFairyRingMushroom.FACTORY);
     }

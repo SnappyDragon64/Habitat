@@ -1,6 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.common.item;
 
-import mod.schnappdragon.bloom_and_gloom.core.capabilities.classes.ConsumedFairyRingMushroom;
+import mod.schnappdragon.bloom_and_gloom.api.capabilities.classes.ConsumedFairyRingMushroom;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.MooshroomEntity;
@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
 
 public class FairyRingMushroomItem extends BlockItem {
     public FairyRingMushroomItem(Block blockIn, Properties builder) {
@@ -29,6 +30,8 @@ public class FairyRingMushroomItem extends BlockItem {
                 for(int j = 0; j < 4; ++j) {
                     mooshroom.world.addParticle(ParticleTypes.EFFECT, mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0.0D, mooshroom.getRNG().nextDouble() / 5.0D, 0.0D);
                 }
+
+                mooshroom.playSound(SoundEvents.ENTITY_MOOSHROOM_EAT, 2.0F, 1.0F);
             }
             else
                 for (int i = 0; i < 2; ++i) {
