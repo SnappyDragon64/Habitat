@@ -1,5 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.common.item;
 
+import mod.schnappdragon.bloom_and_gloom.core.capabilities.classes.ConsumedFairyRingMushroom;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.MooshroomEntity;
@@ -19,12 +20,11 @@ public class FairyRingMushroomItem extends BlockItem {
     public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
         if (target instanceof MooshroomEntity && ((MooshroomEntity) target).getMooshroomType() == MooshroomEntity.Type.BROWN) {
             MooshroomEntity mooshroom = (MooshroomEntity) target;
-            if (mooshroom.hasStewEffect != null) {
+            if (mooshroom.hasStewEffect != null && !mooshroom.getCapability(ConsumedFairyRingMushroom.Provider.CONSUMED_FAIRY_RING_MUSHROOM_CAPABILITY).resolve().get().getConsumedFairyRingMushroom()) {
                 mooshroom.effectDuration *= 2;
-                if (!playerIn.abilities.isCreativeMode) {
+                if (!playerIn.abilities.isCreativeMode)
                     stack.shrink(1);
-                }
-                //capability
+                mooshroom.getCapability(ConsumedFairyRingMushroom.Provider.CONSUMED_FAIRY_RING_MUSHROOM_CAPABILITY).resolve().get().setConsumedFairyRingMushroom(true);
 
                 for(int j = 0; j < 4; ++j) {
                     mooshroom.world.addParticle(ParticleTypes.EFFECT, mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0.0D, mooshroom.getRNG().nextDouble() / 5.0D, 0.0D);
