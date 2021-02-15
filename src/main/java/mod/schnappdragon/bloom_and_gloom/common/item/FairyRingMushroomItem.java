@@ -1,6 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.common.item;
 
-import mod.schnappdragon.bloom_and_gloom.api.capabilities.classes.ConsumedFairyRingMushroom;
+import mod.schnappdragon.bloom_and_gloom.core.capabilities.classes.ConsumedFairyRingMushroom;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.MooshroomEntity;

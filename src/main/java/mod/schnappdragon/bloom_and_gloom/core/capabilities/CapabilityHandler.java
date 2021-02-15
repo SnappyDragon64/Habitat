@@ -1,7 +1,7 @@
-package mod.schnappdragon.bloom_and_gloom.api.capabilities;
+package mod.schnappdragon.bloom_and_gloom.core.capabilities;
 
-import mod.schnappdragon.bloom_and_gloom.api.capabilities.classes.ConsumedFairyRingMushroom;
-import mod.schnappdragon.bloom_and_gloom.api.capabilities.interfaces.IConsumedFairyRingMushroom;
+import mod.schnappdragon.bloom_and_gloom.core.capabilities.classes.ConsumedFairyRingMushroom;
+import mod.schnappdragon.bloom_and_gloom.core.capabilities.interfaces.IConsumedFairyRingMushroom;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 

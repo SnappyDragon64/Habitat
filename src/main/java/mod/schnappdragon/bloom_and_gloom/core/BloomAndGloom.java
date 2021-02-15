@@ -1,11 +1,11 @@
 package mod.schnappdragon.bloom_and_gloom.core;
 
 import mod.schnappdragon.bloom_and_gloom.client.renderer.entity.BGEntityRenderers;
-import mod.schnappdragon.bloom_and_gloom.api.capabilities.CapabilityHandler;
+import mod.schnappdragon.bloom_and_gloom.core.capabilities.CapabilityHandler;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGConfiguredFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGComposterChances;
-import mod.schnappdragon.bloom_and_gloom.core.dispenser.BGDispenserBehaviours;
+import mod.schnappdragon.bloom_and_gloom.core.misc.BGDispenserBehaviours;
 import mod.schnappdragon.bloom_and_gloom.client.renderer.BGRenderLayers;
 import mod.schnappdragon.bloom_and_gloom.core.registry.*;
 import net.minecraftforge.common.MinecraftForge;

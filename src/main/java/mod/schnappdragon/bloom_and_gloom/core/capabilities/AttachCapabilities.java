@@ -1,7 +1,7 @@
-package mod.schnappdragon.bloom_and_gloom.api.capabilities;
+package mod.schnappdragon.bloom_and_gloom.core.capabilities;
 
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
-import mod.schnappdragon.bloom_and_gloom.api.capabilities.classes.ConsumedFairyRingMushroom;
+import mod.schnappdragon.bloom_and_gloom.core.capabilities.classes.ConsumedFairyRingMushroom;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.MooshroomEntity;
 import net.minecraft.util.ResourceLocation;

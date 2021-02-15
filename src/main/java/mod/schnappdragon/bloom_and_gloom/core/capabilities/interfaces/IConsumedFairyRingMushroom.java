@@ -1,4 +1,4 @@
-package mod.schnappdragon.bloom_and_gloom.api.capabilities.interfaces;
+package mod.schnappdragon.bloom_and_gloom.core.capabilities.interfaces;
 
 public interface IConsumedFairyRingMushroom {
     default void setConsumedFairyRingMushroom(boolean value) {}

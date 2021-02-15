@@ -1,4 +1,4 @@
-package mod.schnappdragon.bloom_and_gloom.core.dispenser;
+package mod.schnappdragon.bloom_and_gloom.core.misc;
 
 import mod.schnappdragon.bloom_and_gloom.common.block.FairyRingMushroomBlock;
 import mod.schnappdragon.bloom_and_gloom.common.block.FloweringBallCactusBlock;
