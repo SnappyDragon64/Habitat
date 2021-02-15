@@ -11,13 +11,12 @@ import net.minecraft.item.Items;
 import net.minecraft.item.SuspiciousStewItem;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipe;
-import net.minecraft.potion.Effect;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class FairySuspiciousStewRecipe extends SpecialRecipe {
-    public FairySuspiciousStewRecipe(ResourceLocation idIn) {
+public class SuspiciousStewWithFairyRingMushroomRecipe extends SpecialRecipe {
+    public SuspiciousStewWithFairyRingMushroomRecipe(ResourceLocation idIn) {
         super(idIn);
     }
 
@@ -78,6 +77,6 @@ public class FairySuspiciousStewRecipe extends SpecialRecipe {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return BGRecipeSerializers.CRAFTING_SPECIAL_FAIRYSUSPICIOUSSTEW.get();
+        return BGRecipeSerializers.CRAFTING_SPECIAL_SUSPICIOUSSTEWWITHFAIRYRINGMUSHROOM.get();
     }
 }
