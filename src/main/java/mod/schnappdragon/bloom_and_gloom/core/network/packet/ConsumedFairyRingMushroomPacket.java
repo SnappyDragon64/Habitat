@@ -37,8 +37,8 @@ public class ConsumedFairyRingMushroomPacket {
                 if (entity instanceof MooshroomEntity) {
                     MooshroomEntity mooshroom = (MooshroomEntity) entity;
                     mooshroom.getCapability(ConsumedFairyRingMushroom.Provider.CONSUMED_FAIRY_RING_MUSHROOM_CAPABILITY).resolve().get().setConsumedFairyRingMushroom(msg.consumedFairyRingMushroom);
-                    if (msg.consumedFairyRingMushroom)
-                        mooshroom.effectDuration *= 2;
+                    //if (msg.consumedFairyRingMushroom)
+                    //    mooshroom.effectDuration *= 2;
                 }
             });
             ctx.get().setPacketHandled(true);
