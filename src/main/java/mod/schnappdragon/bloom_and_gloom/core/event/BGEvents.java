@@ -3,6 +3,8 @@ package mod.schnappdragon.bloom_and_gloom.core.event;
 import mod.schnappdragon.bloom_and_gloom.common.entity.ai.goal.BGFindPollinationTargetGoal;
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
 import mod.schnappdragon.bloom_and_gloom.core.capabilities.classes.ConsumedFairyRingMushroom;
+import mod.schnappdragon.bloom_and_gloom.core.network.BGPacketHandler;
+import mod.schnappdragon.bloom_and_gloom.core.network.packet.ConsumedFairyRingMushroomPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;
@@ -12,6 +14,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 @Mod.EventBusSubscriber(modid = BloomAndGloom.MOD_ID)
 public class BGEvents {
@@ -39,6 +42,7 @@ public class BGEvents {
             MooshroomEntity mooshroom = (MooshroomEntity) event.getTarget();
             if (!mooshroom.isChild() && mooshroom.hasStewEffect != null) {
                 mooshroom.getCapability(ConsumedFairyRingMushroom.Provider.CONSUMED_FAIRY_RING_MUSHROOM_CAPABILITY).resolve().get().setConsumedFairyRingMushroom(false);
+                BGPacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new ConsumedFairyRingMushroomPacket(mooshroom.getEntityId(), false));
             }
         }
     }

@@ -7,7 +7,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 
 import java.util.concurrent.Callable;
 
-public class CapabilityHandler {
+public class BGCapabilityHandler {
     public static void registerCapabilities() {
         register(IConsumedFairyRingMushroom.class, ConsumedFairyRingMushroom.STORAGE, ConsumedFairyRingMushroom.FACTORY);
     }
