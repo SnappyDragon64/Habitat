@@ -12,12 +12,8 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.util.SoundCategory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class SlimeDripParticle {
-    @OnlyIn(Dist.CLIENT)
     public static class DrippingSlimeFactory implements IParticleFactory<BasicParticleType> {
         protected final IAnimatedSprite spriteWithAge;
 
@@ -35,7 +31,6 @@ public class SlimeDripParticle {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static class FallingSlimeFactory implements IParticleFactory<BasicParticleType> {
         protected final IAnimatedSprite spriteSet;
 
@@ -52,7 +47,6 @@ public class SlimeDripParticle {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     static class FallingSlimeParticle extends DripParticle.FallingLiquidParticle {
         private FallingSlimeParticle(ClientWorld world, double x, double y, double z, Fluid fluid, IParticleData particleData) {
             super(world, x, y, z, fluid, particleData);
@@ -67,7 +61,6 @@ public class SlimeDripParticle {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static class LandingSlimeFactory implements IParticleFactory<BasicParticleType> {
         protected final IAnimatedSprite spriteSet;
 

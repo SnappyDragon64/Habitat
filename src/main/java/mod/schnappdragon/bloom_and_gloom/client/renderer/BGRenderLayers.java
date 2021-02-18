@@ -4,10 +4,7 @@ import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
 import mod.schnappdragon.bloom_and_gloom.core.util.CompatHelper;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class BGRenderLayers {
     public static void registerRenderLayers() {
         RenderTypeLookup.setRenderLayer(BGBlocks.RAFFLESIA.get(), RenderType.getCutout());

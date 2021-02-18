@@ -3,10 +3,7 @@ package mod.schnappdragon.bloom_and_gloom.client.particle;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class FairyRingSporeParticle extends SpriteTexturedParticle {
     private final IAnimatedSprite spriteSetWithAge;
 
@@ -47,7 +44,6 @@ public class FairyRingSporeParticle extends SpriteTexturedParticle {
         return 240;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory<BasicParticleType> {
         private final IAnimatedSprite spriteSet;
 
