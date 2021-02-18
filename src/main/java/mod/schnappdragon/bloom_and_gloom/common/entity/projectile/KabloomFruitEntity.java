@@ -60,7 +60,7 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
         Vector3d vec = result.getHitVec();
 
         if (this.world.getGameRules().get(GameRules.DO_ENTITY_DROPS).get()) {
-            ItemEntity item = new ItemEntity(this.world, vec.getX() + 0.5F * this.rand.nextDouble() * (this.rand.nextBoolean() ? 1 : -1), vec.getY() + 0.5F * this.rand.nextDouble(), vec.getZ() + 0.5F * this.rand.nextDouble() * (this.rand.nextBoolean() ? 1 : -1), new ItemStack(BGItems.KABLOOM_SEEDS.get()));
+            ItemEntity item = new ItemEntity(this.world, vec.getX() + this.rand.nextGaussian() / 2, vec.getY() + this.rand.nextDouble() / 2, vec.getZ() + this.rand.nextGaussian() / 2, new ItemStack(BGItems.KABLOOM_SEEDS.get()));
             item.setDefaultPickupDelay();
             this.world.addEntity(item);
         }
