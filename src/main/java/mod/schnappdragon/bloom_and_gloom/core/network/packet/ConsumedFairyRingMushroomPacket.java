@@ -1,6 +1,7 @@
 package mod.schnappdragon.bloom_and_gloom.core.network.packet;
 
 import mod.schnappdragon.bloom_and_gloom.core.capabilities.classes.ConsumedFairyRingMushroom;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.MooshroomEntity;
 import net.minecraft.network.PacketBuffer;
@@ -32,7 +33,7 @@ public class ConsumedFairyRingMushroomPacket {
     public static void handle(ConsumedFairyRingMushroomPacket msg, Supplier<NetworkEvent.Context> ctx) {
         if (ctx.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
             ctx.get().enqueueWork(() -> {
-                Entity entity = Objects.requireNonNull(ctx.get().getSender()).world.getEntityByID(msg.entityId);
+                Entity entity = Objects.requireNonNull(Minecraft.getInstance().world.getEntityByID(msg.entityId));
                 if (entity instanceof MooshroomEntity) {
                     MooshroomEntity mooshroom = (MooshroomEntity) entity;
                     mooshroom.getCapability(ConsumedFairyRingMushroom.Provider.CONSUMED_FAIRY_RING_MUSHROOM_CAPABILITY).resolve().get().setConsumedFairyRingMushroom(msg.consumedFairyRingMushroom);
