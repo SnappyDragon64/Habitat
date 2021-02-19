@@ -28,8 +28,8 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
             ArrayList<BlockPos.Mutable> ring = new ArrayList<>();
             ArrayList<BlockPos.Mutable> circle = new ArrayList<>();
 
-            for (int i = -spread; i <= spread + 1; i++) {
-                for (int j = -spread; j <= spread + 1; j++) {
+            for (int i = -spread; i <= spread + 1; ++i) {
+                for (int j = -spread; j <= spread + 1; ++j) {
                     BlockPos.Mutable blockpos$mutable = pos.add(i, 0, j).toMutable();
                     double distance = MathHelper.sqrt(pos.distanceSq(blockpos$mutable));
 

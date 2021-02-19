@@ -44,8 +44,8 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
 
             boolean breakFlag = false;
             if (i > i0 - 6) {
-                for (int x = -1; x <= 1; x++) {
-                    for (int z = -1; z <= 1; z++) {
+                for (int x = -1; x <= 1; ++x) {
+                    for (int z = -1; z <= 1; ++z) {
                         if ((x != 0 || z != 0) && rand.nextInt(12) == 0) {
                             BlockPos.Mutable lightPos = new BlockPos.Mutable().setAndOffset(blockpos$mutable, x, 0, z);
                             if (world.getBlockState(lightPos).canBeReplacedByLeaves(world, lightPos) && !world.getBlockState(lightPos.down()).isIn(fairylightProvider.getBlockState(rand, pos).getBlock())) {
@@ -61,8 +61,8 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
             }
         }
 
-        for (int x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
+        for (int x = -1; x <= 1; ++x) {
+            for (int z = -1; z <= 1; ++z) {
                 if (x != 0 || z != 0) {
                     int len = rand.nextInt(3) < 2 ? MathHelper.ceil((float) rand.nextInt(i0 - 6) / 2) : 0;
                     blockpos$mutable.setAndOffset(pos, x, -1, z);
