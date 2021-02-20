@@ -27,7 +27,7 @@ public class FairyRingMushroomStewItem extends Item {
             entityLiving.getActivePotionEffect(effectIn.getPotion()).combine(new EffectInstance(effectIn.getPotion(), MathHelper.ceil(effectIn.getDuration() * 1.1F), effectIn.getAmplifier()));
         }
 
-        for (int i = 0; i < 2; ++i)
+        for (int i = 0; i < 4; ++i)
             worldIn.addParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), entityLiving.getPosX() + entityLiving.getRNG().nextDouble() / 2.0D, entityLiving.getPosYHeight(0.5D), entityLiving.getPosZ() + entityLiving.getRNG().nextDouble() / 2.0D, entityLiving.getRNG().nextGaussian() * 0.01D, 0.0D, entityLiving.getRNG().nextGaussian() * 0.01D);
 
         return entityLiving instanceof PlayerEntity && ((PlayerEntity) entityLiving).abilities.isCreativeMode ? itemstack : new ItemStack(Items.BOWL);
