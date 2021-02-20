@@ -2,6 +2,7 @@ package mod.schnappdragon.bloom_and_gloom.core;
 
 import mod.schnappdragon.bloom_and_gloom.client.renderer.entity.BGEntityRenderers;
 import mod.schnappdragon.bloom_and_gloom.core.capabilities.BGCapabilityHandler;
+import mod.schnappdragon.bloom_and_gloom.core.misc.BGBrewingMixes;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGConfiguredFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGComposterChances;
@@ -35,6 +36,7 @@ public class BloomAndGloom {
         BGSoundEvents.SOUND_EVENTS.register(modEventBus);
         BGEntityTypes.ENTITY_TYPES.register(modEventBus);
         BGEffects.EFFECTS.register(modEventBus);
+        BGPotions.POTIONS.register(modEventBus);
         BGRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         BGFeatures.FEATURES.register(modEventBus);
         BGParticleTypes.PARTICLE_TYPES.register(modEventBus);
@@ -46,6 +48,7 @@ public class BloomAndGloom {
         BGCapabilityHandler.registerCapabilities();
 
         event.enqueueWork(() -> {
+            BGBrewingMixes.registerBrewingMixes();
             BGConfiguredFeatures.registerConfiguredFeatures();
             BGComposterChances.registerComposterChances();
             BGDispenserBehaviours.registerDispenserBehaviour();
