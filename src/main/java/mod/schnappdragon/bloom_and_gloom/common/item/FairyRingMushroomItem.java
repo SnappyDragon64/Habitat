@@ -1,6 +1,7 @@
 package mod.schnappdragon.bloom_and_gloom.common.item;
 
 import mod.schnappdragon.bloom_and_gloom.core.capabilities.classes.ConsumedFairyRingMushroom;
+import mod.schnappdragon.bloom_and_gloom.core.registry.BGParticleTypes;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
@@ -22,14 +23,15 @@ public class FairyRingMushroomItem extends BlockItem {
     public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
         if (!playerIn.world.isRemote && target instanceof MooshroomEntity && ((MooshroomEntity) target).getMooshroomType() == MooshroomEntity.Type.BROWN) {
             MooshroomEntity mooshroom = (MooshroomEntity) target;
-            if (mooshroom.hasStewEffect != null && !mooshroom.getCapability(ConsumedFairyRingMushroom.Provider.CONSUMED_FAIRY_RING_MUSHROOM_CAPABILITY).resolve().get().getConsumedFairyRingMushroom()) {
-                mooshroom.effectDuration *= 2;
+            if (!mooshroom.getCapability(ConsumedFairyRingMushroom.Provider.CONSUMED_FAIRY_RING_MUSHROOM_CAPABILITY).resolve().get().getConsumedFairyRingMushroom()) {
+                if (mooshroom.hasStewEffect != null)
+                    mooshroom.effectDuration *= 2;
                 if (!playerIn.abilities.isCreativeMode)
                     stack.shrink(1);
                 mooshroom.getCapability(ConsumedFairyRingMushroom.Provider.CONSUMED_FAIRY_RING_MUSHROOM_CAPABILITY).resolve().get().setConsumedFairyRingMushroom(true);
 
                 for (int j = 0; j < 4; ++j)
-                    Minecraft.getInstance().world.addParticle(ParticleTypes.EFFECT, mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0.0D, mooshroom.getRNG().nextDouble() / 5.0D, 0.0D);
+                    Minecraft.getInstance().world.addParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getRNG().nextGaussian() * 0.01D, 0.0D, mooshroom.getRNG().nextGaussian() * 0.01D);
 
                 mooshroom.world.playSound(null, mooshroom.getPosX(), mooshroom.getPosY(), mooshroom.getPosZ(), SoundEvents.ENTITY_MOOSHROOM_EAT, mooshroom.getSoundCategory(), 2.0F, 1.0F);
             }
