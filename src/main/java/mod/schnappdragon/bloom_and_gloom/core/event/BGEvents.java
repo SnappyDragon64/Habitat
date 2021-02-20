@@ -4,18 +4,15 @@ import mod.schnappdragon.bloom_and_gloom.common.entity.ai.goal.BGFindPollination
 import mod.schnappdragon.bloom_and_gloom.core.BloomAndGloom;
 import mod.schnappdragon.bloom_and_gloom.core.capabilities.classes.ConsumedFairyRingMushroom;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGItems;
-import net.minecraft.block.Block;
 import net.minecraft.block.FlowerBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.MooshroomEntity;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.Effect;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DrinkHelper;
@@ -24,9 +21,6 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.Optional;
 
 @Mod.EventBusSubscriber(modid = BloomAndGloom.MOD_ID)
 public class BGEvents {
@@ -74,22 +68,17 @@ public class BGEvents {
                     event.setCancellationResult(ActionResultType.SUCCESS);
                     event.setCanceled(true);
 
-                    Optional<Pair<Effect, Integer>> optional = Optional.empty();
                     if (stack.getItem() instanceof BlockItem && ((BlockItem) stack.getItem()).getBlock() instanceof FlowerBlock) {
                         FlowerBlock flower = (FlowerBlock) ((BlockItem) stack.getItem()).getBlock();
-                        optional = Optional.of(Pair.of(flower.getStewEffect(), flower.getStewEffectDuration() * 2));
-                    }
 
-                    if (optional.isPresent()) {
-                        Pair<Effect, Integer> pair = optional.get();
                         if (!event.getPlayer().abilities.isCreativeMode)
                             stack.shrink(1);
 
                         for (int j = 0; j < 4; ++j)
                             mooshroom.world.addParticle(ParticleTypes.EFFECT, mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0.0D, mooshroom.getRNG().nextDouble() / 5.0D, 0.0D);
 
-                        mooshroom.hasStewEffect = pair.getLeft();
-                        mooshroom.effectDuration = pair.getRight();
+                        mooshroom.hasStewEffect = flower.getStewEffect();
+                        mooshroom.effectDuration = flower.getStewEffectDuration() * 2;
                         mooshroom.playSound(SoundEvents.ENTITY_MOOSHROOM_EAT, 2.0F, 1.0F);
                     }
                 }
