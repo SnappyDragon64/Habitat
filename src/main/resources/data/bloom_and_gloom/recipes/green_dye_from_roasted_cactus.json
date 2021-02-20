@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "green_dye",
+  "ingredients": [
+    {
+      "item": "bloom_and_gloom:roasted_cactus"
+    }
+  ],
+  "result": {
+    "item": "minecraft:green_dye"
+  }
+}
