@@ -47,12 +47,13 @@ public class BGEffectEvents {
     @SubscribeEvent
     public static void causePricklingDamage(LivingHurtEvent event) {
         if (event.getEntityLiving().isPotionActive(BGEffects.PRICKLING.get())) {
+            LivingEntity livingEntity = event.getEntityLiving();
             DamageSource source = event.getSource();
+            int lvl = livingEntity.getActivePotionEffect(BGEffects.PRICKLING.get()).getAmplifier();
 
-            if (!source.isMagicDamage() && !source.isExplosion() && source.getImmediateSource() instanceof LivingEntity) {
+            if (livingEntity.getRNG().nextInt(5) < 2 + lvl && !source.isMagicDamage() && !source.isExplosion() && (source.getImmediateSource() instanceof LivingEntity)) {
                 LivingEntity attacker = (LivingEntity) source.getImmediateSource();
-                LivingEntity livingEntity = event.getEntityLiving();
-                attacker.attackEntityFrom(DamageSource.causeThornsDamage(livingEntity), 1.0F + livingEntity.getActivePotionEffect(BGEffects.PRICKLING.get()).getAmplifier());
+                attacker.attackEntityFrom(DamageSource.causeThornsDamage(livingEntity), 1.0F + livingEntity.getRNG().nextInt(lvl));
             }
         }
     }
