@@ -142,7 +142,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
 
     private void growHugeMushroom(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
         world.removeBlock(pos, false);
-        ConfiguredFeature<?, ?> configuredfeature = BGConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM;
+        ConfiguredFeature<?, ?> configuredfeature = BGConfiguredFeatures.GROWN_HUGE_FAIRY_RING_MUSHROOM;
 
         if (!configuredfeature.generate(world, world.getChunkProvider().getChunkGenerator(), rand, pos))
             world.setBlockState(pos, state, 3);

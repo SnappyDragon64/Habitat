@@ -43,16 +43,18 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
             }
 
             boolean breakFlag = false;
-            if (i > i0 - 6) {
+            if (i > i0 - 7) {
                 for (int x = -1; x <= 1; ++x) {
                     for (int z = -1; z <= 1; ++z) {
-                        if ((x != 0 || z != 0) && rand.nextInt(12) == 0) {
-                            BlockPos.Mutable lightPos = new BlockPos.Mutable().setAndOffset(blockpos$mutable, x, 0, z);
-                            if (world.getBlockState(lightPos).canBeReplacedByLeaves(world, lightPos) && !world.getBlockState(lightPos.down()).isIn(fairylightProvider.getBlockState(rand, pos).getBlock())) {
-                                this.setBlockState(world, lightPos, fairylightProvider.getBlockState(rand, pos));
+                        BlockPos.Mutable inPos = new BlockPos.Mutable().setAndOffset(blockpos$mutable, x, 0, z);
+                        if (world.getBlockState(inPos).canBeReplacedByLeaves(world, inPos)) {
+                            if (i > i0 - 6 && (x != 0 || z != 0) && rand.nextInt(12) == 0 && !world.getBlockState(inPos.down()).isIn(fairylightProvider.getBlockState(rand, pos).getBlock())) {
+                                this.setBlockState(world, inPos, fairylightProvider.getBlockState(rand, pos));
                                 breakFlag = true;
                                 break;
                             }
+                            else
+                                world.destroyBlock(inPos, false);
                         }
                     }
                     if (breakFlag)

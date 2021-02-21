@@ -22,7 +22,7 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
 
     public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
         if (reader.getBlockState(pos.down()).isIn(Blocks.GRASS_BLOCK)) {
-            int spread = 1 + (rand.nextInt(5) < 4 ? 1 : 0) + (rand.nextInt(5) < 1 ? 1 : 0);
+            int spread = 1 + (rand.nextBoolean() ? 1 : 0) + (rand.nextBoolean() ? 1 : 0);
 
             ArrayList<BlockPos.Mutable> ring = new ArrayList<>();
             ArrayList<BlockPos.Mutable> circle = new ArrayList<>();
