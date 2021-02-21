@@ -27,11 +27,7 @@ public class HugeFairyRingMushroomBlock extends HugeMushroomBlock {
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
-        if (rand.nextInt(8) == 0) {
-            double X = (double) pos.getX() + 0.5D;
-            double Y = (double) pos.getY() + 0.5D;
-            double Z = (double) pos.getZ() + 0.5D;
-            worldIn.addParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), X + rand.nextGaussian() / 2, Y + rand.nextGaussian() / 2, Z + rand.nextGaussian() / 2, rand.nextGaussian() * 0.01D, 0.0D, rand.nextGaussian() * 0.01D);
-        }
+        if (rand.nextInt(8) == 0)
+            worldIn.addParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), rand.nextGaussian() * 0.01D, 0.0D, rand.nextGaussian() * 0.01D);
     }
 }
