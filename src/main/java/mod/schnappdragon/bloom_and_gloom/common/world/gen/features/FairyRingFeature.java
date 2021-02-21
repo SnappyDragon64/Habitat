@@ -3,7 +3,6 @@ package mod.schnappdragon.bloom_and_gloom.common.world.gen.features;
 import com.mojang.serialization.Codec;
 import mod.schnappdragon.bloom_and_gloom.common.block.FairyRingMushroomBlock;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGBlocks;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -23,7 +22,7 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
 
     public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
         if (reader.getBlockState(pos.down()).isIn(Blocks.GRASS_BLOCK)) {
-            int spread = rand.nextInt(10) > 7 ? 1 : 3;
+            int spread = 1 + (rand.nextInt(5) < 4 ? 1 : 0) + (rand.nextInt(5) < 1 ? 1 : 0);
 
             ArrayList<BlockPos.Mutable> ring = new ArrayList<>();
             ArrayList<BlockPos.Mutable> circle = new ArrayList<>();
