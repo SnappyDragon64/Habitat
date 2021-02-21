@@ -62,7 +62,6 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
      * Particle Animation Method
      */
 
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
         if (!state.get(DUSTED) && rand.nextInt(10 - state.get(MUSHROOMS)) == 0)
             worldIn.addParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), rand.nextGaussian() * 0.01D, 0.0D, rand.nextGaussian() * 0.01D);

@@ -25,7 +25,6 @@ public class HugeFairyRingMushroomBlock extends HugeMushroomBlock {
      * Particle Animation Method
      */
 
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
         if (rand.nextInt(8) == 0)
             worldIn.addParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), rand.nextGaussian() * 0.01D, 0.0D, rand.nextGaussian() * 0.01D);

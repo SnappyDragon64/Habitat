@@ -33,7 +33,6 @@ public abstract class AbstractSlimeFernBlock extends Block implements IGrowable 
      * Particle Animation Method
      */
 
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
         if (rand.nextInt(10) == 0) {
             VoxelShape voxelshape = this.getShape(state, worldIn, pos, ISelectionContext.dummy());

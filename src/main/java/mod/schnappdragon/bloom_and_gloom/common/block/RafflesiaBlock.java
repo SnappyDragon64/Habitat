@@ -117,7 +117,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
      * Particle Animation Method
      */
 
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
         TileEntity tile = worldIn.getTileEntity(pos);
         if (tile instanceof RafflesiaTileEntity && (rand.nextInt(128) == 0 && !state.get(ON_COOLDOWN) || state.get(POLLINATED)) && state.get(AGE) == 2) {
