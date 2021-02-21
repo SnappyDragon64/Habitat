@@ -3,7 +3,6 @@ package mod.schnappdragon.bloom_and_gloom.common.item;
 import mod.schnappdragon.bloom_and_gloom.core.capabilities.classes.ConsumedFairyRingMushroom;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGParticleTypes;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.MooshroomEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,6 +12,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.world.server.ServerWorld;
 
 public class FairyRingMushroomItem extends BlockItem {
     public FairyRingMushroomItem(Block blockIn, Properties builder) {
@@ -31,13 +31,13 @@ public class FairyRingMushroomItem extends BlockItem {
                 mooshroom.getCapability(ConsumedFairyRingMushroom.Provider.CONSUMED_FAIRY_RING_MUSHROOM_CAPABILITY).resolve().get().setConsumedFairyRingMushroom(true);
 
                 for (int j = 0; j < 4; ++j)
-                    Minecraft.getInstance().world.addParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getRNG().nextGaussian() * 0.01D, 0.0D, mooshroom.getRNG().nextGaussian() * 0.01D);
+                    ((ServerWorld) playerIn.world).spawnParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 1, mooshroom.getRNG().nextGaussian() * 0.01D, 0.0D, mooshroom.getRNG().nextGaussian() * 0.01D, 1.0D);
 
                 mooshroom.world.playSound(null, mooshroom.getPosX(), mooshroom.getPosY(), mooshroom.getPosZ(), SoundEvents.ENTITY_MOOSHROOM_EAT, mooshroom.getSoundCategory(), 2.0F, 1.0F);
             }
             else {
                 for (int i = 0; i < 2; ++i)
-                    Minecraft.getInstance().world.addParticle(ParticleTypes.SMOKE, mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0.0D, mooshroom.getRNG().nextDouble() / 5.0D, 0.0D);
+                    ((ServerWorld) playerIn.world).spawnParticle(ParticleTypes.SMOKE, mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 1, 0.0D, mooshroom.getRNG().nextDouble() / 5.0D, 0.0D, 1.0D);
             }
 
             return ActionResultType.SUCCESS;
