@@ -53,7 +53,7 @@ public class BGEffectEvents {
 
             if (livingEntity.getRNG().nextInt(5) < 2 + lvl && !source.isMagicDamage() && !source.isExplosion() && (source.getImmediateSource() instanceof LivingEntity)) {
                 LivingEntity attacker = (LivingEntity) source.getImmediateSource();
-                attacker.attackEntityFrom(DamageSource.causeThornsDamage(livingEntity), 1.0F + livingEntity.getRNG().nextInt(lvl));
+                attacker.attackEntityFrom(DamageSource.causeThornsDamage(livingEntity), 1.0F + (lvl > 0 ? livingEntity.getRNG().nextInt(lvl) : 0));
             }
         }
     }
