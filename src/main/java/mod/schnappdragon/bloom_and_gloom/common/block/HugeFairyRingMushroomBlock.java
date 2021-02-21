@@ -3,17 +3,10 @@ package mod.schnappdragon.bloom_and_gloom.common.block;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGParticleTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HugeMushroomBlock;
-import net.minecraft.particles.BasicParticleType;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
-import java.util.function.Supplier;
 
 public class HugeFairyRingMushroomBlock extends HugeMushroomBlock {
 
