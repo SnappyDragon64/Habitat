@@ -39,7 +39,6 @@ public class BGEffectEvents {
         }
     }
 
-
     /*
      * Used to inflict damage if livingentity has prickling.
      */
