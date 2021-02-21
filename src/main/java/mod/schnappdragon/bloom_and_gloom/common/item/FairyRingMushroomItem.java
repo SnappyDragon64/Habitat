@@ -31,13 +31,13 @@ public class FairyRingMushroomItem extends BlockItem {
                 mooshroom.getCapability(ConsumedFairyRingMushroom.Provider.CONSUMED_FAIRY_RING_MUSHROOM_CAPABILITY).resolve().get().setConsumedFairyRingMushroom(true);
 
                 for (int j = 0; j < 4; ++j)
-                    ((ServerWorld) playerIn.world).spawnParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 1, mooshroom.getRNG().nextGaussian() * 0.01D, 0.0D, mooshroom.getRNG().nextGaussian() * 0.01D, 1.0D);
+                    ((ServerWorld) playerIn.world).spawnParticle(BGParticleTypes.FAIRY_RING_SPORE.get(), mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0, mooshroom.getRNG().nextGaussian(), 0.0D, mooshroom.getRNG().nextGaussian(), 0.01D);
 
                 mooshroom.world.playSound(null, mooshroom.getPosX(), mooshroom.getPosY(), mooshroom.getPosZ(), SoundEvents.ENTITY_MOOSHROOM_EAT, mooshroom.getSoundCategory(), 2.0F, 1.0F);
             }
             else {
                 for (int i = 0; i < 2; ++i)
-                    ((ServerWorld) playerIn.world).spawnParticle(ParticleTypes.SMOKE, mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 1, 0.0D, mooshroom.getRNG().nextDouble() / 5.0D, 0.0D, 1.0D);
+                    ((ServerWorld) playerIn.world).spawnParticle(ParticleTypes.SMOKE, mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0, 0.0D, mooshroom.getRNG().nextDouble(), 0.0D, 0.2D);
             }
 
             return ActionResultType.SUCCESS;
