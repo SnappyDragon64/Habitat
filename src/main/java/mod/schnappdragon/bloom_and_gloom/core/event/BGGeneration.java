@@ -29,8 +29,10 @@ public class BGGeneration {
                     helper.addVegetalDecorationFeature(BGConfiguredFeatures.PATCH_RAFFLESIA);
 
                 // Plains
-                if (event.getCategory() == Biome.Category.PLAINS)
+                if (event.getCategory() == Biome.Category.PLAINS) {
                     helper.addVegetalDecorationFeature(BGConfiguredFeatures.PATCH_KABLOOM_BUSH);
+                    helper.addVegetalDecorationFeature(BGConfiguredFeatures.FAIRY_RING_PLAINS);
+                }
 
                 // Dark Forests
                 if (event.getName().getPath().contains("dark_forest")) {
