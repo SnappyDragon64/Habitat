@@ -37,7 +37,7 @@ public class BGGeneration {
                 // Dark Forests
                 if (event.getName().getPath().contains("dark_forest")) {
                     helper.addVegetalDecorationFeature(BGConfiguredFeatures.FAIRY_RING);
-                    helper.addVegetalDecorationFeature(BGConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM);
+                    helper.addVegetalDecorationFeature(BGConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM_DARK_FORESTS);
                 }
 
                 // Desert and Badlands
@@ -47,7 +47,7 @@ public class BGGeneration {
                 // Mushroom Fields
                 if (event.getCategory() == Biome.Category.MUSHROOM) {
                     helper.addVegetalDecorationFeature(BGConfiguredFeatures.FAIRY_RING);
-                    helper.addVegetalDecorationFeature(BGConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM);
+                    helper.addVegetalDecorationFeature(BGConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM_MUSHROOM_FIELDS);
                 }
             }
         }

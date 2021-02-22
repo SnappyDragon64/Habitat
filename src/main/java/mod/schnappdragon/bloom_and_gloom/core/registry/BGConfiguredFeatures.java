@@ -24,7 +24,8 @@ public class BGConfiguredFeatures {
 
     public static final ConfiguredFeature<?, ?> FAIRY_RING = BGFeatures.FAIRY_RING_FEATURE.get().withConfiguration(new NoFeatureConfig()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(3);
     public static final ConfiguredFeature<?, ?> FAIRY_RING_PLAINS = BGFeatures.FAIRY_RING_FEATURE.get().withConfiguration(new NoFeatureConfig()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(300);
-    public static final ConfiguredFeature<?, ?> HUGE_FAIRY_RING_MUSHROOM = BGFeatures.HUGE_FAIRY_RING_MUSHROOM_FEATURE.get().withConfiguration(new BigMushroomFeatureConfig(new SimpleBlockStateProvider(BGBlocks.FAIRY_RING_MUSHROOM_BLOCK.get().getDefaultState().with(HugeMushroomBlock.DOWN, false)), new SimpleBlockStateProvider(BGBlocks.FAIRY_RING_MUSHROOM_STEM.get().getDefaultState().with(HugeMushroomBlock.UP, false).with(HugeMushroomBlock.DOWN, false)), 2)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(20);
+    public static final ConfiguredFeature<?, ?> HUGE_FAIRY_RING_MUSHROOM_DARK_FORESTS = BGFeatures.HUGE_FAIRY_RING_MUSHROOM_FEATURE.get().withConfiguration(new BigMushroomFeatureConfig(new SimpleBlockStateProvider(BGBlocks.FAIRY_RING_MUSHROOM_BLOCK.get().getDefaultState().with(HugeMushroomBlock.DOWN, false)), new SimpleBlockStateProvider(BGBlocks.FAIRY_RING_MUSHROOM_STEM.get().getDefaultState().with(HugeMushroomBlock.UP, false).with(HugeMushroomBlock.DOWN, false)), 2)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(20);
+    public static final ConfiguredFeature<?, ?> HUGE_FAIRY_RING_MUSHROOM_MUSHROOM_FIELDS = BGFeatures.HUGE_FAIRY_RING_MUSHROOM_FEATURE.get().withConfiguration(new BigMushroomFeatureConfig(new SimpleBlockStateProvider(BGBlocks.FAIRY_RING_MUSHROOM_BLOCK.get().getDefaultState().with(HugeMushroomBlock.DOWN, false)), new SimpleBlockStateProvider(BGBlocks.FAIRY_RING_MUSHROOM_STEM.get().getDefaultState().with(HugeMushroomBlock.UP, false).with(HugeMushroomBlock.DOWN, false)), 2)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(80);
     public static final ConfiguredFeature<?, ?> GROWN_HUGE_FAIRY_RING_MUSHROOM = BGFeatures.HUGE_FAIRY_RING_MUSHROOM_FEATURE.get().withConfiguration(new BigMushroomFeatureConfig(new SimpleBlockStateProvider(BGBlocks.FAIRY_RING_MUSHROOM_BLOCK.get().getDefaultState().with(HugeMushroomBlock.DOWN, false)), new SimpleBlockStateProvider(BGBlocks.FAIRY_RING_MUSHROOM_STEM.get().getDefaultState().with(HugeMushroomBlock.UP, false).with(HugeMushroomBlock.DOWN, false)), 2));
 
     public static void registerConfiguredFeatures() {
@@ -34,7 +35,8 @@ public class BGConfiguredFeatures {
         register("ball_cactus_patch", PATCH_BALL_CACTUS);
         register("fairy_ring", FAIRY_RING);
         register("fairy_ring_plains", FAIRY_RING_PLAINS);
-        register("huge_fairy_ring_mushroom", HUGE_FAIRY_RING_MUSHROOM);
+        register("huge_fairy_ring_mushroom_mushroom_fields", HUGE_FAIRY_RING_MUSHROOM_MUSHROOM_FIELDS);
+        register("huge_fairy_ring_mushroom_dark_forests", HUGE_FAIRY_RING_MUSHROOM_DARK_FORESTS);
         register("grown_huge_fairy_ring_mushroom", GROWN_HUGE_FAIRY_RING_MUSHROOM);
     }
 
