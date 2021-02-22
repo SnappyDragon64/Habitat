@@ -70,8 +70,7 @@ public abstract class AbstractSlimeFernBlock extends Block implements IGrowable 
     }
 
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        ChunkPos chunkPos = new ChunkPos(pos);
-        return SharedSeedRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, ((ISeedReader) worldIn).getSeed(), 987234911L).nextInt(10) == 0;
+        return true;
     }
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
