@@ -49,18 +49,15 @@ public class BGEvents {
             ItemStack stack = event.getItemStack();
             if (!mooshroom.isChild()) {
                 if (stack.getItem() == Items.BOWL) {
-                    boolean giveStew = false;
-
                     if (mooshroom.hasStewEffect == null && mooshroom.getCapability(ConsumedFairyRingMushroom.Provider.CONSUMED_FAIRY_RING_MUSHROOM_CAPABILITY).resolve().get().getConsumedFairyRingMushroom()) {
                         event.setCancellationResult(ActionResultType.SUCCESS);
                         event.setCanceled(true);
-                        giveStew = true;
+                        event.getPlayer().setHeldItem(event.getHand(), DrinkHelper.fill(stack, event.getPlayer(), new ItemStack(BGItems.FAIRY_RING_MUSHROOM_STEW.get()), false));
+                        mooshroom.playSound(SoundEvents.ENTITY_MOOSHROOM_MILK, 1.0F, 1.0F);
                     }
 
                     if (!event.getWorld().isRemote) {
                         mooshroom.getCapability(ConsumedFairyRingMushroom.Provider.CONSUMED_FAIRY_RING_MUSHROOM_CAPABILITY).resolve().get().setConsumedFairyRingMushroom(false);
-                        if (giveStew)
-                            event.getPlayer().setHeldItem(event.getHand(), DrinkHelper.fill(stack, event.getPlayer(), new ItemStack(BGItems.FAIRY_RING_MUSHROOM_STEW.get()), false));
                     }
                 }
 
