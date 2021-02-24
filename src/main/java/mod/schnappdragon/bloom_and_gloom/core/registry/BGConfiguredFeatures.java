@@ -35,8 +35,8 @@ public class BGConfiguredFeatures {
         register("ball_cactus_patch", PATCH_BALL_CACTUS);
         register("fairy_ring", FAIRY_RING);
         register("fairy_ring_plains", FAIRY_RING_PLAINS);
-        register("huge_fairy_ring_mushroom_mushroom_fields", HUGE_FAIRY_RING_MUSHROOM_MUSHROOM_FIELDS);
         register("huge_fairy_ring_mushroom_dark_forests", HUGE_FAIRY_RING_MUSHROOM_DARK_FORESTS);
+        register("huge_fairy_ring_mushroom_mushroom_fields", HUGE_FAIRY_RING_MUSHROOM_MUSHROOM_FIELDS);
         register("grown_huge_fairy_ring_mushroom", GROWN_HUGE_FAIRY_RING_MUSHROOM);
     }
 
