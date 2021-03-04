@@ -1,7 +1,6 @@
 package mod.schnappdragon.bloom_and_gloom.core;
 
 import mod.schnappdragon.bloom_and_gloom.client.renderer.entity.BGEntityRenderers;
-import mod.schnappdragon.bloom_and_gloom.core.capabilities.BGCapabilityHandler;
 import mod.schnappdragon.bloom_and_gloom.core.misc.BGBrewingMixes;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGFeatures;
 import mod.schnappdragon.bloom_and_gloom.core.registry.BGConfiguredFeatures;
@@ -45,8 +44,6 @@ public class BloomAndGloom {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        BGCapabilityHandler.registerCapabilities();
-
         event.enqueueWork(() -> {
             BGBrewingMixes.registerBrewingMixes();
             BGConfiguredFeatures.registerConfiguredFeatures();
