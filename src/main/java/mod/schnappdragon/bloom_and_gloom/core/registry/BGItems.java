@@ -1,6 +1,5 @@
 package mod.schnappdragon.bloom_and_gloom.core.registry;
 
-import mod.schnappdragon.bloom_and_gloom.common.item.FairyRingMushroomItem;
 import mod.schnappdragon.bloom_and_gloom.common.item.FairyRingMushroomStewItem;
 import mod.schnappdragon.bloom_and_gloom.common.item.KabloomFruitItem;
 import mod.schnappdragon.bloom_and_gloom.common.item.WallOrBaseItem;
@@ -50,7 +49,7 @@ public class BGItems {
             () -> new Item((new Item.Properties()).group(ItemGroup.FOOD).food(BGFoods.ROASTED_CACTUS)));
 
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM = ITEMS.register("fairy_ring_mushroom",
-            () -> new FairyRingMushroomItem(BGBlocks.FAIRY_RING_MUSHROOM.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
+            () -> new BlockItem(BGBlocks.FAIRY_RING_MUSHROOM.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BLOCK = ITEMS.register("fairy_ring_mushroom_block",
             () -> new BlockItem(BGBlocks.FAIRY_RING_MUSHROOM_BLOCK.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_STEM = ITEMS.register("fairy_ring_mushroom_stem",
