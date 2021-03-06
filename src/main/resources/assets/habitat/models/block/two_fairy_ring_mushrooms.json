@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "habitat:block/two_fairy_ring_mushrooms"
+  }
+}

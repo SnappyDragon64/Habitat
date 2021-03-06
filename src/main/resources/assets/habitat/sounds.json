@@ -1,0 +1,59 @@
+{
+  "block.rafflesia.spew": {
+    "category": "block",
+    "subtitle": "habitat.subtitle.block.rafflesia.spew",
+    "sounds": [ "habitat:block/rafflesia/spew" ]
+  },
+  "block.rafflesia.pop": {
+    "category": "block",
+    "subtitle": "habitat.subtitle.block.rafflesia.pop",
+    "sounds": [ "habitat:block/rafflesia/pop" ]
+  },
+  "block.rafflesia.slurp": {
+    "category": "block",
+    "subtitle": "habitat.subtitle.block.rafflesia.slurp",
+    "sounds": [ "habitat:block/rafflesia/slurp" ]
+  },
+  "block.kabloom_bush.rustle": {
+    "category": "block",
+    "subtitle": "habitat.subtitle.block.kabloom_bush.rustle",
+    "sounds": [ "habitat:block/kabloom_bush/rustle" ]
+  },
+  "block.kabloom_bush.shear": {
+    "category": "block",
+    "subtitle": "habitat.subtitle.block.kabloom_bush.shear",
+    "sounds": [ "habitat:block/kabloom_bush/shear" ]
+  },
+  "block.slime_fern.drip": {
+    "category": "block",
+    "subtitle": "habitat.subtitle.block.slime_fern.drip",
+    "sounds": [
+      "minecraft:block/beehive/drip1",
+      "minecraft:block/beehive/drip2",
+      "minecraft:block/beehive/drip3",
+      "minecraft:block/beehive/drip4",
+      "minecraft:block/beehive/drip5",
+      "minecraft:block/beehive/drip6"
+    ]
+  },
+  "block.flowering_ball_cactus.shear": {
+    "category": "block",
+    "subtitle": "habitat.subtitle.block.flowering_ball_cactus.shear",
+    "sounds": [ "habitat:block/flowering_ball_cactus/shear" ]
+  },
+  "block.fairy_ring_mushroom.shear": {
+    "category": "block",
+    "subtitle": "habitat.subtitle.block.fairy_ring_mushroom.shear",
+    "sounds": [ "habitat:block/fairy_ring_mushroom/shear" ]
+  },
+  "entity.kabloom_fruit.throw": {
+    "category": "entity",
+    "subtitle": "habitat.subtitle.entity.kabloom_fruit.throw",
+    "sounds": [ "minecraft:random/bow" ]
+  },
+  "entity.kabloom_fruit.explode": {
+    "category": "entity",
+    "subtitle": "habitat.subtitle.entity.kabloom_fruit.explosion",
+    "sounds": [ "habitat:entity/kabloom_fruit/explode" ]
+  }
+}

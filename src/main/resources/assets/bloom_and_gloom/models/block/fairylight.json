@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "bloom_and_gloom:block/fairylight"
-  }
-}

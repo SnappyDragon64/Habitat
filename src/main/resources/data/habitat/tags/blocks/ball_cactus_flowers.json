@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "habitat:orange_ball_cactus_flower",
+    "habitat:pink_ball_cactus_flower",
+    "habitat:red_ball_cactus_flower",
+    "habitat:yellow_ball_cactus_flower"
+  ]
+}

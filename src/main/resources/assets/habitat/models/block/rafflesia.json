@@ -1,0 +1,63 @@
+{
+  "credit": "Made with Blockbench",
+  "ambientocclusion": false,
+  "textures": {
+    "petal": "habitat:block/rafflesia_petal",
+    "stem": "#rafflesia",
+    "particle": "#rafflesia"
+  },
+  "elements": [
+    {
+      "from": [3, 0, 3],
+      "to": [13, 4, 13],
+      "faces": {
+        "north": {"uv": [3.33333, 12, 6.66667, 16], "texture": "#stem"},
+        "east": {"uv": [0, 12, 3.33333, 16], "texture": "#stem"},
+        "south": {"uv": [10, 12, 13.33333, 16], "texture": "#stem"},
+        "west": {"uv": [6.66667, 12, 10, 16], "texture": "#stem"},
+        "up": {"uv": [6.66667, 12, 3.33333, 2], "texture": "#stem"},
+        "down": {"uv": [10, 2, 6.66667, 12], "texture": "#stem", "cullface": "down"}
+      }
+    },
+    {
+      "from": [-2, 0, 8],
+      "to": [18, 0, 20],
+      "shade": false,
+      "rotation": {"angle": -22.5, "axis": "x", "origin": [8, -1, 6]},
+      "faces": {
+        "up": {"uv": [10, 16, 0, 4], "texture": "#petal"},
+        "down": {"uv": [10, 4, 0, 16], "texture": "#petal"}
+      }
+    },
+    {
+      "from": [8, 0, -2],
+      "to": [20, 0, 18],
+      "shade": false,
+      "rotation": {"angle": 22.5, "axis": "z", "origin": [6, -1, 8]},
+      "faces": {
+        "up": {"uv": [10, 16, 0, 4], "rotation": 270, "texture": "#petal"},
+        "down": {"uv": [0, 4, 10, 16], "rotation": 90, "texture": "#petal"}
+      }
+    },
+    {
+      "from": [-2, 0, -4],
+      "to": [18, 0, 8],
+      "shade": false,
+      "rotation": {"angle": 22.5, "axis": "x", "origin": [8, -1, 10]},
+      "faces": {
+        "up": {"uv": [10, 16, 0, 4], "rotation": 180, "texture": "#petal"},
+        "down": {"uv": [10, 4, 0, 16], "rotation": 180, "texture": "#petal"}
+      }
+    },
+    {
+      "from": [-4, 0, -2],
+      "to": [8, 0, 18],
+      "shade": false,
+      "rotation": {"angle": -22.5, "axis": "z", "origin": [10, -1, 8]},
+      "faces": {
+        "up": {"uv": [10, 16, 0, 4], "rotation": 90, "texture": "#petal"},
+        "down": {"uv": [10, 4, 0, 16], "rotation": 270, "texture": "#petal"}
+      }
+    }
+  ]
+}

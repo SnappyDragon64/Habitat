@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:husbandry/root",
+  "display": {
+    "icon": {
+      "item": "habitat:kabloom_fruit"
+    },
+    "title": {
+      "translate": "habitat.advancements.husbandry.bloom_defused.title"
+    },
+    "description": {
+      "translate": "habitat.advancements.husbandry.bloom_defused.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "bloom_defused": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": {
+          "block": {
+            "block": "habitat:kabloom_bush"
+          }
+        },
+        "item": {
+          "item": "minecraft:shears"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bloom_defused"
+    ]
+  ]
+}

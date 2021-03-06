@@ -1,6 +1,0 @@
-{
-  "parent": "bloom_and_gloom:block/cooldown_rafflesia",
-  "textures": {
-    "rafflesia": "bloom_and_gloom:block/rafflesia_stage2"
-  }
-}

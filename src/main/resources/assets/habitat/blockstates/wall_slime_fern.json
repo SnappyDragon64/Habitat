@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "habitat:block/wall_slime_fern",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "habitat:block/wall_slime_fern"
+    },
+    "facing=south": {
+      "model": "habitat:block/wall_slime_fern",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "habitat:block/wall_slime_fern",
+      "y": 270
+    }
+  }
+}

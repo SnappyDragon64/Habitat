@@ -1,0 +1,6 @@
+{
+  "parent": "habitat:block/cooldown_rafflesia",
+  "textures": {
+    "rafflesia": "habitat:block/rafflesia_stage2"
+  }
+}

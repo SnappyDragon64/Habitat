@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_single_face",
+  "ambientocclusion": false,
+  "textures": {
+    "texture": "habitat:block/fairy_ring_mushroom_block"
+  }
+}

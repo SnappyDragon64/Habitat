@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "tag": "habitat:ball_cacti"
+  },
+  "result": "habitat:roasted_cactus",
+  "experience": 0.35,
+  "cookingtime": 600
+}

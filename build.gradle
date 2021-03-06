@@ -13,9 +13,9 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.3a1'
-group = 'mod.schnappdragon.bloom_and_gloom' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'bloom-and-gloom'
+version = '0.3a2'
+group = 'mod.schnappdragon.habitat' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'habitat'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 

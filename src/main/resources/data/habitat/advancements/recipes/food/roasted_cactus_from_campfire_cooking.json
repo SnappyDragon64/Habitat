@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "habitat:roasted_cactus_from_campfire_cooking"
+    ]
+  },
+  "criteria": {
+    "has_ball_cactus": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "habitat:ball_cacti"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "habitat:roasted_cactus_from_campfire_cooking"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ball_cactus",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "on_ceiling=false": {
+      "model": "habitat:block/slime_fern"
+    },
+    "on_ceiling=true": {
+      "model": "habitat:block/slime_fern",
+      "x": 180
+    }
+  }
+}

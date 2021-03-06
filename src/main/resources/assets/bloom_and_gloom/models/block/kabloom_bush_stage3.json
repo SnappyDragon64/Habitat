@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cross",
-  "textures": {
-    "cross": "bloom_and_gloom:block/kabloom_bush_stage3"
-  }
-}

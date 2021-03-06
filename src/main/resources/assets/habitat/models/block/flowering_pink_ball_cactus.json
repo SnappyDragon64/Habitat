@@ -1,0 +1,6 @@
+{
+  "parent": "habitat:block/flowering_ball_cactus",
+  "textures": {
+    "flower": "habitat:block/pink_ball_cactus_flower"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "habitat:block/kabloom_bush_stage0"
+    },
+    "age=1": {
+      "model": "habitat:block/kabloom_bush_stage1"
+    },
+    "age=2": {
+      "model": "habitat:block/kabloom_bush_stage2"
+    },
+    "age=3": {
+      "model": "habitat:block/kabloom_bush_stage3"
+    },
+    "age=4": {
+      "model": "habitat:block/kabloom_bush_stage4"
+    },
+    "age=5": {
+      "model": "habitat:block/kabloom_bush_stage5"
+    },
+    "age=6": {
+      "model": "habitat:block/kabloom_bush_stage6"
+    },
+    "age=7": {
+      "model": "habitat:block/kabloom_bush_stage7"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "ambientocclusion": false,
+  "textures": {
+    "all": "habitat:block/fairy_ring_mushroom_stem"
+  }
+}

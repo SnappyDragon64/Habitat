@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "habitat:fairy_ring_mushroom_stew"
+    ]
+  },
+  "criteria": {
+    "has_mushroom": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "habitat:fairy_ring_mushroom"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "habitat:fairy_ring_mushroom_stew"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_mushroom",
+      "has_the_recipe"
+    ]
+  ]
+}

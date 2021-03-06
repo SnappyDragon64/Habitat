@@ -1,0 +1,30 @@
+{
+  "block.habitat.slime_fern": "슬라임 고사리",
+
+  "item.habitat.rafflesia_seed": "라플레시아 씨앗",
+  "item.habitat.kabloom_seeds": "펑피움 씨앗",
+  "item.habitat.kabloom_fruit": "펑피움 과일",
+  "item.habitat.candied_kabloom_fruit": "설탕 친 펑피움 과일",
+
+  "entity.habitat.kabloom_fruit": "던진 펑피움",
+
+  "habitat.subtitle.block.rafflesia.spew": "라플레시아가 뿜어냄",
+  "habitat.subtitle.block.rafflesia.pop": "라플레시아가 튀어나옴",
+  "habitat.subtitle.block.rafflesia.slurp": "라플레시아가 후루룩 마심",
+  "habitat.subtitle.block.kabloom_bush.rustle": "펑피움 덤불이 부스럭거림",
+  "habitat.subtitle.block.kabloom_bush.shear": "가위로 해체함",
+  "habitat.subtitle.block.slime_fern.drip": "슬라임 점액이 떨어짐",
+
+  "habitat.subtitle.entity.kabloom_fruit.throw": "펑피움 파리",
+  "habitat.subtitle.entity.kabloom_fruit.explosion": "펑피움",
+
+  "death.attack.habitat.kabloom": "%1$s이(가) 펑 피었습니다",
+
+  "effect.habitat.blast_endurance": "폭발 견딤",
+
+  "habitat.advancements.husbandry.suspicious.title": "수상한데...",
+  "habitat.advancements.husbandry.bloom_defused.title": "꽃이 해체되었습니다",
+
+  "habitat.advancements.husbandry.suspicious.description": "라플레시아에게 수상한 스튜를 먹이세요",
+  "habitat.advancements.husbandry.bloom_defused.description": "가위로 펑피움 덤불을 잘라 펑피움 과일을 수확하세요"
+}

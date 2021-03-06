@@ -1,0 +1,6 @@
+{
+  "parent": "habitat:block/rafflesia",
+  "textures": {
+    "rafflesia": "habitat:block/rafflesia_stage2"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "habitat:block/kabloom_bush_stage0"
+  }
+}

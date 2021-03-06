@@ -4,16 +4,15 @@ license="All rights reserved"
 issueTrackerURL="https://github.com/SnappyDragon18/Bloom-and-Gloom/issues"
 
 [[mods]]
-  modId="bloom_and_gloom"
-  version="0.3a1"
-  displayName="Bloom and Gloom"
+  modId="habitat"
+  version="0.3a2"
+  displayName="Habitat"
   displayURL="https://www.curseforge.com/minecraft/mc-mods/bloom-and-gloom"
   logoFile="logo.png"
   authors="SchnappDragon, Edmord17"
-  description='''Plant mod that plans to add more flora to the overworld to make it feel lush.'''
+  description='''Mod that aims to enhance the Overworld by adding content to old biomes and adding new biomes.'''
 
-
-  [[dependencies.bloom_and_gloom]]
+  [[dependencies.habitat]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.16.4, 1.17)"

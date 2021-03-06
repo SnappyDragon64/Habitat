@@ -1,0 +1,6 @@
+{
+  "parent": "habitat:block/potted_ball_cactus",
+  "textures": {
+    "flower": "habitat:block/red_ball_cactus_flower"
+  }
+}

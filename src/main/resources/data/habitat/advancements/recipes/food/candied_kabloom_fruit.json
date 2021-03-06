@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "habitat:candied_kabloom_fruit"
+    ]
+  },
+  "criteria": {
+    "has_kabloom_fruit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "habitat:kabloom_fruit"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "habitat:candied_kabloom_fruit"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_kabloom_fruit",
+      "has_the_recipe"
+    ]
+  ]
+}

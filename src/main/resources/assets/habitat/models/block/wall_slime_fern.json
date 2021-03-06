@@ -1,0 +1,29 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "habitat:block/slime_fern",
+    "fern": "habitat:block/slime_fern"
+  },
+  "elements": [
+    {
+      "from": [0, 8, 0],
+      "to": [16, 8, 16],
+      "rotation": {"axis": "x", "angle": 22.5, "origin": [8, 8, 14]},
+      "shade": false,
+      "faces": {
+        "up": {"uv": [0, 0, 16, 16], "texture": "#fern"},
+        "down": {"uv": [0, 16, 16, 0], "texture": "#fern"}
+      }
+    },
+    {
+      "from": [0, 8, 0],
+      "to": [16, 8, 16],
+      "rotation": {"axis": "x", "angle": -22.5, "origin": [8, 8, 14]},
+      "shade": false,
+      "faces": {
+        "up": {"uv": [0, 0, 16, 16], "texture": "#fern"},
+        "down": {"uv": [0, 16, 16, 0], "texture": "#fern"}
+      }
+    }
+  ]
+}

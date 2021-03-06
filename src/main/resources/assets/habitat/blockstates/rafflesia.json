@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "habitat:block/rafflesia_stage0"
+    },
+    "age=1": {
+      "model": "habitat:block/rafflesia_stage1"
+    },
+    "age=2,on_cooldown=false,has_stew=false": {
+      "model": "habitat:block/rafflesia_stage2"
+    },
+    "age=2,on_cooldown=true,has_stew=false,pollinated=false": {
+      "model": "habitat:block/cooldown_rafflesia_stage2"
+    },
+    "age=2,on_cooldown=true,has_stew=false,pollinated=true": {
+      "model": "habitat:block/cooldown_pollinated_rafflesia_stage2"
+    },
+    "age=2,on_cooldown=false,has_stew=true": {
+      "model": "habitat:block/suspicious_rafflesia_stage2"
+    },
+    "age=2,on_cooldown=true,has_stew=true": {
+      "model": "habitat:block/cooldown_suspicious_rafflesia_stage2"
+    }
+  }
+}

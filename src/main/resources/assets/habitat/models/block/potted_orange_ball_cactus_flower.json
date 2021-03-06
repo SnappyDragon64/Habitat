@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/flower_pot_cross",
+  "textures": {
+    "plant": "habitat:block/orange_ball_cactus_flower"
+  }
+}
