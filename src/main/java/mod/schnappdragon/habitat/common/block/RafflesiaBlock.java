@@ -37,6 +37,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.ColorHelper;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -51,7 +52,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
 import javax.annotation.Nullable;
-import java.awt.Color;
 import java.util.Collection;
 import java.util.Random;
 
@@ -168,8 +168,8 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
             }
         }
 
-        Color color = new Color(PotionUtils.getPotionColorFromEffectList(effectInstances));
-        return new RedstoneParticleData((float) color.getRed() / 255, (float) color.getGreen() / 255, (float) color.getBlue() / 255, 1.0F);
+        int color = PotionUtils.getPotionColorFromEffectList(effectInstances);
+        return new RedstoneParticleData((float) ColorHelper.PackedColor.getRed(color) / 255, (float) ColorHelper.PackedColor.getGreen(color) / 255, (float) ColorHelper.PackedColor.getBlue(color) / 255, 1.0F);
     }
 
     /*
