@@ -13,9 +13,8 @@ import net.minecraftforge.fml.common.Mod;
 public class HabitatParticleManager {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerParticleFactories(ParticleFactoryRegisterEvent event) {
-        Minecraft.getInstance().particles.registerFactory(HabitatParticleTypes.DRIPPING_SLIME.get(), SlimeDripParticle.DrippingSlimeFactory::new);
-        Minecraft.getInstance().particles.registerFactory(HabitatParticleTypes.FALLING_SLIME.get(), SlimeDripParticle.FallingSlimeFactory::new);
-        Minecraft.getInstance().particles.registerFactory(HabitatParticleTypes.LANDING_SLIME.get(), SlimeDripParticle.LandingSlimeFactory::new);
+        Minecraft.getInstance().particles.registerFactory(HabitatParticleTypes.FALLING_SLIME.get(), FallingSlimeParticle.FallingSlimeFactory::new);
+        Minecraft.getInstance().particles.registerFactory(HabitatParticleTypes.LANDING_SLIME.get(), LandingSlimeParticle.LandingSlimeFactory::new);
         Minecraft.getInstance().particles.registerFactory(HabitatParticleTypes.FAIRY_RING_SPORE.get(), FairyRingSporeParticle.Factory::new);
     }
 }

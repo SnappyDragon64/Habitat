@@ -10,7 +10,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class HabitatParticleTypes {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Habitat.MOD_ID);
 
-    public static final RegistryObject<BasicParticleType> DRIPPING_SLIME = register("dripping_slime", false);
     public static final RegistryObject<BasicParticleType> FALLING_SLIME = register("falling_slime",false);
     public static final RegistryObject<BasicParticleType> LANDING_SLIME = register("landing_slime",false);
     public static final RegistryObject<BasicParticleType> FAIRY_RING_SPORE = register("fairy_ring_spore",false);
