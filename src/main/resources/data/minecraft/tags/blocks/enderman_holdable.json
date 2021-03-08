@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#bloom_and_gloom:growing_ball_cacti",
-    "#bloom_and_gloom:ball_cacti"
+    "#habitat:growing_ball_cacti",
+    "#habitat:ball_cacti"
   ]
 }

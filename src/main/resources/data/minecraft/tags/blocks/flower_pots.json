@@ -1,16 +1,16 @@
 {
   "replace": false,
   "values": [
-    {"id": "bloom_and_gloom:potted_rafflesia", "required": false},
-    {"id": "bloom_and_gloom:potted_kabloom_bush", "required": false},
-    "bloom_and_gloom:potted_slime_fern",
-    "bloom_and_gloom:potted_orange_ball_cactus_flower",
-    "bloom_and_gloom:potted_pink_ball_cactus_flower",
-    "bloom_and_gloom:potted_red_ball_cactus_flower",
-    "bloom_and_gloom:potted_yellow_ball_cactus_flower",
-    "bloom_and_gloom:potted_orange_ball_cactus",
-    "bloom_and_gloom:potted_pink_ball_cactus",
-    "bloom_and_gloom:potted_red_ball_cactus",
-    "bloom_and_gloom:potted_yellow_ball_cactus"
+    {"id": "habitat:potted_rafflesia", "required": false},
+    {"id": "habitat:potted_kabloom_bush", "required": false},
+    "habitat:potted_slime_fern",
+    "habitat:potted_orange_ball_cactus_flower",
+    "habitat:potted_pink_ball_cactus_flower",
+    "habitat:potted_red_ball_cactus_flower",
+    "habitat:potted_yellow_ball_cactus_flower",
+    "habitat:potted_orange_ball_cactus",
+    "habitat:potted_pink_ball_cactus",
+    "habitat:potted_red_ball_cactus",
+    "habitat:potted_yellow_ball_cactus"
   ]
 }
