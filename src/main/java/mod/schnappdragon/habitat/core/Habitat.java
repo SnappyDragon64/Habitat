@@ -21,7 +21,6 @@ import org.apache.logging.log4j.Logger;
 public class Habitat {
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "habitat";
-    public static final boolean DEV = false;
 
     public Habitat() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
