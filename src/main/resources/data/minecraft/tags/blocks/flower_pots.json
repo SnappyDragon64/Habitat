@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    {"id": "habitat:potted_rafflesia", "required": false},
-    {"id": "habitat:potted_kabloom_bush", "required": false},
+    "habitat:potted_rafflesia",
+    "habitat:potted_kabloom_bush",
     "habitat:potted_slime_fern",
     "habitat:potted_orange_ball_cactus_flower",
     "habitat:potted_pink_ball_cactus_flower",
