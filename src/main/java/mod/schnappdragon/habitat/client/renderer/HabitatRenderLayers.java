@@ -1,7 +1,6 @@
 package mod.schnappdragon.habitat.client.renderer;
 
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
-import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -9,10 +8,10 @@ import net.minecraft.client.renderer.RenderTypeLookup;
 public class HabitatRenderLayers {
     public static void registerRenderLayers() {
         setRenderLayer(HabitatBlocks.RAFFLESIA.get(), RenderType.getCutout());
-        CompatHelper.registerCompat(() -> setRenderLayer(HabitatBlocks.POTTED_RAFFLESIA.get(), RenderType.getCutout()), "quark");
+        setRenderLayer(HabitatBlocks.POTTED_RAFFLESIA.get(), RenderType.getCutout());
 
         setRenderLayer(HabitatBlocks.KABLOOM_BUSH.get(), RenderType.getCutout());
-        CompatHelper.registerCompat(() -> setRenderLayer(HabitatBlocks.POTTED_KABLOOM_BUSH.get(), RenderType.getCutout()), "quark");
+        setRenderLayer(HabitatBlocks.POTTED_KABLOOM_BUSH.get(), RenderType.getCutout());
 
         setRenderLayer(HabitatBlocks.SLIME_FERN.get(), RenderType.getCutout());
         setRenderLayer(HabitatBlocks.WALL_SLIME_FERN.get(), RenderType.getCutout());
