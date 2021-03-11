@@ -19,13 +19,4 @@ public class CompatHelper {
         }
         return true;
     }
-
-    public static void registerCompat(Runnable register, String... modids) {
-        if (modsLoaded(modids))
-            register.run();
-    }
-
-    public static <I extends IForgeRegistryEntry<? super I>> RegistryObject<I> registerCompat(Supplier<RegistryObject<I>> register, String... modids) {
-        return modsLoaded(modids) ? register.get() : null;
-    }
 }
