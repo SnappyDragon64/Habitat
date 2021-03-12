@@ -29,6 +29,7 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
@@ -135,7 +136,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     }
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        worldIn.setBlockState(pos, state.with(AGE, Math.min(7, state.get(AGE) + 1)), 2);
+        worldIn.setBlockState(pos, state.with(AGE, Math.min(7, state.get(AGE) + MathHelper.nextInt(rand, 2, 4))), 2);
     }
 
     /*

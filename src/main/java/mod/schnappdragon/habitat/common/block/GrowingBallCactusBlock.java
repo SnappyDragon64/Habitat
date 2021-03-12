@@ -53,6 +53,6 @@ public class GrowingBallCactusBlock extends AbstractBallCactusBlock implements I
     }
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        worldIn.setBlockState(pos, getColor().getBallCactus().getDefaultState());
+        worldIn.setBlockState(pos, (rand.nextBoolean() ? getColor().getBallCactus() : getColor().getFloweringBallCactus()).getDefaultState());
     }
 }
