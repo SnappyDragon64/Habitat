@@ -45,13 +45,14 @@ public class HabitatFindPollinationTargetGoal extends Goal {
                 BlockState state = this.bee.world.getBlockState(pos);
                 Block block = state.getBlock();
                 boolean flag = false;
-                boolean cactusFlag = false;
+                boolean setBlockFlag = false;
                 IntegerProperty integerproperty = null;
                 if (block.isIn(BlockTags.BEE_GROWABLES)) {
                     if (block == HabitatBlocks.KABLOOM_BUSH.get()) {
                         int k = state.get(KabloomBushBlock.AGE);
                         if (k < 7) {
                             flag = true;
+                            setBlockFlag = true;
                             integerproperty = KabloomBushBlock.AGE;
                         }
                     }
@@ -59,28 +60,25 @@ public class HabitatFindPollinationTargetGoal extends Goal {
                     if (block instanceof BallCactusFlowerBlock) {
                         BallCactusFlowerBlock flower = (BallCactusFlowerBlock) block;
                         this.bee.world.setBlockState(pos, flower.getColor().getGrowingBallCactus().getDefaultState());
-                        cactusFlag = true;
+                        flag = true;
                     }
 
                     if (block instanceof GrowingBallCactusBlock) {
                         GrowingBallCactusBlock cactus = (GrowingBallCactusBlock) block;
                         this.bee.world.setBlockState(pos, cactus.getColor().getBallCactus().getDefaultState());
-                        cactusFlag = true;
+                        flag = true;
                     }
 
                     if (block instanceof BallCactusBlock) {
                         BallCactusBlock cactus = (BallCactusBlock) block;
                         this.bee.world.setBlockState(pos, cactus.getColor().getFloweringBallCactus().getDefaultState());
-                        cactusFlag = true;
+                        flag = true;
                     }
 
                     if (flag) {
-                        this.bee.world.playEvent(2005, pos, 0);
-                        this.bee.world.setBlockState(pos, state.with(integerproperty, state.get(integerproperty) + 1));
-                        this.bee.addCropCounter();
-                    }
+                        if (setBlockFlag)
+                            this.bee.world.setBlockState(pos, state.with(integerproperty, state.get(integerproperty) + 1));
 
-                    if (cactusFlag) {
                         this.bee.world.playEvent(2005, pos, 0);
                         this.bee.addCropCounter();
                     }
