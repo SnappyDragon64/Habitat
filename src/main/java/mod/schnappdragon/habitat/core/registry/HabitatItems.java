@@ -17,12 +17,12 @@ public class HabitatItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Habitat.MOD_ID);
 
     public static final RegistryObject<Item> RAFFLESIA_SEED = ITEMS.register("rafflesia_seed",
-            () -> new BlockNamedItem(HabitatBlocks.RAFFLESIA.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
+            () -> new BlockNamedItem(HabitatBlocks.RAFFLESIA.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
 
     public static final RegistryObject<Item> KABLOOM_SEEDS = ITEMS.register("kabloom_seeds",
             () -> new BlockNamedItem(HabitatBlocks.KABLOOM_BUSH.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
     public static final RegistryObject<Item> KABLOOM_FRUIT = ITEMS.register("kabloom_fruit",
-            () -> new KabloomFruitItem(new Item.Properties().maxStackSize(16).group(ItemGroup.MISC)));
+            () -> new KabloomFruitItem(new Item.Properties().maxStackSize(16).group(ItemGroup.COMBAT)));
     public static final RegistryObject<Item> CANDIED_KABLOOM_FRUIT = ITEMS.register("candied_kabloom_fruit",
             () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(HabitatFoods.CANDIED_KABLOOM_FRUIT)));
 
