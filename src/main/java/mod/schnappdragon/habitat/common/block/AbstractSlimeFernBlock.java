@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.common.block;
 
+import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -7,11 +8,11 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
@@ -71,8 +72,30 @@ public abstract class AbstractSlimeFernBlock extends Block implements IGrowable 
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
         ChunkPos chunkPos = new ChunkPos(pos);
-        if (SharedSeedRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, ((ISeedReader) worldIn).getSeed(), 987234911L).nextInt(10) == 0)
-            spawnAsEntity(worldIn, pos, new ItemStack(this));
+        if (SharedSeedRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, ((ISeedReader) worldIn).getSeed(), 987234911L).nextInt(10) == 0) {
+            BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+            Direction[] directions = new Direction[]{Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP};
+
+            for (int j = 0; j < 3; ++j) {
+                blockpos$mutable.setAndOffset(pos, MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2));
+
+                if (worldIn.isAirBlock(blockpos$mutable)) {
+                    for (Direction dir : directions) {
+                        if (worldIn.getBlockState(blockpos$mutable.offset(dir)).isSolidSide(worldIn, blockpos$mutable, dir.getOpposite())) {
+                            BlockState state1 = HabitatBlocks.SLIME_FERN.get().getDefaultState();
+
+                            if (dir == Direction.UP)
+                                state1 = state1.with(SlimeFernBlock.ON_CEILING, true);
+                            else if (dir != Direction.DOWN)
+                                state1 = HabitatBlocks.WALL_SLIME_FERN.get().getDefaultState().with(WallSlimeFernBlock.HORIZONTAL_FACING, dir.getOpposite());
+
+                            worldIn.setBlockState(blockpos$mutable, state1, 3);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /*
