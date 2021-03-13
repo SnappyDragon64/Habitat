@@ -35,7 +35,7 @@ public class SlimeFernFeature extends Feature<BlockClusterFeatureConfig> {
 
                 if (reader.isAirBlock(blockpos$mutable) || config.isReplaceable && reader.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) {
                     for (Direction dir : directions) {
-                        if (reader.getBlockState(blockpos$mutable.offset(dir)).isSolidSide(reader, blockpos$mutable, dir.getOpposite()) && reader.getBlockState(blockpos$mutable.offset(dir)).isIn(Tags.Blocks.STONE)) {
+                        if (reader.getBlockState(blockpos$mutable.offset(dir)).isIn(Tags.Blocks.STONE)) {
                             BlockState state = config.stateProvider.getBlockState(rand, blockpos$mutable);
 
                             if (state.getBlock() == HabitatBlocks.SLIME_FERN.get()) {
