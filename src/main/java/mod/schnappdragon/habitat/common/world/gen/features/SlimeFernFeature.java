@@ -33,7 +33,7 @@ public class SlimeFernFeature extends Feature<BlockClusterFeatureConfig> {
             for (int j = 0; j < config.tryCount; ++j) {
                 blockpos$mutable.setAndOffset(pos1, rand.nextInt(config.xSpread + 1) - rand.nextInt(config.xSpread + 1), rand.nextInt(config.ySpread + 1) - rand.nextInt(config.ySpread + 1), rand.nextInt(config.zSpread + 1) - rand.nextInt(config.zSpread + 1));
 
-                if ((reader.isAirBlock(blockpos$mutable) || config.isReplaceable && reader.getBlockState(blockpos$mutable).getMaterial().isReplaceable())) {
+                if (reader.isAirBlock(blockpos$mutable) || config.isReplaceable && reader.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) {
                     for (Direction dir : directions) {
                         if (reader.getBlockState(blockpos$mutable.offset(dir)).isSolidSide(reader, blockpos$mutable, dir.getOpposite()) && reader.getBlockState(blockpos$mutable.offset(dir)).isIn(Tags.Blocks.STONE)) {
                             BlockState state = config.stateProvider.getBlockState(rand, blockpos$mutable);
