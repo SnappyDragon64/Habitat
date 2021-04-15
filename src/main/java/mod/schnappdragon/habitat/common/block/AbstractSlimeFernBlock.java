@@ -63,7 +63,11 @@ public abstract class AbstractSlimeFernBlock extends Block implements IGrowable 
      */
 
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return true;
+        if (!isClient) {
+            ChunkPos chunkPos = new ChunkPos(pos);
+            return SharedSeedRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, ((ISeedReader) worldIn).getSeed(), 987234911L).nextInt(10) == 0;
+        }
+        return false;
     }
 
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
@@ -71,27 +75,24 @@ public abstract class AbstractSlimeFernBlock extends Block implements IGrowable 
     }
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        ChunkPos chunkPos = new ChunkPos(pos);
-        if (SharedSeedRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, ((ISeedReader) worldIn).getSeed(), 987234911L).nextInt(10) == 0) {
-            BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
-            Direction[] directions = new Direction[]{Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP};
+        BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+        Direction[] directions = new Direction[]{Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP};
 
-            for (int j = 0; j < 3; ++j) {
-                blockpos$mutable.setAndOffset(pos, MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2));
+        for (int j = 0; j < 3; ++j) {
+            blockpos$mutable.setAndOffset(pos, MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2));
 
-                if (worldIn.isAirBlock(blockpos$mutable)) {
-                    for (Direction dir : directions) {
-                        if (worldIn.getBlockState(blockpos$mutable.offset(dir)).isSolidSide(worldIn, blockpos$mutable, dir.getOpposite())) {
-                            BlockState state1 = HabitatBlocks.SLIME_FERN.get().getDefaultState();
+            if (worldIn.isAirBlock(blockpos$mutable)) {
+                for (Direction dir : directions) {
+                    if (worldIn.getBlockState(blockpos$mutable.offset(dir)).isSolidSide(worldIn, blockpos$mutable, dir.getOpposite())) {
+                        BlockState state1 = HabitatBlocks.SLIME_FERN.get().getDefaultState();
 
-                            if (dir == Direction.UP)
-                                state1 = state1.with(SlimeFernBlock.ON_CEILING, true);
-                            else if (dir != Direction.DOWN)
-                                state1 = HabitatBlocks.WALL_SLIME_FERN.get().getDefaultState().with(WallSlimeFernBlock.HORIZONTAL_FACING, dir.getOpposite());
+                        if (dir == Direction.UP)
+                            state1 = state1.with(SlimeFernBlock.ON_CEILING, true);
+                        else if (dir != Direction.DOWN)
+                            state1 = HabitatBlocks.WALL_SLIME_FERN.get().getDefaultState().with(WallSlimeFernBlock.HORIZONTAL_FACING, dir.getOpposite());
 
-                            worldIn.setBlockState(blockpos$mutable, state1, 3);
-                            break;
-                        }
+                        worldIn.setBlockState(blockpos$mutable, state1, 3);
+                        break;
                     }
                 }
             }
