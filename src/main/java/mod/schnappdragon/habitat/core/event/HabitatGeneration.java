@@ -31,24 +31,18 @@ public class HabitatGeneration {
                 // Plains
                 if (event.getCategory() == Biome.Category.PLAINS) {
                     helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH);
-                    helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.FAIRY_RING_PLAINS);
+                    helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.FAIRY_RING);
                 }
 
                 // Dark Forests
                 if (event.getName().getPath().contains("dark_forest")) {
                     helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.FAIRY_RING);
-                    helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM_DARK_FORESTS);
+                    helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM);
                 }
 
                 // Desert and Badlands
                 if (event.getCategory() == Biome.Category.DESERT || event.getCategory() == Biome.Category.MESA)
                     helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS);
-
-                // Mushroom Fields
-                if (event.getCategory() == Biome.Category.MUSHROOM) {
-                    helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.FAIRY_RING);
-                    helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM_MUSHROOM_FIELDS);
-                }
             }
         }
     }
