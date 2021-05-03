@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.ShearsItem;
+import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -61,8 +62,22 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
      */
 
     public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
-        if (!state.get(DUSTED) && rand.nextInt(10 - state.get(MUSHROOMS)) == 0)
+        if (state.get(DUSTED) && rand.nextInt(4) == 0)
+            spawnRedstoneParticles(state, worldIn, pos, rand);
+        else if (!state.get(DUSTED) && rand.nextInt(10 - state.get(MUSHROOMS)) == 0)
             worldIn.addParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), rand.nextGaussian() * 0.01D, 0.0D, rand.nextGaussian() * 0.01D);
+    }
+
+    public void spawnRedstoneParticles(BlockState state, World worldIn, BlockPos pos, Random rand) {
+        VoxelShape voxelshape = this.getShape(state, worldIn, pos, ISelectionContext.dummy());
+
+        for (Direction direction : Direction.values()) {
+            Direction.Axis direction$axis = direction.getAxis();
+            double d1 = direction$axis == Direction.Axis.X ? 0.5D * voxelshape.getBoundingBox().maxX + 0.5625D * direction.getXOffset() : rand.nextDouble();
+            double d2 = direction$axis == Direction.Axis.Y ? 0.5D * voxelshape.getBoundingBox().maxY + 0.5625D * direction.getYOffset() : rand.nextDouble();
+            double d3 = direction$axis == Direction.Axis.Z ? 0.5D * voxelshape.getBoundingBox().maxZ + 0.5625D * direction.getZOffset() : rand.nextDouble();
+            worldIn.addParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX() + d1, pos.getY() + d2, pos.getZ() + d3, 0.0D, 0.0D, 0.0D);
+        }
     }
 
     /*
@@ -91,6 +106,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
             if (!player.abilities.isCreativeMode)
                 player.getHeldItem(handIn).shrink(1);
             worldIn.setBlockState(pos, state.with(DUSTED, true), 2);
+            spawnRedstoneParticles(state, worldIn, pos, worldIn.getRandom());
             return ActionResultType.func_233537_a_(worldIn.isRemote);
         }
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
