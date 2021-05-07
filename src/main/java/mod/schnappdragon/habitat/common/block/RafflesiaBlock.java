@@ -3,8 +3,6 @@ package mod.schnappdragon.habitat.common.block;
 import com.google.common.collect.Lists;
 import mod.schnappdragon.habitat.common.state.properties.HabitatBlockStateProperties;
 import mod.schnappdragon.habitat.common.tileentity.RafflesiaTileEntity;
-import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
-import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import net.minecraft.block.Block;
@@ -32,9 +30,7 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ColorHelper;
@@ -43,6 +39,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
@@ -219,7 +216,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     }
 
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return state.get(ON_COOLDOWN);
+        return true;
     }
 
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
@@ -229,6 +226,18 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
         if (state.get(ON_COOLDOWN))
             cooldownReset(worldIn, pos, state);
+        else if (!state.get(HAS_STEW)) {
+            BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+
+            for (int j = 0; j < 8; ++j) {
+                blockpos$mutable.setAndOffset(pos, MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2));
+
+                if (worldIn.isAirBlock(blockpos$mutable) && worldIn.getBlockState(blockpos$mutable.down()).isIn(HabitatBlockTags.RAFFLESIA_PLANTABLE_ON)) {
+                    worldIn.setBlockState(blockpos$mutable, state, 3);
+                    break;
+                }
+            }
+        }
     }
 
     private void cooldownReset(ServerWorld worldIn, BlockPos pos, BlockState state) {
