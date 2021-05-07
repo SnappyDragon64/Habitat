@@ -14,7 +14,7 @@ import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
 import net.minecraft.world.gen.feature.*;
 
 public class HabitatConfiguredFeatures {
-    public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(HabitatBlocks.RAFFLESIA.get().getDefaultState().with(RafflesiaBlock.AGE, 2)), SimpleBlockPlacer.PLACER).xSpread(6).ySpread(1).zSpread(6).tries(2).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(4);
+    public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(HabitatBlocks.RAFFLESIA.get().getDefaultState()), SimpleBlockPlacer.PLACER).xSpread(6).ySpread(1).zSpread(6).tries(2).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(4);
 
     public static final ConfiguredFeature<?, ?> PATCH_KABLOOM_BUSH = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(HabitatBlocks.KABLOOM_BUSH.get().getDefaultState().with(KabloomBushBlock.AGE, 7)), SimpleBlockPlacer.PLACER).xSpread(4).ySpread(1).zSpread(4).tries(20).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(200);
 
