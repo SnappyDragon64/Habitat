@@ -46,6 +46,11 @@
     "subtitle": "habitat.subtitle.block.fairy_ring_mushroom.shear",
     "sounds": [ "habitat:block/fairy_ring_mushroom/shear" ]
   },
+  "block.fairy_ring_mushroom.dust": {
+    "category": "block",
+    "subtitle": "habitat.subtitle.block.fairy_ring_mushroom.dust",
+    "sounds": [ "habitat:block/fairy_ring_mushroom/dust" ]
+  },
   "entity.kabloom_fruit.throw": {
     "category": "entity",
     "subtitle": "habitat.subtitle.entity.kabloom_fruit.throw",
