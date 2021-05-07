@@ -6,7 +6,7 @@ import net.minecraft.util.IItemProvider;
 
 public class HabitatComposterChances {
     public static void registerComposterChances() {
-        put(HabitatItems.RAFFLESIA.get(), 0.3F);
+        put(HabitatItems.RAFFLESIA.get(), 0.65F);
 
         put(HabitatItems.KABLOOM_SEEDS.get(), 0.3F);
         put(HabitatItems.KABLOOM_FRUIT.get(), 0.65F);
