@@ -56,38 +56,27 @@ import java.util.Collection;
 import java.util.Random;
 
 public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable {
-    protected static final VoxelShape AGE_0_SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 4.0D, 10.0D);
-    protected static final VoxelShape AGE_1_SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D);
     protected static final VoxelShape DEFAULT_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
     protected static final VoxelShape COOLDOWN_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
-    public static final IntegerProperty AGE = BlockStateProperties.AGE_0_2;
     public static final BooleanProperty ON_COOLDOWN = HabitatBlockStateProperties.ON_COOLDOWN;
     public static final BooleanProperty HAS_STEW = HabitatBlockStateProperties.HAS_STEW;
-    public static final BooleanProperty POLLINATED = HabitatBlockStateProperties.POLLINATED;
 
     public RafflesiaBlock(Properties properties) {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(AGE, 0).with(ON_COOLDOWN, false).with(HAS_STEW, false).with(POLLINATED, false)
-        );
+        this.setDefaultState(this.stateContainer.getBaseState().with(ON_COOLDOWN, false).with(HAS_STEW, false));
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(AGE, ON_COOLDOWN, HAS_STEW, POLLINATED);
+        builder.add(ON_COOLDOWN, HAS_STEW);
     }
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        if (state.get(AGE) == 0)
-            return AGE_0_SHAPE;
-        else if (state.get(AGE) == 1)
-            return AGE_1_SHAPE;
-        else {
-            if (state.get(ON_COOLDOWN))
-                return COOLDOWN_SHAPE;
-            else
-                return DEFAULT_SHAPE;
-        }
+        if (state.get(ON_COOLDOWN))
+            return COOLDOWN_SHAPE;
+        else
+            return DEFAULT_SHAPE;
     }
 
     /*
@@ -103,7 +92,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
      */
 
     public boolean hasTileEntity(BlockState state) {
-        return state.get(AGE) == 2;
+        return true;
     }
 
     public TileEntity createTileEntity(BlockState state, IBlockReader worldIn) {
@@ -116,7 +105,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
         TileEntity tile = worldIn.getTileEntity(pos);
-        if (tile instanceof RafflesiaTileEntity && (rand.nextInt(128) == 0 && !state.get(ON_COOLDOWN) || state.get(POLLINATED)) && state.get(AGE) == 2) {
+        if (tile instanceof RafflesiaTileEntity && rand.nextInt(128) == 0 && !state.get(ON_COOLDOWN)) {
             RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
             double X = (double) pos.getX() + 0.5D;
             double Z = (double) pos.getZ() + 0.5D;
@@ -151,8 +140,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
         worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_RAFFLESIA_SPEW.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
         worldIn.addEntity(cloud);
-        if (!state.get(HAS_STEW))
-            attemptPollination(worldIn, pos);
     }
 
     private IParticleData getParticle(ListNBT effects)
@@ -178,9 +165,9 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (!worldIn.isRemote && (entityIn instanceof LivingEntity || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity || entityIn instanceof BoatEntity || entityIn instanceof TNTEntity || entityIn instanceof AbstractMinecartEntity) && state.get(AGE) == 2) {
+        if (!worldIn.isRemote && (entityIn instanceof LivingEntity || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity || entityIn instanceof BoatEntity || entityIn instanceof TNTEntity || entityIn instanceof AbstractMinecartEntity)) {
             TileEntity tile = worldIn.getTileEntity(pos);
-            if (tile instanceof RafflesiaTileEntity && !state.get(ON_COOLDOWN) && !state.get(POLLINATED)) {
+            if (tile instanceof RafflesiaTileEntity && !state.get(ON_COOLDOWN)) {
                 RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
                 createCloud(worldIn, pos, state, rafflesia.Effects);
                 worldIn.setBlockState(pos, state.with(ON_COOLDOWN, true).with(HAS_STEW, false));
@@ -200,9 +187,9 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         ItemStack stack = player.getHeldItem(handIn);
 
-        if (!worldIn.isRemote && stack.getItem() == Items.SUSPICIOUS_STEW && state.get(AGE) == 2) {
+        if (!worldIn.isRemote && stack.getItem() == Items.SUSPICIOUS_STEW) {
             TileEntity tile = worldIn.getTileEntity(pos);
-            if (tile instanceof RafflesiaTileEntity && !state.get(HAS_STEW) && !state.get(POLLINATED)) {
+            if (tile instanceof RafflesiaTileEntity && !state.get(HAS_STEW)) {
                 RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
                 CompoundNBT tag = stack.getTag();
                 if (tag != null && tag.contains("Effects", 9)) {
@@ -219,37 +206,20 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     }
 
     /*
-     * Pollination Method
-     */
-
-    private void attemptPollination(World worldIn, BlockPos pos) {
-        for(Direction direction : Direction.Plane.HORIZONTAL) {
-            BlockState state = worldIn.getBlockState(pos.offset(direction));
-            if (state.getBlock().matchesBlock(HabitatBlocks.RAFFLESIA.get())) {
-                if (!state.get(HAS_STEW) && worldIn.rand.nextInt(10) == 0) {
-                    worldIn.setBlockState(pos.offset(direction), state.with(POLLINATED, true).with(ON_COOLDOWN, true));
-                }
-            }
-        }
-    }
-
-    /*
      * Growth Methods
      */
 
     public boolean ticksRandomly(BlockState state) {
-        return state.get(AGE) < 2 || state.get(ON_COOLDOWN);
+        return state.get(ON_COOLDOWN);
     }
 
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if (state.get(AGE) < 2 && random.nextInt(5) == 0)
-            worldIn.setBlockState(pos, state.with(AGE, state.get(AGE) + 1), 2);
-        else if (state.get(ON_COOLDOWN) && random.nextInt(2) == 0)
+        if (state.get(ON_COOLDOWN) && random.nextInt(2) == 0)
             cooldownReset(worldIn, pos, state);
     }
 
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return state.get(AGE) < 2 || state.get(ON_COOLDOWN);
+        return state.get(ON_COOLDOWN);
     }
 
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
@@ -257,17 +227,12 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     }
 
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        if (state.get(ON_COOLDOWN) && state.get(AGE) == 2)
+        if (state.get(ON_COOLDOWN))
             cooldownReset(worldIn, pos, state);
-        else
-            worldIn.setBlockState(pos, state.with(AGE, Math.min(2, state.get(AGE) + 1)), 2);
     }
 
     private void cooldownReset(ServerWorld worldIn, BlockPos pos, BlockState state) {
-        if (state.get(POLLINATED))
-            spawnAsEntity(worldIn, pos, new ItemStack(HabitatItems.RAFFLESIA_SEED.get()));
-
-        worldIn.setBlockState(pos, state.with(ON_COOLDOWN, false).with(POLLINATED, false));
+        worldIn.setBlockState(pos, state.with(ON_COOLDOWN, false));
         worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_RAFFLESIA_POP.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
     }
 
@@ -306,6 +271,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     @Nullable
     @Override
     public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
-        return state.get(AGE) > 0 ? PathNodeType.DANGER_OTHER : null;
+        return PathNodeType.DANGER_OTHER;
     }
 }

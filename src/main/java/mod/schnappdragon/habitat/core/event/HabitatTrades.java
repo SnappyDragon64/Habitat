@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 public class HabitatTrades {
     @SubscribeEvent
     public static void addWanderingTraderTrades(WandererTradesEvent event) {
-        event.getGenericTrades().add(new BasicTrade(3, new ItemStack(HabitatItems.RAFFLESIA_SEED.get()), 12, 10, 1));
+        event.getGenericTrades().add(new BasicTrade(3, new ItemStack(HabitatItems.RAFFLESIA.get()), 12, 10, 1));
         event.getGenericTrades().add(new BasicTrade(3, new ItemStack(HabitatItems.KABLOOM_FRUIT.get()), 12, 10, 1));
         event.getGenericTrades().add(new BasicTrade(3, new ItemStack(HabitatItems.KABLOOM_SEEDS.get()), 12, 10, 1));
         event.getGenericTrades().add(new BasicTrade(1, new ItemStack(HabitatItems.SLIME_FERN.get()), 12, 10, 1));

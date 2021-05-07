@@ -16,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class HabitatItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Habitat.MOD_ID);
 
-    public static final RegistryObject<Item> RAFFLESIA_SEED = ITEMS.register("rafflesia_seed",
+    public static final RegistryObject<Item> RAFFLESIA = ITEMS.register("rafflesia",
             () -> new BlockNamedItem(HabitatBlocks.RAFFLESIA.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
 
     public static final RegistryObject<Item> KABLOOM_SEEDS = ITEMS.register("kabloom_seeds",

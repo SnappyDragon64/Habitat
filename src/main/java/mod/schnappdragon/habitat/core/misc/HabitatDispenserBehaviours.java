@@ -41,9 +41,9 @@ public class HabitatDispenserBehaviours {
                 World worldIn = source.getWorld();
                 BlockPos pos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
                 BlockState state = worldIn.getBlockState(pos);
-                if (!worldIn.isRemote && state.isIn(HabitatBlocks.RAFFLESIA.get()) && state.get(RafflesiaBlock.AGE) == 2) {
+                if (!worldIn.isRemote && state.isIn(HabitatBlocks.RAFFLESIA.get())) {
                     TileEntity tile = worldIn.getTileEntity(pos);
-                    if (tile instanceof RafflesiaTileEntity && !state.get(RafflesiaBlock.HAS_STEW) && !state.get(RafflesiaBlock.POLLINATED)) {
+                    if (tile instanceof RafflesiaTileEntity && !state.get(RafflesiaBlock.HAS_STEW)) {
                         RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
                         CompoundNBT tag = stack.getTag();
                         if (tag != null && tag.contains("Effects", 9)) {
