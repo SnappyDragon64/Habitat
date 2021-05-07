@@ -21,6 +21,7 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.Util;
@@ -164,9 +165,11 @@ public class HabitatDispenserBehaviours {
                 BlockState state = worldIn.getBlockState(pos);
                 if (!worldIn.isRemote && state.isIn(HabitatBlocks.FAIRY_RING_MUSHROOM.get()) && !state.get(FairyRingMushroomBlock.DUSTED)) {
                     worldIn.setBlockState(pos, state.with(FairyRingMushroomBlock.DUSTED, true));
-                    ((FairyRingMushroomBlock) state.getBlock()).spawnRedstoneParticles(state, worldIn, pos, worldIn.getRandom());
+                    worldIn.addParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX() + 0.5D, pos.getY() + 0.125D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+                    worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_FAIRY_RING_MUSHROOM_DUST.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
                     stack.shrink(1);
                     this.setSuccessful(true);
+                    return stack;
                 }
                 else if (RedstoneBehaviour != null)
                     RedstoneBehaviour.dispense(source, stack);
