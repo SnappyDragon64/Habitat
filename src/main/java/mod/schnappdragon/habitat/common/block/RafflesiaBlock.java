@@ -216,7 +216,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
     }
 
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return true;
+        return !state.get(HAS_STEW) || state.get(ON_COOLDOWN);
     }
 
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
