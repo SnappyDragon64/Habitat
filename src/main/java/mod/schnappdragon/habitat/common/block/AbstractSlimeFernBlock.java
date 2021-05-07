@@ -81,7 +81,7 @@ public abstract class AbstractSlimeFernBlock extends Block implements IGrowable 
         for (int j = 0; j < 3; ++j) {
             blockpos$mutable.setAndOffset(pos, MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2));
 
-            if (worldIn.isAirBlock(blockpos$mutable)) {
+            if (worldIn.isAirBlock(blockpos$mutable) || worldIn.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) {
                 for (Direction dir : directions) {
                     if (worldIn.getBlockState(blockpos$mutable.offset(dir)).isSolidSide(worldIn, blockpos$mutable, dir.getOpposite())) {
                         BlockState state1 = HabitatBlocks.SLIME_FERN.get().getDefaultState();

@@ -232,7 +232,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
             for (int j = 0; j < 8; ++j) {
                 blockpos$mutable.setAndOffset(pos, MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2));
 
-                if (worldIn.isAirBlock(blockpos$mutable) && worldIn.getBlockState(blockpos$mutable.down()).isIn(HabitatBlockTags.RAFFLESIA_PLANTABLE_ON)) {
+                if ((worldIn.isAirBlock(blockpos$mutable) || worldIn.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) && worldIn.getBlockState(blockpos$mutable.down()).isIn(HabitatBlockTags.RAFFLESIA_PLANTABLE_ON)) {
                     worldIn.setBlockState(blockpos$mutable, state, 3);
                     break;
                 }
