@@ -2,6 +2,7 @@ package mod.schnappdragon.habitat.core;
 
 import mod.schnappdragon.habitat.client.renderer.entity.HabitatEntityRenderers;
 import mod.schnappdragon.habitat.core.misc.HabitatBrewingMixes;
+import mod.schnappdragon.habitat.core.misc.HabitatFireInfo;
 import mod.schnappdragon.habitat.core.registry.HabitatFeatures;
 import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
 import mod.schnappdragon.habitat.core.misc.HabitatComposterChances;
@@ -48,6 +49,7 @@ public class Habitat {
             HabitatConfiguredFeatures.registerConfiguredFeatures();
             HabitatComposterChances.registerComposterChances();
             HabitatDispenserBehaviours.registerDispenserBehaviour();
+            HabitatFireInfo.registerFireInfo();
         });
     }
 

@@ -149,20 +149,6 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
     }
 
     /*
-     * Block Flammability Methods
-     */
-
-    @Override
-    public int getFlammability(BlockState state, IBlockReader worldIn, BlockPos pos, Direction face) {
-        return 100;
-    }
-
-    @Override
-    public int getFireSpreadSpeed(BlockState state, IBlockReader worldIn, BlockPos pos, Direction face) {
-        return 60;
-    }
-
-    /*
      * Pathfinding Method
      */
 

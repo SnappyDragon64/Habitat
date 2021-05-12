@@ -106,18 +106,4 @@ public abstract class AbstractSlimeFernBlock extends Block implements IGrowable 
     public PushReaction getPushReaction(BlockState state) {
         return PushReaction.DESTROY;
     }
-
-    /*
-     * Block Flammability Methods
-     */
-
-    @Override
-    public int getFlammability(BlockState state, IBlockReader worldIn, BlockPos pos, Direction face) {
-        return 100;
-    }
-
-    @Override
-    public int getFireSpreadSpeed(BlockState state, IBlockReader worldIn, BlockPos pos, Direction face) {
-        return 60;
-    }
 }

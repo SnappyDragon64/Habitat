@@ -29,19 +29,4 @@ public class HabitatFlowerBlock extends FlowerBlock {
     public int getStewEffectDuration() {
         return this.stewEffectDuration * (this.stewEffect.get().isInstant() ? 1 : 20);
     }
-
-    /*
-     * Block Flammability Methods
-     */
-
-    @Override
-    public int getFlammability(BlockState state, IBlockReader worldIn, BlockPos pos, Direction face) {
-        return 100;
-    }
-
-    @Override
-    public int getFireSpreadSpeed(BlockState state, IBlockReader worldIn, BlockPos pos, Direction face) {
-        return 60;
-    }
-
 }
