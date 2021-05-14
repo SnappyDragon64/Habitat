@@ -8,9 +8,8 @@ public class HabitatComposterChances {
     public static void registerComposterChances() {
         put(HabitatItems.RAFFLESIA.get(), 0.65F);
 
-        put(HabitatItems.KABLOOM_SEEDS.get(), 0.3F);
+        put(HabitatItems.KABLOOM_PULP.get(), 0.3F);
         put(HabitatItems.KABLOOM_FRUIT.get(), 0.65F);
-        put(HabitatItems.CANDIED_KABLOOM_FRUIT.get(), 0.85F);
 
         put(HabitatItems.SLIME_FERN.get(), 0.65F);
 

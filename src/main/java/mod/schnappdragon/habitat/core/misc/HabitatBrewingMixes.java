@@ -10,7 +10,7 @@ import net.minecraft.potion.Potions;
 
 public class HabitatBrewingMixes {
     public static void registerBrewingMixes() {
-        addMix(Potions.AWKWARD, HabitatItems.KABLOOM_FRUIT.get(), HabitatPotions.BLAST_ENDURANCE.get());
+        addMix(Potions.AWKWARD, HabitatItems.KABLOOM_PULP.get(), HabitatPotions.BLAST_ENDURANCE.get());
         addMix(HabitatPotions.BLAST_ENDURANCE.get(), Items.REDSTONE, HabitatPotions.LONG_BLAST_ENDURANCE.get());
         addMix(HabitatPotions.BLAST_ENDURANCE.get(), Items.GLOWSTONE_DUST, HabitatPotions.STRONG_BLAST_ENDURANCE.get());
 

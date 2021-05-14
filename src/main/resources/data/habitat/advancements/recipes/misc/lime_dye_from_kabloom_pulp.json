@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "habitat:candied_kabloom_fruit"
+      "habitat:lime_dye_from_kabloom_pulp"
     ]
   },
   "criteria": {
-    "has_kabloom_fruit": {
+    "has_pulp": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "habitat:kabloom_fruit"
+            "item": "habitat:kabloom_pulp"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "habitat:candied_kabloom_fruit"
+        "recipe": "habitat:lime_dye_from_kabloom_pulp"
       }
     }
   },
   "requirements": [
     [
-      "has_kabloom_fruit",
+      "has_pulp",
       "has_the_recipe"
     ]
   ]

@@ -6,11 +6,11 @@
       "config": {
         "mode": "modify",
         "criteria": {
-          "habitat:candied_kabloom_fruit": {
+          "habitat:kabloom_pulp": {
             "trigger": "minecraft:consume_item",
             "conditions": {
               "item": {
-                "item": "habitat:candied_kabloom_fruit"
+                "item": "habitat:kabloom_pulp"
               }
             }
           },
@@ -33,7 +33,7 @@
         },
         "requirements": [
           [
-            "habitat:candied_kabloom_fruit"
+            "habitat:kabloom_pulp"
           ],
           [
             "habitat:dried_ball_cactus"

@@ -14,7 +14,7 @@ public class HabitatTrades {
     public static void addWanderingTraderTrades(WandererTradesEvent event) {
         event.getGenericTrades().add(new BasicTrade(3, new ItemStack(HabitatItems.RAFFLESIA.get()), 12, 10, 1));
         event.getGenericTrades().add(new BasicTrade(3, new ItemStack(HabitatItems.KABLOOM_FRUIT.get()), 12, 10, 1));
-        event.getGenericTrades().add(new BasicTrade(3, new ItemStack(HabitatItems.KABLOOM_SEEDS.get()), 12, 10, 1));
+        event.getGenericTrades().add(new BasicTrade(3, new ItemStack(HabitatItems.KABLOOM_PULP.get()), 12, 10, 1));
         event.getGenericTrades().add(new BasicTrade(1, new ItemStack(HabitatItems.SLIME_FERN.get()), 12, 10, 1));
         event.getGenericTrades().add(new BasicTrade(2, new ItemStack(HabitatItems.ORANGE_BALL_CACTUS_FLOWER.get()), 8, 10, 1));
         event.getGenericTrades().add(new BasicTrade(2, new ItemStack(HabitatItems.PINK_BALL_CACTUS_FLOWER.get()), 8, 10, 1));

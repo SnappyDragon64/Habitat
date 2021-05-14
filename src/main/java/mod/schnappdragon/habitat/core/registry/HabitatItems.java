@@ -19,12 +19,10 @@ public class HabitatItems {
     public static final RegistryObject<Item> RAFFLESIA = ITEMS.register("rafflesia",
             () -> new BlockNamedItem(HabitatBlocks.RAFFLESIA.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
 
-    public static final RegistryObject<Item> KABLOOM_SEEDS = ITEMS.register("kabloom_seeds",
-            () -> new BlockNamedItem(HabitatBlocks.KABLOOM_BUSH.get(), new Item.Properties().group(ItemGroup.MATERIALS)));
+    public static final RegistryObject<Item> KABLOOM_PULP = ITEMS.register("kabloom_pulp",
+            () -> new BlockNamedItem(HabitatBlocks.KABLOOM_BUSH.get(), new Item.Properties().group(ItemGroup.FOOD).food(HabitatFoods.KABLOOM_PULP)));
     public static final RegistryObject<Item> KABLOOM_FRUIT = ITEMS.register("kabloom_fruit",
             () -> new KabloomFruitItem(new Item.Properties().maxStackSize(16).group(ItemGroup.COMBAT)));
-    public static final RegistryObject<Item> CANDIED_KABLOOM_FRUIT = ITEMS.register("candied_kabloom_fruit",
-            () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(HabitatFoods.CANDIED_KABLOOM_FRUIT)));
 
     public static final RegistryObject<Item> SLIME_FERN = ITEMS.register("slime_fern",
             () -> new WallOrBaseItem(HabitatBlocks.SLIME_FERN.get(), HabitatBlocks.WALL_SLIME_FERN.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));

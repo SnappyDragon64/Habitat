@@ -20,7 +20,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "habitat:kabloom_seeds"
+          "name": "habitat:kabloom_pulp"
         }
       ],
       "conditions": [
