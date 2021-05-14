@@ -22,7 +22,7 @@ public class HabitatComposterChances {
         put(HabitatItems.PINK_BALL_CACTUS.get(), 0.5F);
         put(HabitatItems.RED_BALL_CACTUS.get(), 0.5F);
         put(HabitatItems.YELLOW_BALL_CACTUS.get(), 0.5F);
-        put(HabitatItems.ROASTED_CACTUS.get(), 0.5F);
+        put(HabitatItems.DRIED_BALL_CACTUS.get(), 0.3F);
 
         put(HabitatItems.FAIRY_RING_MUSHROOM.get(), 0.65F);
         put(HabitatItems.FAIRY_RING_MUSHROOM_BLOCK.get(), 0.65F);

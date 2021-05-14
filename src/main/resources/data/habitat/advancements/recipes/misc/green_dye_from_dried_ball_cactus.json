@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "habitat:roasted_cactus_from_smoking"
+      "habitat:green_dye_from_dried_ball_cactus"
     ]
   },
   "criteria": {
-    "has_ball_cactus": {
+    "has_cactus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "habitat:ball_cacti"
+            "item": "habitat:dried_ball_cactus"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "habitat:roasted_cactus_from_smoking"
+        "recipe": "habitat:green_dye_from_dried_ball_cactus"
       }
     }
   },
   "requirements": [
     [
-      "has_ball_cactus",
+      "has_cactus",
       "has_the_recipe"
     ]
   ]

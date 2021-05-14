@@ -3,7 +3,7 @@
   "ingredient": {
     "tag": "habitat:ball_cacti"
   },
-  "result": "habitat:roasted_cactus",
+  "result": "habitat:dried_ball_cactus",
   "experience": 0.35,
   "cookingtime": 200
 }

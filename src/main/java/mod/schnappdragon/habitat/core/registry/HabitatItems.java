@@ -45,8 +45,8 @@ public class HabitatItems {
             () -> new BlockItem(HabitatBlocks.RED_BALL_CACTUS.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> YELLOW_BALL_CACTUS = ITEMS.register("yellow_ball_cactus",
             () -> new BlockItem(HabitatBlocks.YELLOW_BALL_CACTUS.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
-    public static final RegistryObject<Item> ROASTED_CACTUS = ITEMS.register("roasted_cactus",
-            () -> new Item((new Item.Properties()).group(ItemGroup.FOOD).food(HabitatFoods.ROASTED_CACTUS)));
+    public static final RegistryObject<Item> DRIED_BALL_CACTUS = ITEMS.register("dried_ball_cactus",
+            () -> new Item((new Item.Properties()).group(ItemGroup.FOOD).food(HabitatFoods.DRIED_BALL_CACTUS)));
 
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM = ITEMS.register("fairy_ring_mushroom",
             () -> new BlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));

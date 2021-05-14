@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "habitat:roasted_cactus_from_campfire_cooking"
+      "habitat:dried_ball_cactus"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "habitat:roasted_cactus_from_campfire_cooking"
+        "recipe": "habitat:dried_ball_cactus"
       }
     }
   },

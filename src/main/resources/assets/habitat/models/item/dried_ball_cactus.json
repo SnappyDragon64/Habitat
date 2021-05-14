@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "habitat:item/roasted_cactus"
+    "layer0": "habitat:item/dried_ball_cactus"
   }
 }

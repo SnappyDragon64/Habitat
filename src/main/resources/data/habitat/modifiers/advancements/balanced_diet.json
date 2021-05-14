@@ -14,11 +14,11 @@
               }
             }
           },
-          "habitat:roasted_cactus": {
+          "habitat:dried_ball_cactus": {
             "trigger": "minecraft:consume_item",
             "conditions": {
               "item": {
-                "item": "habitat:roasted_cactus"
+                "item": "habitat:dried_ball_cactus"
               }
             }
           },
@@ -36,7 +36,7 @@
             "habitat:candied_kabloom_fruit"
           ],
           [
-            "habitat:roasted_cactus"
+            "habitat:dried_ball_cactus"
           ],
           [
             "habitat:fairy_ring_mushroom_stew"

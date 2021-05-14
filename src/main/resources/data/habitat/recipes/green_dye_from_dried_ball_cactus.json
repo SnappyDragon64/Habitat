@@ -3,7 +3,7 @@
   "group": "green_dye",
   "ingredients": [
     {
-      "item": "habitat:roasted_cactus"
+      "item": "habitat:dried_ball_cactus"
     }
   ],
   "result": {
