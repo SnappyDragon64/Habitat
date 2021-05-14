@@ -20,7 +20,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "habitat:rafflesia_seed"
+          "name": "habitat:rafflesia"
         }
       ],
       "conditions": [
