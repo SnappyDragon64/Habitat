@@ -1,6 +1,6 @@
 {
-  "parent": "item/generated",
+  "parent": "habitat:item/ball_cactus_flower",
   "textures": {
-    "layer0": "habitat:item/orange_ball_cactus_flower"
+    "petal": "habitat:item/orange_ball_cactus_flower"
   }
 }
