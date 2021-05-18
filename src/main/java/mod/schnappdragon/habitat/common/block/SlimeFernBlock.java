@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.common.block;
 
-import mod.schnappdragon.habitat.common.state.properties.HabitatBlockStateProperties;
+import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

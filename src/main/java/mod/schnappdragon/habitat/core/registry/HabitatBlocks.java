@@ -1,6 +1,7 @@
 package mod.schnappdragon.habitat.core.registry;
 
 import mod.schnappdragon.habitat.common.block.*;
+import mod.schnappdragon.habitat.common.block.misc.*;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;

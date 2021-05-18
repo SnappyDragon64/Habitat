@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.common.block;
 
+import mod.schnappdragon.habitat.common.block.misc.BallCactusColor;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

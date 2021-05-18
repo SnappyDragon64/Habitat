@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.common.state.properties;
+package mod.schnappdragon.habitat.common.block.state.properties;
 
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;

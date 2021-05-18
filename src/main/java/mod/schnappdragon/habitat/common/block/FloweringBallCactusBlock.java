@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.common.block;
 
+import mod.schnappdragon.habitat.common.block.misc.BallCactusColor;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

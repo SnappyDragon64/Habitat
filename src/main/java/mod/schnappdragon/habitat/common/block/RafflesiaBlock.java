@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.common.block;
 
 import com.google.common.collect.Lists;
-import mod.schnappdragon.habitat.common.state.properties.HabitatBlockStateProperties;
+import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
 import mod.schnappdragon.habitat.common.tileentity.RafflesiaTileEntity;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
@@ -34,7 +34,6 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ColorHelper;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
