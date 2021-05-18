@@ -6,12 +6,13 @@ import java.util.Random;
 
 import mod.schnappdragon.habitat.common.block.FairyRingMushroomBlock;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
+import mod.schnappdragon.habitat.core.util.CompatHelper;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.HugeMushroomBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
 import net.minecraft.world.gen.feature.AbstractBigMushroomFeature;
 import net.minecraft.world.gen.feature.BigMushroomFeatureConfig;
@@ -34,12 +35,16 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
     @Override
     protected void func_227210_a_(IWorld world, Random rand, BlockPos pos, BigMushroomFeatureConfig config, int i0, BlockPos.Mutable blockpos$mutable) {
         WeightedBlockStateProvider mushroomProvider = new WeightedBlockStateProvider().addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState(), 1).addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 2), 2).addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 3), 3).addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 4), 3);
-        SimpleBlockStateProvider fairylightProvider = new SimpleBlockStateProvider(HabitatBlocks.FAIRYLIGHT.get().getDefaultState());
+
+        BlockState stem = config.stemProvider.getBlockState(rand, pos);
+        boolean enhancedFlag = stem.isIn(HabitatBlocks.FAIRY_RING_MUSHROOM_STEM.get()) && CompatHelper.checkCompat("enhanced_mushrooms");
+        if (enhancedFlag)
+            stem = HabitatBlocks.ENHANCED_FAIRY_RING_MUSHROOM_STEM.get().getDefaultState();
 
         for (int i = 0; i < i0; ++i) {
             blockpos$mutable.setPos(pos).move(Direction.UP, i);
             if (world.getBlockState(blockpos$mutable).canBeReplacedByLogs(world, blockpos$mutable)) {
-                this.setBlockState(world, blockpos$mutable, config.stemProvider.getBlockState(rand, pos));
+                this.setBlockState(world, blockpos$mutable, stem);
             }
 
             boolean breakFlag = false;
@@ -48,8 +53,8 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
                     for (int z = -1; z <= 1; ++z) {
                         BlockPos.Mutable inPos = new BlockPos.Mutable().setAndOffset(blockpos$mutable, x, 0, z);
                         if (world.getBlockState(inPos).canBeReplacedByLeaves(world, inPos)) {
-                            if (i > i0 - 6 && (x != 0 || z != 0) && rand.nextInt(12) == 0 && !world.getBlockState(inPos.down()).isIn(fairylightProvider.getBlockState(rand, pos).getBlock())) {
-                                this.setBlockState(world, inPos, fairylightProvider.getBlockState(rand, pos));
+                            if (i > i0 - 6 && (x != 0 || z != 0) && rand.nextInt(12) == 0 && !world.getBlockState(inPos.down()).isIn(HabitatBlocks.FAIRYLIGHT.get())) {
+                                this.setBlockState(world, inPos, HabitatBlocks.FAIRYLIGHT.get().getDefaultState());
                                 breakFlag = true;
                                 break;
                             }
@@ -63,6 +68,9 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
             }
         }
 
+        if (!enhancedFlag)
+            stem = stem.with(HugeMushroomBlock.UP, true);
+
         for (int x = -1; x <= 1; ++x) {
             for (int z = -1; z <= 1; ++z) {
                 if (x != 0 || z != 0) {
@@ -73,7 +81,7 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
                         blockpos$mutable.move(Direction.UP, 1);
                         if (world.getBlockState(blockpos$mutable).canBeReplacedByLogs(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.down()).isOpaqueCube(world, blockpos$mutable.down())) {
                             if (i < len)
-                                this.setBlockState(world, blockpos$mutable, config.stemProvider.getBlockState(rand, pos).with(HugeMushroomBlock.UP, true));
+                                this.setBlockState(world, blockpos$mutable, stem);
                             else if (rand.nextInt(3) == 0)
                                 this.setBlockState(world, blockpos$mutable, mushroomProvider.getBlockState(rand, pos));
                         }
