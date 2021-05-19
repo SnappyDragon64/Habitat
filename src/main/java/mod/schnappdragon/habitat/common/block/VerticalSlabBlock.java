@@ -28,8 +28,8 @@ import net.minecraft.world.IWorld;
 public class VerticalSlabBlock extends Block implements IWaterLoggable {
     protected static final VoxelShape NORTH_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 8.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape EAST_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
-    protected static final VoxelShape WEST_SHAPE = Block.makeCuboidShape(8.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape SOUTH_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 8.0D);
+    protected static final VoxelShape WEST_SHAPE = Block.makeCuboidShape(8.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape DOUBLE_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
     public static final EnumProperty<VerticalSlabType> TYPE = HabitatBlockStateProperties.VERTICAL_SLAB_TYPE;
@@ -61,10 +61,10 @@ public class VerticalSlabBlock extends Block implements IWaterLoggable {
                 return NORTH_SHAPE;
             case EAST:
                 return EAST_SHAPE;
-            case WEST:
-                return WEST_SHAPE;
-            default:
+            case SOUTH:
                 return SOUTH_SHAPE;
+            default:
+                return WEST_SHAPE;
         }
     }
 
