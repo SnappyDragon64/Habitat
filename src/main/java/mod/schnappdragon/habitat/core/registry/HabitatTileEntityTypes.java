@@ -1,5 +1,7 @@
 package mod.schnappdragon.habitat.core.registry;
 
+import mod.schnappdragon.habitat.common.tileentity.HabitatBeehiveTileEntity;
+import mod.schnappdragon.habitat.common.tileentity.HabitatSignTileEntity;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.common.tileentity.RafflesiaTileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -12,4 +14,8 @@ public class HabitatTileEntityTypes {
 
     public static final RegistryObject<TileEntityType<RafflesiaTileEntity>> RAFFLESIA = TILE_ENTITY_TYPES.register("rafflesia",
             () -> TileEntityType.Builder.create(RafflesiaTileEntity::new, HabitatBlocks.RAFFLESIA.get()).build(null));
+    public static final RegistryObject<TileEntityType<HabitatSignTileEntity>> SIGN = TILE_ENTITY_TYPES.register("sign",
+            () -> TileEntityType.Builder.create(HabitatSignTileEntity::new, HabitatBlocks.FAIRY_RING_MUSHROOM_SIGN.get(), HabitatBlocks.FAIRY_RING_MUSHROOM_WALL_SIGN.get()).build(null));
+    public static final RegistryObject<TileEntityType<HabitatBeehiveTileEntity>> BEEHIVE = TILE_ENTITY_TYPES.register("beehive",
+            () -> TileEntityType.Builder.create(HabitatBeehiveTileEntity::new, HabitatBlocks.FAIRY_RING_MUSHROOM_BEEHIVE.get()).build(null));
 }
