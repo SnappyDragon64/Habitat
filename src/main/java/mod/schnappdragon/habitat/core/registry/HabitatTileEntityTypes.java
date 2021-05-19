@@ -1,9 +1,7 @@
 package mod.schnappdragon.habitat.core.registry;
 
-import mod.schnappdragon.habitat.common.tileentity.HabitatBeehiveTileEntity;
-import mod.schnappdragon.habitat.common.tileentity.HabitatSignTileEntity;
+import mod.schnappdragon.habitat.common.tileentity.*;
 import mod.schnappdragon.habitat.core.Habitat;
-import mod.schnappdragon.habitat.common.tileentity.RafflesiaTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -18,4 +16,8 @@ public class HabitatTileEntityTypes {
             () -> TileEntityType.Builder.create(HabitatSignTileEntity::new, HabitatBlocks.FAIRY_RING_MUSHROOM_SIGN.get(), HabitatBlocks.FAIRY_RING_MUSHROOM_WALL_SIGN.get()).build(null));
     public static final RegistryObject<TileEntityType<HabitatBeehiveTileEntity>> BEEHIVE = TILE_ENTITY_TYPES.register("beehive",
             () -> TileEntityType.Builder.create(HabitatBeehiveTileEntity::new, HabitatBlocks.FAIRY_RING_MUSHROOM_BEEHIVE.get()).build(null));
+    public static final RegistryObject<TileEntityType<HabitatChestTileEntity>> CHEST = TILE_ENTITY_TYPES.register("chest",
+            () -> TileEntityType.Builder.create(HabitatChestTileEntity::new, HabitatBlocks.FAIRY_RING_MUSHROOM_CHEST.get()).build(null));
+    public static final RegistryObject<TileEntityType<HabitatTrappedChestTileEntity>> TRAPPED_CHEST = TILE_ENTITY_TYPES.register("trapped_chest",
+            () -> TileEntityType.Builder.create(HabitatTrappedChestTileEntity::new, HabitatBlocks.TRAPPED_FAIRY_RING_MUSHROOM_CHEST.get()).build(null));
 }
