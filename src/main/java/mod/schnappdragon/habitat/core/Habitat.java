@@ -1,7 +1,11 @@
 package mod.schnappdragon.habitat.core;
 
 import mod.schnappdragon.habitat.client.renderer.entity.HabitatEntityRenderers;
-import mod.schnappdragon.habitat.core.misc.*;
+import mod.schnappdragon.habitat.core.misc.HabitatBrewingMixes;
+import mod.schnappdragon.habitat.core.misc.HabitatComposterChances;
+import mod.schnappdragon.habitat.core.misc.HabitatDispenserBehaviours;
+import mod.schnappdragon.habitat.core.misc.HabitatFireInfo;
+import mod.schnappdragon.habitat.core.misc.HabitatPOI;
 import mod.schnappdragon.habitat.core.registry.HabitatFeatures;
 import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
 import mod.schnappdragon.habitat.client.renderer.HabitatRenderLayers;
