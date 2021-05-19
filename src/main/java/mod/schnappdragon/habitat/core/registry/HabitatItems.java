@@ -56,4 +56,7 @@ public class HabitatItems {
             () -> new BlockItem(HabitatBlocks.FAIRYLIGHT.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_STEW = ITEMS.register("fairy_ring_mushroom_stew",
             () -> new FairyRingMushroomStewItem(new Item.Properties().group(ItemGroup.FOOD).maxStackSize(1).food(HabitatFoods.FAIRY_RING_MUSHROOM_STEW)));
+
+    //public static final RegistryObject<Item> KABLOOM_FRUIT = ITEMS.register("kabloom_fruit",
+    //        () -> new KabloomFruitItem(new Item.Properties().group(ItemGroup.COMBAT)));
 }
