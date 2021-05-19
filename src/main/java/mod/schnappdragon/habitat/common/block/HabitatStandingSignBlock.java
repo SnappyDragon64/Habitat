@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.common.block.wood;
+package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.core.registry.HabitatTileEntityTypes;
 import net.minecraft.block.BlockState;
@@ -9,8 +9,8 @@ import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
 
-public class HabitatWallSignBlock extends StandingSignBlock {
-    public HabitatWallSignBlock(Properties properties, WoodType woodType) {
+public class HabitatStandingSignBlock extends StandingSignBlock {
+    public HabitatStandingSignBlock(Properties properties, WoodType woodType) {
         super(properties, woodType);
     }
 

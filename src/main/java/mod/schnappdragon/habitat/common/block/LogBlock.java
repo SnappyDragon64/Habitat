@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.common.block.wood;
+package mod.schnappdragon.habitat.common.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

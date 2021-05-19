@@ -2,7 +2,6 @@ package mod.schnappdragon.habitat.core.registry;
 
 import mod.schnappdragon.habitat.common.block.*;
 import mod.schnappdragon.habitat.common.block.misc.*;
-import mod.schnappdragon.habitat.common.block.wood.*;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;

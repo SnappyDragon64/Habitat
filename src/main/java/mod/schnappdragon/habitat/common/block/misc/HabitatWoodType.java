@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.common.block.wood;
+package mod.schnappdragon.habitat.common.block.misc;
 
 import net.minecraft.block.WoodType;
 
