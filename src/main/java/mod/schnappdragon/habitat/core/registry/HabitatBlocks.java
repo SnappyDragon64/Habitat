@@ -81,8 +81,4 @@ public class HabitatBlocks {
     // TRAPPED_FAIRY_RING_MUSHROOM_CHEST
 
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_BEEHIVE = BLOCKS.register("fairy_ring_mushroom_beehive", () -> new HabitatBeehiveBlock(AbstractBlock.Properties.create(Material.WOOD, MaterialColor.YELLOW).hardnessAndResistance(0.3F).sound(SoundType.WOOD)));
-
-    /* TEMP COMMENT FROM TEAM AURORA'S ENHANCED MUSHROOMS FOR REFERENCE
-    public static final Pair<RegistryObject<AbnormalsChestBlock>, RegistryObject<AbnormalsTrappedChestBlock>> BROWN_MUSHROOM_CHESTS = HELPER.createCompatChestBlocks("brown_mushroom", MaterialColor.BROWN);
-*/
 }
