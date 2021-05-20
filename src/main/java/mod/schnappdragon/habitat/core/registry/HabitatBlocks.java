@@ -7,6 +7,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.util.Direction;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -74,7 +75,7 @@ public class HabitatBlocks {
     public static final RegistryObject<Block> VERTICAL_FAIRY_RING_MUSHROOM_PLANKS = BLOCKS.register("vertical_fairy_ring_mushroom_planks", () -> new Block(AbstractBlock.Properties.create(Material.WOOD, MaterialColor.YELLOW).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_VERTICAL_SLAB = BLOCKS.register("fairy_ring_mushroom_vertical_slab", () -> new VerticalSlabBlock(AbstractBlock.Properties.create(Material.WOOD, MaterialColor.YELLOW).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_BOOKSHELF = BLOCKS.register("fairy_ring_mushroom_bookshelf", () -> new BookshelfBlock(AbstractBlock.Properties.create(Material.WOOD, MaterialColor.YELLOW).hardnessAndResistance(1.5F).sound(SoundType.WOOD)));
-    public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_LADDER = BLOCKS.register("fairy_ring_mushroom_ladder", () -> new LadderBlock(AbstractBlock.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.4F).sound(SoundType.LADDER).notSolid()));
+    public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_LADDER = BLOCKS.register("fairy_ring_mushroom_ladder", () -> new LadderBlock(AbstractBlock.Properties.create(Material.MISCELLANEOUS).harvestTool(ToolType.AXE).hardnessAndResistance(0.4F).sound(SoundType.LADDER).notSolid()));
     public static final RegistryObject<Block> STRIPPED_FAIRY_RING_MUSHROOM_POST = BLOCKS.register("stripped_fairy_ring_mushroom_post", () -> new WoodPostBlock(AbstractBlock.Properties.create(Material.WOOD, MaterialColor.YELLOW).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_POST = BLOCKS.register("fairy_ring_mushroom_post", () -> new WoodPostBlock(STRIPPED_FAIRY_RING_MUSHROOM_POST, AbstractBlock.Properties.create(Material.WOOD, MaterialColor.YELLOW).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_CHEST = BLOCKS.register("fairy_ring_mushroom_chest", () -> new HabitatChestBlock(AbstractBlock.Properties.create(Material.WOOD, MaterialColor.YELLOW).hardnessAndResistance(2.5F).sound(SoundType.WOOD)));
