@@ -82,7 +82,7 @@ public class HabitatItems {
             () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_POST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.BUILDING_BLOCKS, "enhanced_mushrooms", "quark"))));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_CHEST = ITEMS.register("fairy_ring_mushroom_chest",
             () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.DECORATIONS, "enhanced_mushrooms", "quark"))));
-    public static final RegistryObject<Item> TRAPPED_FAIRY_RING_MUSHROOm_CHEST = ITEMS.register("trapped_fairy_ring_mushroom_chest",
+    public static final RegistryObject<Item> TRAPPED_FAIRY_RING_MUSHROOM_CHEST = ITEMS.register("trapped_fairy_ring_mushroom_chest",
             () -> new FuelBlockItem(HabitatBlocks.TRAPPED_FAIRY_RING_MUSHROOM_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.REDSTONE, "enhanced_mushrooms", "quark"))));
 
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BEEHIVE = registerBlockItem("fairy_ring_mushroom_beehive", HabitatBlocks.FAIRY_RING_MUSHROOM_BEEHIVE, CompatHelper.compatItemGroup(ItemGroup.DECORATIONS, "enhanced_mushrooms", "buzzier_bees"));
