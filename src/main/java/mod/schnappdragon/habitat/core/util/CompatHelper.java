@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.core.util;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
@@ -16,7 +17,7 @@ public class CompatHelper {
         return true;
     }
 
-    public static ItemGroup compatItemGroup(ItemGroup groupIn, String... modids) {
-        return checkCompat(modids) ? groupIn : null;
+    public static Item.Properties compatItemGroupProperty(ItemGroup groupIn, String... modids) {
+        return checkCompat(modids) ? new Item.Properties().group(groupIn) : new Item.Properties();
     }
 }
