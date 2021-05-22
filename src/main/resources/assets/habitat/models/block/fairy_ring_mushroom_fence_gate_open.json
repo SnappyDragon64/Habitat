@@ -1,0 +1,6 @@
+{
+  "parent": "block/template_fence_gate_open",
+  "textures": {
+    "texture": "habitat:block/fairy_ring_mushroom_planks"
+  }
+}

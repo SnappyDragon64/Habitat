@@ -1,0 +1,6 @@
+{
+  "parent": "block/button_pressed",
+  "textures": {
+    "texture": "habitat:block/fairy_ring_mushroom_planks"
+  }
+}

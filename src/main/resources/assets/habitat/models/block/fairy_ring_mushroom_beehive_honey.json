@@ -1,0 +1,10 @@
+{
+  "parent": "block/orientable_with_bottom",
+  "textures": {
+    "particle": "habitat:block/fairy_ring_mushroom_beehive_side",
+    "bottom": "habitat:block/fairy_ring_mushroom_beehive_end",
+    "top": "habitat:block/fairy_ring_mushroom_beehive_end",
+    "front": "habitat:block/fairy_ring_mushroom_beehive_front_honey",
+    "side": "habitat:block/fairy_ring_mushroom_beehive_side"
+  }
+}

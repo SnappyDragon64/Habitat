@@ -1,0 +1,6 @@
+{
+  "parent": "block/template_orientable_trapdoor_top",
+  "textures": {
+    "texture": "habitat:block/fairy_ring_mushroom_trapdoor"
+  }
+}

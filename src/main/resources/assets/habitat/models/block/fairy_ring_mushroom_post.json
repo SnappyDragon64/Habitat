@@ -1,0 +1,6 @@
+{
+  "parent": "habitat:block/post",
+  "textures": {
+    "texture": "habitat:block/fairy_ring_mushroom_stem"
+  }
+}

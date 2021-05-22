@@ -1,0 +1,6 @@
+{
+  "parent": "block/fence_post",
+  "textures": {
+    "texture": "habitat:block/fairy_ring_mushroom_planks"
+  }
+}
