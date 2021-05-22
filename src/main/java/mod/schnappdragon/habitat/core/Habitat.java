@@ -1,6 +1,7 @@
 package mod.schnappdragon.habitat.core;
 
 import mod.schnappdragon.habitat.client.renderer.entity.HabitatEntityRenderers;
+import mod.schnappdragon.habitat.client.renderer.tileentity.HabitatTileEntityRenderers;
 import mod.schnappdragon.habitat.core.misc.HabitatBrewingMixes;
 import mod.schnappdragon.habitat.core.misc.HabitatComposterChances;
 import mod.schnappdragon.habitat.core.misc.HabitatDispenserBehaviours;
@@ -57,6 +58,7 @@ public class Habitat {
 
     private void clientSetup(FMLClientSetupEvent event) {
         HabitatRenderLayers.registerRenderLayers();
+        HabitatTileEntityRenderers.registerRenderers();
         HabitatEntityRenderers.registerRenderers(event.getMinecraftSupplier());
     }
 
