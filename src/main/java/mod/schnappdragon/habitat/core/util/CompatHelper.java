@@ -5,7 +5,7 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 
 public class CompatHelper {
-    public static boolean checkCompat(String... modids) {
+    public static boolean checkMods(String... modids) {
         if (FMLLoader.isProduction()) {
             ModList modList = ModList.get();
             for (String modid : modids) {
@@ -17,6 +17,6 @@ public class CompatHelper {
     }
 
     public static ItemGroup compatItemGroup(ItemGroup group, String... modids) {
-        return checkCompat(modids) ? group : null;
+        return checkMods(modids) ? group : null;
     }
 }
