@@ -88,7 +88,7 @@ public class VerticalSlabBlock extends Block implements IWaterLoggable {
 
     @Override
     public boolean isReplaceable(BlockState state, BlockItemUseContext context) {
-        return state.get(TYPE) != VerticalSlabType.DOUBLE && context.getItem().getItem() == this.asItem() && context.replacingClickedOnBlock() && context.getFace() == state.get(FACING) && getDirectionForPlacement(context) == state.get(FACING);
+        return (state.get(TYPE) != VerticalSlabType.DOUBLE && context.getItem().getItem() == this.asItem() && context.replacingClickedOnBlock() && context.getFace() == state.get(FACING) && getDirectionForPlacement(context) == state.get(FACING)) || !context.replacingClickedOnBlock() && context.getFace().getAxis() != state.get(FACING).getAxis();
     }
 
     @Override
