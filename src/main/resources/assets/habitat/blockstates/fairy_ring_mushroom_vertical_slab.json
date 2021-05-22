@@ -1,24 +1,24 @@
 {
   "variants": {
-    "type=north":
+    "facing=north":
     {
       "model": "habitat:block/fairy_ring_mushroom_vertical_slab",
       "y": 0,
       "uvlock": true
     },
-    "type=south":
+    "facing=south":
     {
       "model": "habitat:block/fairy_ring_mushroom_vertical_slab",
       "y": 180,
       "uvlock": true
     },
-    "type=east":
+    "facing=east":
     {
       "model": "habitat:block/fairy_ring_mushroom_vertical_slab",
       "y": 90,
       "uvlock": true
     },
-    "type=west":
+    "facing=west":
     {
       "model": "habitat:block/fairy_ring_mushroom_vertical_slab",
       "y": 270,
