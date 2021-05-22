@@ -36,8 +36,14 @@ public class HabitatRenderLayers {
 
         setRenderLayer(HabitatBlocks.FAIRY_RING_MUSHROOM.get(), RenderType.getCutout());
         setRenderLayer(HabitatBlocks.POTTED_FAIRY_RING_MUSHROOM.get(), RenderType.getCutout());
+
+        setRenderLayer(HabitatBlocks.FAIRY_RING_MUSHROOM_TRAPDOOR.get(), RenderType.getCutout());
+        setRenderLayer(HabitatBlocks.FAIRY_RING_MUSHROOM_DOOR.get(), RenderType.getCutout());
+        setRenderLayer(HabitatBlocks.FAIRY_RING_MUSHROOM_LADDER.get(), RenderType.getCutout());
+        setRenderLayer(HabitatBlocks.FAIRY_RING_MUSHROOM_POST.get(), RenderType.getCutout());
+        setRenderLayer(HabitatBlocks.STRIPPED_FAIRY_RING_MUSHROOM_POST.get(), RenderType.getCutout());
     }
-    
+
     private static void setRenderLayer(Block block, RenderType type) {
         RenderTypeLookup.setRenderLayer(block, type);
     }
