@@ -8,11 +8,7 @@ import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.misc.HabitatFoods;
 import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockNamedItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.SignItem;
+import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -82,10 +78,14 @@ public class HabitatItems {
             () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_POST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.BUILDING_BLOCKS, "enhanced_mushrooms", "quark"))));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_CHEST = ITEMS.register("fairy_ring_mushroom_chest",
             () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.DECORATIONS, "enhanced_mushrooms", "quark"))));
-    public static final RegistryObject<Item> TRAPPED_FAIRY_RING_MUSHROOM_CHEST = ITEMS.register("trapped_fairy_ring_mushroom_chest",
-            () -> new FuelBlockItem(HabitatBlocks.TRAPPED_FAIRY_RING_MUSHROOM_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.REDSTONE, "enhanced_mushrooms", "quark"))));
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_TRAPPED_CHEST = ITEMS.register("fairy_ring_mushroom_trapped_chest",
+            () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_TRAPPED_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.REDSTONE, "enhanced_mushrooms", "quark"))));
 
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BEEHIVE = registerBlockItem("fairy_ring_mushroom_beehive", HabitatBlocks.FAIRY_RING_MUSHROOM_BEEHIVE, CompatHelper.compatItemGroup(ItemGroup.DECORATIONS, "enhanced_mushrooms", "buzzier_bees"));
+
+    // PLACEHOLDER FOR TAGS UNTIL BOATS ARE ACTUALLY IMPLEMENTED
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BOAT = ITEMS.register("fairy_ring_mushroom_boat",
+            () -> new Item(getProperties(CompatHelper.compatItemGroup(ItemGroup.TRANSPORTATION, "enhanced_mushrooms"))));
 
     private static Item.Properties getProperties(ItemGroup group) {
         return new Item.Properties().group(group);

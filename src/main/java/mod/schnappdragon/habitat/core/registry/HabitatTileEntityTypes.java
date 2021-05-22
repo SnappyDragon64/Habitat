@@ -19,5 +19,5 @@ public class HabitatTileEntityTypes {
     public static final RegistryObject<TileEntityType<HabitatChestTileEntity>> CHEST = TILE_ENTITY_TYPES.register("chest",
             () -> TileEntityType.Builder.create(HabitatChestTileEntity::new, HabitatBlocks.FAIRY_RING_MUSHROOM_CHEST.get()).build(null));
     public static final RegistryObject<TileEntityType<HabitatTrappedChestTileEntity>> TRAPPED_CHEST = TILE_ENTITY_TYPES.register("trapped_chest",
-            () -> TileEntityType.Builder.create(HabitatTrappedChestTileEntity::new, HabitatBlocks.TRAPPED_FAIRY_RING_MUSHROOM_CHEST.get()).build(null));
+            () -> TileEntityType.Builder.create(HabitatTrappedChestTileEntity::new, HabitatBlocks.FAIRY_RING_MUSHROOM_TRAPPED_CHEST.get()).build(null));
 }

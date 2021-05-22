@@ -13,7 +13,8 @@ public class HabitatBlockTags {
     public static final INamedTag<Block> FLOWERING_BALL_CACTI = makeTag("flowering_ball_cacti");
     public static final INamedTag<Block> BALL_CACTUS_PLANTABLE_ON = makeTag("ball_cactus_plantable_on");
     public static final INamedTag<Block> BALL_CACTUS_FLOWER_PLACEABLE_ON = makeTag("ball_cactus_flower_placeable_on");
-    public static final INamedTag<Block> BEEHIVE = makeTag("beehive");
+    public static final INamedTag<Block> BEEHIVES = makeTag("beehives");
+    public static final INamedTag<Block> FAIRY_RING_MUSHROOM_STEMS = makeTag("fairy_ring_mushroom_stems");
 
     private static INamedTag<Block> makeTag(String id) {
         return BlockTags.makeWrapperTag(Habitat.MOD_ID + ":" + id);

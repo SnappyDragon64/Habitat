@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "habitat:enhanced_fairy_ring_mushroom_stem",
+    "habitat:fairy_ring_mushroom_hyphae",
+    "habitat:stripped_fairy_ring_mushroom_stem",
+    "habitat:stripped_fairy_ring_mushroom_hyphae"
+  ]
+}

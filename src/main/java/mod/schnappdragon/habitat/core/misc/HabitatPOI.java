@@ -13,7 +13,7 @@ public class HabitatPOI {
         PointOfInterestType.BEEHIVE.blockStates = Sets.newHashSet(PointOfInterestType.BEEHIVE.blockStates);
         Map<BlockState, PointOfInterestType> statePointOfInterestMap = ObfuscationReflectionHelper.getPrivateValue(PointOfInterestType.class, null, "field_221073_u");
         if (statePointOfInterestMap != null) {
-            HabitatBlockTags.BEEHIVE.getAllElements().forEach(block -> {
+            HabitatBlockTags.BEEHIVES.getAllElements().forEach(block -> {
                 block.getStateContainer().getValidStates().forEach(state -> {
                     statePointOfInterestMap.put(state, PointOfInterestType.BEEHIVE);
                     PointOfInterestType.BEEHIVE.blockStates.add(state);
