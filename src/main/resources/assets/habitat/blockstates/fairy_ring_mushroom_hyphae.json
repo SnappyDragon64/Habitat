@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "habitat:block/fairy_ring_mushroom_hyphae",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "habitat:block/fairy_ring_mushroom_hyphae"
+    },
+    "axis=z": {
+      "model": "habitat:block/fairy_ring_mushroom_hyphae",
+      "x": 90
+    }
+  }
+}

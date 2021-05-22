@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "habitat:block/fairy_ring_mushroom_slab"
+    },
+    "type=double": {
+      "model": "habitat:block/fairy_ring_mushroom_planks"
+    },
+    "type=top": {
+      "model": "habitat:block/fairy_ring_mushroom_slab_top"
+    }
+  }
+}

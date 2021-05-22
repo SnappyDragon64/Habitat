@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "habitat:block/enhanced_fairy_ring_mushroom_stem",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "habitat:block/enhanced_fairy_ring_mushroom_stem"
+    },
+    "axis=z": {
+      "model": "habitat:block/enhanced_fairy_ring_mushroom_stem",
+      "x": 90
+    }
+  }
+}
