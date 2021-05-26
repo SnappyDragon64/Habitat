@@ -135,17 +135,17 @@ public class HabitatChestTileEntityRenderer<T extends TileEntity & IChestLid> ex
 
             switch (type) {
                 case RIGHT:
-                    return getRenderMaterial(chestVariant.getRightMaterial());
+                    return getRenderMaterial(chestVariant.getRightResource());
                 case LEFT:
-                    return getRenderMaterial(chestVariant.getLeftMaterial());
+                    return getRenderMaterial(chestVariant.getLeftResource());
                 default:
-                    return getRenderMaterial(chestVariant.getSingleMaterial());
+                    return getRenderMaterial(chestVariant.getSingleResource());
             }
         }
     }
 
-    private RenderMaterial getRenderMaterial(ResourceLocation location) {
-        return new RenderMaterial(Atlases.CHEST_ATLAS, location);
+    private RenderMaterial getRenderMaterial(ResourceLocation resource) {
+        return new RenderMaterial(Atlases.CHEST_ATLAS, resource);
     }
 
     public void func_228871_a_(MatrixStack matrixStack, IVertexBuilder builder, ModelRenderer chestLid, ModelRenderer chestLatch, ModelRenderer chestBottom, float lidAngle, int combinedLightIn, int combinedOverlayIn) {

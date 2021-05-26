@@ -41,15 +41,15 @@ public class ChestVariants {
             return trapped;
         }
 
-        public ResourceLocation getSingleMaterial() {
+        public ResourceLocation getSingleResource() {
             return getResourceLocation(getPath(name, trapped ? "trapped" : "normal"));
         }
 
-        public ResourceLocation getRightMaterial() {
+        public ResourceLocation getRightResource() {
             return getResourceLocation(getPath(name, trapped ? "trapped" : "normal") + "_right");
         }
 
-        public ResourceLocation getLeftMaterial() {
+        public ResourceLocation getLeftResource() {
             return getResourceLocation(getPath(name, trapped ? "trapped" : "normal") + "_left");
         }
 
