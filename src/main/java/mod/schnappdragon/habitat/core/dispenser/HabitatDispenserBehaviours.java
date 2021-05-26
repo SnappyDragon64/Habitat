@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.core.misc;
+package mod.schnappdragon.habitat.core.dispenser;
 
 import mod.schnappdragon.habitat.common.block.FairyRingMushroomBlock;
 import mod.schnappdragon.habitat.common.block.FloweringBallCactusBlock;
@@ -29,12 +29,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class HabitatDispenserBehaviours {
-    public static IDispenseItemBehavior ShearsBehaviour;
-    public static IDispenseItemBehavior RedstoneBehaviour;
+    private static IDispenseItemBehavior SuspiciousStewBehavior;
+    private static IDispenseItemBehavior ShearsBehavior;
+    private static IDispenseItemBehavior RedstoneBehavior;
 
     public static void registerDispenserBehaviour() {
-        ShearsBehaviour = DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(Items.SHEARS);
-        RedstoneBehaviour = DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(Items.REDSTONE);
+        SuspiciousStewBehavior = DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(Items.SUSPICIOUS_STEW);
+        ShearsBehavior = DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(Items.SHEARS);
+        RedstoneBehavior = DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(Items.REDSTONE);
+
 
         DispenserBlock.registerDispenseBehavior(Items.SUSPICIOUS_STEW, new OptionalDispenseBehavior() {
             protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
@@ -57,6 +60,8 @@ public class HabitatDispenserBehaviours {
                         return stack;
                     }
                 }
+                else if (SuspiciousStewBehavior != null)
+                    SuspiciousStewBehavior.dispense(source, stack);
                 this.setSuccessful(false);
                 return stack;
             }
@@ -94,50 +99,10 @@ public class HabitatDispenserBehaviours {
                         this.setSuccessful(true);
                     }
                     else
-                        return ShearsBehaviour.dispense(source, stack);
+                        return ShearsBehavior.dispense(source, stack);
                 }
                 else
-                    return ShearsBehaviour.dispense(source, stack);
-                return stack;
-            }
-        });
-
-        DispenserBlock.registerDispenseBehavior(Items.SHEARS, new OptionalDispenseBehavior() {
-            protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-                World worldIn = source.getWorld();
-                BlockPos pos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
-                BlockState state = worldIn.getBlockState(pos);
-                if (!worldIn.isRemote) {
-                    if (state.isIn(HabitatBlocks.KABLOOM_BUSH.get()) && state.get(KabloomBushBlock.AGE) == 7) {
-                        Block.spawnAsEntity(worldIn, pos, new ItemStack(HabitatItems.KABLOOM_FRUIT.get()));
-                        worldIn.setBlockState(pos, state.with(KabloomBushBlock.AGE, 3));
-                        worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-                        if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
-                            stack.setCount(0);
-                        this.setSuccessful(true);
-                    }
-                    else if (state.getBlock() instanceof FloweringBallCactusBlock) {
-                        FloweringBallCactusBlock cactus = (FloweringBallCactusBlock) state.getBlock();
-                        Block.spawnAsEntity(worldIn, pos, new ItemStack(cactus.getColor().getFlower()));
-                        worldIn.setBlockState(pos, cactus.getColor().getBallCactus().getDefaultState());
-                        worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_FLOWERING_BALL_CACTUS_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-                        if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
-                            stack.setCount(0);
-                        this.setSuccessful(true);
-                    }
-                    else if (state.isIn(HabitatBlocks.FAIRY_RING_MUSHROOM.get()) && state.get(FairyRingMushroomBlock.MUSHROOMS) > 1) {
-                        Block.spawnAsEntity(worldIn, pos, new ItemStack(state.getBlock()));
-                        worldIn.setBlockState(pos, state.with(FairyRingMushroomBlock.MUSHROOMS, state.get(FairyRingMushroomBlock.MUSHROOMS) - 1));
-                        worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_FAIRY_RING_MUSHROOM_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-                        if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
-                            stack.setCount(0);
-                        this.setSuccessful(true);
-                    }
-                    else
-                        return ShearsBehaviour.dispense(source, stack);
-                }
-                else
-                    return ShearsBehaviour.dispense(source, stack);
+                    return ShearsBehavior.dispense(source, stack);
                 return stack;
             }
         });
@@ -171,8 +136,8 @@ public class HabitatDispenserBehaviours {
                     this.setSuccessful(true);
                     return stack;
                 }
-                else if (RedstoneBehaviour != null)
-                    RedstoneBehaviour.dispense(source, stack);
+                else if (RedstoneBehavior != null)
+                    RedstoneBehavior.dispense(source, stack);
                 this.setSuccessful(false);
                 return stack;
             }
