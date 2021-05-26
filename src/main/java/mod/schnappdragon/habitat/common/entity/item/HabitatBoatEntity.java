@@ -1,9 +1,7 @@
 package mod.schnappdragon.habitat.common.entity.item;
 
 import mod.schnappdragon.habitat.core.Habitat;
-import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.BoatEntity;
@@ -85,8 +83,10 @@ public class HabitatBoatEntity extends BoatEntity {
                     if (!this.world.isRemote && !this.removed) {
                         this.remove();
                         if (this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+                            Item planks = ForgeRegistries.ITEMS.getValue(new ResourceLocation(Habitat.MOD_ID, this.getHabitatBoatType().getName() + "_planks"));
+
                             for (int i = 0; i < 3; ++i)
-                                this.entityDropItem(this.getHabitatBoatType().asPlank());
+                                this.entityDropItem(planks);
 
                             for (int j = 0; j < 2; ++j)
                                 this.entityDropItem(Items.STICK);
@@ -107,25 +107,15 @@ public class HabitatBoatEntity extends BoatEntity {
     }
 
     public enum Type {
-        FAIRY_RING_MUSHROOM(HabitatBlocks.FAIRY_RING_MUSHROOM_PLANKS.get(), "fairy_ring_mushroom");
+        FAIRY_RING_MUSHROOM("fairy_ring_mushroom");
 
         private final String name;
-        private final Block block;
 
-        Type(Block block, String name) {
+        Type(String name) {
             this.name = name;
-            this.block = block;
         }
 
         public String getName() {
-            return this.name;
-        }
-
-        public Block asPlank() {
-            return this.block;
-        }
-
-        public String toString() {
             return this.name;
         }
 
