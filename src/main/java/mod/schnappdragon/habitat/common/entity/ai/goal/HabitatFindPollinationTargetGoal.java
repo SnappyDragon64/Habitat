@@ -16,8 +16,8 @@ import net.minecraft.util.math.BlockPos;
 public class HabitatFindPollinationTargetGoal extends Goal {
     private final BeeEntity bee;
 
-    public HabitatFindPollinationTargetGoal(BeeEntity bee) {
-        this.bee = bee;
+    public HabitatFindPollinationTargetGoal(BeeEntity beeIn) {
+        this.bee = beeIn;
     }
 
     public boolean shouldExecute() {

@@ -24,9 +24,9 @@ public abstract class AbstractBallCactusBlock extends BushBlock {
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D);
     private final BallCactusColor color;
 
-    public AbstractBallCactusBlock(BallCactusColor color, Properties properties) {
+    public AbstractBallCactusBlock(BallCactusColor colorIn, Properties properties) {
         super(properties);
-        this.color = color;
+        this.color = colorIn;
     }
 
     public BallCactusColor getColor() {

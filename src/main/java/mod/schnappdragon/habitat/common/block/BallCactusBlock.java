@@ -17,8 +17,8 @@ import net.minecraft.world.server.ServerWorld;
 import java.util.Random;
 
 public class BallCactusBlock extends AbstractBallCactusBlock implements IGrowable {
-    public BallCactusBlock(BallCactusColor color, Properties properties) {
-        super(color, properties);
+    public BallCactusBlock(BallCactusColor colorIn, Properties properties) {
+        super(colorIn, properties);
     }
 
     /*

@@ -14,8 +14,8 @@ import java.util.function.Supplier;
 public class ChestItemRenderer<T extends TileEntity> extends ItemStackTileEntityRenderer {
     private final Supplier<T> tileEntity;
 
-    public ChestItemRenderer(Supplier<T> tileEntity) {
-        this.tileEntity = tileEntity;
+    public ChestItemRenderer(Supplier<T> tileEntityIn) {
+        this.tileEntity = tileEntityIn;
     }
 
     @Override

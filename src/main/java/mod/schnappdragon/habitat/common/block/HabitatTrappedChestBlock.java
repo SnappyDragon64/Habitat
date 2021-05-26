@@ -19,9 +19,9 @@ import javax.annotation.Nullable;
 public class HabitatTrappedChestBlock extends ChestBlock implements IChestVariant {
     private final ChestVariants.ChestVariant variant;
 
-    public HabitatTrappedChestBlock(ChestVariants.ChestVariant variant, Properties properties) {
+    public HabitatTrappedChestBlock(ChestVariants.ChestVariant variantIn, Properties properties) {
         super(properties, HabitatTileEntityTypes.TRAPPED_CHEST::get);
-        this.variant = variant;
+        this.variant = variantIn;
     }
 
     @Override

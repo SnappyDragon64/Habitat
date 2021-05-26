@@ -16,8 +16,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class FloweringBallCactusBlock extends AbstractBallCactusBlock {
-    public FloweringBallCactusBlock(BallCactusColor color, Properties properties) {
-        super(color, properties);
+    public FloweringBallCactusBlock(BallCactusColor colorIn, Properties properties) {
+        super(colorIn, properties);
     }
 
     @Override

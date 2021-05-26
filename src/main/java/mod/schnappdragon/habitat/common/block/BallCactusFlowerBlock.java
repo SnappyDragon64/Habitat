@@ -21,9 +21,9 @@ public class BallCactusFlowerBlock extends HabitatFlowerBlock implements IGrowab
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 3.0D, 11.0D);
     private final BallCactusColor color;
 
-    public BallCactusFlowerBlock(BallCactusColor color, Supplier<Effect> stewEffect, int stewEffectDuration, Properties properties) {
+    public BallCactusFlowerBlock(BallCactusColor colorIn, Supplier<Effect> stewEffect, int stewEffectDuration, Properties properties) {
         super(stewEffect, stewEffectDuration, properties);
-        this.color = color;
+        this.color = colorIn;
     }
 
     public BallCactusColor getColor() {

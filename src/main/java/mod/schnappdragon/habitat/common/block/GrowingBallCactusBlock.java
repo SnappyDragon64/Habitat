@@ -19,8 +19,8 @@ import java.util.Random;
 public class GrowingBallCactusBlock extends AbstractBallCactusBlock implements IGrowable {
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 3.0D, 11.0D);
 
-    public GrowingBallCactusBlock(BallCactusColor color, Properties properties) {
-        super(color, properties);
+    public GrowingBallCactusBlock(BallCactusColor colorIn, Properties properties) {
+        super(colorIn, properties);
     }
 
     @Override

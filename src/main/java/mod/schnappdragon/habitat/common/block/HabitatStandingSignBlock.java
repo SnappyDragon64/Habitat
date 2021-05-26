@@ -10,8 +10,8 @@ import net.minecraft.world.IBlockReader;
 import javax.annotation.Nullable;
 
 public class HabitatStandingSignBlock extends StandingSignBlock {
-    public HabitatStandingSignBlock(Properties properties, WoodType woodType) {
-        super(properties, woodType);
+    public HabitatStandingSignBlock(Properties properties, WoodType woodTypeIn) {
+        super(properties, woodTypeIn);
     }
 
     @Override
