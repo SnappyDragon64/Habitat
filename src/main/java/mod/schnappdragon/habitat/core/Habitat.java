@@ -5,7 +5,7 @@ import mod.schnappdragon.habitat.client.renderer.tileentity.HabitatTileEntityRen
 import mod.schnappdragon.habitat.common.block.misc.HabitatWoodTypes;
 import mod.schnappdragon.habitat.core.misc.HabitatBrewingMixes;
 import mod.schnappdragon.habitat.core.misc.HabitatComposterChances;
-import mod.schnappdragon.habitat.core.misc.HabitatDispenserBehaviours;
+import mod.schnappdragon.habitat.core.dispenser.HabitatDispenserBehaviours;
 import mod.schnappdragon.habitat.core.misc.HabitatFireInfo;
 import mod.schnappdragon.habitat.core.misc.HabitatPOI;
 import mod.schnappdragon.habitat.core.registry.HabitatFeatures;
