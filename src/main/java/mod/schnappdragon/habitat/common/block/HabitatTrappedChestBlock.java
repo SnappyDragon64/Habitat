@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.common.block;
 
+import mod.schnappdragon.habitat.common.block.misc.ChestVariants;
 import mod.schnappdragon.habitat.core.registry.HabitatTileEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -15,9 +16,12 @@ import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
 
-public class HabitatTrappedChestBlock extends ChestBlock {
-    public HabitatTrappedChestBlock(Properties properties) {
+public class HabitatTrappedChestBlock extends ChestBlock implements IChestVariant {
+    private final ChestVariants.ChestVariant variant;
+
+    public HabitatTrappedChestBlock(ChestVariants.ChestVariant variant, Properties properties) {
         super(properties, HabitatTileEntityTypes.TRAPPED_CHEST::get);
+        this.variant = variant;
     }
 
     @Override
@@ -45,5 +49,10 @@ public class HabitatTrappedChestBlock extends ChestBlock {
 
     public int getStrongPower(BlockState state, IBlockReader world, BlockPos pos, Direction direction) {
         return direction == Direction.UP ? state.getWeakPower(world, pos, direction) : 0;
+    }
+
+    @Override
+    public ChestVariants.ChestVariant getVariant() {
+        return variant;
     }
 }

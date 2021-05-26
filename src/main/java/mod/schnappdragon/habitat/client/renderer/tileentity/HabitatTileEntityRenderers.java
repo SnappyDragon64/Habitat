@@ -7,5 +7,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class HabitatTileEntityRenderers {
     public static void registerRenderers() {
         ClientRegistry.bindTileEntityRenderer(HabitatTileEntityTypes.SIGN.get(), SignTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(HabitatTileEntityTypes.CHEST.get(), HabitatChestTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(HabitatTileEntityTypes.TRAPPED_CHEST.get(), HabitatChestTileEntityRenderer::new);
     }
 }

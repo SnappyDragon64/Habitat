@@ -1,14 +1,18 @@
 package mod.schnappdragon.habitat.core.registry;
 
+import mod.schnappdragon.habitat.client.renderer.tileentity.ChestItemRenderer;
 import mod.schnappdragon.habitat.common.item.FairyRingMushroomStewItem;
 import mod.schnappdragon.habitat.common.item.FuelBlockItem;
 import mod.schnappdragon.habitat.common.item.KabloomFruitItem;
 import mod.schnappdragon.habitat.common.item.WallOrBaseItem;
+import mod.schnappdragon.habitat.common.tileentity.HabitatChestTileEntity;
+import mod.schnappdragon.habitat.common.tileentity.HabitatTrappedChestTileEntity;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.misc.HabitatFoods;
 import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.*;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -77,9 +81,9 @@ public class HabitatItems {
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_POST = ITEMS.register("fairy_ring_mushroom_post",
             () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_POST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.BUILDING_BLOCKS, "enhanced_mushrooms", "quark"))));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_CHEST = ITEMS.register("fairy_ring_mushroom_chest",
-            () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.DECORATIONS, "enhanced_mushrooms", "quark"))));
+            () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.DECORATIONS, "enhanced_mushrooms", "quark")).setISTER(() -> () -> new ChestItemRenderer<TileEntity>(HabitatChestTileEntity::new))));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_TRAPPED_CHEST = ITEMS.register("fairy_ring_mushroom_trapped_chest",
-            () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_TRAPPED_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.REDSTONE, "enhanced_mushrooms", "quark"))));
+            () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_TRAPPED_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.REDSTONE, "enhanced_mushrooms", "quark")).setISTER(() -> () -> new ChestItemRenderer<TileEntity>(HabitatTrappedChestTileEntity::new))));
 
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BEEHIVE = registerBlockItem("fairy_ring_mushroom_beehive", HabitatBlocks.FAIRY_RING_MUSHROOM_BEEHIVE, CompatHelper.compatItemGroup(ItemGroup.DECORATIONS, "enhanced_mushrooms", "buzzier_bees"));
 
