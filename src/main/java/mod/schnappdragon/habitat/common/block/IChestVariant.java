@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.common.block;
 
-import mod.schnappdragon.habitat.common.block.misc.ChestVariants;
+import mod.schnappdragon.habitat.common.block.misc.ChestVariant;
 
 public interface IChestVariant {
-    ChestVariants.ChestVariant getVariant();
+    ChestVariant getVariant();
 }

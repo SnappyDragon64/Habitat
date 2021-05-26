@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.common.block;
 
-import mod.schnappdragon.habitat.common.block.misc.ChestVariants;
+import mod.schnappdragon.habitat.common.block.misc.ChestVariant;
 import mod.schnappdragon.habitat.core.registry.HabitatTileEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -10,9 +10,9 @@ import net.minecraft.world.IBlockReader;
 import javax.annotation.Nullable;
 
 public class HabitatChestBlock extends ChestBlock implements IChestVariant {
-    private final ChestVariants.ChestVariant variant;
+    private final ChestVariant variant;
 
-    public HabitatChestBlock(ChestVariants.ChestVariant variantIn, Properties properties) {
+    public HabitatChestBlock(ChestVariant variantIn, Properties properties) {
         super(properties, HabitatTileEntityTypes.CHEST::get);
         this.variant = variantIn;
     }
@@ -29,7 +29,7 @@ public class HabitatChestBlock extends ChestBlock implements IChestVariant {
     }
 
     @Override
-    public ChestVariants.ChestVariant getVariant() {
+    public ChestVariant getVariant() {
         return variant;
     }
 }

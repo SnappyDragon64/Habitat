@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.client.renderer;
 
-import mod.schnappdragon.habitat.common.block.misc.ChestVariants;
+import mod.schnappdragon.habitat.common.block.misc.ChestVariant;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraftforge.api.distmarker.Dist;
@@ -13,7 +13,7 @@ public class ChestRegistry {
     @SubscribeEvent
     public static void onStitch(TextureStitchEvent.Pre event) {
         if (event.getMap().getTextureLocation().equals(Atlases.CHEST_ATLAS)) {
-            for (ChestVariants.ChestVariant variant : ChestVariants.getVariants()) {
+            for (ChestVariant variant : ChestVariant.values()) {
                 event.addSprite(variant.getSingleResource());
                 event.addSprite(variant.getRightResource());
                 event.addSprite(variant.getLeftResource());

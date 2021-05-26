@@ -3,7 +3,7 @@ package mod.schnappdragon.habitat.client.renderer.tileentity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import mod.schnappdragon.habitat.common.block.IChestVariant;
-import mod.schnappdragon.habitat.common.block.misc.ChestVariants;
+import mod.schnappdragon.habitat.common.block.misc.ChestVariant;
 import net.minecraft.block.*;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -128,7 +128,7 @@ public class HabitatChestTileEntityRenderer<T extends TileEntity & IChestLid> ex
             Block chestBlock = itemBlock;
             if (chestBlock == null)
                 chestBlock = tileEntity.getBlockState().getBlock();
-            ChestVariants.ChestVariant chestVariant = ((IChestVariant) chestBlock).getVariant();
+            ChestVariant chestVariant = ((IChestVariant) chestBlock).getVariant();
 
             if (chestVariant == null)
                 return null;
