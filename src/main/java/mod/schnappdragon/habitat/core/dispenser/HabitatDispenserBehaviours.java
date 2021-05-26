@@ -4,6 +4,7 @@ import mod.schnappdragon.habitat.common.block.FairyRingMushroomBlock;
 import mod.schnappdragon.habitat.common.block.FloweringBallCactusBlock;
 import mod.schnappdragon.habitat.common.block.KabloomBushBlock;
 import mod.schnappdragon.habitat.common.block.RafflesiaBlock;
+import mod.schnappdragon.habitat.common.entity.item.HabitatBoatEntity;
 import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruitEntity;
 import mod.schnappdragon.habitat.common.tileentity.RafflesiaTileEntity;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
@@ -38,6 +39,7 @@ public class HabitatDispenserBehaviours {
         ShearsBehavior = DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(Items.SHEARS);
         RedstoneBehavior = DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(Items.REDSTONE);
 
+        DispenserBlock.registerDispenseBehavior(HabitatItems.FAIRY_RING_MUSHROOM_BOAT.get(), new HabitatDispenseBoatBehavior(HabitatBoatEntity.Type.FAIRY_RING_MUSHROOM));
 
         DispenserBlock.registerDispenseBehavior(Items.SUSPICIOUS_STEW, new OptionalDispenseBehavior() {
             protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {

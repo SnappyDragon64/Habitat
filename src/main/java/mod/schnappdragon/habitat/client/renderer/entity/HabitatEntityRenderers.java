@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public class HabitatEntityRenderers {
     public static void registerRenderers(Supplier<Minecraft> minecraft) {
-        RenderingRegistry.registerEntityRenderingHandler(HabitatEntityTypes.KABLOOM_FRUIT.get(),
-                rendererManager -> new SpriteRenderer<>(rendererManager, minecraft.get().getItemRenderer()));
+        RenderingRegistry.registerEntityRenderingHandler(HabitatEntityTypes.KABLOOM_FRUIT.get(), rendererManager -> new SpriteRenderer<>(rendererManager, minecraft.get().getItemRenderer()));
+        RenderingRegistry.registerEntityRenderingHandler(HabitatEntityTypes.BOAT.get(), HabitatBoatRenderer::new);
     }
 }

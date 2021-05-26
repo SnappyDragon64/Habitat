@@ -1,10 +1,8 @@
 package mod.schnappdragon.habitat.core.registry;
 
 import mod.schnappdragon.habitat.client.renderer.tileentity.ChestItemRenderer;
-import mod.schnappdragon.habitat.common.item.FairyRingMushroomStewItem;
-import mod.schnappdragon.habitat.common.item.FuelBlockItem;
-import mod.schnappdragon.habitat.common.item.KabloomFruitItem;
-import mod.schnappdragon.habitat.common.item.WallOrBaseItem;
+import mod.schnappdragon.habitat.common.entity.item.HabitatBoatEntity;
+import mod.schnappdragon.habitat.common.item.*;
 import mod.schnappdragon.habitat.common.tileentity.HabitatChestTileEntity;
 import mod.schnappdragon.habitat.common.tileentity.HabitatTrappedChestTileEntity;
 import mod.schnappdragon.habitat.core.Habitat;
@@ -87,9 +85,8 @@ public class HabitatItems {
 
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BEEHIVE = registerBlockItem("fairy_ring_mushroom_beehive", HabitatBlocks.FAIRY_RING_MUSHROOM_BEEHIVE, CompatHelper.compatItemGroup(ItemGroup.DECORATIONS, "enhanced_mushrooms", "buzzier_bees"));
 
-    // PLACEHOLDER FOR TAGS UNTIL BOATS ARE ACTUALLY IMPLEMENTED
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BOAT = ITEMS.register("fairy_ring_mushroom_boat",
-            () -> new Item(getProperties(CompatHelper.compatItemGroup(ItemGroup.TRANSPORTATION, "enhanced_mushrooms"))));
+            () -> new HabitatBoatItem(HabitatBoatEntity.Type.FAIRY_RING_MUSHROOM, getProperties(CompatHelper.compatItemGroup(ItemGroup.TRANSPORTATION, "enhanced_mushrooms"))));
 
     private static Item.Properties getProperties(ItemGroup group) {
         return new Item.Properties().group(group);
