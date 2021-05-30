@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "habitat:red_dye_from_red_ball_cactus_flower"
+      "habitat:crafting/red_dye_from_red_ball_cactus_flower"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "habitat:red_dye_from_red_ball_cactus_flower"
+        "recipe": "habitat:crafting/red_dye_from_red_ball_cactus_flower"
       }
     }
   },

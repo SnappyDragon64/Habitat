@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "habitat:dried_ball_cactus_from_smoking"
+      "habitat:smoking/dried_ball_cactus_from_smoking"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "habitat:dried_ball_cactus_from_smoking"
+        "recipe": "habitat:smoking/dried_ball_cactus_from_smoking"
       }
     }
   },

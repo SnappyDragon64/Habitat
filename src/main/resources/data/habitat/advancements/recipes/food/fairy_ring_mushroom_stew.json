@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "habitat:fairy_ring_mushroom_stew"
+      "habitat:crafting/fairy_ring_mushroom_stew"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "habitat:fairy_ring_mushroom_stew"
+        "recipe": "habitat:crafting/fairy_ring_mushroom_stew"
       }
     }
   },

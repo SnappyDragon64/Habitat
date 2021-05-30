@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "habitat:dried_ball_cactus"
+      "habitat:smelting/dried_ball_cactus"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "habitat:dried_ball_cactus"
+        "recipe": "habitat:smelting/dried_ball_cactus"
       }
     }
   },
