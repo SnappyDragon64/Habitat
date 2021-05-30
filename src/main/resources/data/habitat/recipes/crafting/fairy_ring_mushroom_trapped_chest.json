@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "habitat:fairy_ring_mushroom_chest"
+    },
+    {
+      "item": "minecraft:tripwire_hook"
+    }
+  ],
+  "result": {
+    "item": "habitat:fairy_ring_mushroom_trapped_chest"
+  },
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "enhanced_mushrooms"
+    },
+    {
+      "type": "habitat:quark_flag",
+      "flag": "variant_chests"
+    }
+  ]
+}

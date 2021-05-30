@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "habitat:stripped_fairy_ring_mushroom_hyphae"
+    }
+  },
+  "result": {
+    "item": "habitat:stripped_fairy_ring_mushroom_post",
+    "count": 8
+  },
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "enhanced_mushrooms"
+    },
+    {
+      "type": "habitat:quark_flag",
+      "flag": "wooden_posts"
+    }
+  ]
+}

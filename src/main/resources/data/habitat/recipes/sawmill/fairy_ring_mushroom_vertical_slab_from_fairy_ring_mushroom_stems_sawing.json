@@ -1,0 +1,22 @@
+{
+  "type": "environmental:sawing",
+  "ingredient": {
+    "tag": "habitat:fairy_ring_mushroom_stems"
+  },
+  "result": "habitat:fairy_ring_mushroom_vertical_slab",
+  "count": 8,
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "enhanced_mushrooms"
+    },
+    {
+      "type":"habitat:quark_flag",
+      "flag":"vertical_slabs"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "environmental"
+    }
+  ]
+}

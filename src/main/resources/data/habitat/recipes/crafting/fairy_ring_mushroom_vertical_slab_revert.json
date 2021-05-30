@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "habitat:fairy_ring_mushroom_vertical_slab"
+    }
+  ],
+  "result": {
+    "item": "habitat:fairy_ring_mushroom_slab",
+    "count": 1
+  },
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "enhanced_mushrooms"
+    },
+    {
+      "type": "habitat:quark_flag",
+      "flag": "vertical_slabs"
+    }
+  ]
+}

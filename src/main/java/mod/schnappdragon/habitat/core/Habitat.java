@@ -3,6 +3,7 @@ package mod.schnappdragon.habitat.core;
 import mod.schnappdragon.habitat.client.renderer.entity.HabitatEntityRenderers;
 import mod.schnappdragon.habitat.client.renderer.tileentity.HabitatTileEntityRenderers;
 import mod.schnappdragon.habitat.common.block.misc.HabitatWoodTypes;
+import mod.schnappdragon.habitat.core.api.conditions.RecipeConditions;
 import mod.schnappdragon.habitat.core.misc.HabitatBrewingMixes;
 import mod.schnappdragon.habitat.core.misc.HabitatComposterChances;
 import mod.schnappdragon.habitat.core.dispenser.HabitatDispenserBehaviours;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 public class Habitat {
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "habitat";
+    public static final boolean DEV = !FMLLoader.isProduction();
 
     public Habitat() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -42,6 +45,8 @@ public class Habitat {
         HabitatRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         HabitatFeatures.FEATURES.register(modEventBus);
         HabitatParticleTypes.PARTICLE_TYPES.register(modEventBus);
+
+        RecipeConditions.registerSerializers();
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -62,9 +67,7 @@ public class Habitat {
         HabitatTileEntityRenderers.registerRenderers();
         HabitatEntityRenderers.registerRenderers(event.getMinecraftSupplier());
 
-        event.enqueueWork(() -> {
-            HabitatWoodTypes.setupAtlas();
-        });
+        event.enqueueWork(HabitatWoodTypes::setupAtlas);
     }
 
     public static Logger getLOGGER() {

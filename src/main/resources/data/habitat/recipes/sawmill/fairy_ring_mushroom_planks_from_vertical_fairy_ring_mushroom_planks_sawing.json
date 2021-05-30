@@ -1,0 +1,22 @@
+{
+  "type": "environmental:sawing",
+  "ingredient": {
+    "item": "habitat:vertical_fairy_ring_mushroom_planks"
+  },
+  "result": "habitat:fairy_ring_mushroom_planks",
+  "count": 1,
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "enhanced_mushrooms"
+    },
+    {
+      "type":"habitat:quark_flag",
+      "flag":"vertical_planks"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "environmental"
+    }
+  ]
+}
