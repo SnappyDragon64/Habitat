@@ -35,10 +35,8 @@ public class HabitatGeneration {
                 }
 
                 // Dark Forests
-                if (event.getName().getPath().contains("dark_forest")) {
+                if (event.getName().getPath().contains("dark_forest"))
                     helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.FAIRY_RING);
-                    helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM);
-                }
 
                 // Desert and Badlands
                 if (event.getCategory() == Biome.Category.DESERT || event.getCategory() == Biome.Category.MESA)
