@@ -4,13 +4,13 @@
       "model": "habitat:block/rafflesia"
     },
     "on_cooldown=true,has_stew=false": {
-      "model": "habitat:block/cooldown_rafflesia"
+      "model": "habitat:block/rafflesia_on_cooldown"
     },
     "on_cooldown=false,has_stew=true": {
-      "model": "habitat:block/suspicious_rafflesia"
+      "model": "habitat:block/rafflesia_with_stew"
     },
     "on_cooldown=true,has_stew=true": {
-      "model": "habitat:block/cooldown_suspicious_rafflesia"
+      "model": "habitat:block/rafflesia_with_stew_on_cooldown"
     }
   }
 }

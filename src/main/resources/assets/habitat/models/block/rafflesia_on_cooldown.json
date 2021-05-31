@@ -1,5 +1,5 @@
 {
-  "parent": "habitat:block/cooldown_rafflesia_parent",
+  "parent": "habitat:block/template_rafflesia_on_cooldown",
   "textures": {
     "rafflesia": "habitat:block/rafflesia"
   }
