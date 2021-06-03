@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.3a2'
+version = '0.3a3'
 group = 'mod.schnappdragon.habitat' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'habitat'
 
