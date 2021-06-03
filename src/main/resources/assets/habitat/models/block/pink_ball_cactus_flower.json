@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "habitat:block/template_ball_cactus_flower",
   "textures": {
-    "cross": "habitat:block/pink_ball_cactus_flower"
+    "flower": "habitat:block/pink_ball_cactus_flower"
   }
 }

@@ -1,0 +1,54 @@
+{
+  "credit": "Made with Blockbench",
+  "ambientocclusion": false,
+  "textures": {
+    "petal": "#flower",
+    "particle": "#petal"
+  },
+  "elements": [
+    {
+      "from": [6.9, 0.1, 6.9],
+      "to": [9.1, 0.1, 9.1],
+      "faces": {
+        "up": {"uv": [8, 16, 6, 14], "texture": "#petal"},
+        "down": {"uv": [10, 14, 8, 16], "texture": "#petal", "cullface": "down"}
+      }
+    },
+    {
+      "from": [6, 0, 4],
+      "to": [10, 0, 7],
+      "rotation": {"angle": 45, "axis": "x", "origin": [8, 0, 7]},
+      "faces": {
+        "up": {"uv": [8, 14, 4, 11], "rotation": 180, "texture": "#petal"},
+        "down": {"uv": [8, 11, 12, 14], "rotation": 180, "texture": "#petal"}
+      }
+    },
+    {
+      "from": [9, 0, 6],
+      "to": [12, 0, 10],
+      "rotation": {"angle": 45, "axis": "z", "origin": [9, 0, 8]},
+      "faces": {
+        "up": {"uv": [8, 14, 4, 11], "rotation": 270, "texture": "#petal"},
+        "down": {"uv": [12, 11, 8, 14], "rotation": 90, "texture": "#petal"}
+      }
+    },
+    {
+      "from": [4, 0, 6],
+      "to": [7, 0, 10],
+      "rotation": {"angle": -45, "axis": "z", "origin": [7, 0, 8]},
+      "faces": {
+        "up": {"uv": [8, 14, 4, 11], "rotation": 90, "texture": "#petal"},
+        "down": {"uv": [12, 11, 8, 14], "rotation": 270, "texture": "#petal"}
+      }
+    },
+    {
+      "from": [6, 0, 9],
+      "to": [10, 0, 12],
+      "rotation": {"angle": -45, "axis": "x", "origin": [8, 0, 9]},
+      "faces": {
+        "up": {"uv": [8, 14, 4, 11], "texture": "#petal"},
+        "down": {"uv": [8, 14, 12, 11], "rotation": 180, "texture": "#petal"}
+      }
+    }
+  ]
+}

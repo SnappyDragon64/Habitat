@@ -1,5 +1,5 @@
 {
-  "parent": "habitat:block/potted_ball_cactus",
+  "parent": "habitat:block/template_potted_ball_cactus",
   "textures": {
     "flower": "habitat:block/yellow_ball_cactus_flower"
   }
