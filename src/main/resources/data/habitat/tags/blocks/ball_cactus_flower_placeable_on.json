@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:cactus"
+    "minecraft:cactus",
+    "minecraft:dirt",
+    "minecraft:grass_block",
+    "minecraft:podzol",
+    "minecraft:mycelium"
   ]
 }
