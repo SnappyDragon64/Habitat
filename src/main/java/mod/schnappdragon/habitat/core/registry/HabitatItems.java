@@ -9,6 +9,7 @@ import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.misc.HabitatFoods;
 import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.*;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.RegistryObject;
@@ -79,9 +80,9 @@ public class HabitatItems {
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_POST = ITEMS.register("fairy_ring_mushroom_post",
             () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_POST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.BUILDING_BLOCKS, "enhanced_mushrooms", "quark"))));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_CHEST = ITEMS.register("fairy_ring_mushroom_chest",
-            () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.DECORATIONS, "enhanced_mushrooms", "quark")).setISTER(() -> () -> new ChestItemRenderer<TileEntity>(HabitatChestTileEntity::new))));
+            () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.DECORATIONS, "enhanced_mushrooms", "quark")).setISTER(() -> ChestItemRenderer::getChestISTER)));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_TRAPPED_CHEST = ITEMS.register("fairy_ring_mushroom_trapped_chest",
-            () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_TRAPPED_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.REDSTONE, "enhanced_mushrooms", "quark")).setISTER(() -> () -> new ChestItemRenderer<TileEntity>(HabitatTrappedChestTileEntity::new))));
+            () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_TRAPPED_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(ItemGroup.REDSTONE, "enhanced_mushrooms", "quark")).setISTER(() -> ChestItemRenderer::getTrappedChestISTER)));
 
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BEEHIVE = registerBlockItem("fairy_ring_mushroom_beehive", HabitatBlocks.FAIRY_RING_MUSHROOM_BEEHIVE, CompatHelper.compatItemGroup(ItemGroup.DECORATIONS, "enhanced_mushrooms", "buzzier_bees"));
 
