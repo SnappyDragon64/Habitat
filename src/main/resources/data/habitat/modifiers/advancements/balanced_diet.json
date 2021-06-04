@@ -21,14 +21,6 @@
                 "item": "habitat:dried_ball_cactus"
               }
             }
-          },
-          "habitat:fairy_ring_mushroom_stew": {
-            "trigger": "minecraft:consume_item",
-            "conditions": {
-              "item": {
-                "item": "habitat:fairy_ring_mushroom_stew"
-              }
-            }
           }
         },
         "requirements": [
@@ -37,9 +29,6 @@
           ],
           [
             "habitat:dried_ball_cactus"
-          ],
-          [
-            "habitat:fairy_ring_mushroom_stew"
           ]
         ]
       }

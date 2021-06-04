@@ -47,8 +47,6 @@ public class HabitatItems {
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BLOCK = registerBlockItem("fairy_ring_mushroom_block", HabitatBlocks.FAIRY_RING_MUSHROOM_BLOCK, ItemGroup.DECORATIONS);
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_STEM = registerBlockItem("fairy_ring_mushroom_stem", HabitatBlocks.FAIRY_RING_MUSHROOM_STEM, ItemGroup.DECORATIONS);
     public static final RegistryObject<Item> FAIRYLIGHT = registerBlockItem("fairylight", HabitatBlocks.FAIRYLIGHT, ItemGroup.DECORATIONS);
-    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_STEW = ITEMS.register("fairy_ring_mushroom_stew",
-            () -> new FairyRingMushroomStewItem(new Item.Properties().group(ItemGroup.FOOD).maxStackSize(1).food(HabitatFoods.FAIRY_RING_MUSHROOM_STEW)));
 
     public static final RegistryObject<Item> STRIPPED_FAIRY_RING_MUSHROOM_STEM = registerBlockItem("stripped_fairy_ring_mushroom_stem", HabitatBlocks.STRIPPED_FAIRY_RING_MUSHROOM_STEM, CompatHelper.compatItemGroup(ItemGroup.BUILDING_BLOCKS, "enhanced_mushrooms"));
     public static final RegistryObject<Item> ENHANCED_FAIRY_RING_MUSHROOM_STEM = registerBlockItem("enhanced_fairy_ring_mushroom_stem", HabitatBlocks.ENHANCED_FAIRY_RING_MUSHROOM_STEM, CompatHelper.compatItemGroup(ItemGroup.BUILDING_BLOCKS, "enhanced_mushrooms"));

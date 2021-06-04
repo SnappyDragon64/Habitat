@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "habitat:item/fairy_ring_mushroom_stew"
-  }
-}
