@@ -1,7 +1,7 @@
 modLoader="javafml"
 loaderVersion="[35,)"
 license="All rights reserved"
-issueTrackerURL="https://github.com/SnappyDragon18/Bloom-and-Gloom/issues"
+issueTrackerURL="https://github.com/SnappyDragon18/Habitat/issues"
 
 [[mods]]
   modId="habitat"
