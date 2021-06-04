@@ -135,11 +135,11 @@ public class HabitatChestTileEntityRenderer<T extends TileEntity & IChestLid> ex
 
             switch (type) {
                 case RIGHT:
-                    return getRenderMaterial(chestVariant.getRightResource());
+                    return getRenderMaterial(chestVariant.getRight());
                 case LEFT:
-                    return getRenderMaterial(chestVariant.getLeftResource());
+                    return getRenderMaterial(chestVariant.getLeft());
                 default:
-                    return getRenderMaterial(chestVariant.getSingleResource());
+                    return getRenderMaterial(chestVariant.getSingle());
             }
         }
     }

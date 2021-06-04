@@ -14,9 +14,9 @@ public class ChestRegistry {
     public static void onStitch(TextureStitchEvent.Pre event) {
         if (event.getMap().getTextureLocation().equals(Atlases.CHEST_ATLAS)) {
             for (ChestVariant variant : ChestVariant.values()) {
-                event.addSprite(variant.getSingleResource());
-                event.addSprite(variant.getRightResource());
-                event.addSprite(variant.getLeftResource());
+                event.addSprite(variant.getSingle());
+                event.addSprite(variant.getRight());
+                event.addSprite(variant.getLeft());
             }
         }
     }
