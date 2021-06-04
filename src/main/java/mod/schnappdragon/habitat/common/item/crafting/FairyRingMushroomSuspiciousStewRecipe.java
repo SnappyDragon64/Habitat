@@ -15,8 +15,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class SuspiciousStewWithFairyRingMushroomRecipe extends SpecialRecipe {
-    public SuspiciousStewWithFairyRingMushroomRecipe(ResourceLocation idIn) {
+public class FairyRingMushroomSuspiciousStewRecipe extends SpecialRecipe {
+    public FairyRingMushroomSuspiciousStewRecipe(ResourceLocation idIn) {
         super(idIn);
     }
 
@@ -77,6 +77,6 @@ public class SuspiciousStewWithFairyRingMushroomRecipe extends SpecialRecipe {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return HabitatRecipeSerializers.CRAFTING_SPECIAL_SUSPICIOUSSTEWWITHFAIRYRINGMUSHROOM.get();
+        return HabitatRecipeSerializers.CRAFTING_SPECIAL_FAIRYRINGMUSHROOMSUSPICIOUSSTEW.get();
     }
 }
