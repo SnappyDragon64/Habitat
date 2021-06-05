@@ -43,7 +43,8 @@ public class HabitatItems {
     public static final RegistryObject<Item> DRIED_BALL_CACTUS = ITEMS.register("dried_ball_cactus",
             () -> new Item((new Item.Properties()).group(ItemGroup.FOOD).food(HabitatFoods.DRIED_BALL_CACTUS)));
 
-    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM = registerBlockItem("fairy_ring_mushroom", HabitatBlocks.FAIRY_RING_MUSHROOM, ItemGroup.DECORATIONS);
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM = ITEMS.register("fairy_ring_mushroom",
+            () -> new FairyRingMushroomItem(HabitatBlocks.FAIRY_RING_MUSHROOM.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BLOCK = registerBlockItem("fairy_ring_mushroom_block", HabitatBlocks.FAIRY_RING_MUSHROOM_BLOCK, ItemGroup.DECORATIONS);
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_STEM = registerBlockItem("fairy_ring_mushroom_stem", HabitatBlocks.FAIRY_RING_MUSHROOM_STEM, ItemGroup.DECORATIONS);
     public static final RegistryObject<Item> FAIRYLIGHT = registerBlockItem("fairylight", HabitatBlocks.FAIRYLIGHT, ItemGroup.DECORATIONS);
