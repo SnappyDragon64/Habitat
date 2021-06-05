@@ -1,20 +1,19 @@
 package mod.schnappdragon.habitat.common.item.crafting;
 
+import mod.schnappdragon.habitat.common.item.FairyRingMushroomItem;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatRecipeSerializers;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowerBlock;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipe;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.potion.Effect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class FairyRingMushroomSuspiciousStewRecipe extends SpecialRecipe {
     public FairyRingMushroomSuspiciousStewRecipe(ResourceLocation idIn) {
@@ -49,16 +48,14 @@ public class FairyRingMushroomSuspiciousStewRecipe extends SpecialRecipe {
 
     @Override
     public ItemStack getCraftingResult(CraftingInventory inv) {
-        List<Item> flowers = ItemTags.SMALL_FLOWERS.getAllElements().stream().filter((item) -> item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof FlowerBlock).collect(Collectors.toList());
-        Optional<Item> flower = flowers.stream().skip((int) (flowers.size() * Math.random())).findFirst();
+        Optional<Pair<Effect, Integer>> effect = FairyRingMushroomItem.getStewEffect();
 
-        if (flower.isPresent()) {
+        if (effect.isPresent()) {
             ItemStack stew = new ItemStack(Items.SUSPICIOUS_STEW, 1);
-            FlowerBlock flowerBlock = (FlowerBlock) ((BlockItem) flower.get()).getBlock();
-            SuspiciousStewItem.addEffect(stew, flowerBlock.getStewEffect(), flowerBlock.getStewEffectDuration() * 2);
+            SuspiciousStewItem.addEffect(stew, effect.get().getLeft(), effect.get().getRight() * 2);
             return stew;
         }
-        return ItemStack.EMPTY; // Reached when tag is empty or does not contain BlockItem for FlowerBlock at all
+        return ItemStack.EMPTY;
     }
 
     @Override
