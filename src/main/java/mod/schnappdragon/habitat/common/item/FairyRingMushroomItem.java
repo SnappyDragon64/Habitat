@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.common.item;
 
+import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowerBlock;
@@ -60,15 +61,16 @@ public class FairyRingMushroomItem extends BlockItem {
     }
 
     public static Optional<Pair<Effect, Integer>> getStewEffect() {
-        List<Pair<Effect, Integer>> effects = new ArrayList<>();
-        List<Pair<Effect, Integer>> finalEffects = effects;
+        List<Pair<Effect, Integer>> stewEffectPairs = new ArrayList<>();
+        List<Pair<Effect, Integer>> allStewEffectPairs = stewEffectPairs;
         ItemTags.SMALL_FLOWERS.getAllElements().stream().filter((item) -> item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof FlowerBlock).forEach(
                 (block) -> {
                     FlowerBlock flower = (FlowerBlock) ((BlockItem) block).getBlock();
-                    finalEffects.add(Pair.of(flower.getStewEffect(), flower.getStewEffectDuration()));
+                    allStewEffectPairs.add(Pair.of(flower.getStewEffect(), flower.getStewEffectDuration()));
                 }
         );
-        effects = effects.stream().distinct().collect(Collectors.toList());
-        return effects.stream().skip((int) (effects.size() * Math.random())).findFirst();
+
+        stewEffectPairs = stewEffectPairs.stream().distinct().collect(Collectors.toList());
+        return stewEffectPairs.stream().skip((int) (stewEffectPairs.size() * Math.random())).findFirst();
     }
 }
