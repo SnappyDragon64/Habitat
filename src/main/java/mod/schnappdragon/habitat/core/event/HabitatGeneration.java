@@ -34,7 +34,7 @@ public class HabitatGeneration {
 
                 // Dark Forests
                 if (event.getName().getPath().contains("dark_forest"))
-                    helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.FAIRY_RING);
+                    helper.addFeature(HabitatConfiguredFeatures.FAIRY_RING, GenerationStage.Decoration.SURFACE_STRUCTURES);
 
                 // Desert and Badlands
                 if (event.getCategory() == Biome.Category.DESERT || event.getCategory() == Biome.Category.MESA)
