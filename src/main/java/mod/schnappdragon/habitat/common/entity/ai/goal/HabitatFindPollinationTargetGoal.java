@@ -57,7 +57,7 @@ public class HabitatFindPollinationTargetGoal extends Goal {
                         }
                     }
 
-                    if (block instanceof BallCactusFlowerBlock) {
+                    if (block instanceof BallCactusFlowerBlock && ((BallCactusFlowerBlock) block).canGrow(this.bee.world, pos)) {
                         BallCactusFlowerBlock flower = (BallCactusFlowerBlock) block;
                         this.bee.world.setBlockState(pos, flower.getColor().getGrowingBallCactus().getDefaultState());
                         flag = true;

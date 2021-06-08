@@ -73,7 +73,7 @@ public class BallCactusFlowerBlock extends HabitatFlowerBlock implements IGrowab
         worldIn.setBlockState(pos, (rand.nextBoolean() ? color.getGrowingBallCactus() : color.getBallCactus()).getDefaultState());
     }
 
-    private boolean canGrow(World worldIn, BlockPos pos) {
+    public boolean canGrow(World worldIn, BlockPos pos) {
         return !worldIn.getBlockState(pos.down()).isIn(HabitatBlockTags.BALL_CACTUS_FLOWER_PLACEABLE_ON);
     }
 }
