@@ -29,10 +29,8 @@ public class HabitatGeneration {
                     helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA);
 
                 // Plains
-                if (event.getCategory() == Biome.Category.PLAINS) {
+                if (event.getCategory() == Biome.Category.PLAINS)
                     helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH);
-                    helper.addVegetalDecorationFeature(HabitatConfiguredFeatures.FAIRY_RING);
-                }
 
                 // Dark Forests
                 if (event.getName().getPath().contains("dark_forest"))
