@@ -6,6 +6,7 @@ import mod.schnappdragon.habitat.common.block.RafflesiaBlock;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HugeMushroomBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
@@ -34,7 +35,7 @@ public class HabitatConfiguredFeatures {
         register("huge_fairy_ring_mushroom", HUGE_FAIRY_RING_MUSHROOM);
     }
 
-    private static void register(String identifier, ConfiguredFeature<?, ?> configuredFeature) {
-        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, Habitat.MOD_ID + ":" + identifier, configuredFeature);
+    private static void register(String id, ConfiguredFeature<?, ?> configuredFeature) {
+        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(Habitat.MOD_ID, id), configuredFeature);
     }
 }
