@@ -95,6 +95,8 @@ public class FairyRingStructure extends Structure<NoFeatureConfig> {
                     false,
                     true);
 
+            this.recalculateStructureSize();
+
             Habitat.getLOGGER().log(Level.DEBUG, "Fairy Ring at " +
                     this.components.get(0).getBoundingBox().maxX + " " +
                     this.components.get(0).getBoundingBox().maxY + " " +
