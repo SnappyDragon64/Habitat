@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.common.world.gen.features;
+package mod.schnappdragon.habitat.common.world.gen.feature;
 
 import com.mojang.serialization.Codec;
 

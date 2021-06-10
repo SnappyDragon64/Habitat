@@ -1,0 +1,15 @@
+{
+  "name": "habitat:fairy_ring/feature_pool",
+  "fallback": "minecraft:empty",
+
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "habitat:fairy_ring",
+        "feature": "habitat:fairy_ring",
+        "element_type": "minecraft:feature_pool_element"
+      }
+    }
+  ]
+}

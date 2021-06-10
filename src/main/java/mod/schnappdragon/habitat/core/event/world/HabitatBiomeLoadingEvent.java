@@ -2,6 +2,7 @@ package mod.schnappdragon.habitat.core.event.world;
 
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
+import mod.schnappdragon.habitat.core.registry.HabitatConfiguredStructures;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
@@ -15,7 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Habitat.MOD_ID)
-public class BiomeModification {
+public class HabitatBiomeLoadingEvent {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void modifyBiomes(BiomeLoadingEvent event) {
         if (event.getName() != null) {
@@ -35,7 +36,7 @@ public class BiomeModification {
 
                 // Dark Forests
                 if (event.getName().getPath().contains("dark_forest"))
-                    helper.addFeature(HabitatConfiguredFeatures.FAIRY_RING, GenerationStage.Decoration.SURFACE_STRUCTURES);
+                    helper.addStructure(HabitatConfiguredStructures.FAIRY_RING);
 
                 // Desert and Badlands
                 if (event.getCategory() == Biome.Category.DESERT || event.getCategory() == Biome.Category.MESA)

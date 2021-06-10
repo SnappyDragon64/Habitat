@@ -41,6 +41,7 @@ public class Habitat {
         HabitatPotions.POTIONS.register(modEventBus);
         HabitatRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         HabitatFeatures.FEATURES.register(modEventBus);
+        HabitatStructures.STRUCTURE_FEATURES.register(modEventBus);
         HabitatParticleTypes.PARTICLE_TYPES.register(modEventBus);
 
         RecipeConditions.registerSerializers();
@@ -50,8 +51,10 @@ public class Habitat {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            HabitatStructures.setupStructures();
             HabitatBrewingMixes.registerBrewingMixes();
             HabitatConfiguredFeatures.registerConfiguredFeatures();
+            HabitatConfiguredStructures.registerConfiguredStructures();
             HabitatComposterChances.registerComposterChances();
             HabitatDispenserBehaviours.registerDispenserBehaviour();
             HabitatFireInfo.registerFireInfo();
