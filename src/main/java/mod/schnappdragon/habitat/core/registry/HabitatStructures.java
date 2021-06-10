@@ -22,7 +22,7 @@ public class HabitatStructures {
     public static final RegistryObject<Structure<NoFeatureConfig>> FAIRY_RING_STRUCTURE = STRUCTURE_FEATURES.register("fairy_ring", () -> (new FairyRingStructure(NoFeatureConfig.field_236558_a_)));
 
     public static void setupStructures() {
-        setupMapSpacingAndLand(FAIRY_RING_STRUCTURE.get(), new StructureSeparationSettings(100, 20, 1234567890), false);
+        setupMapSpacingAndLand(FAIRY_RING_STRUCTURE.get(), new StructureSeparationSettings(2, 1, 1234567890), false);
     }
 
     private static <F extends Structure<?>> void setupMapSpacingAndLand(F structure, StructureSeparationSettings structureSeparationSettings, boolean transformSurroundingLand) {

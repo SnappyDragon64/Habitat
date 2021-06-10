@@ -35,8 +35,8 @@ public class HabitatBiomeLoadingEvent {
                     helper.addFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH, GenerationStage.Decoration.VEGETAL_DECORATION);
 
                 // Dark Forests
-                if (event.getName().getPath().contains("dark_forest"))
-                    helper.addStructure(HabitatConfiguredStructures.FAIRY_RING);
+                //if (event.getName().getPath().contains("dark_forest"))
+                helper.addStructure(HabitatConfiguredStructures.FAIRY_RING);
 
                 // Desert and Badlands
                 if (event.getCategory() == Biome.Category.DESERT || event.getCategory() == Biome.Category.MESA)
