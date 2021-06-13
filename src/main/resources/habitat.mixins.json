@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "mod.schnappdragon.habitat.core.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "modid.refmap.json",
+  "mixins": [
+  ],
+  "minVersion": "0.8"
+}
