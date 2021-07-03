@@ -26,13 +26,13 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
             WeightedBlockStateProvider mushroomProvider = new WeightedBlockStateProvider().addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState(), 1).addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 2), 2).addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 3), 3).addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 4), 3);
             boolean bigFlag = false;
 
-            for (int i = -3; i <= 4; ++i) {
-                for (int j = -3; j <= 4; ++j) {
+            for (int i = -4; i <= 5; ++i) {
+                for (int j = -4; j <= 5; ++j) {
                     BlockPos.Mutable blockpos$mutable = pos.add(i, 0, j).toMutable();
                     double distance = MathHelper.sqrt(pos.distanceSq(blockpos$mutable));
 
-                    if (distance >= 3 && distance < 4) {
-                        for (int k = 4; k >= -3; --k) {
+                    if (distance >= 4 && distance < 5) {
+                        for (int k = 5; k >= -4; --k) {
                             BlockPos.Mutable blockpos$mutable1 = blockpos$mutable.add(0, k, 0).toMutable();
                             if (reader.isAirBlock(blockpos$mutable1) && reader.getBlockState(blockpos$mutable1.down()).isIn(Blocks.GRASS_BLOCK)) {
                                 if (!bigFlag && rand.nextInt(10) == 0) {

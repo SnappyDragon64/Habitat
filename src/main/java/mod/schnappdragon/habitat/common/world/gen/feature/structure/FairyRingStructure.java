@@ -61,10 +61,10 @@ public class FairyRingStructure extends Structure<NoFeatureConfig> {
 
     @Override
     protected boolean func_230363_a_(ChunkGenerator chunkGenerator, BiomeProvider biomeSource, long seed, SharedSeedRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoFeatureConfig featureConfig) {
-        BlockPos centerOfChunk = new BlockPos((chunkX << 4) + 7, 0, (chunkZ << 4) + 7);
-        int landHeight = chunkGenerator.getNoiseHeight(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
-        IBlockReader columnOfBlocks = chunkGenerator.func_230348_a_(centerOfChunk.getX(), centerOfChunk.getZ());
-        BlockState topBlock = columnOfBlocks.getBlockState(centerOfChunk.up(landHeight));
+        BlockPos center = new BlockPos((chunkX << 4) + 7, 0, (chunkZ << 4) + 7);
+        int landHeight = chunkGenerator.getNoiseHeight(center.getX(), center.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
+        IBlockReader columnOfBlocks = chunkGenerator.func_230348_a_(center.getX(), center.getZ());
+        BlockState topBlock = columnOfBlocks.getBlockState(center.up(landHeight));
 
         return topBlock.getFluidState().isEmpty();
     }
@@ -76,8 +76,8 @@ public class FairyRingStructure extends Structure<NoFeatureConfig> {
 
         @Override
         public void func_230364_a_(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
-            int x = (chunkX << 4) + 7;
-            int z = (chunkZ << 4) + 7;
+            int x = chunkX << 4;
+            int z = chunkZ << 4;
 
             BlockPos blockpos = new BlockPos(x, 0, z);
 
@@ -97,7 +97,7 @@ public class FairyRingStructure extends Structure<NoFeatureConfig> {
 
             this.recalculateStructureSize();
 
-            Habitat.getLOGGER().log(Level.DEBUG, "Fairy Ring at " +
+            Habitat.getLOGGER().debug("Fairy Ring at " +
                     this.components.get(0).getBoundingBox().maxX + " " +
                     this.components.get(0).getBoundingBox().maxY + " " +
                     this.components.get(0).getBoundingBox().maxZ);
