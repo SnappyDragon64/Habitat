@@ -53,6 +53,7 @@ public class Habitat {
         event.enqueueWork(() -> {
             HabitatStructures.setupStructures();
             HabitatBrewingMixes.registerBrewingMixes();
+            HabitatStructureProcessors.registerStructureProcessors();
             HabitatConfiguredFeatures.registerConfiguredFeatures();
             HabitatConfiguredStructures.registerConfiguredStructures();
             HabitatComposterChances.registerComposterChances();
