@@ -2,8 +2,14 @@
   "required": true,
   "package": "mod.schnappdragon.habitat.core.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "modid.refmap.json",
+  "refmap": "habitat.refmap.json",
   "mixins": [
+    "NoLakesInStructuresMixin",
+    "NoTreesInStructuresMixin",
+    "NoBigMushroomsInStructuresMixin"
   ],
+  "injectors": {
+    "defaultRequire": 1
+  },
   "minVersion": "0.8"
 }

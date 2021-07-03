@@ -12,7 +12,9 @@ import net.minecraft.block.HugeMushroomBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.ISeedReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
 import net.minecraft.world.gen.feature.AbstractBigMushroomFeature;
 import net.minecraft.world.gen.feature.BigMushroomFeatureConfig;
@@ -20,6 +22,19 @@ import net.minecraft.world.gen.feature.BigMushroomFeatureConfig;
 public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
     public BigFairyRingMushroomFeature(Codec<BigMushroomFeatureConfig> codec) {
         super(codec);
+    }
+
+    @Override
+    public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, BigMushroomFeatureConfig config) {
+        int i = this.func_227211_a_(rand);
+        BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+        if (!this.func_227209_a_(reader, pos, i, blockpos$mutable, config)) {
+            return false;
+        } else {
+            this.func_225564_a_(reader, rand, pos, i, blockpos$mutable, config);
+            this.func_227210_a_(reader, rand, pos, config, i, blockpos$mutable);
+            return true;
+        }
     }
 
     @Override
