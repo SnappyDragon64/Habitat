@@ -54,6 +54,7 @@ public class Habitat {
             HabitatStructures.setupStructures();
             HabitatBrewingMixes.registerBrewingMixes();
             HabitatConfiguredFeatures.registerConfiguredFeatures();
+            HabitatStructurePieceTypes.registerStructurePieceTypes();
             HabitatConfiguredStructures.registerConfiguredStructures();
             HabitatComposterChances.registerComposterChances();
             HabitatDispenserBehaviours.registerDispenserBehaviour();
