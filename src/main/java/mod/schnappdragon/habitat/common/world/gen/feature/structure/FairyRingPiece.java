@@ -41,15 +41,12 @@ public class FairyRingPiece extends ScatteredStructurePiece {
             return false;
 
         for (int[] XZ : XZ_PAIRS) {
-            BlockState state = getBlockState(random);
             for (int j = 4; j > -4; j--) {
                 BlockPos blockpos = new BlockPos(this.getXWithOffset(XZ[0], XZ[1]), this.getYWithOffset(j), this.getZWithOffset(XZ[0], XZ[1]));
                 if (reader.isAirBlock(blockpos) && reader.getBlockState(blockpos.down()).isSolid()) {
-                    this.setBlockState(reader, Blocks.YELLOW_WOOL.getDefaultState(), XZ[0], j, XZ[1], boundingBox);
-                    reader.setBlockState(blockpos, Blocks.GREEN_WOOL.getDefaultState(), 2);
+                    reader.setBlockState(blockpos, getBlockState(random), 2);
                 }
             }
-            this.setBlockState(reader, Blocks.RED_WOOL.getDefaultState(), XZ[0], 0, XZ[1], boundingBox);
         }
         return true;
     }
