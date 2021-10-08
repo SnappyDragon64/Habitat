@@ -20,7 +20,7 @@ mixin {
     add sourceSets.main, "habitat.refmap.json"
 }
 
-version = '0.3a3'
+version = '0.3'
 group = 'mod.schnappdragon.habitat'
 archivesBaseName = 'habitat'
 
@@ -82,7 +82,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.1.23'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.8'
 }
 
 jar {
