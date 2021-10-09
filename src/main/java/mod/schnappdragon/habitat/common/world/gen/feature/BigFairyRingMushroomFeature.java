@@ -73,8 +73,6 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
                                 breakFlag = true;
                                 break;
                             }
-                            else
-                                world.destroyBlock(inPos, false);
                         }
                     }
                     if (breakFlag)
