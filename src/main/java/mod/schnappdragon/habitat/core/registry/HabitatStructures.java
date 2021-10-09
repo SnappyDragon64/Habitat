@@ -23,7 +23,7 @@ public class HabitatStructures {
 
     public static void setupStructures() {
         // VALUES ARE FOR TESTING
-        setupMapSpacingAndLand(FAIRY_RING_STRUCTURE.get(), new StructureSeparationSettings(32, 8, 1661697279), false);
+        setupMapSpacingAndLand(FAIRY_RING_STRUCTURE.get(), new StructureSeparationSettings(24, 4, 1002806115), false);
     }
 
     private static <F extends Structure<?>> void setupMapSpacingAndLand(F structure, StructureSeparationSettings structureSeparationSettings, boolean transformSurroundingLand) {
