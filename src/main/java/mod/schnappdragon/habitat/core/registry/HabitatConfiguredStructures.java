@@ -10,7 +10,7 @@ import net.minecraft.world.gen.feature.StructureFeature;
 import net.minecraft.world.gen.feature.structure.Structure;
 
 public class HabitatConfiguredStructures {
-    public static StructureFeature<?, ?> FAIRY_RING = HabitatStructures.FAIRY_RING_STRUCTURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+    public static final StructureFeature<?, ?> FAIRY_RING = HabitatStructures.FAIRY_RING_STRUCTURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
 
     public static void registerConfiguredStructures() {
         register("fairy_ring", FAIRY_RING, HabitatStructures.FAIRY_RING_STRUCTURE.get());
