@@ -26,7 +26,6 @@ public class NoLakesInStructuresMixin {
         SectionPos sectionPos = SectionPos.from(blockPos);
         if (serverWorldAccess.func_241827_a(sectionPos, HabitatStructures.FAIRY_RING_STRUCTURE.get()).findAny().isPresent()) {
             cir.setReturnValue(false);
-
         }
     }
 }
