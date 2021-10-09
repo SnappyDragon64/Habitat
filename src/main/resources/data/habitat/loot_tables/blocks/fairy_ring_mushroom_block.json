@@ -2,7 +2,17 @@
   "type": "minecraft:block",
   "pools": [
     {
+      "name": "base",
       "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "habitat:is_mod_loaded",
+            "modid": "enhanced_mushrooms"
+          }
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:alternatives",
@@ -45,6 +55,72 @@
                 },
                 {
                   "function": "minecraft:explosion_decay"
+                }
+              ],
+              "name": "habitat:fairy_ring_mushroom"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "enhanced",
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "habitat:is_mod_loaded",
+          "modid": "enhanced_mushrooms"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:alternative",
+                  "terms": [
+                    {
+                      "condition": "minecraft:match_tool",
+                      "predicate": {
+                        "item": "minecraft:shears"
+                      }
+                    },
+                    {
+                      "condition": "minecraft:match_tool",
+                      "predicate": {
+                        "enchantments": [
+                          {
+                            "enchantment": "minecraft:silk_touch",
+                            "levels": {
+                              "min": 1
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              "name": "habitat:fairy_ring_mushroom_block"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "minecraft:table_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "chances": [
+                    0.25,
+                    0.5,
+                    0.75,
+                    1.0
+                  ]
                 }
               ],
               "name": "habitat:fairy_ring_mushroom"
