@@ -34,8 +34,8 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
 
             for (int[] XZ : XZ_PAIRS) {
                 BlockPos.Mutable blockpos$mutable = pos.add(XZ[0], 0, XZ[1]).toMutable();
-                for (int k = 6; k >= -6; --k) {
-                    BlockPos.Mutable blockpos$mutable1 = blockpos$mutable.add(0, k, 0).toMutable();
+                for (int h = 6; h >= -6; --h) {
+                    BlockPos.Mutable blockpos$mutable1 = blockpos$mutable.add(0, h, 0).toMutable();
                     if (reader.isAirBlock(blockpos$mutable1) && reader.getBlockState(blockpos$mutable1.down()).isIn(Blocks.GRASS_BLOCK)) {
                         if (!bigFlag && rand.nextInt(10) == 0) {
                             ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM;
