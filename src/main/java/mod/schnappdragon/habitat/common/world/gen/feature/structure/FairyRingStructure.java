@@ -3,11 +3,13 @@ package mod.schnappdragon.habitat.common.world.gen.feature.structure;
 import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.block.BlockState;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.registry.DynamicRegistries;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.BiomeProvider;
@@ -15,6 +17,7 @@ import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
 import net.minecraft.world.gen.feature.structure.*;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
@@ -69,8 +72,25 @@ public class FairyRingStructure extends Structure<NoFeatureConfig> {
 
         @Override
         public void func_230364_a_(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
-            FairyRingPiece fairyringpiece = new FairyRingPiece(this.rand, chunkX << 4, chunkZ << 4);
-            this.components.add(fairyringpiece);
+            int x = chunkX << 4;
+            int z = chunkZ << 4;
+
+            BlockPos blockpos = new BlockPos(x, 0, z);
+
+            JigsawManager.func_242837_a(
+                    dynamicRegistryManager,
+                    new VillageConfig(() -> dynamicRegistryManager.getRegistry(Registry.JIGSAW_POOL_KEY)
+                            .getOrDefault(new ResourceLocation(Habitat.MOD_ID, "fairy_ring/start_pool")),
+                            10),
+                    AbstractVillagePiece::new,
+                    chunkGenerator,
+                    templateManagerIn,
+                    blockpos,
+                    this.components,
+                    this.rand,
+                    false,
+                    true);
+
             this.recalculateStructureSize();
         }
     }
