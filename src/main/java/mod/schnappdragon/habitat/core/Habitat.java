@@ -57,6 +57,7 @@ public class Habitat {
             HabitatConfiguredStructures.registerConfiguredStructures();
             HabitatComposterChances.registerComposterChances();
             HabitatDispenserBehaviours.registerDispenserBehaviour();
+            HabitatLootConditionTypes.registerLootConditionTypes();
             HabitatFireInfo.registerFireInfo();
             HabitatPOI.addBeehivePOI();
         });
