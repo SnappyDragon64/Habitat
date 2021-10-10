@@ -1,11 +1,20 @@
 package mod.schnappdragon.habitat.common.world.gen.feature;
 
+import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.common.block.FairyRingMushroomBlock;
+import mod.schnappdragon.habitat.core.Habitat;
+import mod.schnappdragon.habitat.core.api.conditions.QuarkFlagRecipeCondition;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.loot.LootTables;
+import net.minecraft.tileentity.ChestTileEntity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -13,6 +22,8 @@ import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.fml.ModList;
 
 import java.util.Random;
 
@@ -42,6 +53,7 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
 
                         if (configuredfeature.generate(reader, generator, rand, blockpos$mutable1)) {
                             bigFlag = true;
+                            generateChest(reader, rand, blockpos$mutable1);
                             break;
                         }
                     }
@@ -51,5 +63,36 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
             }
         }
         return true;
+    }
+
+    private void generateChest(ISeedReader reader, Random rand, BlockPos pos) {
+        BlockPos chestPos = pos.down(6 + rand.nextInt(3));
+        BlockState chest = quarkVariantChests() ? HabitatBlocks.FAIRY_RING_MUSHROOM_CHEST.get().getDefaultState() : Blocks.CHEST.getDefaultState();
+
+        reader.setBlockState(chestPos, chest, 2);
+        TileEntity tileentity = reader.getTileEntity(chestPos);
+        if (tileentity instanceof ChestTileEntity) {
+            ((ChestTileEntity) tileentity).setLootTable(new ResourceLocation(Habitat.MOD_ID, "chests/fairy_ring_treasure"), rand.nextLong());
+        }
+
+        Direction[] directions = {Direction.UP, Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
+        for (Direction dir1 : directions) {
+            reader.destroyBlock(chestPos.offset(dir1), false);
+            for (Direction dir2 : directions) {
+                if (dir2 != dir1.getOpposite() && rand.nextBoolean()) {
+                    reader.destroyBlock(chestPos.offset(dir1).offset(dir2), false);
+                }
+            }
+        }
+    }
+
+    private boolean quarkVariantChests() {
+        if (ModList.get().isLoaded("quark")) {
+            JsonObject dummyObject = new JsonObject();
+            dummyObject.addProperty("type", "quark:flag");
+            dummyObject.addProperty("flag", "variant_chests");
+            return CraftingHelper.getCondition(dummyObject).test();
+        }
+        return Habitat.DEV;
     }
 }
