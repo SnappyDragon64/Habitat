@@ -3,11 +3,10 @@ package mod.schnappdragon.habitat.core.api.conditions;
 import com.google.gson.JsonObject;
 
 import mod.schnappdragon.habitat.core.Habitat;
+import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
-import net.minecraftforge.fml.ModList;
 
 public final class QuarkFlagRecipeCondition implements ICondition {
     private final ResourceLocation location;
@@ -25,13 +24,7 @@ public final class QuarkFlagRecipeCondition implements ICondition {
 
     @Override
     public boolean test() {
-        if (ModList.get().isLoaded("quark")) {
-            JsonObject dummyObject = new JsonObject();
-            dummyObject.addProperty("type", "quark:flag");
-            dummyObject.addProperty("flag", this.flag);
-            return CraftingHelper.getCondition(dummyObject).test();
-        }
-        return Habitat.DEV;
+        return CompatHelper.checkQuarkFlag(this.flag);
     }
 
     public static class Serializer implements IConditionSerializer<QuarkFlagRecipeCondition> {

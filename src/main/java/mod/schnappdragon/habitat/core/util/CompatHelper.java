@@ -1,7 +1,9 @@
 package mod.schnappdragon.habitat.core.util;
 
+import com.google.gson.JsonObject;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.item.ItemGroup;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 
@@ -15,6 +17,16 @@ public class CompatHelper {
             }
         }
         return true;
+    }
+
+    public static boolean checkQuarkFlag(String flag) {
+        if (ModList.get().isLoaded("quark")) {
+            JsonObject dummyObject = new JsonObject();
+            dummyObject.addProperty("type", "quark:flag");
+            dummyObject.addProperty("flag", flag);
+            return CraftingHelper.getCondition(dummyObject).test();
+        }
+        return Habitat.DEV;
     }
 
     public static ItemGroup compatItemGroup(ItemGroup group, String... modids) {
