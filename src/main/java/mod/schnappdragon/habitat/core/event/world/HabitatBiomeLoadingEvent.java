@@ -37,24 +37,22 @@ public class HabitatBiomeLoadingEvent {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void modifyBiomes(BiomeLoadingEvent event) {
         if (event.getName() != null) {
-            RegistryKey<Biome> biomeRegistryKey = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, event.getName());
-            boolean overworld = BiomeDictionary.hasType(biomeRegistryKey, BiomeDictionary.Type.OVERWORLD);
             String biome = event.getName().toString();
             ModificationHelper helper = new ModificationHelper(event);
 
-            if (overworld && helper.checkCategory(Biome.Category.JUNGLE) && !rafflesiaBlacklist.contains(biome) || rafflesiaWhitelist.contains(biome))
+            if (helper.checkOverworldCategory(Biome.Category.JUNGLE) && !rafflesiaBlacklist.contains(biome) || rafflesiaWhitelist.contains(biome))
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStage.Decoration.VEGETAL_DECORATION);
 
-            if (overworld && helper.checkCategory(Biome.Category.PLAINS) && !kabloomBushBlacklist.contains(biome) || kabloomBushWhitelist.contains(biome))
+            if (helper.checkOverworldCategory(Biome.Category.PLAINS) && !kabloomBushBlacklist.contains(biome) || kabloomBushWhitelist.contains(biome))
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH, GenerationStage.Decoration.VEGETAL_DECORATION);
 
-            if (overworld && !slimeFernBlacklist.contains(biome) || slimeFernWhitelist.contains(biome))
+            if (helper.checkType(BiomeDictionary.Type.OVERWORLD) && !slimeFernBlacklist.contains(biome) || slimeFernWhitelist.contains(biome))
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_SLIME_FERN, GenerationStage.Decoration.UNDERGROUND_DECORATION);
 
-            if (overworld && (helper.checkCategory(Biome.Category.DESERT) || helper.checkCategory(Biome.Category.MESA)) && !ballCactusBlacklist.contains(biome) || ballCactusWhitelist.contains(biome))
+            if ((helper.checkOverworldCategory(Biome.Category.DESERT) || helper.checkOverworldCategory(Biome.Category.MESA)) && !ballCactusBlacklist.contains(biome) || ballCactusWhitelist.contains(biome))
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStage.Decoration.VEGETAL_DECORATION);
 
-            if (overworld && helper.checkCategory(Biome.Category.FOREST) && !fairyRingBlacklist.contains(biome) || fairyRingWhitelist.contains(biome))
+            if (helper.checkOverworldCategory(Biome.Category.FOREST) && !fairyRingBlacklist.contains(biome) || fairyRingWhitelist.contains(biome))
                 helper.addStructure(HabitatConfiguredStructures.FAIRY_RING);
         }
     }
@@ -66,8 +64,12 @@ public class HabitatBiomeLoadingEvent {
             ModificationHelper.event = event;
         }
 
-        private boolean checkCategory(Biome.Category category) {
-            return event.getCategory() == category;
+        private boolean checkOverworldCategory(Biome.Category category) {
+            return checkType(BiomeDictionary.Type.OVERWORLD) && event.getCategory() == category;
+        }
+
+        private boolean checkType(BiomeDictionary.Type type) {
+            return BiomeDictionary.hasType(RegistryKey.getOrCreateKey(Registry.BIOME_KEY, event.getName()), type);
         }
 
         private void addFeature(ConfiguredFeature<?, ?> feature, GenerationStage.Decoration stage) {
