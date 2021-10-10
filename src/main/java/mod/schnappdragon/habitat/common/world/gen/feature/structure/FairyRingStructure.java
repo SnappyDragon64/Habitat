@@ -57,10 +57,10 @@ public class FairyRingStructure extends Structure<NoFeatureConfig> {
 
     @Override
     protected boolean func_230363_a_(ChunkGenerator chunkGenerator, BiomeProvider biomeSource, long seed, SharedSeedRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoFeatureConfig featureConfig) {
-        BlockPos centerOfChunk = new BlockPos(chunkX * 16, 0, chunkZ * 16);
-        int landHeight = chunkGenerator.getNoiseHeightMinusOne(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
-        IBlockReader columnOfBlocks = chunkGenerator.func_230348_a_(centerOfChunk.getX(), centerOfChunk.getZ());
-        BlockState topBlock = columnOfBlocks.getBlockState(centerOfChunk.up(landHeight));
+        BlockPos center = new BlockPos(chunkX * 16 + 6, 0, chunkZ * 16 + 6);
+        int landHeight = chunkGenerator.getNoiseHeightMinusOne(center.getX(), center.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
+        IBlockReader columnOfBlocks = chunkGenerator.func_230348_a_(center.getX(), center.getZ());
+        BlockState topBlock = columnOfBlocks.getBlockState(center.up(landHeight));
         return topBlock.getFluidState().isEmpty();
     }
 
