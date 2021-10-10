@@ -30,18 +30,15 @@ public class HabitatConfig {
 
             builder.comment("Features have 1 in X Chance of Generating per Chunk where X is the Config Value");
             rafflesiaChance = builder.define("rafflesia_chance", 4);
-            kabloomBushChance = builder.define("kabloom_bush_chance", 200);
-            slimeFernChance = builder.define("slime_fern_chance", 3);
-            ballCactusChance = builder.define("ball_cactus_chance", 16);
+            kabloomBushChance = builder.define("kabloom_bush_chance", 144);
+            slimeFernChance = builder.define("slime_fern_chance", 2);
+            ballCactusChance = builder.define("ball_cactus_chance", 15);
 
             builder.comment("Average and Minimum Chunk Spacing for Structures (Minimum must be lower than Average)");
-            fairyRingAverage = builder.define("fairy_ring_average", 24);
-            fairyRingMinimum = builder.define("fairy_ring_minimum", 4);
+            fairyRingAverage = builder.define("fairy_ring_average", 32);
+            fairyRingMinimum = builder.define("fairy_ring_minimum", 8);
 
-            builder.comment("Whitelist and Blacklist for Biomes in which Features and Structures can generate");
-            builder.comment("Use the Biome Name with Namespace and separate them with a single ,");
-
-            builder.comment("Biome Whitelist");
+            builder.comment("Whitelist and Blacklist for Biomes in which Features and Structures can generate\nUse the Biome Name with Namespace (namespace:biome) and separate Biomes if more than one with a single ,\nBiome Whitelist");
             rafflesiaWhitelist = builder.define("rafflesia_whitelist", "");
             kabloomBushWhitelist = builder.define("kabloom_bush_whitelist", "");
             slimeFernWhitelist = builder.define("slime_fern_whitelist", "");
