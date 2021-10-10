@@ -14,6 +14,7 @@ public class HabitatBlockTags {
     public static final INamedTag<Block> BALL_CACTUS_PLANTABLE_ON = makeTag("ball_cactus_plantable_on");
     public static final INamedTag<Block> BALL_CACTUS_FLOWER_PLACEABLE_ON = makeTag("ball_cactus_flower_placeable_on");
     public static final INamedTag<Block> BEEHIVES = makeTag("beehives");
+    public static final INamedTag<Block> FAIRY_RING_GENERATION_BLACKLIST = makeTag("fairy_ring_generation_blacklist");
     public static final INamedTag<Block> FAIRY_RING_MUSHROOM_STEMS = makeTag("fairy_ring_mushroom_stems");
 
     private static INamedTag<Block> makeTag(String id) {
