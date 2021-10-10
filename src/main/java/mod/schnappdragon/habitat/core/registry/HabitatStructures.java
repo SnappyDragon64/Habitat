@@ -23,7 +23,6 @@ public class HabitatStructures {
     public static final RegistryObject<Structure<NoFeatureConfig>> FAIRY_RING_STRUCTURE = STRUCTURE_FEATURES.register("fairy_ring", () -> (new FairyRingStructure(NoFeatureConfig.field_236558_a_)));
 
     public static void setupStructures() {
-        // VALUES ARE FOR TESTING
         setupMapSpacingAndLand(FAIRY_RING_STRUCTURE.get(), new StructureSeparationSettings(HabitatConfig.COMMON.fairyRingAverage.get(), HabitatConfig.COMMON.fairyRingMinimum.get(), 1002806115), false);
     }
 
