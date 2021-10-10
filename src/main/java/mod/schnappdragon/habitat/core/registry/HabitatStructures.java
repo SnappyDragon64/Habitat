@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import mod.schnappdragon.habitat.common.world.gen.feature.structure.FairyRingStructure;
 import mod.schnappdragon.habitat.core.Habitat;
+import mod.schnappdragon.habitat.core.HabitatConfig;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.Structure;
@@ -23,7 +24,7 @@ public class HabitatStructures {
 
     public static void setupStructures() {
         // VALUES ARE FOR TESTING
-        setupMapSpacingAndLand(FAIRY_RING_STRUCTURE.get(), new StructureSeparationSettings(24, 4, 1002806115), false);
+        setupMapSpacingAndLand(FAIRY_RING_STRUCTURE.get(), new StructureSeparationSettings(HabitatConfig.COMMON.fairyRingAverage.get(), HabitatConfig.COMMON.fairyRingMinimum.get(), 1002806115), false);
     }
 
     private static <F extends Structure<?>> void setupMapSpacingAndLand(F structure, StructureSeparationSettings structureSeparationSettings, boolean transformSurroundingLand) {
