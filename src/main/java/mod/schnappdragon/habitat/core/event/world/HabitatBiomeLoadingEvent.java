@@ -11,46 +11,36 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.StructureFeature;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Habitat.MOD_ID)
 public class HabitatBiomeLoadingEvent {
-    private static final ArrayList<String> rafflesiaWhitelist = new ArrayList<>(Arrays.asList(HabitatConfig.COMMON.rafflesiaWhitelist.get().split(",")));
-    private static final ArrayList<String> kabloomBushWhitelist = new ArrayList<>(Arrays.asList(HabitatConfig.COMMON.kabloomBushWhitelist.get().split(",")));
-    private static final ArrayList<String> slimeFernWhitelist = new ArrayList<>(Arrays.asList(HabitatConfig.COMMON.slimeFernWhitelist.get().split(",")));
-    private static final ArrayList<String> ballCactusWhitelist = new ArrayList<>(Arrays.asList(HabitatConfig.COMMON.ballCactusWhitelist.get().split(",")));
-    private static final ArrayList<String> fairyRingWhitelist = new ArrayList<>(Arrays.asList(HabitatConfig.COMMON.fairyRingWhitelist.get().split(",")));
-
-    private static final ArrayList<String> rafflesiaBlacklist = new ArrayList<>(Arrays.asList(HabitatConfig.COMMON.rafflesiaBlacklist.get().split(",")));
-    private static final ArrayList<String> kabloomBushBlacklist = new ArrayList<>(Arrays.asList(HabitatConfig.COMMON.kabloomBushBlacklist.get().split(",")));
-    private static final ArrayList<String> slimeFernBlacklist = new ArrayList<>(Arrays.asList(HabitatConfig.COMMON.slimeFernBlacklist.get().split(",")));
-    private static final ArrayList<String> ballCactusBlacklist = new ArrayList<>(Arrays.asList(HabitatConfig.COMMON.ballCactusBlacklist.get().split(",")));
-    private static final ArrayList<String> fairyRingBlacklist = new ArrayList<>(Arrays.asList(HabitatConfig.COMMON.fairyRingBlacklist.get().split(",")));
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void modifyBiomes(BiomeLoadingEvent event) {
         if (event.getName() != null) {
             ModificationHelper helper = new ModificationHelper(event);
 
-            if (helper.check(helper.checkOverworldCategory(Biome.Category.JUNGLE), rafflesiaWhitelist, rafflesiaBlacklist))
+            if (helper.check(helper.checkOverworldCategory(Biome.Category.JUNGLE), HabitatConfig.COMMON.rafflesiaWhitelist, HabitatConfig.COMMON.rafflesiaBlacklist))
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStage.Decoration.VEGETAL_DECORATION);
 
-            if (helper.check(helper.checkOverworldCategory(Biome.Category.PLAINS), kabloomBushWhitelist, kabloomBushBlacklist))
+            if (helper.check(helper.checkOverworldCategory(Biome.Category.PLAINS), HabitatConfig.COMMON.kabloomBushWhitelist, HabitatConfig.COMMON.kabloomBushBlacklist))
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH, GenerationStage.Decoration.VEGETAL_DECORATION);
 
-            if (helper.check(helper.checkType(BiomeDictionary.Type.OVERWORLD), slimeFernWhitelist, slimeFernBlacklist))
+            if (helper.check(helper.checkType(BiomeDictionary.Type.OVERWORLD), HabitatConfig.COMMON.slimeFernWhitelist, HabitatConfig.COMMON.slimeFernBlacklist))
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_SLIME_FERN, GenerationStage.Decoration.UNDERGROUND_DECORATION);
 
-            if (helper.check(helper.checkOverworldCategory(Biome.Category.DESERT) || helper.checkOverworldCategory(Biome.Category.MESA), ballCactusWhitelist, ballCactusBlacklist))
+            if (helper.check(helper.checkOverworldCategory(Biome.Category.DESERT) || helper.checkOverworldCategory(Biome.Category.MESA), HabitatConfig.COMMON.ballCactusWhitelist, HabitatConfig.COMMON.ballCactusBlacklist))
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStage.Decoration.VEGETAL_DECORATION);
 
-            if (helper.check(helper.checkOverworldCategory(Biome.Category.FOREST), fairyRingWhitelist, fairyRingBlacklist))
+            if (helper.check(helper.checkOverworldCategory(Biome.Category.FOREST), HabitatConfig.COMMON.fairyRingWhitelist, HabitatConfig.COMMON.fairyRingBlacklist))
                 helper.addStructure(HabitatConfiguredStructures.FAIRY_RING);
         }
     }
@@ -62,8 +52,10 @@ public class HabitatBiomeLoadingEvent {
             ModificationHelper.event = event;
         }
 
-        private boolean check(boolean condition, ArrayList<String> whitelist, ArrayList<String> blacklist) {
+        private boolean check(boolean condition, ForgeConfigSpec.ConfigValue<String> whitelistConfig, ForgeConfigSpec.ConfigValue<String> blacklistConfig) {
             String biome = event.getName().toString();
+            List<String> whitelist = Arrays.asList(whitelistConfig.get().split(","));
+            List<String> blacklist = Arrays.asList(blacklistConfig.get().split(","));
             return condition && !blacklist.contains(biome) || whitelist.contains(biome);
         }
 
