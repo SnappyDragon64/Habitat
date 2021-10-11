@@ -29,10 +29,10 @@ public class HabitatConfig {
             builder.comment("Common Configurations for Habitat").push("common");
 
             builder.comment("Features have 1 in X Chance of Generating per Chunk where X is the Config Value");
-            rafflesiaChance = builder.define("rafflesia_chance", 4);
+            rafflesiaChance = builder.define("rafflesia_chance", 3);
             kabloomBushChance = builder.define("kabloom_bush_chance", 144);
             slimeFernChance = builder.define("slime_fern_chance", 2);
-            ballCactusChance = builder.define("ball_cactus_chance", 15);
+            ballCactusChance = builder.define("ball_cactus_chance", 14);
 
             builder.comment("Average and Minimum Chunk Spacing for Structures (Minimum must be lower than Average)");
             fairyRingAverage = builder.define("fairy_ring_average", 24);
