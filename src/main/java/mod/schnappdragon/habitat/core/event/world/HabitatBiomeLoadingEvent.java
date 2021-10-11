@@ -28,7 +28,7 @@ public class HabitatBiomeLoadingEvent {
         if (event.getName() != null && BiomeDictionary.hasType(RegistryKey.getOrCreateKey(Registry.BIOME_KEY, event.getName()), BiomeDictionary.Type.OVERWORLD)) {
             ModificationHelper helper = new ModificationHelper(event);
 
-            if (helper.check(helper.checkCategory(Biome.Category.JUNGLE), HabitatConfig.COMMON.rafflesiaWhitelist, HabitatConfig.COMMON.rafflesiaBlacklist))
+            if (helper.check(helper.checkCategory(Biome.Category.JUNGLE) && !helper.checkName("bamboo"), HabitatConfig.COMMON.rafflesiaWhitelist, HabitatConfig.COMMON.rafflesiaBlacklist))
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStage.Decoration.VEGETAL_DECORATION);
 
             if (helper.check(helper.checkCategory(Biome.Category.PLAINS), HabitatConfig.COMMON.kabloomBushWhitelist, HabitatConfig.COMMON.kabloomBushBlacklist))
