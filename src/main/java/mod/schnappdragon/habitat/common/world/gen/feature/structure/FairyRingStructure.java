@@ -8,6 +8,7 @@ import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.IBlockReader;
@@ -57,10 +58,10 @@ public class FairyRingStructure extends Structure<NoFeatureConfig> {
 
     @Override
     protected boolean func_230363_a_(ChunkGenerator chunkGenerator, BiomeProvider biomeSource, long seed, SharedSeedRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoFeatureConfig featureConfig) {
-        BlockPos center = new BlockPos(chunkX * 16 + 6, 0, chunkZ * 16 + 6);
-        int landHeight = chunkGenerator.getNoiseHeightMinusOne(center.getX(), center.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
-        IBlockReader columnOfBlocks = chunkGenerator.func_230348_a_(center.getX(), center.getZ());
-        BlockState topBlock = columnOfBlocks.getBlockState(center.up(landHeight));
+        BlockPos centerOfChunk = new BlockPos(chunkX * 16, 0, chunkZ * 16);
+        int landHeight = chunkGenerator.getNoiseHeightMinusOne(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
+        IBlockReader columnOfBlocks = chunkGenerator.func_230348_a_(centerOfChunk.getX(), centerOfChunk.getZ());
+        BlockState topBlock = columnOfBlocks.getBlockState(centerOfChunk.up(landHeight));
         return topBlock.getFluidState().isEmpty();
     }
 
@@ -71,10 +72,10 @@ public class FairyRingStructure extends Structure<NoFeatureConfig> {
 
         @Override
         public void func_230364_a_(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
-            int x = chunkX << 4;
-            int z = chunkZ << 4;
+            int x = chunkX * 16;
+            int z = chunkZ * 16;
 
-            BlockPos blockpos = new BlockPos(x, 0, z);
+            BlockPos centerPos = new BlockPos(x, 0, z);
 
             JigsawManager.func_242837_a(
                     dynamicRegistryManager,
@@ -84,11 +85,18 @@ public class FairyRingStructure extends Structure<NoFeatureConfig> {
                     AbstractVillagePiece::new,
                     chunkGenerator,
                     templateManagerIn,
-                    blockpos,
+                    centerPos,
                     this.components,
                     this.rand,
                     false,
                     true);
+
+            Vector3i structureCenter = this.components.get(0).getBoundingBox().func_215126_f();
+            int xOffset = centerPos.getX() - structureCenter.getX();
+            int zOffset = centerPos.getZ() - structureCenter.getZ();
+            for (StructurePiece structurePiece : this.components){
+                structurePiece.offset(xOffset, 0, zOffset);
+            }
 
             this.recalculateStructureSize();
         }
