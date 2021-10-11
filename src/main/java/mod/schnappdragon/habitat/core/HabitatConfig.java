@@ -35,8 +35,8 @@ public class HabitatConfig {
             ballCactusChance = builder.define("ball_cactus_chance", 15);
 
             builder.comment("Average and Minimum Chunk Spacing for Structures (Minimum must be lower than Average)");
-            fairyRingAverage = builder.define("fairy_ring_average", 32);
-            fairyRingMinimum = builder.define("fairy_ring_minimum", 8);
+            fairyRingAverage = builder.define("fairy_ring_average", 24);
+            fairyRingMinimum = builder.define("fairy_ring_minimum", 4);
 
             builder.comment("Whitelist and Blacklist for Biomes in which Features and Structures can generate\nUse the Biome Name with Namespace (namespace:biome) and separate Biomes if more than one with a single ,\nBiome Whitelist");
             rafflesiaWhitelist = builder.define("rafflesia_whitelist", "");
