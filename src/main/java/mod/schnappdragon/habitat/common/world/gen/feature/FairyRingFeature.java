@@ -52,7 +52,7 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
                             break;
                         }
                     }
-                    reader.setBlockState(blockpos$mutable, mushroomProvider.getBlockState(rand, blockpos$mutable), 2);
+                    this.setBlockState(reader, blockpos$mutable, mushroomProvider.getBlockState(rand, blockpos$mutable));
                     break;
                 }
             }
@@ -66,29 +66,30 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
         BlockState chest = CompatHelper.checkQuarkFlag("variant_chests") ? HabitatBlocks.FAIRY_RING_MUSHROOM_CHEST.get().getDefaultState() : Blocks.CHEST.getDefaultState();
         BlockState stem = CompatHelper.checkMods("enhanced_mushrooms") ? HabitatBlocks.ENHANCED_FAIRY_RING_MUSHROOM_STEM.get().getDefaultState(): HabitatBlocks.FAIRY_RING_MUSHROOM_STEM.get().getDefaultState();
 
-        for (int i = 3; i < depth; i++)
-            reader.setBlockState(chestPos.up(i), stem, 2);
-        reader.setBlockState(chestPos.down(), stem, 2);
+        reader.destroyBlock(chestPos.up(), false);
+        for (int i = 2; i < depth; i++)
+            this.setBlockState(reader, chestPos.up(i), stem);
+        this.setBlockState(reader, chestPos.down(), stem);
 
-        for (Direction dir1 : new Direction[]{Direction.UP, Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST}) {
-            reader.destroyBlock(chestPos.offset(dir1), false);
+        for (int i = -1; i <= 2; i++) {
+            BlockPos.Mutable stemPos = chestPos.up(i).toMutable();
+            for (Direction dir : new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST})
+                this.setBlockState(reader, stemPos.offset(dir), stem);
+        }
 
-            for (Direction dir2 : Direction.values()) {
-                if (rand.nextInt(3) == 0) {
-                    reader.destroyBlock(chestPos.offset(dir1).offset(dir2), false);
-                    for (Direction dir3 : Direction.values()) {
-                        BlockPos.Mutable stemPos = chestPos.offset(dir1).offset(dir2).offset(dir3).toMutable();
-                        if (reader.getBlockState(stemPos).isSolid()) {
-                            reader.setBlockState(stemPos, stem, 2);
-                        }
-                    }
+        for (int i = -1; i <= 1; i += 2) {
+            for (int k = -1; k <= 1; k += 2) {
+                for (int j = 0; j <= 1; j++)
+                    this.setBlockState(reader, chestPos.add(i, j, k), stem);
+
+                for (int j = -1; j <= 2; j += 3) {
+                    if (rand.nextBoolean())
+                        this.setBlockState(reader, chestPos.add(i, j, k), stem);
                 }
-                else
-                    reader.setBlockState(chestPos.offset(dir1).offset(dir2), stem, 2);
             }
         }
 
-        reader.setBlockState(chestPos, chest, 2);
+        this.setBlockState(reader, chestPos, chest);
         TileEntity tileentity = reader.getTileEntity(chestPos);
         if (tileentity instanceof ChestTileEntity)
             ((ChestTileEntity) tileentity).setLootTable(new ResourceLocation(Habitat.MOD_ID, "chests/fairy_ring_treasure"), rand.nextLong());
