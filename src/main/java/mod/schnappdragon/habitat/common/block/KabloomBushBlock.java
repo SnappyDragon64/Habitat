@@ -70,7 +70,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
             if (entityIn instanceof LivingEntity && state.get(AGE) > 1)
                 entityIn.setMotionMultiplier(state, new Vector3d(0.95F, 0.9D, 0.95F));
             if (state.get(AGE) == 7) {
-                dropFruit(state, worldIn, pos, true);
+                dropFruit(state, worldIn, pos, true, false);
             }
         }
     }
@@ -87,10 +87,16 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
                 worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
             }
             else
-                dropFruit(state, worldIn, pos, true);
+                dropFruit(state, worldIn, pos, true, false);
             return ActionResultType.func_233537_a_(worldIn.isRemote);
         }
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+    }
+
+    @Override
+    public void catchFire(BlockState state, World worldIn, BlockPos pos, @Nullable Direction face, @Nullable LivingEntity igniter) {
+        if (state.get(AGE) == 7)
+            dropFruit(state, worldIn, pos, true, true);
     }
 
     @Override
@@ -98,18 +104,21 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
         ItemStack held = player.getHeldItemMainhand();
 
         if (state.get(AGE) == 7 && !player.abilities.isCreativeMode && !(held.getItem() instanceof ShearsItem) && (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, held) == 0 || !(held.getItem() instanceof ToolItem)))
-            dropFruit(state, worldIn, pos, false);
+            dropFruit(state, worldIn, pos, false, false);
 
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 
-    private void dropFruit(BlockState state, World worldIn, BlockPos pos, boolean replaceBush) {
+    private void dropFruit(BlockState state, World worldIn, BlockPos pos, boolean replaceBush, boolean setFire) {
         if (replaceBush && !worldIn.isRemote) {
             worldIn.setBlockState(pos, state.with(AGE, 3), 2);
             worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_RUSTLE.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
         }
 
-        worldIn.addEntity(new KabloomFruitEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F));
+        KabloomFruitEntity kabloom = new KabloomFruitEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F);
+        if (setFire)
+            kabloom.setFire(8);
+        worldIn.addEntity(kabloom);
     }
 
     /*
