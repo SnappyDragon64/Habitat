@@ -94,7 +94,7 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
         for (Entity entity : this.world.getEntitiesWithinAABBExcludingEntity(null, this.getBoundingBox().grow(0.75D))) {
             boolean flag = false;
 
-            for(int i = 0; i < 2; ++i) {
+            for (int i = 0; i < 2; ++i) {
                 RayTraceResult raytraceresult = this.world.rayTraceBlocks(new RayTraceContext(vector3d, new Vector3d(entity.getPosX(), entity.getPosYHeight(0.5D * (double) i), entity.getPosZ()), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
                 if (raytraceresult.getType() == RayTraceResult.Type.MISS) {
                     flag = true;
@@ -123,7 +123,7 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
 
                         boolean knockback = true;
                         if (entity instanceof PlayerEntity) {
-                            PlayerEntity playerentity = (PlayerEntity)entity;
+                            PlayerEntity playerentity = (PlayerEntity) entity;
                             if (playerentity.isSpectator() || (playerentity.isCreative() && playerentity.abilities.isFlying)) {
                                 knockback = false;
                             }
@@ -138,6 +138,9 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
                     entity.attackEntityFrom(HabitatDamageSources.causeKabloomDamage(this, this.func_234616_v_()).setExplosion(), dmg);
                 else if (entity.canBeAttackedWithItem())
                     entity.attackEntityFrom(HabitatDamageSources.causeKabloomDamage(this, this.func_234616_v_()), dmg);
+
+                if (this.isBurning() && !entity.isImmuneToFire())
+                    entity.setFire(1);
             }
         }
     }
