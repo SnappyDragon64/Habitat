@@ -28,6 +28,8 @@ public class HabitatItems {
             () -> new BlockNamedItem(HabitatBlocks.KABLOOM_BUSH.get(), new Item.Properties().group(ItemGroup.FOOD).food(HabitatFoods.KABLOOM_PULP)));
     public static final RegistryObject<Item> KABLOOM_FRUIT = ITEMS.register("kabloom_fruit",
             () -> new KabloomFruitItem(new Item.Properties().maxStackSize(16).group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> KABLOOM_FRUIT_CRATE = ITEMS.register("kabloom_fruit_crate",
+            () -> new FuelBlockItem(HabitatBlocks.KABLOOM_FRUIT_CRATE.get(), 150, new Item.Properties().group(ItemGroup.DECORATIONS)));
 
     public static final RegistryObject<Item> SLIME_FERN = ITEMS.register("slime_fern",
             () -> new WallOrBaseItem(HabitatBlocks.SLIME_FERN.get(), HabitatBlocks.WALL_SLIME_FERN.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
