@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "habitat:block/kabloom_fruit_crate"
+    }
+  }
+}
