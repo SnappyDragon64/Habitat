@@ -113,7 +113,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
      * Cloud and Particle Helper Methods
      */
 
-    private void createCloud(World worldIn, BlockPos pos, BlockState state, ListNBT effects)
+    private void createCloud(World worldIn, BlockPos pos, ListNBT effects)
     {
         AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(worldIn, pos.getX() + 0.5D, pos.getY() + 0.25D, pos.getZ() + 0.5D);
         cloud.setDuration(50);
@@ -161,11 +161,11 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (!worldIn.isRemote && (entityIn instanceof LivingEntity || entityIn instanceof ProjectileEntity || entityIn instanceof FallingBlockEntity || entityIn instanceof BoatEntity || entityIn instanceof TNTEntity || entityIn instanceof AbstractMinecartEntity)) {
+        if (!worldIn.isRemote) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof RafflesiaTileEntity && !state.get(ON_COOLDOWN)) {
                 RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
-                createCloud(worldIn, pos, state, rafflesia.Effects);
+                createCloud(worldIn, pos, rafflesia.Effects);
                 worldIn.setBlockState(pos, state.with(ON_COOLDOWN, true).with(HAS_STEW, false));
                 ListNBT Effects = new ListNBT();
                 CompoundNBT tag = new CompoundNBT();
