@@ -62,10 +62,10 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
      */
 
     public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
-        if (state.get(DUSTED) && rand.nextInt(24 - 2 * state.get(MUSHROOMS)) == 0)
+        if (state.get(DUSTED) && rand.nextInt(18 - 2 * state.get(MUSHROOMS)) == 0)
             worldIn.addParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), 0.0D, 0.0D, 0.0D);
 
-        if (rand.nextInt(12 - state.get(MUSHROOMS)) == 0)
+        if (rand.nextInt(9 - state.get(MUSHROOMS)) == 0)
             worldIn.addParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), rand.nextGaussian() * 0.01D, 0.0D, rand.nextGaussian() * 0.01D);
     }
 
