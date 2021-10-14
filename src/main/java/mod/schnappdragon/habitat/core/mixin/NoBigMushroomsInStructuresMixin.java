@@ -16,7 +16,6 @@ import java.util.Random;
 
 @Mixin(AbstractBigMushroomFeature.class)
 public class NoBigMushroomsInStructuresMixin {
-
     @Inject(
             method = "generate(Lnet/minecraft/world/ISeedReader;Lnet/minecraft/world/gen/ChunkGenerator;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/gen/feature/BigMushroomFeatureConfig;)Z",
             at = @At(value = "HEAD"),
