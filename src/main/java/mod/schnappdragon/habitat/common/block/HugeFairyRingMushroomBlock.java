@@ -9,7 +9,6 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class HugeFairyRingMushroomBlock extends HugeMushroomBlock {
-
     public HugeFairyRingMushroomBlock(Properties properties) {
         super(properties);
     }
