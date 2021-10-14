@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "habitat:kabloom_fruit"
+    }
+  },
+  "result": {
+    "item": "habitat:kabloom_fruit_pile"
+  }
+}

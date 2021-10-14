@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "habitat:kabloom_fruit_pile"
+    }
+  ],
+  "result": {
+    "item": "habitat:kabloom_fruit",
+    "count": 9
+  }
+}
