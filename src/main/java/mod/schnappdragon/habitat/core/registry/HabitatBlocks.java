@@ -20,7 +20,7 @@ public class HabitatBlocks {
 
     public static final RegistryObject<Block> KABLOOM_BUSH = BLOCKS.register("kabloom_bush", () -> new KabloomBushBlock(AbstractBlock.Properties.create(Material.PLANTS).zeroHardnessAndResistance().sound(SoundType.PLANT).tickRandomly().doesNotBlockMovement().notSolid()));
     public static final RegistryObject<Block> POTTED_KABLOOM_BUSH = BLOCKS.register("potted_kabloom_bush", () -> new FlowerPotBlock(KABLOOM_BUSH.get(), AbstractBlock.Properties.from(Blocks.FLOWER_POT)));
-    public static final RegistryObject<Block> KABLOOM_FRUIT_PILE = BLOCKS.register("kabloom_fruit_pile", () -> new KabloomFruitPileBlock(Block.Properties.create(Material.WOOD, MaterialColor.GREEN).hardnessAndResistance(1.5F).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> KABLOOM_FRUIT_PILE = BLOCKS.register("kabloom_fruit_pile", () -> new KabloomFruitPileBlock(Block.Properties.create(Material.ORGANIC, MaterialColor.GREEN).hardnessAndResistance(0.4F).sound(SoundType.CLOTH)));
 
     public static final RegistryObject<Block> SLIME_FERN = BLOCKS.register("slime_fern", () -> new SlimeFernBlock(AbstractBlock.Properties.create(Material.PLANTS).zeroHardnessAndResistance().sound(SoundType.PLANT).doesNotBlockMovement().notSolid()));
     public static final RegistryObject<Block> WALL_SLIME_FERN = BLOCKS.register("wall_slime_fern", () -> new WallSlimeFernBlock(AbstractBlock.Properties.create(Material.PLANTS).zeroHardnessAndResistance().lootFrom(SLIME_FERN).sound(SoundType.PLANT).doesNotBlockMovement().notSolid()));
