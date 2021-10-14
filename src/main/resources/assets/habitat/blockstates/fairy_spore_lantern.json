@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "habitat:block/fairy_spore_lantern"
+    },
+    "hanging=true": {
+      "model": "habitat:block/fairy_spore_lantern_hanging"
+    }
+  }
+}

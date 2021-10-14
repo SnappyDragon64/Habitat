@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_lantern",
+  "textures": {
+    "lantern": "habitat:block/fairy_spore_lantern"
+  }
+}
