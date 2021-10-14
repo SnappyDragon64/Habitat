@@ -94,7 +94,7 @@ public class KabloomFruitPileBlock extends Block {
         worldIn.playSound(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, HabitatSoundEvents.ENTITY_KABLOOM_FRUIT_EXPLODE.get(), SoundCategory.NEUTRAL, 1.0F, (1.0F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2F), true);
         worldIn.addParticle(ParticleTypes.EXPLOSION, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, 1.0D, 0.0D, 0.0D);
 
-        for (int i = 1; i <= 8; i++) {
+        for (int i = 1; i <= 9; i++) {
             KabloomFruitEntity kabloom = new KabloomFruitEntity(worldIn, pos.getX() + worldIn.rand.nextFloat(), pos.getY() + worldIn.rand.nextFloat(), pos.getZ() + worldIn.rand.nextFloat());
             if (setFire)
                 kabloom.setFire(8);
