@@ -10,7 +10,7 @@ public class HabitatFireInfo {
         setFireInfo(HabitatBlocks.RAFFLESIA.get(), 60, 100);
 
         setFireInfo(HabitatBlocks.KABLOOM_BUSH.get(), 60, 100);
-        setFireInfo(HabitatBlocks.KABLOOM_FRUIT_CRATE.get(), 5, 20);
+        setFireInfo(HabitatBlocks.KABLOOM_FRUIT_PILE.get(), 5, 20);
 
         setFireInfo(HabitatBlocks.SLIME_FERN.get(), 60, 100);
         setFireInfo(HabitatBlocks.WALL_SLIME_FERN.get(), 60, 100);

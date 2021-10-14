@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "habitat:kabloom_fruit_crate"
+          "name": "habitat:kabloom_fruit_pile"
         }
       ],
       "conditions": [

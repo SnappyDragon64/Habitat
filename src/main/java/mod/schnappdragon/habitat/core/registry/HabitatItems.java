@@ -3,15 +3,11 @@ package mod.schnappdragon.habitat.core.registry;
 import mod.schnappdragon.habitat.client.renderer.tileentity.ChestItemRenderer;
 import mod.schnappdragon.habitat.common.entity.item.HabitatBoatEntity;
 import mod.schnappdragon.habitat.common.item.*;
-import mod.schnappdragon.habitat.common.tileentity.HabitatChestTileEntity;
-import mod.schnappdragon.habitat.common.tileentity.HabitatTrappedChestTileEntity;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.misc.HabitatFoods;
 import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.*;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -28,8 +24,8 @@ public class HabitatItems {
             () -> new BlockNamedItem(HabitatBlocks.KABLOOM_BUSH.get(), new Item.Properties().group(ItemGroup.FOOD).food(HabitatFoods.KABLOOM_PULP)));
     public static final RegistryObject<Item> KABLOOM_FRUIT = ITEMS.register("kabloom_fruit",
             () -> new KabloomFruitItem(new Item.Properties().maxStackSize(16).group(ItemGroup.COMBAT)));
-    public static final RegistryObject<Item> KABLOOM_FRUIT_CRATE = ITEMS.register("kabloom_fruit_crate",
-            () -> new FuelBlockItem(HabitatBlocks.KABLOOM_FRUIT_CRATE.get(), 150, new Item.Properties().group(ItemGroup.DECORATIONS)));
+    public static final RegistryObject<Item> KABLOOM_FRUIT_PILE = ITEMS.register("kabloom_fruit_pile",
+            () -> new FuelBlockItem(HabitatBlocks.KABLOOM_FRUIT_PILE.get(), 150, new Item.Properties().group(ItemGroup.DECORATIONS)));
 
     public static final RegistryObject<Item> SLIME_FERN = ITEMS.register("slime_fern",
             () -> new WallOrBaseItem(HabitatBlocks.SLIME_FERN.get(), HabitatBlocks.WALL_SLIME_FERN.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
