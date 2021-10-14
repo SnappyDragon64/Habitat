@@ -33,7 +33,7 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
         int[] bigXZ = XZ_PAIRS[rand.nextInt(32)];
 
         for (int[] XZ : XZ_PAIRS) {
-            for (int d = -1; d >= -6; d--) {
+            for (int d = -1; d >= -6; --d) {
                 BlockPos.Mutable blockpos$mutable = pos.add(XZ[0], d, XZ[1]).toMutable();
                 BlockState base = reader.getBlockState(blockpos$mutable.down());
                 if (reader.isAirBlock(blockpos$mutable) && base.isSolid() && !base.isIn(HabitatBlockTags.FAIRY_RING_GENERATION_BLACKLIST)) {
