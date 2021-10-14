@@ -5,6 +5,7 @@ import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -82,6 +83,11 @@ public class KabloomFruitPileBlock extends Block {
             explode(worldIn, pos, false, false);
 
         super.onBlockHarvested(worldIn, pos, state, player);
+    }
+
+    @Override
+    public PushReaction getPushReaction(BlockState state) {
+        return PushReaction.DESTROY;
     }
 
     private void explode(World worldIn, BlockPos pos, boolean destroyBlock, boolean setFire) {
