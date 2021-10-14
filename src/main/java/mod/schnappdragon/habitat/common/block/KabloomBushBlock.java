@@ -111,12 +111,12 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
         if (replaceBush && !worldIn.isRemote) {
             worldIn.setBlockState(pos, state.with(AGE, 3), 2);
             worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_RUSTLE.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-        }
 
-        KabloomFruitEntity kabloom = new KabloomFruitEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F);
-        if (setFire)
-            kabloom.setFire(8);
-        worldIn.addEntity(kabloom);
+            KabloomFruitEntity kabloom = new KabloomFruitEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F);
+            if (setFire)
+                kabloom.setFire(8);
+            worldIn.addEntity(kabloom);
+        }
     }
 
     /*
