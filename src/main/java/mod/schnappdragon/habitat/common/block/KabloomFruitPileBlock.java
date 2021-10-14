@@ -33,10 +33,10 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class KabloomFruitCrateBlock extends Block {
+public class KabloomFruitPileBlock extends Block {
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D);
 
-    public KabloomFruitCrateBlock(AbstractBlock.Properties properties) {
+    public KabloomFruitPileBlock(AbstractBlock.Properties properties) {
         super(properties);
     }
 
