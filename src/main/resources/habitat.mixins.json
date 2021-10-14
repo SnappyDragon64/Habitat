@@ -6,7 +6,8 @@
   "mixins": [
     "NoLakesInStructuresMixin",
     "NoTreesInStructuresMixin",
-    "NoBigMushroomsInStructuresMixin"
+    "NoBigMushroomsInStructuresMixin",
+    "PistonDestroyEffectsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -31,7 +31,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class KabloomFruitPileBlock extends Block {
+public class KabloomFruitPileBlock extends Block implements IHasPistonDestroyEffect {
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D);
 
     public KabloomFruitPileBlock(AbstractBlock.Properties properties) {
@@ -88,6 +88,11 @@ public class KabloomFruitPileBlock extends Block {
     @Override
     public PushReaction getPushReaction(BlockState state) {
         return PushReaction.DESTROY;
+    }
+
+    @Override
+    public void onPistonDestroy(World worldIn, BlockPos pos, BlockState state) {
+        explode(worldIn, pos, false, false);
     }
 
     private void explode(World worldIn, BlockPos pos, boolean destroyBlock, boolean setFire) {

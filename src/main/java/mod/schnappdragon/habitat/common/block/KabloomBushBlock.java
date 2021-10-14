@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.IGrowable;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -40,7 +41,7 @@ import net.minecraftforge.common.PlantType;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class KabloomBushBlock extends BushBlock implements IGrowable {
+public class KabloomBushBlock extends BushBlock implements IGrowable, IHasPistonDestroyEffect {
     protected static final VoxelShape[] SHAPES = {Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D)};
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
@@ -107,10 +108,23 @@ public class KabloomBushBlock extends BushBlock implements IGrowable {
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 
+    @Override
+    public PushReaction getPushReaction(BlockState state) {
+        return PushReaction.DESTROY;
+    }
+
+    @Override
+    public void onPistonDestroy(World worldIn, BlockPos pos, BlockState state) {
+        if (state.get(AGE) == 7)
+            dropFruit(state, worldIn, pos, false, false);
+    }
+
     private void dropFruit(BlockState state, World worldIn, BlockPos pos, boolean replaceBush, boolean setFire) {
-        if (replaceBush && !worldIn.isRemote) {
-            worldIn.setBlockState(pos, state.with(AGE, 3), 2);
-            worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_RUSTLE.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+        if (!worldIn.isRemote) {
+            if (replaceBush) {
+                worldIn.setBlockState(pos, state.with(AGE, 3), 2);
+                worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_RUSTLE.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+            }
 
             KabloomFruitEntity kabloom = new KabloomFruitEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F);
             if (setFire)
