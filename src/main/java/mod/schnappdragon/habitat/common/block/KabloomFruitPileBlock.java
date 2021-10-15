@@ -42,14 +42,6 @@ public class KabloomFruitPileBlock extends Block implements IHasPistonDestroyEff
         return SHAPE;
     }
 
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader reader, BlockPos pos) {
-        return VoxelShapes.fullCube();
-    }
-
-    public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-        return VoxelShapes.fullCube();
-    }
-
     /*
      * Kabloom Bush Function Methods
      */
