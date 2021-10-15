@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "habitat:kabloom_pulp_tub"
+          "name": "habitat:kabloom_pulp_block"
         }
       ],
       "conditions": [

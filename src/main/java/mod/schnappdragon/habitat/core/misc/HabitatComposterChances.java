@@ -11,7 +11,7 @@ public class HabitatComposterChances {
         put(HabitatItems.KABLOOM_PULP.get(), 0.3F);
         put(HabitatItems.KABLOOM_FRUIT.get(), 0.5F);
         put(HabitatItems.KABLOOM_FRUIT_PILE.get(), 1.0F);
-        put(HabitatItems.KABLOOM_PULP_TUB.get(), 1.0F);
+        put(HabitatItems.KABLOOM_PULP_BLOCK.get(), 1.0F);
 
         put(HabitatItems.SLIME_FERN.get(), 0.65F);
 

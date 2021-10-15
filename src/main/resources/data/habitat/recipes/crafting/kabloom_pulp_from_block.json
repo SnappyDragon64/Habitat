@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "habitat:kabloom_pulp_tub"
+      "item": "habitat:kabloom_pulp_block"
     }
   ],
   "result": {
