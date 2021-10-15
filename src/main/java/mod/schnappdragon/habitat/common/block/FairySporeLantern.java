@@ -19,6 +19,6 @@ public class FairySporeLantern extends LanternBlock {
 
     public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
         if (rand.nextInt(5) == 0)
-            worldIn.addParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), 0.0D, 0.0D, 0.0D);
+            worldIn.addParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), pos.getX() + 0.3125D + rand.nextDouble() * 0.375D, pos.getY() + (state.get(LanternBlock.HANGING) ? 0.0625D : 0) + rand.nextDouble() * 0.4375D, pos.getZ() + 0.3125D + rand.nextDouble() * 0.375D, rand.nextGaussian() * 0.01D, 0.0D, rand.nextGaussian() * 0.01D);
     }
 }
