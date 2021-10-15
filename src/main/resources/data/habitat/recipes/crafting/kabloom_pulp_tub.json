@@ -13,11 +13,5 @@
   "result": {
     "item": "habitat:kabloom_pulp_tub",
     "count": 1
-  },
-  "conditions": [
-    {
-      "type": "habitat:quark_flag",
-      "flag": "berry_sack"
-    }
-  ]
+  }
 }

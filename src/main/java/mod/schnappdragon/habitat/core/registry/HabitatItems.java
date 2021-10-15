@@ -25,7 +25,7 @@ public class HabitatItems {
     public static final RegistryObject<Item> KABLOOM_FRUIT = ITEMS.register("kabloom_fruit",
             () -> new KabloomFruitItem(new Item.Properties().maxStackSize(16).group(ItemGroup.COMBAT)));
     public static final RegistryObject<Item> KABLOOM_FRUIT_PILE = ITEMS.register("kabloom_fruit_pile", () -> new BlockItem(HabitatBlocks.KABLOOM_FRUIT_PILE.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
-    public static final RegistryObject<Item> KABLOOM_PULP_TUB = ITEMS.register("kabloom_pulp_tub", () -> new BlockItem(HabitatBlocks.KABLOOM_PULP_TUB.get(), getProperties(CompatHelper.compatItemGroup(ItemGroup.DECORATIONS, "quark"))));
+    public static final RegistryObject<Item> KABLOOM_PULP_TUB = ITEMS.register("kabloom_pulp_tub", () -> new BlockItem(HabitatBlocks.KABLOOM_PULP_TUB.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
 
     public static final RegistryObject<Item> SLIME_FERN = ITEMS.register("slime_fern",
             () -> new WallOrBaseItem(HabitatBlocks.SLIME_FERN.get(), HabitatBlocks.WALL_SLIME_FERN.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
