@@ -57,20 +57,7 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
     @Override
     protected void onImpact(RayTraceResult result) {
         super.onImpact(result);
-        Vector3d vec = result.getHitVec();
-
-        if (this.world.getGameRules().get(GameRules.DO_ENTITY_DROPS).get()) {
-            ItemEntity item = new ItemEntity(this.world, vec.getX() + this.rand.nextGaussian() / 2, vec.getY() + this.rand.nextDouble() / 2, vec.getZ() + this.rand.nextGaussian() / 2, new ItemStack(HabitatItems.KABLOOM_PULP.get()));
-            item.setDefaultPickupDelay();
-            this.world.addEntity(item);
-        }
-
         createExplosion();
-
-        if (!this.world.isRemote) {
-            this.world.setEntityState(this, (byte) 3);
-            this.remove();
-        }
     }
 
     @Override
@@ -88,8 +75,20 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
+    @Override
+    protected Vector3d handlePistonMovement(Vector3d pos) {
+        createExplosion();
+        return Vector3d.ZERO;
+    }
+
     private void createExplosion() {
         Vector3d vector3d = this.getPositionVec();
+
+        if (this.world.getGameRules().get(GameRules.DO_ENTITY_DROPS).get()) {
+            ItemEntity item = new ItemEntity(this.world, vector3d.getX() + this.rand.nextGaussian() / 2, vector3d.getY() + this.rand.nextDouble() / 2, vector3d.getZ() + this.rand.nextGaussian() / 2, new ItemStack(HabitatItems.KABLOOM_PULP.get()));
+            item.setDefaultPickupDelay();
+            this.world.addEntity(item);
+        }
 
         for (Entity entity : this.world.getEntitiesWithinAABBExcludingEntity(null, this.getBoundingBox().grow(0.75D))) {
             boolean flag = false;
@@ -142,6 +141,11 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
                 if (this.isBurning() && !entity.isImmuneToFire())
                     entity.setFire(1);
             }
+        }
+
+        if (!this.world.isRemote) {
+            this.world.setEntityState(this, (byte) 3);
+            this.remove();
         }
     }
 }
