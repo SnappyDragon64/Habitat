@@ -1,14 +1,12 @@
 package mod.schnappdragon.habitat.common.world.gen.feature;
 
 import com.mojang.serialization.Codec;
-
-import java.util.Random;
-
 import mod.schnappdragon.habitat.common.block.FairyRingMushroomBlock;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HugeMushroomBlock;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -18,6 +16,8 @@ import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
 import net.minecraft.world.gen.feature.AbstractBigMushroomFeature;
 import net.minecraft.world.gen.feature.BigMushroomFeatureConfig;
+
+import java.util.Random;
 
 public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
     public BigFairyRingMushroomFeature(Codec<BigMushroomFeatureConfig> codec) {
@@ -39,7 +39,7 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
 
     @Override
     protected int func_227211_a_(Random rand) {
-        int i = rand.nextInt(3) + 8;
+        int i = rand.nextInt(2) + 10;
         if (rand.nextInt(12) == 0) {
             i *= 2;
         }
@@ -52,7 +52,7 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
         WeightedBlockStateProvider mushroomProvider = new WeightedBlockStateProvider().addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState(), 1).addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 2), 2).addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 3), 3).addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 4), 3);
 
         BlockState stem = config.stemProvider.getBlockState(rand, pos);
-        boolean enhancedFlag = stem.isIn(HabitatBlocks.FAIRY_RING_MUSHROOM_STEM.get()) && CompatHelper.checkMods("enhanced_mushrooms");
+        boolean enhancedFlag = !CompatHelper.checkMods("enhanced_mushrooms");
         if (enhancedFlag)
             stem = HabitatBlocks.ENHANCED_FAIRY_RING_MUSHROOM_STEM.get().getDefaultState();
 
@@ -81,26 +81,55 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
             }
         }
 
-        if (!enhancedFlag)
-            stem = stem.with(HugeMushroomBlock.UP, true);
+        for (Direction dir : new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}) {
+            int len = rand.nextInt(3) > 0 ? rand.nextBoolean() ? 1 + MathHelper.ceil((float) rand.nextInt(i0 - 7) / 2) : MathHelper.ceil((float) rand.nextInt(i0 - 7) / 2) : 0;
+            blockpos$mutable.setAndOffset(pos, dir.getXOffset(), -1, dir.getZOffset());
 
-        for (int x = -1; x <= 1; ++x) {
-            for (int z = -1; z <= 1; ++z) {
-                if (x != 0 || z != 0) {
-                    int len = rand.nextInt(3) < 2 ? MathHelper.ceil((float) rand.nextInt(i0 - 6) / 2) : 0;
-                    blockpos$mutable.setAndOffset(pos, x, -1, z);
-
-                    for (int i = 0; i < len + 1; ++i) {
-                        blockpos$mutable.move(Direction.UP, 1);
-                        if (world.getBlockState(blockpos$mutable).canBeReplacedByLogs(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.down()).isOpaqueCube(world, blockpos$mutable.down())) {
-                            if (i < len)
-                                this.setBlockState(world, blockpos$mutable, stem);
-                            else if (rand.nextInt(3) == 0)
-                                this.setBlockState(world, blockpos$mutable, mushroomProvider.getBlockState(rand, pos));
+            for (int i = 0; i < len + 1; ++i) {
+                blockpos$mutable.move(Direction.UP);
+                if (world.getBlockState(blockpos$mutable).canBeReplacedByLogs(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.down()).isOpaqueCube(world, blockpos$mutable.down())) {
+                    if (i < len) {
+                        BlockState stemState = stem;
+                        if (stemState.getBlock() instanceof HugeMushroomBlock) {
+                            stemState = stemState.with(HugeMushroomBlock.UP, i == len - 1);
+                            if (world.getBlockState(blockpos$mutable.offset(dir.getOpposite())).isIn(stemState.getBlock())) {
+                                stemState = stemState.with(getPropertyFromDirection(dir.getOpposite()), false);
+                                this.setBlockState(world, blockpos$mutable.offset(dir.getOpposite()), world.getBlockState(blockpos$mutable.offset(dir.getOpposite())).with(getPropertyFromDirection(dir), false));
+                            }
                         }
+                        this.setBlockState(world, blockpos$mutable, stemState);
+                    }
+                    else if (rand.nextInt(3) == 0)
+                        this.setBlockState(world, blockpos$mutable, mushroomProvider.getBlockState(rand, blockpos$mutable));
+                }
+            }
+        }
+
+        for (int i = -1; i <= 1; i += 2) {
+            for (int k = -1; k <= 1; k += 2) {
+                for (int j = -1; j <= 1; ++j) {
+                    blockpos$mutable.setAndOffset(pos, i, j, k);
+
+                    if (world.getBlockState(blockpos$mutable).isAir(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.down()).isOpaqueCube(world, blockpos$mutable.down())) {
+                        if (rand.nextInt(3) == 0)
+                            this.setBlockState(world, blockpos$mutable, mushroomProvider.getBlockState(rand, blockpos$mutable));
+                        break;
                     }
                 }
             }
+        }
+    }
+
+    private BooleanProperty getPropertyFromDirection(Direction direction) {
+        switch (direction) {
+            case NORTH:
+                return HugeMushroomBlock.NORTH;
+            case EAST:
+                return HugeMushroomBlock.EAST;
+            case SOUTH:
+                return HugeMushroomBlock.SOUTH;
+            default:
+                return HugeMushroomBlock.WEST;
         }
     }
 
