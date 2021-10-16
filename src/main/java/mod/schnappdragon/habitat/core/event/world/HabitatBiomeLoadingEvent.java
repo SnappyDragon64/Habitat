@@ -16,6 +16,7 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,8 +55,8 @@ public class HabitatBiomeLoadingEvent {
 
         private boolean check(boolean condition, ForgeConfigSpec.ConfigValue<String> whitelistConfig, ForgeConfigSpec.ConfigValue<String> blacklistConfig) {
             String biome = event.getName().toString();
-            List<String> whitelist = Arrays.asList(whitelistConfig.get().split(","));
-            List<String> blacklist = Arrays.asList(blacklistConfig.get().split(","));
+            List<String> whitelist = Arrays.asList(StringUtils.deleteWhitespace(whitelistConfig.get()).split(","));
+            List<String> blacklist = Arrays.asList(StringUtils.deleteWhitespace(blacklistConfig.get()).split(","));
             return condition && !blacklist.contains(biome) || whitelist.contains(biome);
         }
 
