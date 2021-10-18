@@ -117,7 +117,6 @@ public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
 
     public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
         if (this.isChild) {
-            float f = 1.5F;
             matrixStackIn.push();
             matrixStackIn.scale(0.56666666F, 0.56666666F, 0.56666666F);
             matrixStackIn.translate(0.0D, 1.375D, 0.125D);
