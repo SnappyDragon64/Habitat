@@ -23,6 +23,8 @@ public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
     private final ModelRenderer pookaHead;
     private final ModelRenderer pookaRightEar;
     private final ModelRenderer pookaLeftEar;
+    private final ModelRenderer pookaRightEarBase;
+    private final ModelRenderer pookaLeftEarBase;
     private final ModelRenderer pookaTail;
     private final ModelRenderer pookaNose;
     private float jumpRotation;
@@ -89,15 +91,24 @@ public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
         this.pookaHead.mirror = true;
         this.setRotationOffset(this.pookaHead, 0.0F, 0.0F, 0.0F);
         this.pookaRightEar = new ModelRenderer(this, 0, 0);
-        this.pookaRightEar.addBox(-3.5F, -11.0F, -1.0F, 3.0F, 7.0F, 0.0F);
+        this.pookaRightEar.addBox(-3.5F, -10.0F, -1.0F, 3.0F, 5.0F, 1.0F);
         this.pookaRightEar.setRotationPoint(0.0F, 16.0F, -1.0F);
         this.pookaRightEar.mirror = true;
         this.setRotationOffset(this.pookaRightEar, 0.0F, -0.2617994F, 0.0F);
         this.pookaLeftEar = new ModelRenderer(this, 22, 0);
-        this.pookaLeftEar.addBox(0.5F, -11.0F, -1.0F, 3.0F, 7.0F, 0.0F);
+        this.pookaLeftEar.addBox(0.5F, -10.0F, -1.0F, 3.0F, 5.0F, 1.0F);
         this.pookaLeftEar.setRotationPoint(0.0F, 16.0F, -1.0F);
         this.pookaLeftEar.mirror = true;
-        this.setRotationOffset(this.pookaLeftEar, 0.0F, 0.2617994F, 0.0F);
+        this.pookaRightEarBase = new ModelRenderer(this, 32, 0);
+        this.pookaRightEarBase.addBox(-2.5F, -5.0F, -0.5F, 1.0F, 1.0F, 0.0F);
+        this.pookaRightEarBase.setRotationPoint(0.0F, 16.0F, -1.0F);
+        this.pookaRightEarBase.mirror = true;
+        this.setRotationOffset(this.pookaRightEarBase, 0.0F, -0.2617994F, 0.0F);
+        this.pookaLeftEarBase = new ModelRenderer(this, 32, 0);
+        this.pookaLeftEarBase.addBox(1.5F, -5.0F, -0.5F, 1.0F, 1.0F, 0.0F);
+        this.pookaLeftEarBase.setRotationPoint(0.0F, 16.0F, -1.0F);
+        this.pookaLeftEarBase.mirror = true;
+        this.setRotationOffset(this.pookaLeftEarBase, 0.0F, 0.2617994F, 0.0F);
         this.pookaTail = new ModelRenderer(this, 52, 0);
         this.pookaTail.addBox(-1.5F, -1.5F, 0.0F, 3.0F, 3.0F, 2.0F);
         this.pookaTail.setRotationPoint(0.0F, 20.0F, 7.0F);
@@ -121,14 +132,14 @@ public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
             matrixStackIn.push();
             matrixStackIn.scale(0.56666666F, 0.56666666F, 0.56666666F);
             matrixStackIn.translate(0.0D, 1.375D, 0.125D);
-            ImmutableList.of(this.pookaHead, this.pookaLeftEar, this.pookaRightEar, this.pookaNose).forEach((modelRenderer) -> {
+            ImmutableList.of(this.pookaHead, this.pookaLeftEar, this.pookaRightEar, this.pookaLeftEarBase, this.pookaRightEarBase, this.pookaNose).forEach((modelRenderer) -> {
                 modelRenderer.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
             });
             matrixStackIn.pop();
             matrixStackIn.push();
             matrixStackIn.scale(0.4F, 0.4F, 0.4F);
             matrixStackIn.translate(0.0D, 2.25D, 0.0D);
-            ImmutableList.of(this.pookaLeftFoot, this.pookaRightFoot, this.pookaLeftThigh, this.pookaRightThigh, this.pookaBody, this.pookaSmallMushroomX, this.pookaSmallMushroomZ, this.pookaBigMushroomX, this.pookaBigMushroomZ, this.pookaLeftArm, this.pookaRightArm, this.pookaTail).forEach((modelRenderer) -> {
+            ImmutableList.of(this.pookaLeftFoot, this.pookaRightFoot, this.pookaLeftThigh, this.pookaRightThigh, this.pookaBody, this.pookaLeftArm, this.pookaRightArm, this.pookaTail).forEach((modelRenderer) -> {
                 modelRenderer.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
             });
             matrixStackIn.pop();
@@ -136,7 +147,7 @@ public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
             matrixStackIn.push();
             matrixStackIn.scale(0.6F, 0.6F, 0.6F);
             matrixStackIn.translate(0.0D, 1.0D, 0.0D);
-            ImmutableList.of(this.pookaLeftFoot, this.pookaRightFoot, this.pookaLeftThigh, this.pookaRightThigh, this.pookaBody, this.pookaSmallMushroomX, this.pookaSmallMushroomZ, this.pookaBigMushroomX, this.pookaBigMushroomZ, this.pookaLeftArm, this.pookaRightArm, this.pookaHead, this.pookaRightEar, this.pookaLeftEar, this.pookaTail, this.pookaNose).forEach((modelRenderer) -> {
+            ImmutableList.of(this.pookaLeftFoot, this.pookaRightFoot, this.pookaLeftThigh, this.pookaRightThigh, this.pookaBody, this.pookaSmallMushroomX, this.pookaSmallMushroomZ, this.pookaBigMushroomX, this.pookaBigMushroomZ, this.pookaLeftArm, this.pookaRightArm, this.pookaHead, this.pookaRightEar, this.pookaLeftEar, this.pookaRightEarBase, this.pookaLeftEarBase, this.pookaTail, this.pookaNose).forEach((modelRenderer) -> {
                 modelRenderer.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
             });
             matrixStackIn.pop();
@@ -149,6 +160,8 @@ public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
         this.pookaHead.rotateAngleX = headPitch * ((float) Math.PI / 180F);
         this.pookaRightEar.rotateAngleX = headPitch * ((float) Math.PI / 180F);
         this.pookaLeftEar.rotateAngleX = headPitch * ((float) Math.PI / 180F);
+        this.pookaRightEarBase.rotateAngleX = headPitch * ((float) Math.PI / 180F);
+        this.pookaLeftEarBase.rotateAngleX = headPitch * ((float) Math.PI / 180F);
         this.pookaNose.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
         this.pookaHead.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
         this.pookaRightEar.rotateAngleY = this.pookaNose.rotateAngleY - 0.2617994F;
