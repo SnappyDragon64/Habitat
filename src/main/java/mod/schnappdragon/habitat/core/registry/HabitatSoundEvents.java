@@ -27,6 +27,12 @@ public class HabitatSoundEvents {
     public static final RegistryObject<SoundEvent> ENTITY_KABLOOM_FRUIT_THROW = register("entity.kabloom_fruit.throw");
     public static final RegistryObject<SoundEvent> ENTITY_KABLOOM_FRUIT_EXPLODE = register("entity.kabloom_fruit.explode");
 
+    public static final RegistryObject<SoundEvent> ENTITY_POOKA_AMBIENT = register("entity.pooka.ambient");
+    public static final RegistryObject<SoundEvent> ENTITY_POOKA_ATTACK = register("entity.pooka.attack");
+    public static final RegistryObject<SoundEvent> ENTITY_POOKA_DEATH = register("entity.pooka.death");
+    public static final RegistryObject<SoundEvent> ENTITY_POOKA_HURT = register("entity.pooka.hurt");
+    public static final RegistryObject<SoundEvent> ENTITY_POOKA_JUMP = register("entity.pooka.jump");
+
     private static RegistryObject<SoundEvent> register(String name) {
         return SOUND_EVENTS.register(name, () -> new SoundEvent((new ResourceLocation(Habitat.MOD_ID, name))));
     }

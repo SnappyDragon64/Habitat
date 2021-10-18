@@ -22,29 +22,143 @@
   "block.kabloom_bush.shear": {
     "category": "block",
     "subtitle": "habitat.subtitle.block.kabloom_bush.shear",
-    "sounds": [ "habitat:block/kabloom_bush/shear" ]
+    "sounds": [
+      {
+        "name": "habitat:block/kabloom_bush/shear",
+        "volume": 0.8,
+        "pitch": 1
+      },
+      {
+        "name": "habitat:block/kabloom_bush/shear",
+        "volume": 0.8,
+        "pitch": 0.9
+      },
+      {
+        "name": "habitat:block/kabloom_bush/shear",
+        "volume": 0.8,
+        "pitch": 0.8
+      }
+    ]
   },
   "block.slime_fern.drip": {
     "category": "block",
     "subtitle": "habitat.subtitle.block.slime_fern.drip",
     "sounds": [
-      "minecraft:block/beehive/drip1",
-      "minecraft:block/beehive/drip2",
-      "minecraft:block/beehive/drip3",
-      "minecraft:block/beehive/drip4",
-      "minecraft:block/beehive/drip5",
-      "minecraft:block/beehive/drip6"
+      {
+        "attenuation_distance": 8,
+        "name": "block/beehive/drip1",
+        "volume": 0.3,
+        "pitch": 0.9
+      },
+      {
+        "attenuation_distance": 8,
+        "name": "block/beehive/drip2",
+        "volume": 0.3,
+        "pitch": 0.9
+      },
+      {
+        "attenuation_distance": 8,
+        "name": "block/beehive/drip3",
+        "volume": 0.3,
+        "pitch": 0.9
+      },
+      {
+        "attenuation_distance": 8,
+        "name": "block/beehive/drip4",
+        "volume": 0.3,
+        "pitch": 0.9
+      },
+      {
+        "attenuation_distance": 8,
+        "name": "block/beehive/drip5",
+        "volume": 0.3,
+        "pitch": 0.9
+      },
+      {
+        "attenuation_distance": 8,
+        "name": "block/beehive/drip6",
+        "volume": 0.3,
+        "pitch": 0.9
+      },
+      {
+        "attenuation_distance": 8,
+        "name": "block/beehive/drip1",
+        "volume": 0.3,
+        "pitch": 0.7
+      },
+      {
+        "attenuation_distance": 8,
+        "name": "block/beehive/drip2",
+        "volume": 0.3,
+        "pitch": 0.7
+      },
+      {
+        "attenuation_distance": 8,
+        "name": "block/beehive/drip3",
+        "volume": 0.3,
+        "pitch": 0.7
+      },
+      {
+        "attenuation_distance": 8,
+        "name": "block/beehive/drip4",
+        "volume": 0.3,
+        "pitch": 0.7
+      },
+      {
+        "attenuation_distance": 8,
+        "name": "block/beehive/drip5",
+        "volume": 0.3,
+        "pitch": 0.7
+      },
+      {
+        "attenuation_distance": 8,
+        "name": "block/beehive/drip6",
+        "volume": 0.3,
+        "pitch": 0.7
+      }
     ]
   },
   "block.flowering_ball_cactus.shear": {
     "category": "block",
     "subtitle": "habitat.subtitle.block.flowering_ball_cactus.shear",
-    "sounds": [ "habitat:block/flowering_ball_cactus/shear" ]
+    "sounds": [
+      {
+        "name": "habitat:block/flowering_ball_cactus/shear",
+        "volume": 0.8,
+        "pitch": 1
+      },
+      {
+        "name": "habitat:block/flowering_ball_cactus/shear",
+        "volume": 0.8,
+        "pitch": 0.9
+      },
+      {
+        "name": "habitat:block/flowering_ball_cactus/shear",
+        "volume": 0.8,
+        "pitch": 0.8
+      }
+    ]
   },
   "block.fairy_ring_mushroom.shear": {
     "category": "block",
     "subtitle": "habitat.subtitle.block.fairy_ring_mushroom.shear",
-    "sounds": [ "habitat:block/fairy_ring_mushroom/shear" ]
+    "sounds": [
+      {
+        "name": "habitat:block/fairy_ring_mushroom/shear",
+        "volume": 0.8,
+        "pitch": 1
+      },
+      {
+        "name": "habitat:block/fairy_ring_mushroom/shear",
+        "volume": 0.8,
+        "pitch": 0.9
+      },
+      {
+        "name": "habitat:block/fairy_ring_mushroom/shear",
+        "volume": 0.8,
+        "pitch": 0.8
+      }
+    ]
   },
   "block.fairy_ring_mushroom.dust": {
     "category": "block",
@@ -60,5 +174,91 @@
     "category": "entity",
     "subtitle": "habitat.subtitle.entity.kabloom_fruit.explosion",
     "sounds": [ "habitat:entity/kabloom_fruit/explode" ]
+  },
+  "entity.pooka.ambient": {
+    "category": "entity",
+    "subtitle": "subtitles.entity.pooka.ambient",
+    "sounds": [
+      {
+        "name": "mob/rabbit/idle1",
+        "volume": 0.25
+      },
+      {
+        "name": "mob/rabbit/idle2",
+        "volume": 0.25
+      },
+      {
+        "name": "mob/rabbit/idle3",
+        "volume": 0.25
+      },
+      {
+        "name": "mob/rabbit/idle4",
+        "volume": 0.25
+      }
+    ]
+  },
+  "entity.pooka.attack": {
+    "category": "entity",
+    "subtitle": "subtitles.entity.pooka.attack",
+    "sounds": [
+      "entity/rabbit/attack1",
+      "entity/rabbit/attack2",
+      "entity/rabbit/attack3",
+      "entity/rabbit/attack4"
+    ]
+  },
+  "entity.pooka.death": {
+    "category": "entity",
+    "subtitle": "subtitles.entity.pooka.death",
+    "sounds": [
+      {
+        "name": "mob/rabbit/bunnymurder",
+        "volume": 0.5
+      }
+    ]
+  },
+  "entity.pooka.hurt": {
+    "category": "entity",
+    "subtitle": "subtitles.entity.pooka.hurt",
+    "sounds": [
+      {
+        "name": "mob/rabbit/hurt1",
+        "volume": 0.5
+      },
+      {
+        "name": "mob/rabbit/hurt2",
+        "volume": 0.5
+      },
+      {
+        "name": "mob/rabbit/hurt3",
+        "volume": 0.5
+      },
+      {
+        "name": "mob/rabbit/hurt4",
+        "volume": 0.5
+      }
+    ]
+  },
+  "entity.pooka.jump": {
+    "category": "entity",
+    "subtitle": "subtitles.entity.pooka.jump",
+    "sounds": [
+      {
+        "name": "mob/rabbit/hop1",
+        "volume": 0.1
+      },
+      {
+        "name": "mob/rabbit/hop2",
+        "volume": 0.1
+      },
+      {
+        "name": "mob/rabbit/hop3",
+        "volume": 0.1
+      },
+      {
+        "name": "mob/rabbit/hop4",
+        "volume": 0.1
+      }
+    ]
   }
 }
