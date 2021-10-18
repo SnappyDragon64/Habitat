@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 
 public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
-    private final ModelRenderer pookaLeftFoot = new ModelRenderer(this, 26, 24);
+    private final ModelRenderer pookaLeftFoot;
     private final ModelRenderer pookaRightFoot;
     private final ModelRenderer pookaLeftThigh;
     private final ModelRenderer pookaRightThigh;
@@ -28,6 +28,7 @@ public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
     private float jumpRotation;
 
     public PookaModel() {
+        this.pookaLeftFoot = new ModelRenderer(this, 26, 24);
         this.pookaLeftFoot.addBox(-1.0F, 5.5F, -3.7F, 2.0F, 1.0F, 7.0F);
         this.pookaLeftFoot.setRotationPoint(3.0F, 17.5F, 3.7F);
         this.pookaLeftFoot.mirror = true;
@@ -52,7 +53,7 @@ public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
         this.pookaBody.setRotationPoint(0.0F, 19.0F, 8.0F);
         this.pookaBody.mirror = true;
         this.setRotationOffset(this.pookaBody, -0.34906584F, 0.0F, 0.0F);
-        this.pookaBigMushroomX = new ModelRenderer(this, 0, 0);
+        this.pookaBigMushroomX = new ModelRenderer(this, 0, 27);
         this.pookaBigMushroomX.addBox(0.0F, -7.0F, -3.0F, 3.0F, 5.0F, 0.0F);
         this.pookaBigMushroomX.setRotationPoint(0.0F, 19.0F, 8.0F);
         this.pookaBigMushroomX.mirror = true;
@@ -62,7 +63,7 @@ public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
         this.pookaBigMushroomZ.setRotationPoint(0.0F, 19.0F, 8.0F);
         this.pookaBigMushroomZ.mirror = true;
         this.setRotationOffset(this.pookaBigMushroomZ, -0.34906584F, 0.0F, 0.0F);
-        this.pookaSmallMushroomX = new ModelRenderer(this, 22, 0);
+        this.pookaSmallMushroomX = new ModelRenderer(this, 22, 27);
         this.pookaSmallMushroomX.addBox(-3.0F, -6.0F, -7.0F, 3.0F, 4.0F, 0.0F);
         this.pookaSmallMushroomX.setRotationPoint(0.0F, 19.0F, 8.0F);
         this.pookaSmallMushroomX.mirror = true;
@@ -87,17 +88,17 @@ public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
         this.pookaHead.setRotationPoint(0.0F, 16.0F, -1.0F);
         this.pookaHead.mirror = true;
         this.setRotationOffset(this.pookaHead, 0.0F, 0.0F, 0.0F);
-        this.pookaRightEar = new ModelRenderer(this, 52, 0);
+        this.pookaRightEar = new ModelRenderer(this, 0, 0);
         this.pookaRightEar.addBox(-3.5F, -11.0F, -1.0F, 3.0F, 7.0F, 0.0F);
         this.pookaRightEar.setRotationPoint(0.0F, 16.0F, -1.0F);
         this.pookaRightEar.mirror = true;
         this.setRotationOffset(this.pookaRightEar, 0.0F, -0.2617994F, 0.0F);
-        this.pookaLeftEar = new ModelRenderer(this, 58, 0);
+        this.pookaLeftEar = new ModelRenderer(this, 22, 0);
         this.pookaLeftEar.addBox(0.5F, -11.0F, -1.0F, 3.0F, 7.0F, 0.0F);
         this.pookaLeftEar.setRotationPoint(0.0F, 16.0F, -1.0F);
         this.pookaLeftEar.mirror = true;
         this.setRotationOffset(this.pookaLeftEar, 0.0F, 0.2617994F, 0.0F);
-        this.pookaTail = new ModelRenderer(this, 52, 7);
+        this.pookaTail = new ModelRenderer(this, 52, 0);
         this.pookaTail.addBox(-1.5F, -1.5F, 0.0F, 3.0F, 3.0F, 2.0F);
         this.pookaTail.setRotationPoint(0.0F, 20.0F, 7.0F);
         this.pookaTail.mirror = true;
