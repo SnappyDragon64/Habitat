@@ -1,7 +1,9 @@
 package mod.schnappdragon.habitat.common.world.gen.feature.structure;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.core.Habitat;
+import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedSeedRandom;
@@ -13,6 +15,7 @@ import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
@@ -21,6 +24,8 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
 import net.minecraft.world.gen.feature.structure.*;
 import net.minecraft.world.gen.feature.template.TemplateManager;
+
+import java.util.List;
 
 public class FairyRingStructure extends Structure<NoFeatureConfig> {
     public FairyRingStructure(Codec<NoFeatureConfig> codec) {
@@ -37,24 +42,14 @@ public class FairyRingStructure extends Structure<NoFeatureConfig> {
         return GenerationStage.Decoration.SURFACE_STRUCTURES;
     }
 
-    /*
     private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
+            new MobSpawnInfo.Spawners(HabitatEntityTypes.POOKA.get(), 100, 1, 3)
     );
 
     @Override
     public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
         return STRUCTURE_MONSTERS;
     }
-
-    private static final List<MobSpawnInfo.Spawners> STRUCTURE_CREATURES = ImmutableList.of(
-            new MobSpawnInfo.Spawners(EntityType.RABBIT, 100, 1, 2)
-    );
-
-    @Override
-    public List<MobSpawnInfo.Spawners> getDefaultCreatureSpawnList() {
-        return STRUCTURE_CREATURES;
-    }
-    */
 
     @Override
     protected boolean func_230363_a_(ChunkGenerator chunkGenerator, BiomeProvider biomeSource, long seed, SharedSeedRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoFeatureConfig featureConfig) {
