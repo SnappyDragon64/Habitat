@@ -63,6 +63,7 @@ public class Habitat {
             HabitatLootConditionTypes.registerLootConditionTypes();
             HabitatFireInfo.registerFireInfo();
             HabitatPOI.addBeehivePOI();
+            HabitatSpawns.registerSpawns();
         });
     }
 

@@ -106,6 +106,8 @@
   "subtitles.entity.pooka.hurt": "Pooka hurts",
   "subtitles.entity.pooka.jump": "Pooka hops",
 
+  "subtitles.entity.rabbit.converted_to_pooka": "Rabbit changes",
+
   "death.attack.habitat.kabloom": "%1$s went kabloom",
 
   "effect.habitat.blast_endurance": "Blast Endurance",

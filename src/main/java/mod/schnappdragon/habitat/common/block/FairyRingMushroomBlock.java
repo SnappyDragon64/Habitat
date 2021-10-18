@@ -3,11 +3,12 @@ package mod.schnappdragon.habitat.common.block;
 import java.util.Random;
 
 import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
-import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
-import mod.schnappdragon.habitat.core.registry.HabitatItems;
-import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
-import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
+import mod.schnappdragon.habitat.common.entity.monster.PookaEntity;
+import mod.schnappdragon.habitat.core.registry.*;
 import net.minecraft.block.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -55,6 +56,19 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
     @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
         return worldIn.getBlockState(pos.down()).isOpaqueCube(worldIn, pos.down());
+    }
+
+    @Override
+    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+        if (entityIn.getType() == EntityType.RABBIT) {
+            RabbitEntity rabbit = (RabbitEntity) entityIn;
+            rabbit.playSound( HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isChild() ? (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.5F : (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.0F);
+            rabbit.remove();
+            worldIn.addEntity(PookaEntity.convertRabbit(rabbit));
+
+            for (int j = 0; j < 8; ++j)
+                ((ServerWorld) worldIn).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getPosXRandom(0.5D), rabbit.getPosYHeight(0.5D), rabbit.getPosZRandom(0.5D), 0, rabbit.getRNG().nextGaussian(), 0.0D, rabbit.getRNG().nextGaussian(), 0.01D);
+        }
     }
 
     /*

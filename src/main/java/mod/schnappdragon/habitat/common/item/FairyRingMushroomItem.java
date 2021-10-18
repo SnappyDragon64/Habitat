@@ -1,11 +1,16 @@
 package mod.schnappdragon.habitat.common.item;
 
+import mod.schnappdragon.habitat.common.entity.monster.PookaEntity;
 import mod.schnappdragon.habitat.core.Habitat;
+import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
+import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowerBlock;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.MooshroomEntity;
+import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.particles.ParticleTypes;
@@ -29,32 +34,44 @@ public class FairyRingMushroomItem extends BlockItem {
 
     @Override
     public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
-        if (!playerIn.world.isRemote && target instanceof MooshroomEntity && ((MooshroomEntity) target).getMooshroomType() == MooshroomEntity.Type.BROWN) {
-            MooshroomEntity mooshroom = (MooshroomEntity) target;
+        if (!playerIn.world.isRemote) {
+            if (target instanceof MooshroomEntity && ((MooshroomEntity) target).getMooshroomType() == MooshroomEntity.Type.BROWN) {
+                MooshroomEntity mooshroom = (MooshroomEntity) target;
 
-            if (mooshroom.hasStewEffect == null) {
-                Optional<Pair<Effect, Integer>> effect = getStewEffect();
+                if (mooshroom.hasStewEffect == null) {
+                    Optional<Pair<Effect, Integer>> effect = getStewEffect();
 
-                if (effect.isPresent()) {
-                    mooshroom.hasStewEffect = effect.get().getLeft();
-                    mooshroom.effectDuration = effect.get().getRight() * 2;
+                    if (effect.isPresent()) {
+                        mooshroom.hasStewEffect = effect.get().getLeft();
+                        mooshroom.effectDuration = effect.get().getRight() * 2;
 
-                    if (!playerIn.abilities.isCreativeMode)
-                        stack.shrink(1);
+                        if (!playerIn.abilities.isCreativeMode)
+                            stack.shrink(1);
 
-                    for (int j = 0; j < 4; ++j) {
-                        ((ServerWorld) playerIn.world).spawnParticle(ParticleTypes.EFFECT, mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0, 0.0D, mooshroom.getRNG().nextDouble(), 0.0D, 0.2D);
-                        ((ServerWorld) playerIn.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0, mooshroom.getRNG().nextGaussian(), 0.0D, mooshroom.getRNG().nextGaussian(), 0.01D);
+                        for (int j = 0; j < 4; ++j) {
+                            ((ServerWorld) playerIn.world).spawnParticle(ParticleTypes.EFFECT, mooshroom.getPosXRandom(0.5D), mooshroom.getPosYHeight(0.5D), mooshroom.getPosZRandom(0.5D), 0, 0.0D, mooshroom.getRNG().nextDouble(), 0.0D, 0.2D);
+                            ((ServerWorld) playerIn.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0, mooshroom.getRNG().nextGaussian(), 0.0D, mooshroom.getRNG().nextGaussian(), 0.01D);
+                        }
+
+                        playerIn.world.playMovingSound(null, mooshroom, SoundEvents.ENTITY_MOOSHROOM_EAT, mooshroom.getSoundCategory(), 2.0F, 1.0F);
+                        return ActionResultType.SUCCESS;
                     }
-
-                    playerIn.world.playSound(null, mooshroom.getPosX(), mooshroom.getPosY(), mooshroom.getPosZ(), SoundEvents.ENTITY_MOOSHROOM_EAT, mooshroom.getSoundCategory(), 2.0F, 1.0F);
-                    return ActionResultType.SUCCESS;
                 }
-            }
 
-            for (int i = 0; i < 2; ++i)
-                ((ServerWorld) playerIn.world).spawnParticle(ParticleTypes.SMOKE, mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0, 0.0D, mooshroom.getRNG().nextDouble(), 0.0D, 0.2D);
-            return ActionResultType.SUCCESS;
+                for (int i = 0; i < 2; ++i)
+                    ((ServerWorld) playerIn.world).spawnParticle(ParticleTypes.SMOKE, mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0, 0.0D, mooshroom.getRNG().nextDouble(), 0.0D, 0.2D);
+                return ActionResultType.SUCCESS;
+            }
+            else if (target.getType() == EntityType.RABBIT) {
+                RabbitEntity rabbit = (RabbitEntity) target;
+                rabbit.playSound( HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isChild() ? (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.5F : (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.0F);
+                rabbit.remove();
+                playerIn.world.addEntity(PookaEntity.convertRabbit(rabbit));
+
+                for (int j = 0; j < 8; ++j)
+                    ((ServerWorld) playerIn.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getPosXRandom(0.5D), rabbit.getPosYHeight(0.5D), rabbit.getPosZRandom(0.5D), 0, rabbit.getRNG().nextGaussian(), 0.0D, rabbit.getRNG().nextGaussian(), 0.01D);
+                return ActionResultType.SUCCESS;
+            }
         }
 
         return super.itemInteractionForEntity(stack, playerIn, target, hand);

@@ -260,5 +260,15 @@
         "volume": 0.1
       }
     ]
+  },
+  "entity.rabbit.converted_to_pooka": {
+    "category": "entity",
+    "subtitle": "subtitles.entity.rabbit.converted_to_pooka",
+    "sounds": [
+      {
+        "name": "mob/rabbit/bunnymurder",
+        "volume": 0.5
+      }
+    ]
   }
 }
