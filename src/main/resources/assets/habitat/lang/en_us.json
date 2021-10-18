@@ -100,6 +100,12 @@
   "habitat.subtitle.entity.kabloom_fruit.throw": "Kabloom Fruit flies",
   "habitat.subtitle.entity.kabloom_fruit.explosion": "Kabloom",
 
+  "subtitles.entity.pooka.ambient": "Pooka squeaks",
+  "subtitles.entity.pooka.attack": "Pooka attacks",
+  "subtitles.entity.pooka.death": "Pooka dies",
+  "subtitles.entity.pooka.hurt": "Pooka hurts",
+  "subtitles.entity.pooka.jump": "Pooka hops",
+
   "death.attack.habitat.kabloom": "%1$s went kabloom",
 
   "effect.habitat.blast_endurance": "Blast Endurance",
