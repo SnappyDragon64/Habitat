@@ -6,6 +6,7 @@ import mod.schnappdragon.habitat.common.block.KabloomBushBlock;
 import mod.schnappdragon.habitat.common.block.RafflesiaBlock;
 import mod.schnappdragon.habitat.common.entity.item.HabitatBoatEntity;
 import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruitEntity;
+import mod.schnappdragon.habitat.common.item.HabitatSpawnEggItem;
 import mod.schnappdragon.habitat.common.tileentity.RafflesiaTileEntity;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
@@ -13,17 +14,22 @@ import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.OptionalDispenseBehavior;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
@@ -144,5 +150,17 @@ public class HabitatDispenserBehaviours {
                 return stack;
             }
         });
+
+        for (SpawnEggItem egg : HabitatSpawnEggItem.HABITAT_EGGS) {
+            DispenserBlock.registerDispenseBehavior(egg, new DefaultDispenseItemBehavior() {
+                protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
+                    Direction direction = source.getBlockState().get(DispenserBlock.FACING);
+                    EntityType<?> entitytype = ((SpawnEggItem) stack.getItem()).getType(stack.getTag());
+                    entitytype.spawn(source.getWorld(), stack, null, source.getBlockPos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
+                    stack.shrink(1);
+                    return stack;
+                }
+            });
+        }
     }
 }

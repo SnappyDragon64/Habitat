@@ -87,6 +87,9 @@ public class HabitatItems {
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BOAT = ITEMS.register("fairy_ring_mushroom_boat",
             () -> new HabitatBoatItem(HabitatBoatEntity.Type.FAIRY_RING_MUSHROOM, getProperties(CompatHelper.compatItemGroup(ItemGroup.TRANSPORTATION, "enhanced_mushrooms"))));
 
+    public static final RegistryObject<Item> POOKA_SPAWN_EGG = ITEMS.register("pooka_spawn_egg",
+            () -> new HabitatSpawnEggItem(HabitatEntityTypes.POOKA, 15920353, 16771962, new Item.Properties().group(ItemGroup.MISC)));
+
     private static Item.Properties getProperties(ItemGroup group) {
         return new Item.Properties().group(group);
     }
