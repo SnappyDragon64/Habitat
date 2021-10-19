@@ -64,9 +64,12 @@ public class FairyRingMushroomItem extends BlockItem {
             }
             else if (target.getType() == EntityType.RABBIT) {
                 RabbitEntity rabbit = (RabbitEntity) target;
-                rabbit.playSound( HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isChild() ? (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.5F : (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.0F);
+                rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isChild() ? (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.5F : (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.0F);
                 rabbit.remove();
                 playerIn.world.addEntity(PookaEntity.convertRabbit(rabbit));
+
+                if (!playerIn.abilities.isCreativeMode)
+                    stack.shrink(1);
 
                 for (int j = 0; j < 8; ++j)
                     ((ServerWorld) playerIn.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getPosXRandom(0.5D), rabbit.getPosYHeight(0.5D), rabbit.getPosZRandom(0.5D), 0, rabbit.getRNG().nextGaussian(), 0.0D, rabbit.getRNG().nextGaussian(), 0.01D);
