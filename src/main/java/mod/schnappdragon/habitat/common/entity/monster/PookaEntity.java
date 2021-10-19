@@ -86,26 +86,30 @@ public class PookaEntity extends AnimalEntity implements IMob, IForgeShearable {
         if (!this.world.isRemote()) {
             ((ServerWorld) this.world).spawnParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosYHeight(0.5D), this.getPosZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
             this.remove();
-            RabbitEntity rabbit = EntityType.RABBIT.create(world);
-            rabbit.setLocationAndAngles(this.getPosX(), this.getPosY(), this.getPosZ(), this.rotationYaw, this.rotationPitch);
-            rabbit.setHealth(this.getHealth());
-            rabbit.renderYawOffset = this.renderYawOffset;
-            if (this.hasCustomName()) {
-                rabbit.setCustomName(this.getCustomName());
-                rabbit.setCustomNameVisible(this.isCustomNameVisible());
-            }
-
-            if (this.isNoDespawnRequired()) {
-                rabbit.enablePersistence();
-            }
-
-            /// SET RABBIT TYPE AND DATA
-
-            rabbit.setChild(this.isChild());
-            rabbit.setInvulnerable(this.isInvulnerable());
-            world.addEntity(rabbit);
+            world.addEntity(convertPooka(this));
         }
-        return Collections.singletonList(new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get(), 4));
+        return Collections.singletonList(new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get(), 2));
+    }
+
+    public static RabbitEntity convertPooka(PookaEntity pooka) {
+        RabbitEntity rabbit = EntityType.RABBIT.create(pooka.world);
+        rabbit.setLocationAndAngles(pooka.getPosX(), pooka.getPosY(), pooka.getPosZ(), pooka.rotationYaw, pooka.rotationPitch);
+        rabbit.setHealth(pooka.getHealth());
+        rabbit.renderYawOffset = pooka.renderYawOffset;
+        if (pooka.hasCustomName()) {
+            rabbit.setCustomName(pooka.getCustomName());
+            rabbit.setCustomNameVisible(pooka.isCustomNameVisible());
+        }
+
+        if (pooka.isNoDespawnRequired()) {
+            rabbit.enablePersistence();
+        }
+
+        /// SET RABBIT TYPE AND DATA
+
+        rabbit.setChild(pooka.isChild());
+        rabbit.setInvulnerable(pooka.isInvulnerable());
+        return rabbit;
     }
 
     public static PookaEntity convertRabbit(RabbitEntity rabbit) {
@@ -120,6 +124,8 @@ public class PookaEntity extends AnimalEntity implements IMob, IForgeShearable {
 
         if (rabbit.isNoDespawnRequired())
             pooka.enablePersistence();
+
+        /// SET POOKA TYPE AND DATA
 
         pooka.setChild(rabbit.isChild());
         pooka.setInvulnerable(rabbit.isInvulnerable());

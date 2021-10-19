@@ -264,23 +264,7 @@
   "entity.pooka.shear": {
     "category": "entity",
     "subtitle": "subtitles.entity.pooka.shear",
-    "sounds": [
-      {
-        "name": "habitat:block/fairy_ring_mushroom/shear",
-        "volume": 0.8,
-        "pitch": 1
-      },
-      {
-        "name": "habitat:block/fairy_ring_mushroom/shear",
-        "volume": 0.8,
-        "pitch": 0.9
-      },
-      {
-        "name": "habitat:block/fairy_ring_mushroom/shear",
-        "volume": 0.8,
-        "pitch": 0.8
-      }
-    ]
+    "sounds": [ "habitat:block/fairy_ring_mushroom/shear" ]
   },
   "entity.rabbit.converted_to_pooka": {
     "category": "entity",

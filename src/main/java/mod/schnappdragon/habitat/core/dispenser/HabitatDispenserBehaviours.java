@@ -26,12 +26,14 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IShearable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -89,6 +91,21 @@ public class HabitatDispenserBehaviours {
                 BlockPos pos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
                 BlockState state = worldIn.getBlockState(pos);
                 if (!worldIn.isRemote) {
+                    for (PookaEntity pooka : worldIn.getEntitiesWithinAABB(PookaEntity.class, new AxisAlignedBB(pos), EntityPredicates.NOT_SPECTATING)) {
+                        worldIn.playMovingSound(null, pooka, HabitatSoundEvents.ENTITY_POOKA_SHEAR.get(), SoundCategory.HOSTILE, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+                        ((ServerWorld) worldIn).spawnParticle(ParticleTypes.EXPLOSION, pooka.getPosX(), pooka.getPosYHeight(0.5D), pooka.getPosZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                        pooka.remove();
+                        worldIn.addEntity(PookaEntity.convertPooka(pooka));
+                        for (int i = 0; i < 2; ++i) {
+                            worldIn.addEntity(new ItemEntity(worldIn, pooka.getPosX(), pooka.getPosYHeight(1.0D), pooka.getPosZ(), new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get())));
+                        }
+
+                        if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
+                            stack.setCount(0);
+                        this.setSuccessful(true);
+                        return stack;
+                    }
+
                     if (state.isIn(HabitatBlocks.KABLOOM_BUSH.get()) && state.get(KabloomBushBlock.AGE) == 7) {
                         Block.spawnAsEntity(worldIn, pos, new ItemStack(HabitatItems.KABLOOM_FRUIT.get()));
                         worldIn.setBlockState(pos, state.with(KabloomBushBlock.AGE, 3));
