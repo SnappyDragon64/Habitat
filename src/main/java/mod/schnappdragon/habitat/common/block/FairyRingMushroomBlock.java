@@ -58,6 +58,10 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
         return worldIn.getBlockState(pos.down()).isOpaqueCube(worldIn, pos.down());
     }
 
+    /*
+     * Conversion method
+     */
+
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn.getType() == EntityType.RABBIT) {
