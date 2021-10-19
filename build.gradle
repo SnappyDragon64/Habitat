@@ -20,7 +20,7 @@ mixin {
     add sourceSets.main, "habitat.refmap.json"
 }
 
-version = '0.3'
+version = '1.0'
 group = 'mod.schnappdragon.habitat'
 archivesBaseName = 'habitat'
 
