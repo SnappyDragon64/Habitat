@@ -4,32 +4,39 @@ import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import net.minecraft.entity.*;
+import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.JumpController;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.pathfinding.Path;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.IForgeShearable;
 
 import javax.annotation.Nonnull;
@@ -38,17 +45,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class PookaEntity extends AnimalEntity implements IMob, IForgeShearable {
-    private int jumpTicks;
-    private int jumpDuration;
-    private boolean wasOnGround;
-    private int currentMoveTypeDuration;
-
+public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     public PookaEntity(EntityType<? extends PookaEntity> entityType, World world) {
         super(entityType, world);
-        this.jumpController = new PookaEntity.JumpHelperController(this);
-        this.moveController = new PookaEntity.MoveHelperController(this);
-        this.setMovementSpeed(0.0D);
     }
 
     protected void registerGoals() {
@@ -68,6 +67,11 @@ public class PookaEntity extends AnimalEntity implements IMob, IForgeShearable {
                 .createMutableAttribute(Attributes.MAX_HEALTH, 3.0D)
                 .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3F)
                 .createMutableAttribute(Attributes.ARMOR, 8.0D);
+    }
+
+    @Override
+    public ItemStack getPickedResult(RayTraceResult target) {
+        return new ItemStack(HabitatItems.POOKA_SPAWN_EGG.get());
     }
 
     /*
@@ -105,8 +109,7 @@ public class PookaEntity extends AnimalEntity implements IMob, IForgeShearable {
             rabbit.enablePersistence();
         }
 
-        /// SET RABBIT TYPE AND DATA
-
+        rabbit.setRabbitType(pooka.getRabbitType());
         rabbit.setChild(pooka.isChild());
         rabbit.setInvulnerable(pooka.isInvulnerable());
         return rabbit;
@@ -125,8 +128,7 @@ public class PookaEntity extends AnimalEntity implements IMob, IForgeShearable {
         if (rabbit.isNoDespawnRequired())
             pooka.enablePersistence();
 
-        /// SET POOKA TYPE AND DATA
-
+        pooka.setRabbitType(rabbit.getRabbitType());
         pooka.setChild(rabbit.isChild());
         pooka.setInvulnerable(rabbit.isInvulnerable());
         return pooka;
@@ -162,12 +164,21 @@ public class PookaEntity extends AnimalEntity implements IMob, IForgeShearable {
 
     @Override
     public PookaEntity func_241840_a(ServerWorld serverWorld, AgeableEntity entity) {
-        return HabitatEntityTypes.POOKA.get().create(serverWorld);
+        PookaEntity pooka = HabitatEntityTypes.POOKA.get().create(serverWorld);
+        int i = this.getRandomRabbitType(serverWorld);
+        if (this.rand.nextInt(20) != 0) {
+            if (entity instanceof RabbitEntity && this.rand.nextBoolean())
+                i = ((RabbitEntity) entity).getRabbitType();
+            else
+                i = this.getRabbitType();
+        }
+
+        pooka.setRabbitType(i);
+        return pooka;
     }
 
-    @Override
-    public ItemStack getPickedResult(RayTraceResult target) {
-        return new ItemStack(HabitatItems.POOKA_SPAWN_EGG.get());
+    public boolean isBreedingItem(ItemStack stack) {
+        return false;
     }
 
     /*
@@ -178,6 +189,30 @@ public class PookaEntity extends AnimalEntity implements IMob, IForgeShearable {
         return true;
     }
 
+    @Nullable
+    @Override
+    public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+        int i = this.getRandomRabbitType(worldIn);
+        if (spawnDataIn instanceof RabbitEntity.RabbitData)
+            i = ((RabbitEntity.RabbitData) spawnDataIn).typeData;
+        else
+            spawnDataIn = new RabbitEntity.RabbitData(i);
+
+        this.setRabbitType(i);
+        return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+    }
+
+    private int getRandomRabbitType(IWorld world) {
+        Biome biome = world.getBiome(this.getPosition());
+        int i = this.rand.nextInt(100);
+        if (biome.getPrecipitation() == Biome.RainType.SNOW)
+            return i < 80 ? 1 : 3;
+        else if (biome.getCategory() == Biome.Category.DESERT)
+            return 4;
+        else
+            return i < 50 ? 0 : (i < 90 ? 5 : 2);
+    }
+
     /*
      * Damage Methods
      */
@@ -185,7 +220,7 @@ public class PookaEntity extends AnimalEntity implements IMob, IForgeShearable {
     public boolean attackEntityAsMob(Entity entityIn) {
         if (entityIn.getType() == EntityType.RABBIT) {
             RabbitEntity rabbit = (RabbitEntity) entityIn;
-            rabbit.playSound( HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isChild() ? (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.5F : (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.0F);
+            rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isChild() ? (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.5F : (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.0F);
             rabbit.remove();
             this.world.addEntity(convertRabbit(rabbit));
 
@@ -200,210 +235,6 @@ public class PookaEntity extends AnimalEntity implements IMob, IForgeShearable {
 
     public boolean attackEntityFrom(DamageSource source, float amount) {
         return !this.isInvulnerableTo(source) && super.attackEntityFrom(source, amount);
-    }
-
-    /*
-     * Jumping Methods
-     */
-
-    public void updateAITasks() {
-        if (this.currentMoveTypeDuration > 0)
-            --this.currentMoveTypeDuration;
-
-        if (this.onGround) {
-            if (!this.wasOnGround) {
-                this.setJumping(false);
-                this.checkLandingDelay();
-            }
-
-            if (this.currentMoveTypeDuration == 0) {
-                LivingEntity livingentity = this.getAttackTarget();
-                if (livingentity != null && this.getDistanceSq(livingentity) < 16.0D) {
-                    this.calculateRotationYaw(livingentity.getPosX(), livingentity.getPosZ());
-                    this.moveController.setMoveTo(livingentity.getPosX(), livingentity.getPosY(), livingentity.getPosZ(), this.moveController.getSpeed());
-                    this.startJumping();
-                    this.wasOnGround = true;
-                }
-            }
-
-            PookaEntity.JumpHelperController pookaentity$jumphelpercontroller = (PookaEntity.JumpHelperController) this.jumpController;
-            if (!pookaentity$jumphelpercontroller.getIsJumping())
-                if (this.moveController.isUpdating() && this.currentMoveTypeDuration == 0) {
-                    Path path = this.navigator.getPath();
-                    Vector3d vector3d = new Vector3d(this.moveController.getX(), this.moveController.getY(), this.moveController.getZ());
-                    if (path != null && !path.isFinished())
-                        vector3d = path.getPosition(this);
-
-                    this.calculateRotationYaw(vector3d.x, vector3d.z);
-                    this.startJumping();
-                } else if (!pookaentity$jumphelpercontroller.canJump())
-                    this.enableJumpControl();
-        }
-
-        this.wasOnGround = this.onGround;
-    }
-
-    public boolean shouldSpawnRunningEffects() {
-        return false;
-    }
-
-    private void calculateRotationYaw(double x, double z) {
-        this.rotationYaw = (float) (MathHelper.atan2(z - this.getPosZ(), x - this.getPosX()) * (double) (180F / (float) Math.PI)) - 90.0F;
-    }
-
-    private void enableJumpControl() {
-        ((PookaEntity.JumpHelperController) this.jumpController).setCanJump(true);
-    }
-
-    private void disableJumpControl() {
-        ((PookaEntity.JumpHelperController) this.jumpController).setCanJump(false);
-    }
-
-    private void updateMoveTypeDuration() {
-        if (this.moveController.getSpeed() < 2.2D)
-            this.currentMoveTypeDuration = 10;
-        else
-            this.currentMoveTypeDuration = 1;
-    }
-
-    private void checkLandingDelay() {
-        this.updateMoveTypeDuration();
-        this.disableJumpControl();
-    }
-
-    public void livingTick() {
-        super.livingTick();
-        if (this.jumpTicks != this.jumpDuration)
-            ++this.jumpTicks;
-        else if (this.jumpDuration != 0) {
-            this.jumpTicks = 0;
-            this.jumpDuration = 0;
-            this.setJumping(false);
-        }
-
-    }
-
-    protected float getJumpUpwardsMotion() {
-        if (!this.collidedHorizontally && (!this.moveController.isUpdating() || !(this.moveController.getY() > this.getPosY() + 0.5D))) {
-            Path path = this.navigator.getPath();
-            if (path != null && !path.isFinished()) {
-                Vector3d vector3d = path.getPosition(this);
-                if (vector3d.y > this.getPosY() + 0.5D)
-                    return 0.5F;
-            }
-
-            return this.moveController.getSpeed() <= 0.6D ? 0.2F : 0.3F;
-        } else
-            return 0.5F;
-    }
-
-    protected void jump() {
-        super.jump();
-        double d0 = this.moveController.getSpeed();
-        if (d0 > 0.0D) {
-            double d1 = horizontalMag(this.getMotion());
-            if (d1 < 0.01D)
-                this.moveRelative(0.1F, new Vector3d(0.0D, 0.0D, 1.0D));
-        }
-
-        if (!this.world.isRemote)
-            this.world.setEntityState(this, (byte) 1);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public float getJumpCompletion(float p_175521_1_) {
-        return this.jumpDuration == 0 ? 0.0F : ((float) this.jumpTicks + p_175521_1_) / (float) this.jumpDuration;
-    }
-
-    public void setMovementSpeed(double newSpeed) {
-        this.getNavigator().setSpeed(newSpeed);
-        this.moveController.setMoveTo(this.moveController.getX(), this.moveController.getY(), this.moveController.getZ(), newSpeed);
-    }
-
-    public void setJumping(boolean jumping) {
-        super.setJumping(jumping);
-        if (jumping)
-            this.playSound(this.getJumpSound(), this.getSoundVolume(), ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
-    }
-
-    public void startJumping() {
-        this.setJumping(true);
-        this.jumpDuration = 10;
-        this.jumpTicks = 0;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public void handleStatusUpdate(byte id) {
-        if (id == 1) {
-            this.handleRunningEffect();
-            this.jumpDuration = 10;
-            this.jumpTicks = 0;
-        }
-        else
-            super.handleStatusUpdate(id);
-
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public Vector3d func_241205_ce_() {
-        return new Vector3d(0.0D, 0.6F * this.getEyeHeight(), this.getWidth() * 0.4F);
-    }
-
-    public class JumpHelperController extends JumpController {
-        private final PookaEntity pooka;
-        private boolean canJump;
-
-        public JumpHelperController(PookaEntity pooka) {
-            super(pooka);
-            this.pooka = pooka;
-        }
-
-        public boolean getIsJumping() {
-            return this.isJumping;
-        }
-
-        public boolean canJump() {
-            return this.canJump;
-        }
-
-        public void setCanJump(boolean canJumpIn) {
-            this.canJump = canJumpIn;
-        }
-
-        public void tick() {
-            if (this.isJumping) {
-                this.pooka.startJumping();
-                this.isJumping = false;
-            }
-        }
-    }
-
-    static class MoveHelperController extends MovementController {
-        private final PookaEntity pooka;
-        private double nextJumpSpeed;
-
-        public MoveHelperController(PookaEntity pooka) {
-            super(pooka);
-            this.pooka = pooka;
-        }
-
-        public void tick() {
-            if (this.pooka.onGround && !this.pooka.isJumping && !((PookaEntity.JumpHelperController) this.pooka.jumpController).getIsJumping())
-                this.pooka.setMovementSpeed(0.0D);
-            else if (this.isUpdating())
-                this.pooka.setMovementSpeed(this.nextJumpSpeed);
-
-            super.tick();
-        }
-
-        public void setMoveTo(double x, double y, double z, double speedIn) {
-            if (this.pooka.isInWater())
-                speedIn = 1.5D;
-
-            super.setMoveTo(x, y, z, speedIn);
-            if (speedIn > 0.0D)
-                this.nextJumpSpeed = speedIn;
-        }
     }
 
     static class PanicGoal extends net.minecraft.entity.ai.goal.PanicGoal {
