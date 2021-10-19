@@ -1,12 +1,15 @@
 package mod.schnappdragon.habitat.core.event;
 
 import mod.schnappdragon.habitat.common.entity.ai.goal.HabitatFindPollinationTargetGoal;
+import mod.schnappdragon.habitat.common.entity.ai.goal.RabbitAvoidEntityGoal;
+import mod.schnappdragon.habitat.common.entity.monster.PookaEntity;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.DamageSource;
@@ -21,15 +24,19 @@ import net.minecraftforge.fml.common.Mod;
 public class HabitatEvents {
 
     /*
-     * Used to add HabitatFindPollinationTargetGoal to bees on spawn.
+     * Used to goals to vanilla entities
      */
 
     @SubscribeEvent
-    public static void addPollinationGoal(EntityJoinWorldEvent event) {
+    public static void addGoals(EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
         if (entity.getType() == EntityType.BEE) {
             BeeEntity bee = (BeeEntity) entity;
             bee.goalSelector.addGoal(7, new HabitatFindPollinationTargetGoal(bee));
+        }
+        else if (entity.getType() == EntityType.RABBIT) {
+            RabbitEntity rabbit = (RabbitEntity) entity;
+            rabbit.goalSelector.addGoal(4, new RabbitAvoidEntityGoal<>(rabbit, PookaEntity.class, 4.0F, 2.2D, 2.2D));
         }
     }
 
