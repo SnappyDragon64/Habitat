@@ -36,7 +36,7 @@ public class HabitatEvents {
         }
         else if (entity.getType() == EntityType.RABBIT) {
             RabbitEntity rabbit = (RabbitEntity) entity;
-            rabbit.goalSelector.addGoal(4, new RabbitAvoidEntityGoal<>(rabbit, PookaEntity.class, 4.0F, 2.2D, 2.2D));
+            rabbit.goalSelector.addGoal(4, new RabbitAvoidEntityGoal<>(rabbit, PookaEntity.class, 2.0F, 2.2D, 2.2D));
         }
     }
 
