@@ -9,17 +9,14 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.JumpController;
 import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
@@ -33,10 +30,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.IForgeShearable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
-public class PookaEntity extends AnimalEntity {
+public class PookaEntity extends AnimalEntity implements IMob, IForgeShearable {
     private int jumpTicks;
     private int jumpDuration;
     private boolean wasOnGround;
@@ -66,6 +68,44 @@ public class PookaEntity extends AnimalEntity {
                 .createMutableAttribute(Attributes.MAX_HEALTH, 3.0D)
                 .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3F)
                 .createMutableAttribute(Attributes.ARMOR, 8.0D);
+    }
+
+    /*
+     * Conversion Methods
+     */
+
+    @Override
+    public boolean isShearable(@Nonnull ItemStack item, World world, BlockPos pos) {
+        return true;
+    }
+
+    @Nonnull
+    @Override
+    public List<ItemStack> onSheared(@Nullable PlayerEntity player, @Nonnull ItemStack item, World world, BlockPos pos, int fortune) {
+        world.playMovingSound(null, this, HabitatSoundEvents.ENTITY_POOKA_SHEAR.get(), SoundCategory.HOSTILE, 1.0F, 0.8F + this.rand.nextFloat() * 0.4F);
+        if (!this.world.isRemote()) {
+            ((ServerWorld) this.world).spawnParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosYHeight(0.5D), this.getPosZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            this.remove();
+            RabbitEntity rabbit = EntityType.RABBIT.create(world);
+            rabbit.setLocationAndAngles(this.getPosX(), this.getPosY(), this.getPosZ(), this.rotationYaw, this.rotationPitch);
+            rabbit.setHealth(this.getHealth());
+            rabbit.renderYawOffset = this.renderYawOffset;
+            if (this.hasCustomName()) {
+                rabbit.setCustomName(this.getCustomName());
+                rabbit.setCustomNameVisible(this.isCustomNameVisible());
+            }
+
+            if (this.isNoDespawnRequired()) {
+                rabbit.enablePersistence();
+            }
+
+            /// SET RABBIT TYPE AND DATA
+
+            rabbit.setChild(this.isChild());
+            rabbit.setInvulnerable(this.isInvulnerable());
+            world.addEntity(rabbit);
+        }
+        return Collections.singletonList(new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get(), 4));
     }
 
     public static PookaEntity convertRabbit(RabbitEntity rabbit) {
