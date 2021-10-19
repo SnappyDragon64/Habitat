@@ -54,7 +54,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         this.goalSelector.addGoal(1, new SwimGoal(this));
         this.goalSelector.addGoal(1, new PookaEntity.PanicGoal(this, 2.2D));
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp());
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, RabbitEntity.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, RabbitEntity.class, 10, true, false, livingEntity -> livingEntity.getType() == EntityType.RABBIT));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, WolfEntity.class, true));
         this.goalSelector.addGoal(4, new PookaEntity.AttackGoal(this));
