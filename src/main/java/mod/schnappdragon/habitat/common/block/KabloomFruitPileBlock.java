@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
 import net.minecraft.particles.ParticleTypes;
@@ -48,7 +49,7 @@ public class KabloomFruitPileBlock extends Block implements IHasPistonDestroyEff
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        explode(worldIn, pos, entityIn, true, false);
+        explode(worldIn, pos, entityIn instanceof ProjectileEntity ? ((ProjectileEntity) entityIn).func_234616_v_() : entityIn, true, false);
     }
 
     @Override

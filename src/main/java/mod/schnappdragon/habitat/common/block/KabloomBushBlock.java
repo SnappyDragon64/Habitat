@@ -15,6 +15,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShearsItem;
 import net.minecraft.item.ToolItem;
@@ -69,7 +70,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable, IHasPiston
             if (entityIn instanceof LivingEntity && state.get(AGE) > 1)
                 entityIn.setMotionMultiplier(state, new Vector3d(0.95F, 0.9D, 0.95F));
             if (state.get(AGE) == 7) {
-                dropFruit(state, worldIn, pos, entityIn, true, false);
+                dropFruit(state, worldIn, pos,  entityIn instanceof ProjectileEntity ? ((ProjectileEntity) entityIn).func_234616_v_() : entityIn, true, false);
             }
         }
     }
