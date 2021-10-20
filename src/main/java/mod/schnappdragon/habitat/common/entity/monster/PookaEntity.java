@@ -166,6 +166,10 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         if (rabbit.isNoDespawnRequired())
             pooka.enablePersistence();
 
+        Pair<Integer, Integer> aid = pooka.getRandomAid();
+        Pair<Integer, Integer> ailment = pooka.getRandomAilment();
+        pooka.setAidAndAilment(aid.getLeft(), aid.getRight(), ailment.getLeft(), ailment.getRight());
+
         pooka.setRabbitType(rabbit.getRabbitType());
         pooka.setChild(rabbit.isChild());
         pooka.setInvulnerable(rabbit.isInvulnerable());
