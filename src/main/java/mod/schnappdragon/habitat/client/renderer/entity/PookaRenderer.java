@@ -22,6 +22,6 @@ public class PookaRenderer extends MobRenderer<PookaEntity, PookaModel<PookaEnti
 
     @Override
     public ResourceLocation getEntityTexture(PookaEntity entity) {
-        return POOKA_TEXTURES;
+        return entity.isPacified() ? PACIFIED_POOKA_TEXTURES : POOKA_TEXTURES;
     }
 }

@@ -92,16 +92,18 @@ public class HabitatDispenserBehaviours {
                 BlockState state = worldIn.getBlockState(pos);
                 if (!worldIn.isRemote) {
                     for (PookaEntity pooka : worldIn.getEntitiesWithinAABB(PookaEntity.class, new AxisAlignedBB(pos), EntityPredicates.NOT_SPECTATING)) {
-                        worldIn.playMovingSound(null, pooka, HabitatSoundEvents.ENTITY_POOKA_SHEAR.get(), SoundCategory.HOSTILE, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-                        ((ServerWorld) worldIn).spawnParticle(ParticleTypes.EXPLOSION, pooka.getPosX(), pooka.getPosYHeight(0.5D), pooka.getPosZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
-                        pooka.remove();
-                        worldIn.addEntity(PookaEntity.convertPooka(pooka));
-                        worldIn.addEntity(new ItemEntity(worldIn, pooka.getPosX(), pooka.getPosYHeight(1.0D), pooka.getPosZ(), new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get())));
+                        if (pooka.isPacified()) {
+                            worldIn.playMovingSound(null, pooka, HabitatSoundEvents.ENTITY_POOKA_SHEAR.get(), SoundCategory.HOSTILE, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+                            ((ServerWorld) worldIn).spawnParticle(ParticleTypes.EXPLOSION, pooka.getPosX(), pooka.getPosYHeight(0.5D), pooka.getPosZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                            pooka.remove();
+                            worldIn.addEntity(PookaEntity.convertPooka(pooka));
+                            worldIn.addEntity(new ItemEntity(worldIn, pooka.getPosX(), pooka.getPosYHeight(1.0D), pooka.getPosZ(), new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get())));
 
-                        if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
-                            stack.setCount(0);
-                        this.setSuccessful(true);
-                        return stack;
+                            if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
+                                stack.setCount(0);
+                            this.setSuccessful(true);
+                            return stack;
+                        }
                     }
 
                     if (state.isIn(HabitatBlocks.KABLOOM_BUSH.get()) && state.get(KabloomBushBlock.AGE) == 7) {

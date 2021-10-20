@@ -4,35 +4,27 @@ import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
@@ -50,6 +42,7 @@ import java.util.List;
 import java.util.Random;
 
 public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
+    private static final DataParameter<Boolean> PACIFIED = EntityDataManager.createKey(PookaEntity.class, DataSerializers.BOOLEAN);
     private int aidId;
     private int aidDuration;
     private int ailmentId;
@@ -87,12 +80,18 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
      * Data Methods
      */
 
+    protected void registerData() {
+        super.registerData();
+        this.dataManager.register(PACIFIED, false);
+    }
+
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
         compound.putInt("aidId", this.aidId);
         compound.putInt("aidDuration", this.aidDuration);
         compound.putInt("ailmentId", this.ailmentId);
         compound.putInt("ailmentDuration", this.ailmentDuration);
+        compound.putBoolean("isPacified", this.isPacified());
     }
 
     public void readAdditional(CompoundNBT compound) {
@@ -103,6 +102,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
                 compound.getInt("ailmentId"),
                 compound.getInt("ailmentDuration")
         );
+        this.setPacified(compound.getBoolean("isPacified"));
     }
 
     private void setAidAndAilment(int aidI, int aidD, int ailI, int ailD) {
@@ -112,13 +112,21 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         this.ailmentDuration = ailD;
     }
 
+    public void setPacified(boolean isPacified) {
+        this.dataManager.set(PACIFIED, isPacified);
+    }
+
+    public boolean isPacified() {
+        return this.dataManager.get(PACIFIED);
+    }
+
     /*
      * Conversion Methods
      */
 
     @Override
     public boolean isShearable(@Nonnull ItemStack item, World world, BlockPos pos) {
-        return true;
+        return this.isPacified();
     }
 
     @Nonnull
@@ -181,7 +189,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
      */
 
     public SoundCategory getSoundCategory() {
-        return SoundCategory.HOSTILE;
+        return this.isPacified() ? SoundCategory.NEUTRAL : SoundCategory.HOSTILE;
     }
 
     protected SoundEvent getJumpSound() {
@@ -198,6 +206,50 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
 
     protected SoundEvent getDeathSound() {
         return HabitatSoundEvents.ENTITY_POOKA_DEATH.get();
+    }
+
+    /*
+     * Taming Methods
+     */
+
+    @Override
+    public ActionResultType applyPlayerInteraction(PlayerEntity player, Vector3d vec, Hand hand) {
+        ItemStack stack = player.getHeldItem(hand);
+        if (stack.getItem() == Items.GOLDEN_CARROT) {
+            if (!player.abilities.isCreativeMode)
+                stack.shrink(1);
+            int roll = rand.nextInt(5);
+            boolean fail = false;
+
+            if (this.isPacified())
+                this.heal((float) stack.getItem().getFood().getHealing());
+            else if (this.isChild() && roll > 0 || roll == 0) {
+                if (this.isAlone()) {
+                    this.setPacified(true);
+                    this.navigator.clearPath();
+                    this.setAttackTarget(null);
+                    for (int i = 0; i < 7; i++)
+                        this.world.addParticle(ParticleTypes.HEART, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D);
+                }
+                else
+                    fail = true;
+            }
+            else
+                fail = true;
+
+            if (fail) {
+                for (int i = 0; i < 7; i++)
+                    this.world.addParticle(ParticleTypes.SMOKE, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D);
+            }
+
+            return ActionResultType.SUCCESS;
+        }
+
+        return super.applyPlayerInteraction(player, vec, hand);
+    }
+
+    private boolean isAlone() {
+        return this.world.getEntitiesWithinAABB(PookaEntity.class, this.getBoundingBox().grow(16.0D, 4.0D, 16.0D), pooka -> !pooka.isPacified()).isEmpty();
     }
 
     /*
@@ -247,6 +299,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
 
         pooka.setRabbitType(i);
         pooka.setAidAndAilment(aidI, aidD, ailI, ailD);
+        pooka.setPacified(true);
         return pooka;
     }
 
@@ -267,6 +320,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
         Pair<Integer, Integer> aid = this.getRandomAid();
         Pair<Integer, Integer> ailment = this.getRandomAilment();
+        boolean pacified = false;
         int i = this.getRandomRabbitType(worldIn);
         int aidI = aid.getLeft();
         int aidD = aid.getRight();
@@ -279,12 +333,14 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             aidD = data.aidDurationData;
             ailI = data.ailmentIdData;
             ailD = data.ailmentDurationData;
+            pacified = data.pacifiedData;
         }
         else
-            spawnDataIn = new PookaEntity.PookaData(i, aidI, aidD, ailI, ailD);
+            spawnDataIn = new PookaEntity.PookaData(i, aidI, aidD, ailI, ailD, false);
 
         this.setRabbitType(i);
         this.setAidAndAilment(aidI, aidD, ailI, ailD);
+        this.setPacified(pacified);
         return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
@@ -357,6 +413,10 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
                     ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), this.getPosXRandom(0.5D), this.getPosYHeight(0.5D), this.getPosZRandom(0.5D), 0, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian(), 0.01D);
             }
         }
+
+        if (this.isPacified() && source.getTrueSource() instanceof PlayerEntity)
+            this.setPacified(false);
+
         return !this.isInvulnerableTo(source) && super.attackEntityFrom(source, amount);
     }
 
@@ -369,13 +429,15 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         int aidDurationData;
         int ailmentIdData;
         int ailmentDurationData;
+        boolean pacifiedData;
 
-        public PookaData(int type, int aidId, int aidDuration, int ailmentId, int ailmentDuration) {
+        public PookaData(int type, int aidId, int aidDuration, int ailmentId, int ailmentDuration, boolean pacified) {
             super(type);
             aidIdData = aidId;
             aidDurationData = aidDuration;
             ailmentIdData = ailmentId;
             ailmentDurationData = ailmentDuration;
+            pacifiedData = pacified;
         }
     }
 
