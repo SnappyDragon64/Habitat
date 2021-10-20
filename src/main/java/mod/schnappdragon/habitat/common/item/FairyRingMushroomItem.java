@@ -76,12 +76,12 @@ public class FairyRingMushroomItem extends BlockItem {
 
     public static Pair<Effect, Integer> getStewEffect() {
         List<Pair<Effect, Integer>> stewEffectPairs = Arrays.asList(
-                Pair.of(Effects.FIRE_RESISTANCE, 8),
-                Pair.of(Effects.BLINDNESS, 16),
-                Pair.of(Effects.JUMP_BOOST, 12),
-                Pair.of(Effects.POISON, 24),
-                Pair.of(Effects.REGENERATION, 16),
-                Pair.of(Effects.WEAKNESS, 18)
+                Pair.of(Effects.FIRE_RESISTANCE, 160),
+                Pair.of(Effects.BLINDNESS, 320),
+                Pair.of(Effects.JUMP_BOOST, 240),
+                Pair.of(Effects.POISON, 480),
+                Pair.of(Effects.REGENERATION, 320),
+                Pair.of(Effects.WEAKNESS, 360)
         );
         return stewEffectPairs.get((int) (Math.random() * 6));
     }
