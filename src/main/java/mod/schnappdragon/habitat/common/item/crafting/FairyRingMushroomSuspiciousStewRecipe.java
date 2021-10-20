@@ -13,8 +13,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Optional;
-
 public class FairyRingMushroomSuspiciousStewRecipe extends SpecialRecipe {
     public FairyRingMushroomSuspiciousStewRecipe(ResourceLocation idIn) {
         super(idIn);
@@ -48,14 +46,11 @@ public class FairyRingMushroomSuspiciousStewRecipe extends SpecialRecipe {
 
     @Override
     public ItemStack getCraftingResult(CraftingInventory inv) {
-        Optional<Pair<Effect, Integer>> effect = FairyRingMushroomItem.getStewEffect();
+        Pair<Effect, Integer> effect = FairyRingMushroomItem.getStewEffect();
 
-        if (effect.isPresent()) {
-            ItemStack stew = new ItemStack(Items.SUSPICIOUS_STEW, 1);
-            SuspiciousStewItem.addEffect(stew, effect.get().getLeft(), effect.get().getRight() * 2);
-            return stew;
-        }
-        return ItemStack.EMPTY;
+        ItemStack stew = new ItemStack(Items.SUSPICIOUS_STEW, 1);
+        SuspiciousStewItem.addEffect(stew, effect.getLeft(), effect.getRight() * 2);
+        return stew;
     }
 
     @Override
