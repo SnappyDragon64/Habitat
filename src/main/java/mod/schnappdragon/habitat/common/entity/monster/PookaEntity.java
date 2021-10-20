@@ -26,6 +26,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -38,14 +40,21 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IForgeShearable;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
+    private int aidId;
+    private int aidDuration;
+    private int ailmentId;
+    private int ailmentDuration;
+
     public PookaEntity(EntityType<? extends PookaEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -72,6 +81,35 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     @Override
     public ItemStack getPickedResult(RayTraceResult target) {
         return new ItemStack(HabitatItems.POOKA_SPAWN_EGG.get());
+    }
+
+    /*
+     * Data Methods
+     */
+
+    public void writeAdditional(CompoundNBT compound) {
+        super.writeAdditional(compound);
+        compound.putInt("aidId", this.aidId);
+        compound.putInt("aidDuration", this.aidDuration);
+        compound.putInt("ailmentId", this.ailmentId);
+        compound.putInt("ailmentDuration", this.ailmentDuration);
+    }
+
+    public void readAdditional(CompoundNBT compound) {
+        super.readAdditional(compound);
+        this.setAidAndAilment(
+                compound.getInt("aidId"),
+                compound.getInt("aidDuration"),
+                compound.getInt("ailmentId"),
+                compound.getInt("ailmentDuration")
+        );
+    }
+
+    private void setAidAndAilment(int aidI, int aidD, int ailI, int ailD) {
+        this.aidId = aidI;
+        this.aidDuration = aidD;
+        this.ailmentId = ailI;
+        this.ailmentDuration = ailD;
     }
 
     /*
@@ -167,13 +205,44 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         PookaEntity pooka = HabitatEntityTypes.POOKA.get().create(serverWorld);
         int i = this.getRandomRabbitType(serverWorld);
         if (this.rand.nextInt(20) != 0) {
-            if (entity instanceof RabbitEntity && this.rand.nextBoolean())
-                i = ((RabbitEntity) entity).getRabbitType();
+            if (entity instanceof PookaEntity && this.rand.nextBoolean())
+                i = ((PookaEntity) entity).getRabbitType();
             else
                 i = this.getRabbitType();
         }
 
+        Pair<Integer, Integer> aid = this.getRandomAid();
+        int aidI = aid.getLeft();
+        int aidD = aid.getRight();
+        if (this.rand.nextInt(20) != 0) {
+            if (entity instanceof PookaEntity && this.rand.nextBoolean()) {
+                PookaEntity parent = ((PookaEntity) entity);
+                aidI = parent.aidId;
+                aidD = parent.aidDuration;
+            }
+            else {
+                aidI = this.aidId;
+                aidD = this.aidDuration;
+            }
+        }
+
+        Pair<Integer, Integer> ailment = this.getRandomAilment();
+        int ailI = ailment.getLeft();
+        int ailD = ailment.getRight();
+        if (this.rand.nextInt(20) != 0) {
+            if (entity instanceof RabbitEntity && this.rand.nextBoolean()) {
+                PookaEntity parent = ((PookaEntity) entity);
+                ailI = parent.ailmentId;
+                ailD = parent.ailmentDuration;
+            }
+            else {
+                ailI = this.ailmentId;
+                ailD = this.ailmentDuration;
+            }
+        }
+
         pooka.setRabbitType(i);
+        pooka.setAidAndAilment(aidI, aidD, ailI, ailD);
         return pooka;
     }
 
@@ -192,13 +261,26 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     @Nullable
     @Override
     public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+        Pair<Integer, Integer> aid = this.getRandomAid();
+        Pair<Integer, Integer> ailment = this.getRandomAilment();
         int i = this.getRandomRabbitType(worldIn);
-        if (spawnDataIn instanceof RabbitEntity.RabbitData)
-            i = ((RabbitEntity.RabbitData) spawnDataIn).typeData;
+        int aidI = aid.getLeft();
+        int aidD = aid.getRight();
+        int ailI = ailment.getLeft();
+        int ailD = ailment.getRight();
+        if (spawnDataIn instanceof PookaEntity.PookaData) {
+            PookaEntity.PookaData data = (PookaEntity.PookaData) spawnDataIn;
+            i = data.typeData;
+            aidI = data.aidIdData;
+            aidD = data.aidDurationData;
+            ailI = data.ailmentIdData;
+            ailD = data.ailmentDurationData;
+        }
         else
-            spawnDataIn = new RabbitEntity.RabbitData(i);
+            spawnDataIn = new PookaEntity.PookaData(i, aidI, aidD, ailI, ailD);
 
         this.setRabbitType(i);
+        this.setAidAndAilment(aidI, aidD, ailI, ailD);
         return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
@@ -211,6 +293,26 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             return 4;
         else
             return i < 50 ? 0 : (i < 90 ? 5 : 2);
+    }
+
+    private Pair<Integer, Integer> getRandomAid() {
+        List<Pair<Integer, Integer>> pairs = Arrays.asList(
+                Pair.of(12, 40),
+                Pair.of(8, 60),
+                Pair.of(10, 80)
+        );
+
+        return pairs.get(this.rand.nextInt(3));
+    }
+
+    private Pair<Integer, Integer> getRandomAilment() {
+        List<Pair<Integer, Integer>> pairs = Arrays.asList(
+                Pair.of(15, 80),
+                Pair.of(19, 120),
+                Pair.of(18, 90)
+        );
+
+        return pairs.get(this.rand.nextInt(3));
     }
 
     /*
@@ -229,13 +331,47 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             return false;
         }
 
+        if (!this.isChild() && entityIn instanceof LivingEntity) {
+            Effect effect = Effect.get(ailmentId);
+            if (effect != null) {
+                ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(effect, ailmentDuration));
+            }
+        }
+
         this.playSound(HabitatSoundEvents.ENTITY_POOKA_ATTACK.get(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
         return entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), 8.0F);
     }
 
     public boolean attackEntityFrom(DamageSource source, float amount) {
+        Effect effect = Effect.get(aidId);
+        if (!this.isChild() && effect != null) {
+            this.addPotionEffect(new EffectInstance(effect, aidDuration));
+        }
         return !this.isInvulnerableTo(source) && super.attackEntityFrom(source, amount);
     }
+
+    /*
+     * Data
+     */
+
+    public static class PookaData extends RabbitEntity.RabbitData {
+        int aidIdData;
+        int aidDurationData;
+        int ailmentIdData;
+        int ailmentDurationData;
+
+        public PookaData(int type, int aidId, int aidDuration, int ailmentId, int ailmentDuration) {
+            super(type);
+            aidIdData = aidId;
+            aidDurationData = aidDuration;
+            ailmentIdData = ailmentId;
+            ailmentDurationData = ailmentDuration;
+        }
+    }
+
+    /*
+     * AI Goals
+     */
 
     static class PanicGoal extends net.minecraft.entity.ai.goal.PanicGoal {
         private final PookaEntity pooka;
