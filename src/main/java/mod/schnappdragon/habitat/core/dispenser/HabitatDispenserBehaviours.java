@@ -96,9 +96,7 @@ public class HabitatDispenserBehaviours {
                         ((ServerWorld) worldIn).spawnParticle(ParticleTypes.EXPLOSION, pooka.getPosX(), pooka.getPosYHeight(0.5D), pooka.getPosZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
                         pooka.remove();
                         worldIn.addEntity(PookaEntity.convertPooka(pooka));
-                        for (int i = 0; i < 2; ++i) {
-                            worldIn.addEntity(new ItemEntity(worldIn, pooka.getPosX(), pooka.getPosYHeight(1.0D), pooka.getPosZ(), new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get())));
-                        }
+                        worldIn.addEntity(new ItemEntity(worldIn, pooka.getPosX(), pooka.getPosYHeight(1.0D), pooka.getPosZ(), new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get())));
 
                         if (stack.attemptDamageItem(1, worldIn.getRandom(), null))
                             stack.setCount(0);

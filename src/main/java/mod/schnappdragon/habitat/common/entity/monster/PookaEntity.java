@@ -130,7 +130,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             this.remove();
             world.addEntity(convertPooka(this));
         }
-        return Collections.singletonList(new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get(), 2));
+        return Collections.singletonList(new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get()));
     }
 
     public static RabbitEntity convertPooka(PookaEntity pooka) {
