@@ -48,23 +48,23 @@ public class KabloomFruitPileBlock extends Block implements IHasPistonDestroyEff
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        explode(worldIn, pos, true, false);
+        explode(worldIn, pos, entityIn, true, false);
     }
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        explode(worldIn, pos, true, false);
+        explode(worldIn, pos, player, true, false);
         return ActionResultType.func_233537_a_(worldIn.isRemote);
     }
 
     @Override
     public void catchFire(BlockState state, World worldIn, BlockPos pos, @Nullable Direction face, @Nullable LivingEntity igniter) {
-        explode(worldIn, pos, true, true);
+        explode(worldIn, pos, igniter, true, true);
     }
 
     @Override
     public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosionIn) {
-        explode(worldIn, pos, false, false);
+        explode(worldIn, pos, null, false, false);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class KabloomFruitPileBlock extends Block implements IHasPistonDestroyEff
         ItemStack held = player.getHeldItemMainhand();
 
         if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, held) == 0 || !(held.getItem() instanceof ToolItem))
-            explode(worldIn, pos, false, false);
+            explode(worldIn, pos, player, false, false);
 
         super.onBlockHarvested(worldIn, pos, state, player);
     }
@@ -84,10 +84,10 @@ public class KabloomFruitPileBlock extends Block implements IHasPistonDestroyEff
 
     @Override
     public void onPistonDestroy(World worldIn, BlockPos pos, BlockState state) {
-        explode(worldIn, pos, false, false);
+        explode(worldIn, pos, null, false, false);
     }
 
-    private void explode(World worldIn, BlockPos pos, boolean destroyBlock, boolean setFire) {
+    private void explode(World worldIn, BlockPos pos, @Nullable Entity activator, boolean destroyBlock, boolean setFire) {
         if (!worldIn.isRemote) {
             if (destroyBlock)
                 worldIn.destroyBlock(pos, false);
@@ -97,6 +97,7 @@ public class KabloomFruitPileBlock extends Block implements IHasPistonDestroyEff
 
             for (int i = 1; i <= 9; i++) {
                 KabloomFruitEntity kabloom = new KabloomFruitEntity(worldIn, pos.getX() + worldIn.rand.nextFloat(), pos.getY() + worldIn.rand.nextFloat(), pos.getZ() + worldIn.rand.nextFloat());
+                kabloom.setShooter(activator);
                 if (setFire)
                     kabloom.setFire(8);
                 worldIn.addEntity(kabloom);
