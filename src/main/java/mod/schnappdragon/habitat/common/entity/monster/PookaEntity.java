@@ -339,6 +339,8 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             Effect effect = Effect.get(ailmentId);
             if (effect != null) {
                 ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(effect, ailmentDuration));
+                for (int i = 0; i < 2; i++)
+                    ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), entityIn.getPosXRandom(0.5D), entityIn.getPosYHeight(0.5D), entityIn.getPosZRandom(0.5D), 0, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian(), 0.01D);
             }
         }
 
@@ -350,6 +352,10 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         Effect effect = Effect.get(aidId);
         if (!this.isChild() && effect != null) {
             this.addPotionEffect(new EffectInstance(effect, aidDuration));
+            if (!this.world.isRemote) {
+                for (int i = 0; i < 2; i++)
+                    ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), this.getPosXRandom(0.5D), this.getPosYHeight(0.5D), this.getPosZRandom(0.5D), 0, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian(), 0.01D);
+            }
         }
         return !this.isInvulnerableTo(source) && super.attackEntityFrom(source, amount);
     }
