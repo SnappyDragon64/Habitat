@@ -1,26 +1,21 @@
 {
   "block.rafflesia.spew": {
-    "category": "block",
     "subtitle": "habitat.subtitle.block.rafflesia.spew",
     "sounds": [ "habitat:block/rafflesia/spew" ]
   },
   "block.rafflesia.pop": {
-    "category": "block",
     "subtitle": "habitat.subtitle.block.rafflesia.pop",
     "sounds": [ "habitat:block/rafflesia/pop" ]
   },
   "block.rafflesia.slurp": {
-    "category": "block",
     "subtitle": "habitat.subtitle.block.rafflesia.slurp",
     "sounds": [ "habitat:block/rafflesia/slurp" ]
   },
   "block.kabloom_bush.rustle": {
-    "category": "block",
     "subtitle": "habitat.subtitle.block.kabloom_bush.rustle",
     "sounds": [ "habitat:block/kabloom_bush/rustle" ]
   },
   "block.kabloom_bush.shear": {
-    "category": "block",
     "subtitle": "habitat.subtitle.block.kabloom_bush.shear",
     "sounds": [
       {
@@ -41,7 +36,6 @@
     ]
   },
   "block.slime_fern.drip": {
-    "category": "block",
     "subtitle": "habitat.subtitle.block.slime_fern.drip",
     "sounds": [
       {
@@ -119,7 +113,6 @@
     ]
   },
   "block.flowering_ball_cactus.shear": {
-    "category": "block",
     "subtitle": "habitat.subtitle.block.flowering_ball_cactus.shear",
     "sounds": [
       {
@@ -140,7 +133,6 @@
     ]
   },
   "block.fairy_ring_mushroom.shear": {
-    "category": "block",
     "subtitle": "habitat.subtitle.block.fairy_ring_mushroom.shear",
     "sounds": [
       {
@@ -161,22 +153,18 @@
     ]
   },
   "block.fairy_ring_mushroom.dust": {
-    "category": "block",
     "subtitle": "habitat.subtitle.block.fairy_ring_mushroom.dust",
     "sounds": [ "habitat:block/fairy_ring_mushroom/dust" ]
   },
   "entity.kabloom_fruit.throw": {
-    "category": "entity",
     "subtitle": "habitat.subtitle.entity.kabloom_fruit.throw",
     "sounds": [ "minecraft:random/bow" ]
   },
   "entity.kabloom_fruit.explode": {
-    "category": "entity",
     "subtitle": "habitat.subtitle.entity.kabloom_fruit.explosion",
     "sounds": [ "habitat:entity/kabloom_fruit/explode" ]
   },
   "entity.pooka.ambient": {
-    "category": "entity",
     "subtitle": "subtitles.entity.pooka.ambient",
     "sounds": [
       {
@@ -198,7 +186,6 @@
     ]
   },
   "entity.pooka.attack": {
-    "category": "entity",
     "subtitle": "subtitles.entity.pooka.attack",
     "sounds": [
       "entity/rabbit/attack1",
@@ -208,7 +195,6 @@
     ]
   },
   "entity.pooka.death": {
-    "category": "entity",
     "subtitle": "subtitles.entity.pooka.death",
     "sounds": [
       {
@@ -218,7 +204,6 @@
     ]
   },
   "entity.pooka.hurt": {
-    "category": "entity",
     "subtitle": "subtitles.entity.pooka.hurt",
     "sounds": [
       {
@@ -240,7 +225,6 @@
     ]
   },
   "entity.pooka.jump": {
-    "category": "entity",
     "subtitle": "subtitles.entity.pooka.jump",
     "sounds": [
       {
@@ -262,12 +246,10 @@
     ]
   },
   "entity.pooka.shear": {
-    "category": "entity",
     "subtitle": "subtitles.entity.pooka.shear",
     "sounds": [ "habitat:block/fairy_ring_mushroom/shear" ]
   },
   "entity.rabbit.converted_to_pooka": {
-    "category": "entity",
     "subtitle": "subtitles.entity.rabbit.converted_to_pooka",
     "sounds": [
       {
