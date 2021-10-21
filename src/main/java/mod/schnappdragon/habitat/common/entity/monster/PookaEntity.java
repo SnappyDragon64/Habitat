@@ -4,6 +4,7 @@ import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -171,8 +172,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             pooka.setCustomNameVisible(rabbit.isCustomNameVisible());
         }
 
-        if (rabbit.isNoDespawnRequired())
-            pooka.enablePersistence();
+        pooka.enablePersistence();
 
         Pair<Integer, Integer> aid = pooka.getRandomAid();
         Pair<Integer, Integer> ailment = pooka.getRandomAilment();
@@ -219,29 +219,29 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             if (!player.abilities.isCreativeMode)
                 stack.shrink(1);
             int roll = rand.nextInt(5);
-            boolean fail = false;
 
             if (this.isPacified())
                 this.heal((float) stack.getItem().getFood().getHealing());
-            else if (this.isChild() && roll > 0 || roll == 0) {
-                if (this.isAlone()) {
-                    this.setPacified(true);
-                    this.navigator.clearPath();
-                    this.setAttackTarget(null);
-                    for (int i = 0; i < 7; i++)
-                        this.world.addParticle(ParticleTypes.HEART, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D);
-                }
-                else
-                    fail = true;
+            else if ((this.isChild() && roll > 0 || roll == 0) && this.isAlone()) {
+                this.setPacified(true);
+                this.enablePersistence();
+                this.navigator.clearPath();
+                this.setAttackTarget(null);
+                for (int i = 0; i < 7; i++)
+                    this.world.addParticle(ParticleTypes.HEART, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D);
             }
-            else
-                fail = true;
-
-            if (fail) {
+            else {
                 for (int i = 0; i < 7; i++)
                     this.world.addParticle(ParticleTypes.SMOKE, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D);
             }
 
+            return ActionResultType.SUCCESS;
+        }
+        else if (stack.getItem() == Items.CARROT && this.isPacified()) {
+            if (!player.abilities.isCreativeMode)
+                stack.shrink(1);
+
+            this.heal((float) stack.getItem().getFood().getHealing());
             return ActionResultType.SUCCESS;
         }
 
@@ -249,7 +249,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     }
 
     private boolean isAlone() {
-        return this.world.getEntitiesWithinAABB(PookaEntity.class, this.getBoundingBox().grow(16.0D, 4.0D, 16.0D), pooka -> !pooka.isPacified()).isEmpty();
+        return this.world.getEntitiesWithinAABB(PookaEntity.class, this.getBoundingBox().grow(16.0D, 4.0D, 16.0D), pooka -> !pooka.isPacified()).size() == 1;
     }
 
     /*
@@ -260,46 +260,54 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     public PookaEntity func_241840_a(ServerWorld serverWorld, AgeableEntity entity) {
         PookaEntity pooka = HabitatEntityTypes.POOKA.get().create(serverWorld);
         int i = this.getRandomRabbitType(serverWorld);
-        if (this.rand.nextInt(20) != 0) {
-            if (entity instanceof PookaEntity && this.rand.nextBoolean())
-                i = ((PookaEntity) entity).getRabbitType();
-            else
-                i = this.getRabbitType();
-        }
+        boolean pacified = false;
 
         Pair<Integer, Integer> aid = this.getRandomAid();
         int aidI = aid.getLeft();
         int aidD = aid.getRight();
-        if (this.rand.nextInt(20) != 0) {
-            if (entity instanceof PookaEntity && this.rand.nextBoolean()) {
-                PookaEntity parent = ((PookaEntity) entity);
-                aidI = parent.aidId;
-                aidD = parent.aidDuration;
-            }
-            else {
-                aidI = this.aidId;
-                aidD = this.aidDuration;
-            }
-        }
 
         Pair<Integer, Integer> ailment = this.getRandomAilment();
         int ailI = ailment.getLeft();
         int ailD = ailment.getRight();
-        if (this.rand.nextInt(20) != 0) {
-            if (entity instanceof RabbitEntity && this.rand.nextBoolean()) {
-                PookaEntity parent = ((PookaEntity) entity);
-                ailI = parent.ailmentId;
-                ailD = parent.ailmentDuration;
+
+        if (entity instanceof PookaEntity) {
+            PookaEntity parent = ((PookaEntity) entity);
+            pacified = this.isPacified() && parent.isPacified();
+
+            if (this.rand.nextInt(20) != 0) {
+                if (this.rand.nextBoolean())
+                    i = parent.getRabbitType();
+                else
+                    i = this.getRabbitType();
             }
-            else {
-                ailI = this.ailmentId;
-                ailD = this.ailmentDuration;
+
+            if (this.rand.nextInt(20) != 0) {
+                if (this.rand.nextBoolean()) {
+                    aidI = parent.aidId;
+                    aidD = parent.aidDuration;
+                }
+                else {
+                    aidI = this.aidId;
+                    aidD = this.aidDuration;
+                }
+            }
+
+            if (this.rand.nextInt(20) != 0) {
+                if (this.rand.nextBoolean()) {
+                    ailI = parent.ailmentId;
+                    ailD = parent.ailmentDuration;
+                }
+                else {
+                    ailI = this.ailmentId;
+                    ailD = this.ailmentDuration;
+                }
             }
         }
 
         pooka.setRabbitType(i);
+        pooka.setPacified(pacified);
         pooka.setAidAndAilment(aidI, aidD, ailI, ailD);
-        pooka.setPacified(true);
+        pooka.enablePersistence();
         return pooka;
     }
 
@@ -312,7 +320,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
      */
 
     public static boolean canPookaSpawn(EntityType<PookaEntity> pooka, IWorld world, SpawnReason reason, BlockPos pos, Random rand) {
-        return true;
+        return world.getBlockState(pos.down()).isIn(Blocks.GRASS_BLOCK);
     }
 
     @Nullable
@@ -414,8 +422,13 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             }
         }
 
-        if (this.isPacified() && source.getTrueSource() instanceof PlayerEntity)
+        if (this.isPacified() && source.getTrueSource() instanceof PlayerEntity) {
             this.setPacified(false);
+            if (!this.world.isRemote) {
+                for (int i = 0; i < 7; i++)
+                    ((ServerWorld) this.world).spawnParticle(ParticleTypes.ANGRY_VILLAGER, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), 0, this.rand.nextGaussian(), this.rand.nextGaussian(), this.rand.nextGaussian(), 0.02D);
+            }
+        }
 
         return !this.isInvulnerableTo(source) && super.attackEntityFrom(source, amount);
     }
@@ -460,12 +473,23 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     }
 
     static class AttackGoal extends MeleeAttackGoal {
+        private final PookaEntity pooka;
+
         public AttackGoal(PookaEntity pooka) {
             super(pooka, 1.4D, true);
+            this.pooka = pooka;
         }
 
         protected double getAttackReachSqr(LivingEntity attackTarget) {
             return 4.0F + attackTarget.getWidth();
+        }
+
+        public boolean shouldExecute() {
+            return !pooka.isPacified() && super.shouldExecute();
+        }
+
+        public boolean shouldContinueExecuting() {
+            return !pooka.isPacified() && super.shouldContinueExecuting();
         }
     }
 }
