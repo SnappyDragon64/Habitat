@@ -5,16 +5,28 @@ import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
+import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -22,10 +34,15 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
@@ -56,11 +73,15 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new SwimGoal(this));
         this.goalSelector.addGoal(1, new PookaEntity.PanicGoal(this, 2.2D));
-        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp());
+        this.targetSelector.addGoal(1, (new PookaEntity.HurtByTargetGoal(this)).setCallsForHelp());
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, RabbitEntity.class, 10, true, false, livingEntity -> livingEntity.getType() == EntityType.RABBIT));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, WolfEntity.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
+        this.goalSelector.addGoal(3, new PookaEntity.TemptGoal(this, 1.0D, Ingredient.fromItems(Items.GOLDEN_CARROT), false));
         this.goalSelector.addGoal(4, new PookaEntity.AttackGoal(this));
+        this.goalSelector.addGoal(4, new PookaEntity.AvoidEntityGoal<>(this, WolfEntity.class, 10.0F, 2.2D, 2.2D));
+        this.goalSelector.addGoal(4, new PookaEntity.AvoidEntityGoal<>(this, IronGolemEntity.class, 4.0F, 2.2D, 2.2D));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 0.6D));
         this.goalSelector.addGoal(11, new LookAtGoal(this, PlayerEntity.class, 10.0F));
     }
@@ -215,7 +236,8 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     @Override
     public ActionResultType applyPlayerInteraction(PlayerEntity player, Vector3d vec, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (stack.getItem() == Items.GOLDEN_CARROT) {
+        if (!this.world.isRemote && stack.getItem() == Items.GOLDEN_CARROT) {
+            this.enablePersistence();
             if (!player.abilities.isCreativeMode)
                 stack.shrink(1);
             int roll = rand.nextInt(5);
@@ -227,21 +249,15 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
                 this.enablePersistence();
                 this.navigator.clearPath();
                 this.setAttackTarget(null);
-                for (int i = 0; i < 7; i++)
-                    this.world.addParticle(ParticleTypes.HEART, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D);
+                this.setRevengeTarget(null);
+                for (int i = 0; i < 5; i++)
+                    ((ServerWorld) this.world).spawnParticle(ParticleTypes.HEART, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), 0, this.rand.nextGaussian(), this.rand.nextGaussian(), this.rand.nextGaussian(), 0.02D);
             }
             else {
-                for (int i = 0; i < 7; i++)
-                    this.world.addParticle(ParticleTypes.SMOKE, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D, this.rand.nextGaussian() * 0.02D);
+                for (int i = 0; i < 5; i++)
+                    ((ServerWorld) this.world).spawnParticle(ParticleTypes.SMOKE, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), 0, this.rand.nextGaussian(), this.rand.nextGaussian(), this.rand.nextGaussian(), 0.02D);
             }
 
-            return ActionResultType.SUCCESS;
-        }
-        else if (stack.getItem() == Items.CARROT && this.isPacified()) {
-            if (!player.abilities.isCreativeMode)
-                stack.shrink(1);
-
-            this.heal((float) stack.getItem().getFood().getHealing());
             return ActionResultType.SUCCESS;
         }
 
@@ -415,17 +431,17 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     public boolean attackEntityFrom(DamageSource source, float amount) {
         Effect effect = Effect.get(aidId);
         if (!this.isChild() && effect != null) {
-            this.addPotionEffect(new EffectInstance(effect, aidDuration));
+            this.addPotionEffect(new EffectInstance(effect, aidDuration * (this.world.getDifficulty() == Difficulty.HARD ? 2 : 1)));
             if (!this.world.isRemote) {
                 for (int i = 0; i < 2; i++)
                     ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), this.getPosXRandom(0.5D), this.getPosYHeight(0.5D), this.getPosZRandom(0.5D), 0, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian(), 0.01D);
             }
         }
 
-        if (this.isPacified() && source.getTrueSource() instanceof PlayerEntity) {
+        if (this.isPacified() && source.getTrueSource() instanceof PlayerEntity && !source.isCreativePlayer()) {
             this.setPacified(false);
             if (!this.world.isRemote) {
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 5; i++)
                     ((ServerWorld) this.world).spawnParticle(ParticleTypes.ANGRY_VILLAGER, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), 0, this.rand.nextGaussian(), this.rand.nextGaussian(), this.rand.nextGaussian(), 0.02D);
             }
         }
@@ -469,6 +485,49 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         public void tick() {
             super.tick();
             this.pooka.setMovementSpeed(this.speed);
+        }
+    }
+
+    static class TemptGoal extends net.minecraft.entity.ai.goal.TemptGoal {
+        private final PookaEntity pooka;
+
+        public TemptGoal(PookaEntity pooka, double speed, Ingredient temptItem, boolean scaredByMovement) {
+            super(pooka, speed, temptItem, scaredByMovement);
+            this.pooka = pooka;
+        }
+
+        public boolean shouldExecute() {
+            return this.pooka.isPacified() && super.shouldExecute();
+        }
+    }
+
+    static class HurtByTargetGoal extends net.minecraft.entity.ai.goal.HurtByTargetGoal {
+        private final PookaEntity pooka;
+
+        public HurtByTargetGoal(PookaEntity pooka) {
+            super(pooka);
+            this.pooka = pooka;
+        }
+
+        public boolean shouldExecute() {
+            return !this.pooka.isPacified() && super.shouldExecute();
+        }
+
+        public boolean shouldContinueExecuting() {
+            return !this.pooka.isPacified() && super.shouldContinueExecuting();
+        }
+    }
+
+    static class AvoidEntityGoal<T extends LivingEntity> extends net.minecraft.entity.ai.goal.AvoidEntityGoal<T> {
+        private final PookaEntity pooka;
+
+        public AvoidEntityGoal(PookaEntity pooka, Class<T> entity, float range, double v1, double v2) {
+            super(pooka, entity, range, v1, v2);
+            this.pooka = pooka;
+        }
+
+        public boolean shouldExecute() {
+            return this.pooka.isPacified() && super.shouldExecute();
         }
     }
 
