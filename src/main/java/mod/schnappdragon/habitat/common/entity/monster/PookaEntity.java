@@ -69,6 +69,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     private int aidDuration;
     private int ailmentId;
     private int ailmentDuration;
+    private int forgiveTicks = 0;
 
     public PookaEntity(EntityType<? extends PookaEntity> entityType, World world) {
         super(entityType, world);
@@ -118,6 +119,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         compound.putInt("aidDuration", this.aidDuration);
         compound.putInt("ailmentId", this.ailmentId);
         compound.putInt("ailmentDuration", this.ailmentDuration);
+        compound.putInt("forgiveTicks", this.forgiveTicks);
         compound.putBoolean("isPacified", this.isPacified());
     }
 
@@ -129,6 +131,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
                 compound.getInt("ailmentId"),
                 compound.getInt("ailmentDuration")
         );
+        this.forgiveTicks = compound.getInt("forgiveTicks");
         this.setPacified(compound.getBoolean("isPacified"));
     }
 
@@ -152,6 +155,9 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     */
 
     public void updateAITasks() {
+        if (this.forgiveTicks > 0)
+            forgiveTicks--;
+
         if (this.onGround && !this.isPacified() && this.currentMoveTypeDuration == 0) {
             LivingEntity livingentity = this.getAttackTarget();
             if (livingentity != null && this.getDistanceSq(livingentity) < 16.0D) {
@@ -271,7 +277,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
 
             if (this.isPacified())
                 this.heal((float) stack.getItem().getFood().getHealing());
-            else if ((this.isChild() && roll > 0 || roll == 0) && this.isAlone()) {
+            else if (this.forgiveTicks == 0 && (this.isChild() && roll > 0 || roll == 0) && this.isAlone()) {
                 this.setPacified(true);
                 HabitatCriterionTriggers.PACIFY_POOKA.trigger((ServerPlayerEntity) player);
                 this.navigator.clearPath();
@@ -281,6 +287,9 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
                     ((ServerWorld) this.world).spawnParticle(ParticleTypes.HEART, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), 0, this.rand.nextGaussian(), this.rand.nextGaussian(), this.rand.nextGaussian(), 0.02D);
             }
             else {
+                if (this.forgiveTicks > 0)
+                    this.forgiveTicks -= this.forgiveTicks * 0.1D;
+
                 for (int i = 0; i < 5; i++)
                     ((ServerWorld) this.world).spawnParticle(ParticleTypes.SMOKE, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), 0, this.rand.nextGaussian(), this.rand.nextGaussian(), this.rand.nextGaussian(), 0.02D);
             }
@@ -468,6 +477,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
 
         if (this.isPacified() && source.getTrueSource() instanceof PlayerEntity && !source.isCreativePlayer()) {
             this.setPacified(false);
+            this.forgiveTicks = 12000;
             if (!this.world.isRemote) {
                 for (int i = 0; i < 5; i++)
                     ((ServerWorld) this.world).spawnParticle(ParticleTypes.ANGRY_VILLAGER, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), 0, this.rand.nextGaussian(), this.rand.nextGaussian(), this.rand.nextGaussian(), 0.02D);
