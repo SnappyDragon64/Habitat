@@ -82,7 +82,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, WolfEntity.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
         this.goalSelector.addGoal(2, new BreedGoal(this, 0.8D));
-        this.goalSelector.addGoal(3, new PookaEntity.TemptGoal(this, 1.0D, Ingredient.fromTag(HabitatItemTags.POOKA_FOOD), false));
+        this.goalSelector.addGoal(3, new PookaEntity.TemptGoal(this, 1.0D, Ingredient.fromTag(HabitatItemTags.POOKA_PACIFICATION_FOOD), false));
         this.goalSelector.addGoal(4, new PookaEntity.AttackGoal(this));
         this.goalSelector.addGoal(4, new PookaEntity.AvoidEntityGoal<>(this, WolfEntity.class, 10.0F, 2.2D, 2.2D));
         this.goalSelector.addGoal(4, new PookaEntity.AvoidEntityGoal<>(this, IronGolemEntity.class, 4.0F, 2.2D, 2.2D));
@@ -240,7 +240,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     @Override
     public ActionResultType applyPlayerInteraction(PlayerEntity player, Vector3d vec, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (!this.world.isRemote && isBreedingItem(stack)) {
+        if (!this.world.isRemote && stack.getItem().isIn(HabitatItemTags.POOKA_PACIFICATION_FOOD)) {
             this.enablePersistence();
             if (!player.abilities.isCreativeMode)
                 stack.shrink(1);
@@ -333,7 +333,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     }
 
     public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem().isIn(HabitatItemTags.POOKA_FOOD);
+        return stack.getItem().isIn(HabitatItemTags.POOKA_BREEDING_FOOD);
     }
 
     /*
