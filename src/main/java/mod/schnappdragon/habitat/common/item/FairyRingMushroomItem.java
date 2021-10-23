@@ -65,7 +65,7 @@ public class FairyRingMushroomItem extends BlockItem {
                 if (!playerIn.abilities.isCreativeMode)
                     stack.shrink(1);
 
-                for (int j = 0; j < 8; ++j)
+                for (int j = 0; j < 8; j++)
                     ((ServerWorld) playerIn.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getPosXRandom(0.5D), rabbit.getPosYHeight(0.5D), rabbit.getPosZRandom(0.5D), 0, rabbit.getRNG().nextGaussian(), 0.0D, rabbit.getRNG().nextGaussian(), 0.01D);
                 return ActionResultType.SUCCESS;
             }
