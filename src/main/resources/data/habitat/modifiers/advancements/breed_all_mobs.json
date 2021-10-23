@@ -1,0 +1,33 @@
+{
+  "advancement": "minecraft:husbandry/bred_all_animals",
+  "modifiers": [
+    {
+      "type": "indexed_requirements",
+      "config": {
+        "mode": "modify",
+        "index": 0,
+        "criteria": {
+          "habitat:pooka": {
+            "trigger": "minecraft:bred_animals",
+            "conditions": {
+              "child": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "predicate": {
+                    "type": "habitat:pooka"
+                  },
+                  "entity": "this"
+                }
+              ]
+            }
+          }
+        },
+        "requirements": [
+          [
+            "habitat:pooka"
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -1,6 +1,11 @@
 package mod.schnappdragon.habitat.common.entity.monster;
 
-import mod.schnappdragon.habitat.core.registry.*;
+import mod.schnappdragon.habitat.core.registry.HabitatCriterionTriggers;
+import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
+import mod.schnappdragon.habitat.core.registry.HabitatItems;
+import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
+import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
+import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
@@ -11,6 +16,7 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -23,7 +29,6 @@ import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -76,7 +81,8 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, WolfEntity.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
-        this.goalSelector.addGoal(3, new PookaEntity.TemptGoal(this, 1.0D, Ingredient.fromItems(Items.GOLDEN_CARROT), false));
+        this.goalSelector.addGoal(2, new BreedGoal(this, 0.8D));
+        this.goalSelector.addGoal(3, new PookaEntity.TemptGoal(this, 1.0D, Ingredient.fromTag(HabitatItemTags.POOKA_FOOD), false));
         this.goalSelector.addGoal(4, new PookaEntity.AttackGoal(this));
         this.goalSelector.addGoal(4, new PookaEntity.AvoidEntityGoal<>(this, WolfEntity.class, 10.0F, 2.2D, 2.2D));
         this.goalSelector.addGoal(4, new PookaEntity.AvoidEntityGoal<>(this, IronGolemEntity.class, 4.0F, 2.2D, 2.2D));
@@ -234,7 +240,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     @Override
     public ActionResultType applyPlayerInteraction(PlayerEntity player, Vector3d vec, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (!this.world.isRemote && stack.getItem() == Items.GOLDEN_CARROT) {
+        if (!this.world.isRemote && isBreedingItem(stack)) {
             this.enablePersistence();
             if (!player.abilities.isCreativeMode)
                 stack.shrink(1);
@@ -327,7 +333,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     }
 
     public boolean isBreedingItem(ItemStack stack) {
-        return false;
+        return stack.getItem().isIn(HabitatItemTags.POOKA_FOOD);
     }
 
     /*
