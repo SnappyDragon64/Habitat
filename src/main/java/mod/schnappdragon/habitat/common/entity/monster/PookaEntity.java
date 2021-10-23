@@ -1,9 +1,6 @@
 package mod.schnappdragon.habitat.common.entity.monster;
 
-import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
-import mod.schnappdragon.habitat.core.registry.HabitatItems;
-import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
-import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
+import mod.schnappdragon.habitat.core.registry.*;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
@@ -24,6 +21,7 @@ import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
@@ -246,6 +244,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
                 this.heal((float) stack.getItem().getFood().getHealing());
             else if ((this.isChild() && roll > 0 || roll == 0) && this.isAlone()) {
                 this.setPacified(true);
+                HabitatCriterionTriggers.PACIFY_POOKA.trigger((ServerPlayerEntity) player);
                 this.enablePersistence();
                 this.navigator.clearPath();
                 this.setAttackTarget(null);
@@ -410,7 +409,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             rabbit.remove();
             this.world.addEntity(convertRabbit(rabbit));
 
-            for (int j = 0; j < 8; ++j)
+            for (int j = 0; j < 8; j++)
                 ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getPosXRandom(0.5D), rabbit.getPosYHeight(0.5D), rabbit.getPosZRandom(0.5D), 0, rabbit.getRNG().nextGaussian(), 0.0D, rabbit.getRNG().nextGaussian(), 0.01D);
             return false;
         }
@@ -419,6 +418,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             Effect effect = Effect.get(ailmentId);
             if (effect != null) {
                 ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(effect, ailmentDuration * (this.world.getDifficulty() == Difficulty.HARD ? 2 : 1)));
+
                 for (int i = 0; i < 2; i++)
                     ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), entityIn.getPosXRandom(0.5D), entityIn.getPosYHeight(0.5D), entityIn.getPosZRandom(0.5D), 0, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian(), 0.01D);
             }

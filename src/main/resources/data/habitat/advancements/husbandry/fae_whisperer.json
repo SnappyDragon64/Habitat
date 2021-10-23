@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:husbandry/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:golden_carrot"
+    },
+    "title": {
+      "translate": "habitat.advancements.husbandry.fae_whisperer.title"
+    },
+    "description": {
+      "translate": "habitat.advancements.husbandry.fae_whisperer.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "fae_whisperer": {
+      "trigger": "habitat:pacify_pooka"
+    }
+  },
+  "requirements": [
+    [
+      "fae_whisperer"
+    ]
+  ]
+}

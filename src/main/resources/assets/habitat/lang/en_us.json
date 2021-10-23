@@ -116,7 +116,9 @@
 
   "habitat.advancements.husbandry.suspicious.title": "Suspicious...",
   "habitat.advancements.husbandry.bloom_defused.title": "The Bloom Has Been Defused",
+  "habitat.advancements.husbandry.fae_whisperer.title": "Fae Whisperer",
 
-  "habitat.advancements.husbandry.suspicious.description": "Feed suspicious stew to a rafflesia",
-  "habitat.advancements.husbandry.bloom_defused.description": "Shear a kabloom bush to harvest the fruit"
+  "habitat.advancements.husbandry.suspicious.description": "Feed suspicious stew to a Rafflesia",
+  "habitat.advancements.husbandry.bloom_defused.description": "Shear a Kabloom Bush to harvest the fruit",
+  "habitat.advancements.husbandry.fae_whisperer.description": "Lure a Pooka away from the rest and pacify it with golden carrots"
 }

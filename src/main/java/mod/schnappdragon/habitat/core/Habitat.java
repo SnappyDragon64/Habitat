@@ -60,6 +60,7 @@ public class Habitat {
             HabitatConfiguredStructures.registerConfiguredStructures();
             HabitatComposterChances.registerComposterChances();
             HabitatDispenserBehaviours.registerDispenserBehaviour();
+            HabitatCriterionTriggers.registerCriteriaTriggers();
             HabitatLootConditionTypes.registerLootConditionTypes();
             HabitatFireInfo.registerFireInfo();
             HabitatPOI.addBeehivePOI();
