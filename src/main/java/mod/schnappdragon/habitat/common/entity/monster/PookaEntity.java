@@ -251,7 +251,6 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             else if ((this.isChild() && roll > 0 || roll == 0) && this.isAlone()) {
                 this.setPacified(true);
                 HabitatCriterionTriggers.PACIFY_POOKA.trigger((ServerPlayerEntity) player);
-                this.enablePersistence();
                 this.navigator.clearPath();
                 this.setAttackTarget(null);
                 this.setRevengeTarget(null);
