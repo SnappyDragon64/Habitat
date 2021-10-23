@@ -43,6 +43,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
@@ -144,6 +145,28 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
 
     public boolean isPacified() {
         return this.dataManager.get(PACIFIED);
+    }
+
+    /*
+     * Update AI Tasks
+    */
+
+    public void updateAITasks() {
+        if (this.onGround && !this.isPacified() && this.currentMoveTypeDuration == 0) {
+            LivingEntity livingentity = this.getAttackTarget();
+            if (livingentity != null && this.getDistanceSq(livingentity) < 16.0D) {
+                this.calculateRotationYaw(livingentity.getPosX(), livingentity.getPosZ());
+                this.moveController.setMoveTo(livingentity.getPosX(), livingentity.getPosY(), livingentity.getPosZ(), this.moveController.getSpeed());
+                this.startJumping();
+                this.wasOnGround = true;
+            }
+        }
+
+        super.updateAITasks();
+    }
+
+    private void calculateRotationYaw(double x, double z) {
+        this.rotationYaw = (float) (MathHelper.atan2(z - this.getPosZ(), x - this.getPosX()) * (double) (180F / (float) Math.PI)) - 90.0F;
     }
 
     /*
