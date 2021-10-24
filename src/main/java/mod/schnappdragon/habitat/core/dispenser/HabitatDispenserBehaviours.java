@@ -93,7 +93,7 @@ public class HabitatDispenserBehaviours {
                 if (!worldIn.isRemote) {
                     for (PookaEntity pooka : worldIn.getEntitiesWithinAABB(PookaEntity.class, new AxisAlignedBB(pos), EntityPredicates.NOT_SPECTATING)) {
                         if (pooka.isPacified()) {
-                            worldIn.playMovingSound(null, pooka, HabitatSoundEvents.ENTITY_POOKA_SHEAR.get(), SoundCategory.HOSTILE, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+                            worldIn.playMovingSound(null, pooka, HabitatSoundEvents.ENTITY_POOKA_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
                             ((ServerWorld) worldIn).spawnParticle(ParticleTypes.EXPLOSION, pooka.getPosX(), pooka.getPosYHeight(0.5D), pooka.getPosZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
                             pooka.remove();
                             worldIn.addEntity(PookaEntity.convertPooka(pooka));
