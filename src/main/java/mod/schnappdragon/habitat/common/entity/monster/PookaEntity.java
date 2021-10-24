@@ -495,13 +495,13 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     public void handleStatusUpdate(byte id) {
         if (id == 11)
             spawnParticles(ParticleTypes.HEART, 5, true);
-        if (id == 12)
+        else if (id == 12)
             spawnParticles(ParticleTypes.SMOKE, 5, true);
-        if (id == 13)
+        else if (id == 13)
             spawnParticles(ParticleTypes.ANGRY_VILLAGER, 5, true);
-        if (id == 14)
+        else if (id == 14)
             spawnParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), 2, false);
-        if (id == 15)
+        else if (id == 15)
             spawnParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), 8, false);
         else
             super.handleStatusUpdate(id);
