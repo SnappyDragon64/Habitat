@@ -33,6 +33,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
@@ -291,15 +292,13 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
                 this.navigator.clearPath();
                 this.setAttackTarget(null);
                 this.setRevengeTarget(null);
-                for (int i = 0; i < 5; i++)
-                    ((ServerWorld) this.world).spawnParticle(ParticleTypes.HEART, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), 0, this.rand.nextGaussian(), this.rand.nextGaussian(), this.rand.nextGaussian(), 0.02D);
+                this.world.setEntityState(this, (byte) 11);
             }
             else {
                 if (this.forgiveTicks > 0)
                     this.forgiveTicks -= this.forgiveTicks * 0.1D;
 
-                for (int i = 0; i < 5; i++)
-                    ((ServerWorld) this.world).spawnParticle(ParticleTypes.SMOKE, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), 0, this.rand.nextGaussian(), this.rand.nextGaussian(), this.rand.nextGaussian(), 0.02D);
+                this.world.setEntityState(this, (byte) 12);
             }
 
             return ActionResultType.SUCCESS;
@@ -454,7 +453,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             rabbit.remove();
             this.world.addEntity(convertRabbit(rabbit));
 
-            for (int j = 0; j < 8; j++)
+            for (int i = 0; i < 8; i++)
                 ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getPosXRandom(0.5D), rabbit.getPosYHeight(0.5D), rabbit.getPosZRandom(0.5D), 0, rabbit.getRNG().nextGaussian(), 0.0D, rabbit.getRNG().nextGaussian(), 0.01D);
             return false;
         }
@@ -477,22 +476,45 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         Effect effect = Effect.get(aidId);
         if (!this.isChild() && effect != null) {
             this.addPotionEffect(new EffectInstance(effect, aidDuration * (this.world.getDifficulty() == Difficulty.HARD ? 2 : 1)));
-            if (!this.world.isRemote) {
-                for (int i = 0; i < 2; i++)
-                    ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), this.getPosXRandom(0.5D), this.getPosYHeight(0.5D), this.getPosZRandom(0.5D), 0, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian(), 0.01D);
-            }
+            this.world.setEntityState(this, (byte) 14);
         }
 
         if (this.isPacified() && source.getTrueSource() instanceof PlayerEntity && !source.isCreativePlayer()) {
             this.setPacified(false);
             this.setForgiveTimer();
-            if (!this.world.isRemote) {
-                for (int i = 0; i < 5; i++)
-                    ((ServerWorld) this.world).spawnParticle(ParticleTypes.ANGRY_VILLAGER, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), 0, this.rand.nextGaussian(), this.rand.nextGaussian(), this.rand.nextGaussian(), 0.02D);
-            }
+            this.world.setEntityState(this, (byte) 13);
         }
 
         return !this.isInvulnerableTo(source) && super.attackEntityFrom(source, amount);
+    }
+
+    /*
+     * Particle Status Updates
+     */
+
+    public void handleStatusUpdate(byte id) {
+        if (id == 11)
+            spawnParticles(ParticleTypes.HEART, 5, true);
+        if (id == 12)
+            spawnParticles(ParticleTypes.SMOKE, 5, true);
+        if (id == 13)
+            spawnParticles(ParticleTypes.ANGRY_VILLAGER, 5, true);
+        if (id == 14)
+            spawnParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), 2, false);
+        if (id == 15)
+            spawnParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), 8, false);
+        else
+            super.handleStatusUpdate(id);
+    }
+
+    protected void spawnParticles(IParticleData particle, int number, boolean vanillaPresets) {
+        for (int i = 0; i < number; i++) {
+            double d0 = this.rand.nextGaussian() * (vanillaPresets ? 0.02D : 0.01D);
+            double d1 = vanillaPresets ? this.rand.nextGaussian() * 0.02D : 0.0D;
+            double d2 = this.rand.nextGaussian() * (vanillaPresets ? 0.02D : 0.01D);
+            double d3 = vanillaPresets ? 0.5D : 0.0D;
+            this.world.addParticle(particle, this.getPosXRandom(0.5D + d3), this.getPosYRandom() + d3, this.getPosZRandom(0.5D + d3), d0, d1, d2);
+        }
     }
 
     /*
@@ -582,6 +604,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
                 if (this.goalOwner.getRevengeTarget() instanceof PlayerEntity && pookaentity.isPacified()) {
                     pookaentity.setPacified(false);
                     pookaentity.setForgiveTimer();
+                    pookaentity.world.setEntityState(pookaentity, (byte) 13);
                 }
                 this.setAttackTarget(pookaentity, this.goalOwner.getRevengeTarget());
             }

@@ -70,7 +70,7 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
             rabbit.remove();
             worldIn.addEntity(PookaEntity.convertRabbit(rabbit));
 
-            for (int j = 0; j < 8; j++)
+            for (int i = 0; i < 8; i++)
                 ((ServerWorld) worldIn).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getPosXRandom(0.5D), rabbit.getPosYHeight(0.5D), rabbit.getPosZRandom(0.5D), 0, rabbit.getRNG().nextGaussian(), 0.0D, rabbit.getRNG().nextGaussian(), 0.01D);
         }
     }

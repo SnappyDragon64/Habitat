@@ -43,7 +43,7 @@ public class FairyRingMushroomItem extends BlockItem {
                     if (!playerIn.abilities.isCreativeMode)
                         stack.shrink(1);
 
-                    for (int j = 0; j < 4; ++j) {
+                    for (int i = 0; i < 4; ++i) {
                         ((ServerWorld) playerIn.world).spawnParticle(ParticleTypes.EFFECT, mooshroom.getPosXRandom(0.5D), mooshroom.getPosYHeight(0.5D), mooshroom.getPosZRandom(0.5D), 0, 0.0D, mooshroom.getRNG().nextDouble(), 0.0D, 0.2D);
                         ((ServerWorld) playerIn.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0, mooshroom.getRNG().nextGaussian(), 0.0D, mooshroom.getRNG().nextGaussian(), 0.01D);
                     }
@@ -60,13 +60,13 @@ public class FairyRingMushroomItem extends BlockItem {
                 RabbitEntity rabbit = (RabbitEntity) target;
                 rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isChild() ? (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.5F : (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.0F);
                 rabbit.remove();
-                playerIn.world.addEntity(PookaEntity.convertRabbit(rabbit));
+                PookaEntity pooka = PookaEntity.convertRabbit(rabbit);
+                playerIn.world.addEntity(pooka);
+                playerIn.world.setEntityState(pooka, (byte) 15);
 
                 if (!playerIn.abilities.isCreativeMode)
                     stack.shrink(1);
 
-                for (int j = 0; j < 8; j++)
-                    ((ServerWorld) playerIn.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getPosXRandom(0.5D), rabbit.getPosYHeight(0.5D), rabbit.getPosZRandom(0.5D), 0, rabbit.getRNG().nextGaussian(), 0.0D, rabbit.getRNG().nextGaussian(), 0.01D);
                 return ActionResultType.SUCCESS;
             }
         }
