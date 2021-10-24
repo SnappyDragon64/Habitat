@@ -145,7 +145,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         this.ailmentDuration = ailD;
     }
 
-    public void setPacified(boolean isPacified) {
+    private void setPacified(boolean isPacified) {
         this.dataManager.set(PACIFIED, isPacified);
     }
 
@@ -153,7 +153,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         return this.dataManager.get(PACIFIED);
     }
 
-    public void setForgiveTimer() {
+    private void setForgiveTimer() {
         this.forgiveTicks = 12000;
     }
 
