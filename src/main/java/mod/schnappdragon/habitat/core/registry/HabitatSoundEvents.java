@@ -33,6 +33,7 @@ public class HabitatSoundEvents {
     public static final RegistryObject<SoundEvent> ENTITY_POOKA_HURT = register("entity.pooka.hurt");
     public static final RegistryObject<SoundEvent> ENTITY_POOKA_JUMP = register("entity.pooka.jump");
     public static final RegistryObject<SoundEvent> ENTITY_POOKA_SHEAR = register("entity.pooka.shear");
+    public static final RegistryObject<SoundEvent> ENTITY_POOKA_PACIFY = register("entity.pooka.pacify");
 
     public static final RegistryObject<SoundEvent> ENTITY_RABBIT_CONVERTED_TO_POOKA = register("entity.rabbit.converted_to_pooka");
 

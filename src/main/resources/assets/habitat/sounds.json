@@ -249,6 +249,27 @@
     "subtitle": "subtitles.entity.pooka.shear",
     "sounds": [ "habitat:block/fairy_ring_mushroom/shear" ]
   },
+  "entity.pooka.pacify": {
+    "subtitle": "subtitles.entity.pooka.pacify",
+    "sounds": [
+      {
+        "name": "mob/rabbit/idle1",
+        "volume": 0.25
+      },
+      {
+        "name": "mob/rabbit/idle2",
+        "volume": 0.25
+      },
+      {
+        "name": "mob/rabbit/idle3",
+        "volume": 0.25
+      },
+      {
+        "name": "mob/rabbit/idle4",
+        "volume": 0.25
+      }
+    ]
+  },
   "entity.rabbit.converted_to_pooka": {
     "subtitle": "subtitles.entity.rabbit.converted_to_pooka",
     "sounds": [
