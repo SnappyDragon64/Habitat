@@ -82,6 +82,6 @@ public class FairyRingMushroomItem extends BlockItem {
         String[] pair = stewEffectPairs.get((int) (Math.random() * stewEffectPairs.size())).split(":");
         Effect effect = Effect.get(Integer.parseInt(pair[0]));
 
-        return Pair.of(effect != null ? effect : Effects.GLOWING, Integer.parseInt(pair[1]));
+        return Pair.of(effect != null ? effect : Effects.GLOWING, Integer.parseInt(pair[1]) * 20);
     }
 }

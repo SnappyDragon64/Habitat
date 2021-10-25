@@ -437,7 +437,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         List<String> stewEffectPairs = Arrays.asList(StringUtils.deleteWhitespace(config.get()).split(","));
         String[] pair = stewEffectPairs.get(this.rand.nextInt(stewEffectPairs.size())).split(":");
 
-        return Pair.of(Integer.parseInt(pair[0]), Integer.parseInt(pair[1]));
+        return Pair.of(Integer.parseInt(pair[0]), Integer.parseInt(pair[1]) * 20);
     }
 
     /*
