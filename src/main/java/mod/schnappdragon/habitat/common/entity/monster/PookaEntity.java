@@ -550,6 +550,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             this.pooka = pooka;
         }
 
+        @Override
         public void tick() {
             super.tick();
             this.pooka.setMovementSpeed(this.speed);
@@ -564,8 +565,18 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             this.pooka = pooka;
         }
 
+        @Override
         public boolean shouldExecute() {
             return this.pooka.isPacified() && super.shouldExecute();
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            Effect aid = Effect.get(this.pooka.aidId);
+
+            if (this.pooka.getRNG().nextInt(40) == 0 && aid != null)
+                this.closestPlayer.addPotionEffect(new EffectInstance(aid, this.pooka.aidDuration);
         }
     }
 
@@ -577,10 +588,12 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             this.pooka = pooka;
         }
 
+        @Override
         public boolean shouldExecute() {
             return !this.pooka.isPacified() && super.shouldExecute();
         }
 
+        @Override
         public boolean shouldContinueExecuting() {
             return !this.pooka.isPacified() && super.shouldContinueExecuting();
         }
@@ -625,6 +638,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             this.pooka = pooka;
         }
 
+        @Override
         public boolean shouldExecute() {
             return !this.pooka.isPacified() && super.shouldExecute();
         }
@@ -638,6 +652,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             this.pooka = pooka;
         }
 
+        @Override
         public boolean shouldExecute() {
             return this.pooka.isPacified() && super.shouldExecute();
         }
@@ -651,14 +666,17 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             this.pooka = pooka;
         }
 
+        @Override
         protected double getAttackReachSqr(LivingEntity attackTarget) {
             return 4.0F + attackTarget.getWidth();
         }
 
+        @Override
         public boolean shouldExecute() {
             return !pooka.isPacified() && super.shouldExecute();
         }
 
+        @Override
         public boolean shouldContinueExecuting() {
             return !pooka.isPacified() && super.shouldContinueExecuting();
         }
