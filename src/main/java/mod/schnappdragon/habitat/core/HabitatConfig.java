@@ -32,7 +32,7 @@ public class HabitatConfig {
         Common(ForgeConfigSpec.Builder builder) {
             builder.comment("Common Configurations for Habitat").push("common");
 
-            builder.comment("\n[MOBS]\n");
+            builder.comment("\n[MISC]\n");
             builder.comment("\nPooka and Fairy Ring Mushroom Stew Effects\nEnter them in the format effectid:duration (duration in seconds) and separate theme with a single ,");
             suspiciousStewEffects = builder.define("suspicious_stew_effects", "1:12,5:8,8:16,10:10,11:8,2:8,15:12,17:16,18:8,19:10");
             pookaPositiveEffects = builder.define("pooka_positive_effects", "1:6,5:4,8:8,10:5,11:4");
