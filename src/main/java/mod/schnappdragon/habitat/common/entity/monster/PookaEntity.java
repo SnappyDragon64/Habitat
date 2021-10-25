@@ -469,7 +469,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         }
 
         this.playSound(HabitatSoundEvents.ENTITY_POOKA_ATTACK.get(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-        return entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), 8.0F);
+        return entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), this.isChild() ? 3.0F : 5.0F);
     }
 
     public boolean attackEntityFrom(DamageSource source, float amount) {
