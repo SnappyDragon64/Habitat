@@ -475,7 +475,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     public boolean attackEntityFrom(DamageSource source, float amount) {
         Effect effect = Effect.get(aidId);
         if (!this.isChild() && effect != null) {
-            this.addPotionEffect(new EffectInstance(effect, aidDuration * (this.world.getDifficulty() == Difficulty.HARD ? 2 : 1)));
+            this.addPotionEffect(new EffectInstance(effect, aidDuration));
             this.world.setEntityState(this, (byte) 14);
         }
 
