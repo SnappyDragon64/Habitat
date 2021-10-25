@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.common.entity.monster;
 
+import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.HabitatCriterionTriggers;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
@@ -54,7 +55,9 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.IForgeShearable;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
@@ -423,23 +426,18 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
     }
 
     private Pair<Integer, Integer> getRandomAid() {
-        List<Pair<Integer, Integer>> pairs = Arrays.asList(
-                Pair.of(12, 40),
-                Pair.of(8, 60),
-                Pair.of(10, 80)
-        );
-
-        return pairs.get(this.rand.nextInt(3));
+        return getEffect(HabitatConfig.COMMON.pookaPositiveEffects);
     }
 
     private Pair<Integer, Integer> getRandomAilment() {
-        List<Pair<Integer, Integer>> pairs = Arrays.asList(
-                Pair.of(15, 80),
-                Pair.of(19, 120),
-                Pair.of(18, 90)
-        );
+        return getEffect(HabitatConfig.COMMON.pookaNegativeEffects);
+    }
 
-        return pairs.get(this.rand.nextInt(3));
+    private Pair<Integer, Integer> getEffect(ForgeConfigSpec.ConfigValue<String> config) {
+        List<String> stewEffectPairs = Arrays.asList(StringUtils.deleteWhitespace(config.get()).split(","));
+        String[] pair = stewEffectPairs.get(this.rand.nextInt(stewEffectPairs.size())).split(":");
+
+        return Pair.of(Integer.parseInt(pair[0]), Integer.parseInt(pair[1]));
     }
 
     /*

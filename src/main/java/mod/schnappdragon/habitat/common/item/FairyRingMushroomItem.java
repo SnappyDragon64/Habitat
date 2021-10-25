@@ -1,6 +1,7 @@
 package mod.schnappdragon.habitat.common.item;
 
 import mod.schnappdragon.habitat.common.entity.monster.PookaEntity;
+import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.block.Block;
@@ -18,6 +19,8 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeConfigSpec;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
@@ -38,7 +41,7 @@ public class FairyRingMushroomItem extends BlockItem {
                     Pair<Effect, Integer> effect = getStewEffect();
 
                     mooshroom.hasStewEffect = effect.getLeft();
-                    mooshroom.effectDuration = effect.getRight() * 2;
+                    mooshroom.effectDuration = effect.getRight();
 
                     if (!playerIn.abilities.isCreativeMode)
                         stack.shrink(1);
@@ -75,14 +78,10 @@ public class FairyRingMushroomItem extends BlockItem {
     }
 
     public static Pair<Effect, Integer> getStewEffect() {
-        List<Pair<Effect, Integer>> stewEffectPairs = Arrays.asList(
-                Pair.of(Effects.FIRE_RESISTANCE, 160),
-                Pair.of(Effects.BLINDNESS, 320),
-                Pair.of(Effects.JUMP_BOOST, 240),
-                Pair.of(Effects.POISON, 480),
-                Pair.of(Effects.REGENERATION, 320),
-                Pair.of(Effects.WEAKNESS, 360)
-        );
-        return stewEffectPairs.get((int) (Math.random() * 6));
+        List<String> stewEffectPairs = Arrays.asList(StringUtils.deleteWhitespace(HabitatConfig.COMMON.suspiciousStewEffects.get()).split(","));
+        String[] pair = stewEffectPairs.get((int) (Math.random() * stewEffectPairs.size())).split(":");
+        Effect effect = Effect.get(Integer.parseInt(pair[0]));
+
+        return Pair.of(effect != null ? effect : Effects.GLOWING, Integer.parseInt(pair[1]));
     }
 }

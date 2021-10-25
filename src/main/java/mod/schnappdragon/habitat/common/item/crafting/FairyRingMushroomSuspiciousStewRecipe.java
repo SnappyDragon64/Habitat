@@ -1,6 +1,7 @@
 package mod.schnappdragon.habitat.common.item.crafting;
 
 import mod.schnappdragon.habitat.common.item.FairyRingMushroomItem;
+import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatRecipeSerializers;
 import net.minecraft.block.Blocks;
@@ -49,7 +50,7 @@ public class FairyRingMushroomSuspiciousStewRecipe extends SpecialRecipe {
         Pair<Effect, Integer> effect = FairyRingMushroomItem.getStewEffect();
 
         ItemStack stew = new ItemStack(Items.SUSPICIOUS_STEW, 1);
-        SuspiciousStewItem.addEffect(stew, effect.getLeft(), effect.getRight() * 2);
+        SuspiciousStewItem.addEffect(stew, effect.getLeft(), effect.getRight());
         return stew;
     }
 
