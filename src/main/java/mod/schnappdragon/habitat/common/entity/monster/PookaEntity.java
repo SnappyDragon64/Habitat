@@ -585,6 +585,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             return !this.pooka.isPacified() && super.shouldContinueExecuting();
         }
 
+        @Override
         protected void alertOthers() {
             double d0 = this.getTargetDistance();
             AxisAlignedBB axisalignedbb = AxisAlignedBB.fromVector(this.goalOwner.getPositionVec()).grow(d0, 10.0D, d0);
