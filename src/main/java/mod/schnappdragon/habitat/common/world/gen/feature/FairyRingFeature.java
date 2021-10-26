@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.common.block.FairyRingMushroomBlock;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
-import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
@@ -36,7 +35,7 @@ public class FairyRingFeature extends Feature<NoFeatureConfig> {
             for (int d = -1; d >= -6; --d) {
                 BlockPos.Mutable blockpos$mutable = pos.add(XZ[0], d, XZ[1]).toMutable();
                 BlockState base = reader.getBlockState(blockpos$mutable.down());
-                if (reader.isAirBlock(blockpos$mutable) && base.isSolid() && !base.isIn(HabitatBlockTags.FAIRY_RING_GENERATION_BLACKLIST)) {
+                if (reader.isAirBlock(blockpos$mutable) && base.isSolid() && !base.isIn(HabitatBlocks.FAIRY_RING_MUSHROOM_BLOCK.get()) && !base.isIn(HabitatBlocks.FAIRYLIGHT.get())) {
                     if (Arrays.equals(XZ, bigXZ)) {
                         ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM;
 
