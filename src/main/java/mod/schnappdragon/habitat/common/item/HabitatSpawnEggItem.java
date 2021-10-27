@@ -27,7 +27,7 @@ public class HabitatSpawnEggItem extends SpawnEggItem {
     }
 
     public static void registerSpawnEggs() {
-        Map<EntityType<?>, SpawnEggItem> EGGS = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class, null, "EGGS");
+        Map<EntityType<?>, SpawnEggItem> EGGS = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class, null, "field_195987_b");
         for (SpawnEggItem egg : HABITAT_EGGS) {
             EGGS.put(egg.getType(null), egg);
         }
