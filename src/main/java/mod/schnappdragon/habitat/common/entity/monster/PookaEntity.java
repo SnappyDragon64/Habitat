@@ -573,7 +573,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
             super.tick();
             Effect aid = Effect.get(this.pooka.aidId);
 
-            if (this.pooka.getRNG().nextInt(30) == 0 && aid != null)
+            if (!this.pooka.isChild() && this.pooka.getRNG().nextInt(30) == 0 && aid != null)
                 this.closestPlayer.addPotionEffect(new EffectInstance(aid, this.pooka.aidDuration));
         }
     }
