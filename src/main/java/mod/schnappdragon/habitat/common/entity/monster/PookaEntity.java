@@ -121,24 +121,24 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
 
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
-        compound.putInt("aidId", this.aidId);
-        compound.putInt("aidDuration", this.aidDuration);
-        compound.putInt("ailmentId", this.ailmentId);
-        compound.putInt("ailmentDuration", this.ailmentDuration);
-        compound.putInt("forgiveTicks", this.forgiveTicks);
-        compound.putBoolean("isPacified", this.isPacified());
+        compound.putInt("AidId", this.aidId);
+        compound.putInt("AidDuration", this.aidDuration);
+        compound.putInt("AilmentId", this.ailmentId);
+        compound.putInt("AilmentDuration", this.ailmentDuration);
+        compound.putInt("ForgiveTicks", this.forgiveTicks);
+        compound.putBoolean("IsPacified", this.isPacified());
     }
 
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
         this.setAidAndAilment(
-                compound.getInt("aidId"),
-                compound.getInt("aidDuration"),
-                compound.getInt("ailmentId"),
-                compound.getInt("ailmentDuration")
+                compound.getInt("AidId"),
+                compound.getInt("AidDuration"),
+                compound.getInt("AilmentId"),
+                compound.getInt("AilmentDuration")
         );
-        this.forgiveTicks = compound.getInt("forgiveTicks");
-        this.setPacified(compound.getBoolean("isPacified"));
+        this.forgiveTicks = compound.getInt("ForgiveTicks");
+        this.setPacified(compound.getBoolean("IsPacified"));
     }
 
     private void setAidAndAilment(int aidI, int aidD, int ailI, int ailD) {
