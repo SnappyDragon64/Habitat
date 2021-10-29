@@ -8,7 +8,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class HabitatParticleTypes {
-    public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Habitat.MOD_ID);
+    public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Habitat.MODID);
 
     public static final RegistryObject<BasicParticleType> FALLING_SLIME = register("falling_slime",false);
     public static final RegistryObject<BasicParticleType> LANDING_SLIME = register("landing_slime",false);

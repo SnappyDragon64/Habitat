@@ -20,14 +20,14 @@ public enum ChestVariant {
     }
 
     public ResourceLocation getSingle() {
-        return new ResourceLocation(Habitat.MOD_ID, "entity/chest/" + this.name + "_" + (this.trapped ? "trapped" : "normal"));
+        return new ResourceLocation(Habitat.MODID, "entity/chest/" + this.name + "_" + (this.trapped ? "trapped" : "normal"));
     }
 
     public ResourceLocation getRight() {
-        return new ResourceLocation(Habitat.MOD_ID, "entity/chest/" + this.name + "_" + (this.trapped ? "trapped" : "normal") + "_right");
+        return new ResourceLocation(Habitat.MODID, "entity/chest/" + this.name + "_" + (this.trapped ? "trapped" : "normal") + "_right");
     }
 
     public ResourceLocation getLeft() {
-        return new ResourceLocation(Habitat.MOD_ID, "entity/chest/" + this.name + "_" + (this.trapped ? "trapped" : "normal") + "_left");
+        return new ResourceLocation(Habitat.MODID, "entity/chest/" + this.name + "_" + (this.trapped ? "trapped" : "normal") + "_left");
     }
 }

@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.function.Supplier;
 
 public class HabitatPotions {
-    public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTION_TYPES, Habitat.MOD_ID);
+    public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTION_TYPES, Habitat.MODID);
 
     public static final RegistryObject<Potion> BLAST_ENDURANCE = register("blast_endurance", HabitatEffects.BLAST_ENDURANCE, 3600);
     public static final RegistryObject<Potion> LONG_BLAST_ENDURANCE = register("long_blast_endurance", HabitatEffects.BLAST_ENDURANCE, 9600);

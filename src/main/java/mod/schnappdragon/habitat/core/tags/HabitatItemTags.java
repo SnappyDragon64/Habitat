@@ -14,6 +14,6 @@ public class HabitatItemTags {
     public static final INamedTag<Item> POOKA_FOOD = makeTag("pooka_food");
 
     private static INamedTag<Item> makeTag(String id) {
-        return ItemTags.makeWrapperTag(Habitat.MOD_ID + ":" + id);
+        return ItemTags.makeWrapperTag(Habitat.MODID + ":" + id);
     }
 }

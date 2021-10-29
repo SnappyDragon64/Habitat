@@ -75,7 +75,7 @@ public class FairyRingStructure extends Structure<NoFeatureConfig> {
             JigsawManager.func_242837_a(
                     dynamicRegistryManager,
                     new VillageConfig(() -> dynamicRegistryManager.getRegistry(Registry.JIGSAW_POOL_KEY)
-                            .getOrDefault(new ResourceLocation(Habitat.MOD_ID, "fairy_ring/start_pool")),
+                            .getOrDefault(new ResourceLocation(Habitat.MODID, "fairy_ring/start_pool")),
                             10),
                     AbstractVillagePiece::new,
                     chunkGenerator,

@@ -9,8 +9,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 public class PookaRenderer extends MobRenderer<PookaEntity, PookaModel<PookaEntity>> {
-    private static final ResourceLocation POOKA_TEXTURES = new ResourceLocation(Habitat.MOD_ID, "textures/entity/pooka/pooka.png");
-    private static final ResourceLocation PACIFIED_POOKA_TEXTURES = new ResourceLocation(Habitat.MOD_ID, "textures/entity/pooka/pooka_pacified.png");
+    private static final ResourceLocation POOKA_TEXTURES = new ResourceLocation(Habitat.MODID, "textures/entity/pooka/pooka.png");
+    private static final ResourceLocation PACIFIED_POOKA_TEXTURES = new ResourceLocation(Habitat.MODID, "textures/entity/pooka/pooka_pacified.png");
 
     public PookaRenderer(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new PookaModel<>(), 0.3F);

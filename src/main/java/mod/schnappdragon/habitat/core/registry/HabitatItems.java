@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.function.Supplier;
 
 public class HabitatItems {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Habitat.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Habitat.MODID);
 
     public static final RegistryObject<Item> RAFFLESIA = ITEMS.register("rafflesia",
             () -> new BlockNamedItem(HabitatBlocks.RAFFLESIA.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));

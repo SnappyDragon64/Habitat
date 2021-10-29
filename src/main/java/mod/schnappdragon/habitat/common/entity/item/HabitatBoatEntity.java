@@ -44,7 +44,7 @@ public class HabitatBoatEntity extends BoatEntity {
 
     @Override
     public Item getItemBoat() {
-        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(Habitat.MOD_ID, this.getHabitatBoatType().getName() + "_boat"));
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(Habitat.MODID, this.getHabitatBoatType().getName() + "_boat"));
     }
 
     public void setBoatType(HabitatBoatEntity.Type boatType) {
@@ -83,7 +83,7 @@ public class HabitatBoatEntity extends BoatEntity {
                     if (!this.world.isRemote && !this.removed) {
                         this.remove();
                         if (this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-                            Item planks = ForgeRegistries.ITEMS.getValue(new ResourceLocation(Habitat.MOD_ID, this.getHabitatBoatType().getName() + "_planks"));
+                            Item planks = ForgeRegistries.ITEMS.getValue(new ResourceLocation(Habitat.MODID, this.getHabitatBoatType().getName() + "_planks"));
 
                             for (int i = 0; i < 3; ++i)
                                 this.entityDropItem(planks);

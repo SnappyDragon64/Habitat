@@ -13,6 +13,6 @@ public class HabitatCriterionTriggers {
     }
 
     private static ResourceLocation get(String id) {
-        return new ResourceLocation(Habitat.MOD_ID, id);
+        return new ResourceLocation(Habitat.MODID, id);
     }
 }

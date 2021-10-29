@@ -36,6 +36,6 @@ public class HabitatConfiguredFeatures {
     }
 
     private static void register(String id, ConfiguredFeature<?, ?> configuredFeature) {
-        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(Habitat.MOD_ID, id), configuredFeature);
+        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(Habitat.MODID, id), configuredFeature);
     }
 }

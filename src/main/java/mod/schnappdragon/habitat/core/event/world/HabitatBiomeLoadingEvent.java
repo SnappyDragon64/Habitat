@@ -21,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Arrays;
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = Habitat.MOD_ID)
+@Mod.EventBusSubscriber(modid = Habitat.MODID)
 public class HabitatBiomeLoadingEvent {
 
     @SubscribeEvent(priority = EventPriority.HIGH)

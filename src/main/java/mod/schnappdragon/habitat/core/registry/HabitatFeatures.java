@@ -13,7 +13,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class HabitatFeatures {
-    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Habitat.MOD_ID);
+    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Habitat.MODID);
 
     public final static RegistryObject<Feature<BlockClusterFeatureConfig>> SLIME_FERN_FEATURE = FEATURES.register("slime_fern",
             () -> new SlimeFernFeature(BlockClusterFeatureConfig.field_236587_a_));

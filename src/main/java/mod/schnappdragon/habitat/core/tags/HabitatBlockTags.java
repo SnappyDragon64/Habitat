@@ -17,6 +17,6 @@ public class HabitatBlockTags {
     public static final INamedTag<Block> FAIRY_RING_MUSHROOM_STEMS = makeTag("fairy_ring_mushroom_stems");
 
     private static INamedTag<Block> makeTag(String id) {
-        return BlockTags.makeWrapperTag(Habitat.MOD_ID + ":" + id);
+        return BlockTags.makeWrapperTag(Habitat.MODID + ":" + id);
     }
 }

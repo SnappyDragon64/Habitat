@@ -8,7 +8,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class HabitatSoundEvents {
-    public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Habitat.MOD_ID);
+    public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Habitat.MODID);
 
     public static final RegistryObject<SoundEvent> BLOCK_RAFFLESIA_SPEW = register("block.rafflesia.spew");
     public static final RegistryObject<SoundEvent> BLOCK_RAFFLESIA_POP = register("block.rafflesia.pop");
@@ -38,6 +38,6 @@ public class HabitatSoundEvents {
     public static final RegistryObject<SoundEvent> ENTITY_RABBIT_CONVERTED_TO_POOKA = register("entity.rabbit.converted_to_pooka");
 
     private static RegistryObject<SoundEvent> register(String name) {
-        return SOUND_EVENTS.register(name, () -> new SoundEvent((new ResourceLocation(Habitat.MOD_ID, name))));
+        return SOUND_EVENTS.register(name, () -> new SoundEvent((new ResourceLocation(Habitat.MODID, name))));
     }
 }

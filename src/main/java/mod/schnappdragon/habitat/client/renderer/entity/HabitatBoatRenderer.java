@@ -19,7 +19,7 @@ import net.minecraft.util.math.vector.Vector3f;
 public class HabitatBoatRenderer extends EntityRenderer<HabitatBoatEntity> {
 
     private static final ResourceLocation[] BOAT_TEXTURES = new ResourceLocation[]{
-            new ResourceLocation(Habitat.MOD_ID, "textures/entity/boat/fairy_ring_mushroom.png")
+            new ResourceLocation(Habitat.MODID, "textures/entity/boat/fairy_ring_mushroom.png")
     };
     protected final BoatModel modelBoat = new BoatModel();
 

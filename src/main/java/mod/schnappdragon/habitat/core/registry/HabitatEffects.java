@@ -9,7 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class HabitatEffects {
-    public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, Habitat.MOD_ID);
+    public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, Habitat.MODID);
 
     public static final RegistryObject<Effect> BLAST_ENDURANCE = EFFECTS.register("blast_endurance",
             () -> new HabitatEffect(EffectType.BENEFICIAL, 8440968));

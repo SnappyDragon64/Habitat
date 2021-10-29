@@ -16,6 +16,6 @@ public class HabitatLootConditionTypes {
     }
 
     private static LootConditionType register(final String name, final ILootSerializer<? extends ILootCondition> serializer) {
-        return Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(Habitat.MOD_ID, name), new LootConditionType(serializer));
+        return Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(Habitat.MODID, name), new LootConditionType(serializer));
     }
 }

@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HabitatStructures {
-    public static final DeferredRegister<Structure<?>> STRUCTURE_FEATURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Habitat.MOD_ID);
+    public static final DeferredRegister<Structure<?>> STRUCTURE_FEATURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Habitat.MODID);
 
     public static final RegistryObject<Structure<NoFeatureConfig>> FAIRY_RING_STRUCTURE = STRUCTURE_FEATURES.register("fairy_ring", () -> (new FairyRingStructure(NoFeatureConfig.field_236558_a_)));
 

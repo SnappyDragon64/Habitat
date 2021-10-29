@@ -17,7 +17,7 @@ public class HabitatConfiguredStructures {
     }
 
     private static void register(String id, StructureFeature<?, ?> structureFeature, Structure<?> structure) {
-        Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(Habitat.MOD_ID, id), structureFeature);
+        Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(Habitat.MODID, id), structureFeature);
         FlatGenerationSettings.STRUCTURES.put(structure, structureFeature);
     }
 }

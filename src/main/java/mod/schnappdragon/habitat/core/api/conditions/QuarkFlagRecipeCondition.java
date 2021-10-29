@@ -31,7 +31,7 @@ public final class QuarkFlagRecipeCondition implements ICondition {
         private final ResourceLocation location;
 
         public Serializer() {
-            this.location = new ResourceLocation(Habitat.MOD_ID, "quark_flag");
+            this.location = new ResourceLocation(Habitat.MODID, "quark_flag");
         }
 
         @Override

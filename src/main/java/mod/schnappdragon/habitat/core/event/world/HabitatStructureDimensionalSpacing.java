@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-@Mod.EventBusSubscriber(modid = Habitat.MOD_ID)
+@Mod.EventBusSubscriber(modid = Habitat.MODID)
 public class HabitatStructureDimensionalSpacing {
     private static Method GETCODEC_METHOD;
 

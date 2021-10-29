@@ -22,10 +22,10 @@ import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(Habitat.MOD_ID)
+@Mod(Habitat.MODID)
 public class Habitat {
     private static final Logger LOGGER = LogManager.getLogger();
-    public static final String MOD_ID = "habitat";
+    public static final String MODID = "habitat";
     public static final boolean DEV = !FMLLoader.isProduction();
 
     public Habitat() {
