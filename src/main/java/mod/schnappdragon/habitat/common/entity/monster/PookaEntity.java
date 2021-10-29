@@ -102,6 +102,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         return MobEntity.func_233666_p_()
                 .createMutableAttribute(Attributes.MAX_HEALTH, 3.0D)
                 .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3F)
+                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 5.0D)
                 .createMutableAttribute(Attributes.ARMOR, 8.0D);
     }
 
@@ -445,45 +446,55 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
      */
 
     public boolean attackEntityAsMob(Entity entityIn) {
-        if (entityIn.getType() == EntityType.RABBIT) {
-            RabbitEntity rabbit = (RabbitEntity) entityIn;
-            rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isChild() ? (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.5F : (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.0F);
-            rabbit.remove();
-            this.world.addEntity(convertRabbit(rabbit));
+        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
+        if (flag) {
+            this.applyEnchantments(this, entityIn);
 
-            for (int i = 0; i < 8; i++)
-                ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getPosXRandom(0.5D), rabbit.getPosYHeight(0.5D), rabbit.getPosZRandom(0.5D), 0, rabbit.getRNG().nextGaussian(), 0.0D, rabbit.getRNG().nextGaussian(), 0.01D);
-            return false;
-        }
+            if (entityIn.getType() == EntityType.RABBIT) {
+                RabbitEntity rabbit = (RabbitEntity) entityIn;
+                rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isChild() ? (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.5F : (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.0F);
+                rabbit.remove();
+                this.world.addEntity(convertRabbit(rabbit));
 
-        if (!this.isChild() && entityIn instanceof LivingEntity) {
-            Effect effect = Effect.get(ailmentId);
-            if (effect != null) {
-                ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(effect, ailmentDuration * (this.world.getDifficulty() == Difficulty.HARD ? 2 : 1)));
-
-                for (int i = 0; i < 2; i++)
-                    ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), entityIn.getPosXRandom(0.5D), entityIn.getPosYHeight(0.5D), entityIn.getPosZRandom(0.5D), 0, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian(), 0.01D);
+                for (int i = 0; i < 8; i++)
+                    ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getPosXRandom(0.5D), rabbit.getPosYHeight(0.5D), rabbit.getPosZRandom(0.5D), 0, rabbit.getRNG().nextGaussian(), 0.0D, rabbit.getRNG().nextGaussian(), 0.01D);
+                return false;
             }
+
+            if (!this.isChild() && entityIn instanceof LivingEntity) {
+                Effect effect = Effect.get(ailmentId);
+                if (effect != null) {
+                    ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(effect, ailmentDuration * (this.world.getDifficulty() == Difficulty.HARD ? 2 : 1)));
+
+                    for (int i = 0; i < 2; i++)
+                        ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), entityIn.getPosXRandom(0.5D), entityIn.getPosYHeight(0.5D), entityIn.getPosZRandom(0.5D), 0, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian(), 0.01D);
+                }
+            }
+
+            this.playSound(HabitatSoundEvents.ENTITY_POOKA_ATTACK.get(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
         }
 
-        this.playSound(HabitatSoundEvents.ENTITY_POOKA_ATTACK.get(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-        return entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), this.isChild() ? 3.0F : 5.0F);
+        return flag;
     }
 
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        Effect effect = Effect.get(aidId);
-        if (!this.isChild() && effect != null) {
-            this.addPotionEffect(new EffectInstance(effect, aidDuration));
-            this.world.setEntityState(this, (byte) 14);
-        }
+        if (this.isInvulnerableTo(source))
+            return false;
+        else {
+            Effect effect = Effect.get(aidId);
+            if (!this.isChild() && effect != null) {
+                this.addPotionEffect(new EffectInstance(effect, aidDuration));
+                this.world.setEntityState(this, (byte) 14);
+            }
 
-        if (this.isPacified() && source.getTrueSource() instanceof PlayerEntity && !source.isCreativePlayer()) {
-            this.setPacified(false);
-            this.setForgiveTimer();
-            this.world.setEntityState(this, (byte) 13);
-        }
+            if (this.isPacified() && source.getTrueSource() instanceof PlayerEntity && !source.isCreativePlayer()) {
+                this.setPacified(false);
+                this.setForgiveTimer();
+                this.world.setEntityState(this, (byte) 13);
+            }
 
-        return !this.isInvulnerableTo(source) && super.attackEntityFrom(source, amount);
+            return super.attackEntityFrom(source, amount);
+        }
     }
 
     /*
