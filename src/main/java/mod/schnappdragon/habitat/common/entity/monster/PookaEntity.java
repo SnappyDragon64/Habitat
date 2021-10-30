@@ -449,6 +449,7 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
         boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
         if (flag) {
             this.applyEnchantments(this, entityIn);
+            this.playSound(HabitatSoundEvents.ENTITY_POOKA_ATTACK.get(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
 
             if (entityIn.getType() == EntityType.RABBIT) {
                 RabbitEntity rabbit = (RabbitEntity) entityIn;
@@ -470,8 +471,6 @@ public class PookaEntity extends RabbitEntity implements IMob, IForgeShearable {
                         ((ServerWorld) this.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), entityIn.getPosXRandom(0.5D), entityIn.getPosYHeight(0.5D), entityIn.getPosZRandom(0.5D), 0, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian(), 0.01D);
                 }
             }
-
-            this.playSound(HabitatSoundEvents.ENTITY_POOKA_ATTACK.get(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
         }
 
         return flag;
