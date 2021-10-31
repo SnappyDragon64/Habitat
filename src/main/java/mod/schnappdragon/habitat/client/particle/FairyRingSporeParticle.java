@@ -10,7 +10,7 @@ public class FairyRingSporeParticle extends TextureSheetParticle {
     private FairyRingSporeParticle(ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ, SpriteSet spriteSetWithAge) {
         super(world, x, y, z);
         this.spriteSetWithAge = spriteSetWithAge;
-        this.lifetime = (int) (40 + random.nextDouble() * 40);
+        this.lifetime = (int) (60 + random.nextDouble() * 60);
         this.gravity = 0.0001F;
         float f = 0.9F + this.random.nextFloat() * 0.1F;
         this.rCol = f;
