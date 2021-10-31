@@ -8,8 +8,11 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.Features;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HugeMushroomBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.blockplacers.SimpleBlockPlacer;
@@ -24,9 +27,9 @@ public class HabitatConfiguredFeatures {
 
     public static final ConfiguredFeature<?, ?> PATCH_KABLOOM_BUSH = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(HabitatBlocks.KABLOOM_BUSH.get().defaultBlockState().setValue(KabloomBushBlock.AGE, 7)), SimpleBlockPlacer.INSTANCE).xspread(4).yspread(1).zspread(4).tries(20).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).build()).decorated(Features.Decorators.HEIGHTMAP_SQUARE).rarity(HabitatConfig.COMMON.kabloomBushChance.get());
 
-    public static final ConfiguredFeature<?, ?> PATCH_SLIME_FERN = HabitatFeatures.SLIME_FERN_FEATURE.get().configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(HabitatBlocks.SLIME_FERN.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE).xspread(4).yspread(5).zspread(4).tries(50).build()).range(40).rarity(HabitatConfig.COMMON.slimeFernChance.get());
+    public static final ConfiguredFeature<?, ?> PATCH_SLIME_FERN = HabitatFeatures.SLIME_FERN_FEATURE.get().configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(HabitatBlocks.SLIME_FERN.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE).xspread(4).yspread(5).zspread(4).tries(50).build()).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(40)).rarity(HabitatConfig.COMMON.slimeFernChance.get());
 
-    public static final ConfiguredFeature<?, ?> PATCH_BALL_CACTUS = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new WeightedStateProvider().add(HabitatBlocks.FLOWERING_ORANGE_BALL_CACTUS.get().defaultBlockState(), 3).add(HabitatBlocks.FLOWERING_PINK_BALL_CACTUS.get().defaultBlockState(), 3).add(HabitatBlocks.FLOWERING_RED_BALL_CACTUS.get().defaultBlockState(), 2).add(HabitatBlocks.FLOWERING_YELLOW_BALL_CACTUS.get().defaultBlockState(), 1), SimpleBlockPlacer.INSTANCE).xspread(5).yspread(1).zspread(5).tries(5).build()).decorated(Features.Decorators.HEIGHTMAP_SQUARE).rarity(HabitatConfig.COMMON.ballCactusChance.get());
+    public static final ConfiguredFeature<?, ?> PATCH_BALL_CACTUS = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(HabitatBlocks.FLOWERING_ORANGE_BALL_CACTUS.get().defaultBlockState(), 3).add(HabitatBlocks.FLOWERING_PINK_BALL_CACTUS.get().defaultBlockState(), 3).add(HabitatBlocks.FLOWERING_RED_BALL_CACTUS.get().defaultBlockState(), 2).add(HabitatBlocks.FLOWERING_YELLOW_BALL_CACTUS.get().defaultBlockState(), 1)), SimpleBlockPlacer.INSTANCE).xspread(5).yspread(1).zspread(5).tries(5).build()).decorated(Features.Decorators.HEIGHTMAP_SQUARE).rarity(HabitatConfig.COMMON.ballCactusChance.get());
 
     public static final ConfiguredFeature<?, ?> FAIRY_RING = HabitatFeatures.FAIRY_RING_FEATURE.get().configured(new NoneFeatureConfiguration());
     public static final ConfiguredFeature<?, ?> HUGE_FAIRY_RING_MUSHROOM = HabitatFeatures.HUGE_FAIRY_RING_MUSHROOM_FEATURE.get().configured(new HugeMushroomFeatureConfiguration(new SimpleStateProvider(HabitatBlocks.FAIRY_RING_MUSHROOM_BLOCK.get().defaultBlockState().setValue(HugeMushroomBlock.DOWN, false)), new SimpleStateProvider(HabitatBlocks.FAIRY_RING_MUSHROOM_STEM.get().defaultBlockState().setValue(HugeMushroomBlock.UP, false).setValue(HugeMushroomBlock.DOWN, false)), 2));
