@@ -27,13 +27,12 @@ public class FairyRingSporeParticle extends TextureSheetParticle {
         this.xo = this.x;
         this.yo = this.y;
         this.zo = this.z;
-        if (this.age++ >= this.lifetime) {
+        if (this.age++ >= this.lifetime)
             this.remove();
-        } else {
+        else
             this.yd -= this.gravity;
             this.move(this.xd, this.yd, this.zd);
             this.setSpriteFromAge(this.spriteSetWithAge);
-        }
     }
 
     public ParticleRenderType getRenderType() {
