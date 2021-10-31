@@ -1,17 +1,19 @@
 package mod.schnappdragon.habitat.common.blockentity;
 
 import mod.schnappdragon.habitat.core.registry.HabitatBlockEntityTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 public class HabitatChestBlockEntity extends ChestBlockEntity {
-    protected HabitatChestBlockEntity(BlockEntityType<?> typeIn) {
-        super(typeIn);
+    protected HabitatChestBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
+        super(typeIn, pos, state);
     }
 
-    public HabitatChestBlockEntity() {
-        super(HabitatBlockEntityTypes.CHEST.get());
+    public HabitatChestBlockEntity(BlockPos pos, BlockState state) {
+        super(HabitatBlockEntityTypes.CHEST.get(), pos, state);
     }
 
     @Override

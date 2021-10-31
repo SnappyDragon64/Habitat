@@ -8,7 +8,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class HabitatBlockEntityTypes {
-    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Habitat.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Habitat.MODID);
 
     public static final RegistryObject<BlockEntityType<RafflesiaBlockEntity>> RAFFLESIA = TILE_ENTITY_TYPES.register("rafflesia",
             () -> BlockEntityType.Builder.of(RafflesiaBlockEntity::new, HabitatBlocks.RAFFLESIA.get()).build(null));
