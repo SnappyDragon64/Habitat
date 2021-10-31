@@ -56,8 +56,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
         WeightedStateProvider mushroomProvider = new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState(), 1).add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState().setValue(FairyRingMushroomBlock.MUSHROOMS, 2), 2).add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState().setValue(FairyRingMushroomBlock.MUSHROOMS, 3), 3).add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState().setValue(FairyRingMushroomBlock.MUSHROOMS, 4), 3));
 
         BlockState stem = config.stemProvider.getState(rand, pos);
-        boolean enhancedFlag = CompatHelper.checkMods("enhanced_mushrooms");
-        if (enhancedFlag)
+        if (CompatHelper.checkMods("enhanced_mushrooms"))
             stem = HabitatBlocks.ENHANCED_FAIRY_RING_MUSHROOM_STEM.get().defaultBlockState();
 
         for (int i = 0; i < i0; ++i) {
