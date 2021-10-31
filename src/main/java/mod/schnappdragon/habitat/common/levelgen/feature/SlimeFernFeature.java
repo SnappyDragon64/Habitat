@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.Tags;
@@ -22,7 +23,12 @@ public class SlimeFernFeature extends Feature<RandomPatchConfiguration> {
         super(codec);
     }
 
-    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, RandomPatchConfiguration config) {
+    public boolean place(FeaturePlaceContext<RandomPatchConfiguration> context) {
+        RandomPatchConfiguration config = context.config();
+        WorldGenLevel reader = context.level();
+        BlockPos pos = context.origin();
+        Random rand = context.random();
+
         ChunkPos chunkPos = new ChunkPos(pos);
         if (WorldgenRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, reader.getSeed(), 987234911L).nextInt(10) == 0) {
             int i = 0;

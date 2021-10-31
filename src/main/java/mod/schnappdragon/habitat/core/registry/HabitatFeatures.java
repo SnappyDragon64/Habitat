@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.core.registry;
 
-import mod.schnappdragon.habitat.common.levelgen.feature.BigFairyRingMushroomFeature;
+import mod.schnappdragon.habitat.common.levelgen.feature.HugeFairyRingMushroomFeature;
 import mod.schnappdragon.habitat.common.levelgen.feature.FairyRingFeature;
 import mod.schnappdragon.habitat.common.levelgen.feature.SlimeFernFeature;
 import mod.schnappdragon.habitat.core.Habitat;
@@ -22,5 +22,5 @@ public class HabitatFeatures {
             () -> new FairyRingFeature(NoneFeatureConfiguration.CODEC));
 
     public final static RegistryObject<Feature<HugeMushroomFeatureConfiguration>> HUGE_FAIRY_RING_MUSHROOM_FEATURE = FEATURES.register("huge_fairy_ring_mushroom",
-            () -> new BigFairyRingMushroomFeature(HugeMushroomFeatureConfiguration.CODEC));
+            () -> new HugeFairyRingMushroomFeature(HugeMushroomFeatureConfiguration.CODEC));
 }
