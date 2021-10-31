@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatLootConditionTypes;
+import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -25,7 +26,7 @@ public class IsModLoaded implements LootItemCondition {
 
     @Override
     public boolean test(LootContext lootContext) {
-        return ModList.get().isLoaded(modid) || Habitat.DEV;
+        return CompatHelper.checkMods(modid);
     }
 
     public static LootItemCondition.Builder builder(String modid) {
