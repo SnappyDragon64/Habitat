@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "habitat:rafflesia",
+    "habitat:kabloom_bush",
+    "habitat:kabloom_fruit_pile",
+    "habitat:slime_fern",
+    "habitat:wall_slime_fern",
+    "habitat:growing_orange_ball_cactus",
+    "habitat:growing_pink_ball_cactus",
+    "habitat:growing_red_ball_cactus",
+    "habitat:growing_yellow_ball_cactus",
+    "habitat:orange_ball_cactus",
+    "habitat:pink_ball_cactus",
+    "habitat:red_ball_cactus",
+    "habitat:yellow_ball_cactus",
+    "habitat:fairy_ring_mushroom",
+    "habitat:fairy_ring_mushroom_block",
+    "habitat:fairy_ring_mushroom_stem",
+    "habitat:fairy_ring_mushroom_vertical_slab",
+    "habitat:fairy_ring_mushroom_bookshelf",
+    "habitat:fairy_ring_mushroom_ladder",
+    "habitat:stripped_fairy_ring_mushroom_post",
+    "habitat:fairy_ring_mushroom_post",
+    "habitat:fairy_ring_mushroom_chest",
+    "habitat:fairy_ring_mushroom_trapped_chest",
+    "habitat:fairy_ring_mushroom_beehive"
+  ]
+}
