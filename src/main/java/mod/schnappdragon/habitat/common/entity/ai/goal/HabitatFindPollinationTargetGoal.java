@@ -47,7 +47,7 @@ public class HabitatFindPollinationTargetGoal extends Goal {
                 boolean flag = false;
                 boolean setBlockFlag = false;
                 IntegerProperty integerproperty = null;
-                if (block.is(BlockTags.BEE_GROWABLES)) {
+                if (state.is(BlockTags.BEE_GROWABLES)) {
                     if (block == HabitatBlocks.KABLOOM_BUSH.get()) {
                         int k = state.getValue(KabloomBushBlock.AGE);
                         if (k < 7) {
@@ -57,20 +57,17 @@ public class HabitatFindPollinationTargetGoal extends Goal {
                         }
                     }
 
-                    if (block instanceof BallCactusFlowerBlock && ((BallCactusFlowerBlock) block).canGrow(this.bee.level, pos)) {
-                        BallCactusFlowerBlock flower = (BallCactusFlowerBlock) block;
+                    if (block instanceof BallCactusFlowerBlock flower && ((BallCactusFlowerBlock) block).canGrow(this.bee.level, pos)) {
                         this.bee.level.setBlockAndUpdate(pos, flower.getColor().getGrowingBallCactus().defaultBlockState());
                         flag = true;
                     }
 
-                    if (block instanceof GrowingBallCactusBlock) {
-                        GrowingBallCactusBlock cactus = (GrowingBallCactusBlock) block;
+                    if (block instanceof GrowingBallCactusBlock cactus) {
                         this.bee.level.setBlockAndUpdate(pos, cactus.getColor().getBallCactus().defaultBlockState());
                         flag = true;
                     }
 
-                    if (block instanceof BallCactusBlock) {
-                        BallCactusBlock cactus = (BallCactusBlock) block;
+                    if (block instanceof BallCactusBlock cactus) {
                         this.bee.level.setBlockAndUpdate(pos, cactus.getColor().getFloweringBallCactus().defaultBlockState());
                         flag = true;
                     }

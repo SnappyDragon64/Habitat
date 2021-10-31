@@ -15,7 +15,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -26,6 +26,7 @@ public class HabitatStructureDimensionalSpacing {
     private static Method GETCODEC_METHOD;
 
     @SubscribeEvent
+    @SuppressWarnings("unchecked")
     public void addDimensionalSpacing(final WorldEvent.Load event) {
         if (event.getWorld() instanceof ServerLevel) {
             ServerLevel serverWorld = (ServerLevel) event.getWorld();

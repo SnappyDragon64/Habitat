@@ -4,14 +4,14 @@ import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
 public class HabitatPotions {
-    public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTION_TYPES, Habitat.MODID);
+    public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, Habitat.MODID);
 
     public static final RegistryObject<Potion> BLAST_ENDURANCE = register("blast_endurance", HabitatEffects.BLAST_ENDURANCE, 3600);
     public static final RegistryObject<Potion> LONG_BLAST_ENDURANCE = register("long_blast_endurance", HabitatEffects.BLAST_ENDURANCE, 9600);

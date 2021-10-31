@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.common.world.gen.feature;
+package mod.schnappdragon.habitat.common.levelgen.feature;
 
 import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.common.block.FairyRingMushroomBlock;

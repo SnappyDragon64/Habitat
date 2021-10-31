@@ -1,22 +1,19 @@
 package mod.schnappdragon.habitat.common.item.crafting;
 
 import mod.schnappdragon.habitat.common.item.FairyRingMushroomItem;
-import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatRecipeSerializers;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.item.*;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.CustomRecipe;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.Level;
-import org.apache.commons.lang3.tuple.Pair;
-
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SuspiciousStewItem;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class FairyRingMushroomSuspiciousStewRecipe extends CustomRecipe {
     public FairyRingMushroomSuspiciousStewRecipe(ResourceLocation idIn) {

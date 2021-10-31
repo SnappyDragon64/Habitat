@@ -2,7 +2,7 @@ package mod.schnappdragon.habitat.core.registry;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import mod.schnappdragon.habitat.common.world.gen.feature.structure.FairyRingStructure;
+import mod.schnappdragon.habitat.common.levelgen.feature.structure.FairyRingStructure;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.HabitatConfig;
 import net.minecraft.data.BuiltinRegistries;
@@ -10,7 +10,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.StructureSettings;
 import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 

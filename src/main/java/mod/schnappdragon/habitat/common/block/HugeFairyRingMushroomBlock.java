@@ -1,20 +1,18 @@
 package mod.schnappdragon.habitat.common.block;
 
-import mod.schnappdragon.habitat.common.entity.monster.PookaEntity;
+import mod.schnappdragon.habitat.common.entity.monster.Pooka;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.HugeMushroomBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Rabbit;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.HugeMushroomBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class HugeFairyRingMushroomBlock extends HugeMushroomBlock {
     public HugeFairyRingMushroomBlock(Properties properties) {
@@ -26,12 +24,12 @@ public class HugeFairyRingMushroomBlock extends HugeMushroomBlock {
      */
 
     @Override
-    public void stepOn(Level worldIn, BlockPos pos, Entity entityIn) {
+    public void stepOn(Level worldIn, BlockPos pos, BlockState state, Entity entityIn) {
         if (entityIn.getType() == EntityType.RABBIT) {
             Rabbit rabbit = (Rabbit) entityIn;
             rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
-            rabbit.remove();
-            worldIn.addFreshEntity(PookaEntity.convertRabbit(rabbit));
+            rabbit.kill();
+            worldIn.addFreshEntity(Pooka.convertRabbit(rabbit));
 
             for (int i = 0; i < 8; i++)
                 ((ServerLevel) worldIn).sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getRandomX(0.5D), rabbit.getY(0.5D), rabbit.getRandomZ(0.5D), 0, rabbit.getRandom().nextGaussian(), 0.0D, rabbit.getRandom().nextGaussian(), 0.01D);

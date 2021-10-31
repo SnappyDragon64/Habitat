@@ -19,8 +19,8 @@ import java.util.Map;
 @Mixin(PistonBaseBlock.class)
 public class PistonDestroyEffectsMixin {
     @Inject(
-            method = "moveBlocks(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/Direction;Z)Z",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/World;setBlock(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z", ordinal = 1),
+            method = "moveBlocks(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Z)Z",
+            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/Level;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void habitat_pistonDestroyEffectsMixin(Level worldIn, BlockPos pos, Direction directionIn, boolean extending, CallbackInfoReturnable<Boolean> cir, BlockPos blockpos, PistonStructureResolver pistonblockstructurehelper, Map<BlockPos, BlockState> map, List<BlockPos> list, List<BlockState> list1, List<BlockPos> list2, BlockState[] ablockstate, Direction direction, int j, int k, BlockPos blockpos2, BlockState blockstate1) {

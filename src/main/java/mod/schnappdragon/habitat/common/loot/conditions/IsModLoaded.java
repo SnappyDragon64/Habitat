@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatLootConditionTypes;
-import net.minecraft.world.level.storage.loot.Serializer;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -26,14 +25,14 @@ public class IsModLoaded implements LootItemCondition {
 
     @Override
     public boolean test(LootContext lootContext) {
-        return ModList.get().isLoaded(modid)/* || Habitat.DEV*/;
+        return ModList.get().isLoaded(modid) || Habitat.DEV;
     }
 
     public static LootItemCondition.Builder builder(String modid) {
         return () -> new IsModLoaded(modid);
     }
 
-    public static class Serializer implements Serializer<IsModLoaded> {
+    public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<IsModLoaded> {
         @Override
         public void serialize(JsonObject object, IsModLoaded instance, JsonSerializationContext context) {
             object.addProperty("modid", instance.modid);

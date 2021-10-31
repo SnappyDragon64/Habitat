@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.common.item;
 
-import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruitEntity;
+import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruit;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.world.entity.player.Player;
@@ -19,17 +19,17 @@ public class KabloomFruitItem extends Item {
 
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack itemstack = playerIn.getItemInHand(handIn);
-        worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), HabitatSoundEvents.ENTITY_KABLOOM_FRUIT_THROW.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+        worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), HabitatSoundEvents.ENTITY_KABLOOM_FRUIT_THROW.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (playerIn.getRandom().nextFloat() * 0.4F + 0.8F));
         playerIn.getCooldowns().addCooldown(this, 20);
 
-        if (!playerIn.abilities.instabuild) {
+        if (!playerIn.getAbilities().instabuild) {
             itemstack.shrink(1);
         }
 
         if (!worldIn.isClientSide) {
-            KabloomFruitEntity kabloomfruitentity = new KabloomFruitEntity(worldIn, playerIn);
+            KabloomFruit kabloomfruitentity = new KabloomFruit(worldIn, playerIn);
             kabloomfruitentity.setItem(new ItemStack(HabitatItems.KABLOOM_FRUIT.get()));
-            kabloomfruitentity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 0.5F, 0.9F);
+            kabloomfruitentity.shootFromRotation(playerIn, playerIn.getXRot(), playerIn.getYRot(), 0.0F, 0.5F, 0.9F);
             worldIn.addFreshEntity(kabloomfruitentity);
         }
 

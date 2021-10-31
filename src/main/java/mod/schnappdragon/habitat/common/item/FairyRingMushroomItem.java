@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.common.item;
 
-import mod.schnappdragon.habitat.common.entity.monster.PookaEntity;
+import mod.schnappdragon.habitat.common.entity.monster.Pooka;
 import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
@@ -19,14 +19,11 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
 import java.util.List;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class FairyRingMushroomItem extends BlockItem {
     public FairyRingMushroomItem(Block blockIn, Properties builder) {
@@ -45,7 +42,7 @@ public class FairyRingMushroomItem extends BlockItem {
                     mooshroom.effect = effect.getLeft();
                     mooshroom.effectDuration = effect.getRight();
 
-                    if (!playerIn.abilities.instabuild)
+                    if (!playerIn.getAbilities().instabuild)
                         stack.shrink(1);
 
                     for (int i = 0; i < 4; ++i) {
@@ -64,12 +61,12 @@ public class FairyRingMushroomItem extends BlockItem {
             else if (target.getType() == EntityType.RABBIT) {
                 Rabbit rabbit = (Rabbit) target;
                 rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
-                rabbit.remove();
-                PookaEntity pooka = PookaEntity.convertRabbit(rabbit);
+                rabbit.kill();
+                Pooka pooka = Pooka.convertRabbit(rabbit);
                 playerIn.level.addFreshEntity(pooka);
                 playerIn.level.broadcastEntityEvent(pooka, (byte) 15);
 
-                if (!playerIn.abilities.instabuild)
+                if (!playerIn.getAbilities().instabuild)
                     stack.shrink(1);
 
                 return InteractionResult.SUCCESS;

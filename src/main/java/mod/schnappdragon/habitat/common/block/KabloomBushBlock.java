@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.common.block;
 
-import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruitEntity;
+import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruit;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.world.level.block.Block;
@@ -41,8 +41,6 @@ import net.minecraftforge.common.PlantType;
 
 import javax.annotation.Nullable;
 import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class KabloomBushBlock extends BushBlock implements BonemealableBlock, IHasPistonDestroyEffect {
     protected static final VoxelShape[] SHAPES = {Block.box(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D)};
@@ -105,7 +103,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock, IH
     public void playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) {
         ItemStack held = player.getMainHandItem();
 
-        if (state.getValue(AGE) == 7 && !player.abilities.instabuild && !(held.getItem() instanceof ShearsItem) && (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, held) == 0 || !(held.getItem() instanceof DiggerItem)))
+        if (state.getValue(AGE) == 7 && !player.getAbilities().instabuild && !(held.getItem() instanceof ShearsItem) && (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, held) == 0 || !(held.getItem() instanceof DiggerItem)))
             dropFruit(state, worldIn, pos, player, false, false);
 
         super.playerWillDestroy(worldIn, pos, state, player);
@@ -129,7 +127,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock, IH
                 worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_RUSTLE.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             }
 
-            KabloomFruitEntity kabloom = new KabloomFruitEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F);
+            KabloomFruit kabloom = new KabloomFruit(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F);
             kabloom.setOwner(activator);
             if (setFire)
                 kabloom.setSecondsOnFire(8);

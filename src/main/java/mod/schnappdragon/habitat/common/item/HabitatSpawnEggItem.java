@@ -1,17 +1,15 @@
 package mod.schnappdragon.habitat.common.item;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class HabitatSpawnEggItem extends SpawnEggItem {
     public static final List<HabitatSpawnEggItem> HABITAT_EGGS = new ArrayList<>();

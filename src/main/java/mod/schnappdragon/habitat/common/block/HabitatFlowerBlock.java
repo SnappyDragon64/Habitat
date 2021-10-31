@@ -1,16 +1,10 @@
 package mod.schnappdragon.habitat.common.block;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.FlowerBlock;
 
 import java.util.function.Supplier;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class HabitatFlowerBlock extends FlowerBlock {
     private final Supplier<MobEffect> stewEffect;

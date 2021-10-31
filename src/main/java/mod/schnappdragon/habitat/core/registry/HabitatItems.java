@@ -1,24 +1,18 @@
 package mod.schnappdragon.habitat.core.registry;
 
-import mod.schnappdragon.habitat.client.renderer.tileentity.ChestItemRenderer;
+import mod.schnappdragon.habitat.client.renderer.blockentity.ChestItemRenderer;
 import mod.schnappdragon.habitat.common.entity.item.HabitatBoatEntity;
 import mod.schnappdragon.habitat.common.item.*;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.misc.HabitatFoods;
 import mod.schnappdragon.habitat.core.util.CompatHelper;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.item.*;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
-
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.item.SignItem;
 
 public class HabitatItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Habitat.MODID);

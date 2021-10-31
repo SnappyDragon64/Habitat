@@ -1,8 +1,9 @@
 package mod.schnappdragon.habitat.common.block;
 
 import com.google.common.collect.Lists;
+import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
-import mod.schnappdragon.habitat.common.tileentity.RafflesiaTileEntity;
+import mod.schnappdragon.habitat.common.blockentity.RafflesiaBlockEntity;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import net.minecraft.world.level.block.Block;
@@ -45,8 +46,6 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Random;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class RafflesiaBlock extends BushBlock implements IForgeBlock, BonemealableBlock {
     protected static final VoxelShape DEFAULT_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
     protected static final VoxelShape COOLDOWN_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
@@ -88,7 +87,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
     }
 
     public BlockEntity createTileEntity(BlockState state, BlockGetter worldIn) {
-        return new RafflesiaTileEntity();
+        return new RafflesiaBlockEntity();
     }
 
     /*
@@ -97,8 +96,8 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
 
     public void animateTick(BlockState state, Level worldIn, BlockPos pos, Random rand) {
         BlockEntity tile = worldIn.getBlockEntity(pos);
-        if (tile instanceof RafflesiaTileEntity && rand.nextInt(128) == 0 && !state.getValue(ON_COOLDOWN)) {
-            RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
+        if (tile instanceof RafflesiaBlockEntity && rand.nextInt(128) == 0 && !state.getValue(ON_COOLDOWN)) {
+            RafflesiaBlockEntity rafflesia = (RafflesiaBlockEntity) tile;
             double X = (double) pos.getX() + 0.5D;
             double Z = (double) pos.getZ() + 0.5D;
             worldIn.addParticle(getParticle(rafflesia.Effects), X + (2 * rand.nextDouble() - 1.0F) / 3.0D, pos.getY() + 0.25F + rand.nextDouble() / 2, Z + (2 * rand.nextDouble() - 1.0F) / 3.0D, 0.0D, 0.01D, 0.0D);
@@ -148,7 +147,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
         }
 
         int color = PotionUtils.getColor(effectInstances);
-        return new DustParticleOptions((float) FastColor.ARGB32.red(color) / 255, (float) FastColor.ARGB32.green(color) / 255, (float) FastColor.ARGB32.blue(color) / 255, 1.0F);
+        return new DustParticleOptions(new Vector3f((float) FastColor.ARGB32.red(color) / 255, (float) FastColor.ARGB32.green(color) / 255, (float) FastColor.ARGB32.blue(color) / 255), 1.0F);
     }
 
     /*
@@ -159,8 +158,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (!worldIn.isClientSide) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof RafflesiaTileEntity && !state.getValue(ON_COOLDOWN)) {
-                RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
+            if (tile instanceof RafflesiaBlockEntity rafflesia && !state.getValue(ON_COOLDOWN)) {
                 createCloud(worldIn, pos, rafflesia.Effects);
                 worldIn.setBlockAndUpdate(pos, state.setValue(ON_COOLDOWN, true).setValue(HAS_STEW, false));
                 ListTag Effects = new ListTag();
@@ -181,15 +179,14 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
 
         if (!worldIn.isClientSide && stack.getItem() == Items.SUSPICIOUS_STEW) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof RafflesiaTileEntity && !state.getValue(HAS_STEW)) {
-                RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
+            if (tile instanceof RafflesiaBlockEntity rafflesia && !state.getValue(HAS_STEW)) {
                 CompoundTag tag = stack.getTag();
                 if (tag != null && tag.contains("Effects", 9)) {
                     rafflesia.Effects = tag.getList("Effects", 10);
                 }
                 worldIn.setBlockAndUpdate(pos, state.setValue(HAS_STEW, true));
                 rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
-                player.setItemInHand(handIn, player.abilities.instabuild ? stack : new ItemStack(Items.BOWL));
+                player.setItemInHand(handIn, player.getAbilities().instabuild ? stack : new ItemStack(Items.BOWL));
                 worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_RAFFLESIA_SLURP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                 return InteractionResult.SUCCESS;
             }

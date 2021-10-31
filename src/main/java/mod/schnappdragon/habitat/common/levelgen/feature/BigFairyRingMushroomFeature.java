@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.common.world.gen.feature;
+package mod.schnappdragon.habitat.common.levelgen.feature;
 
 import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.common.block.FairyRingMushroomBlock;
@@ -25,7 +25,7 @@ public class BigFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
     }
 
     @Override
-    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, HugeMushroomFeatureConfiguration config) {
+    public boolean placeTrunk(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, HugeMushroomFeatureConfiguration config) {
         int i = this.getTreeHeight(rand);
         BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
         if (!this.isValidPosition(reader, pos, i, blockpos$mutable, config)) {

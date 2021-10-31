@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.core;
 
 import mod.schnappdragon.habitat.client.renderer.entity.HabitatEntityRenderers;
-import mod.schnappdragon.habitat.client.renderer.tileentity.HabitatTileEntityRenderers;
+import mod.schnappdragon.habitat.client.renderer.blockentity.HabitatTileEntityRenderers;
 import mod.schnappdragon.habitat.common.block.misc.HabitatWoodTypes;
 import mod.schnappdragon.habitat.core.api.conditions.RecipeConditions;
 import mod.schnappdragon.habitat.core.misc.*;
@@ -37,7 +37,7 @@ public class Habitat {
 
         HabitatBlocks.BLOCKS.register(modEventBus);
         HabitatItems.ITEMS.register(modEventBus);
-        HabitatTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
+        HabitatBlockEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
         HabitatSoundEvents.SOUND_EVENTS.register(modEventBus);
         HabitatEntityTypes.ENTITY_TYPES.register(modEventBus);
         HabitatEffects.EFFECTS.register(modEventBus);

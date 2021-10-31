@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 import java.util.Map;
 

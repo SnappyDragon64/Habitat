@@ -4,46 +4,45 @@ import mod.schnappdragon.habitat.common.block.FairyRingMushroomBlock;
 import mod.schnappdragon.habitat.common.block.FloweringBallCactusBlock;
 import mod.schnappdragon.habitat.common.block.KabloomBushBlock;
 import mod.schnappdragon.habitat.common.block.RafflesiaBlock;
+import mod.schnappdragon.habitat.common.blockentity.RafflesiaBlockEntity;
 import mod.schnappdragon.habitat.common.entity.item.HabitatBoatEntity;
-import mod.schnappdragon.habitat.common.entity.monster.PookaEntity;
-import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruitEntity;
+import mod.schnappdragon.habitat.common.entity.monster.Pooka;
+import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruit;
 import mod.schnappdragon.habitat.common.item.HabitatSpawnEggItem;
-import mod.schnappdragon.habitat.common.tileentity.RafflesiaTileEntity;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
-import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
-import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.entity.IShearable;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.Util;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 public class HabitatDispenserBehaviours {
     private static DispenseItemBehavior SuspiciousStewBehavior;
@@ -64,8 +63,8 @@ public class HabitatDispenserBehaviours {
                 BlockState state = worldIn.getBlockState(pos);
                 if (!worldIn.isClientSide && state.is(HabitatBlocks.RAFFLESIA.get())) {
                     BlockEntity tile = worldIn.getBlockEntity(pos);
-                    if (tile instanceof RafflesiaTileEntity && !state.getValue(RafflesiaBlock.HAS_STEW)) {
-                        RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
+                    if (tile instanceof RafflesiaBlockEntity && !state.getValue(RafflesiaBlock.HAS_STEW)) {
+                        RafflesiaBlockEntity rafflesia = (RafflesiaBlockEntity) tile;
                         CompoundTag tag = stack.getTag();
                         if (tag != null && tag.contains("Effects", 9)) {
                             rafflesia.Effects = tag.getList("Effects", 10);
@@ -91,12 +90,12 @@ public class HabitatDispenserBehaviours {
                 BlockPos pos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
                 BlockState state = worldIn.getBlockState(pos);
                 if (!worldIn.isClientSide) {
-                    for (PookaEntity pooka : worldIn.getEntitiesOfClass(PookaEntity.class, new AABB(pos), EntitySelector.NO_SPECTATORS)) {
+                    for (Pooka pooka : worldIn.getEntitiesOfClass(Pooka.class, new AABB(pos), EntitySelector.NO_SPECTATORS)) {
                         if (pooka.isPacified()) {
                             worldIn.playSound(null, pooka, HabitatSoundEvents.ENTITY_POOKA_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                             ((ServerLevel) worldIn).sendParticles(ParticleTypes.EXPLOSION, pooka.getX(), pooka.getY(0.5D), pooka.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
-                            pooka.remove();
-                            worldIn.addFreshEntity(PookaEntity.convertPooka(pooka));
+                            pooka.kill();
+                            worldIn.addFreshEntity(Pooka.convertPooka(pooka));
                             worldIn.addFreshEntity(new ItemEntity(worldIn, pooka.getX(), pooka.getY(1.0D), pooka.getZ(), new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get())));
 
                             if (stack.hurt(1, worldIn.getRandom(), null))
@@ -142,7 +141,7 @@ public class HabitatDispenserBehaviours {
 
         DispenserBlock.registerBehavior(HabitatItems.KABLOOM_FRUIT.get(), new AbstractProjectileDispenseBehavior() {
             protected Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
-                return Util.make(new KabloomFruitEntity(worldIn, position.x(), position.y(), position.z()), (kabloomfruit) -> {
+                return Util.make(new KabloomFruit(worldIn, position.x(), position.y(), position.z()), (kabloomfruit) -> {
                     kabloomfruit.setItem(stackIn);
                 });
             }
@@ -197,8 +196,8 @@ public class HabitatDispenserBehaviours {
                         if (livingentity.getType() == EntityType.RABBIT) {
                             Rabbit rabbit = (Rabbit) livingentity;
                             rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
-                            rabbit.remove();
-                            worldIn.addFreshEntity(PookaEntity.convertRabbit(rabbit));
+                            rabbit.kill();
+                            worldIn.addFreshEntity(Pooka.convertRabbit(rabbit));
                             stack.shrink(1);
                             for (int j = 0; j < 8; ++j)
                                 ((ServerLevel) worldIn).sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getRandomX(0.5D), rabbit.getY(0.5D), rabbit.getRandomZ(0.5D), 0, rabbit.getRandom().nextGaussian(), 0.0D, rabbit.getRandom().nextGaussian(), 0.01D);

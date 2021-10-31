@@ -2,7 +2,7 @@ package mod.schnappdragon.habitat.core.event;
 
 import mod.schnappdragon.habitat.common.entity.ai.goal.HabitatFindPollinationTargetGoal;
 import mod.schnappdragon.habitat.common.entity.ai.goal.RabbitAvoidEntityGoal;
-import mod.schnappdragon.habitat.common.entity.monster.PookaEntity;
+import mod.schnappdragon.habitat.common.entity.monster.Pooka;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatEffects;
 import net.minecraft.world.entity.Entity;
@@ -36,7 +36,7 @@ public class HabitatEvents {
         }
         else if (entity.getType() == EntityType.RABBIT) {
             Rabbit rabbit = (Rabbit) entity;
-            rabbit.goalSelector.addGoal(4, new RabbitAvoidEntityGoal<>(rabbit, PookaEntity.class, 2.25F, 2.2D, 2.2D));
+            rabbit.goalSelector.addGoal(4, new RabbitAvoidEntityGoal<>(rabbit, Pooka.class, 2.25F, 2.2D, 2.2D));
         }
     }
 

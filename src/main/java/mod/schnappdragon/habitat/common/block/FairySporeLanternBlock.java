@@ -1,17 +1,15 @@
 package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Lantern;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class FairySporeLantern extends Lantern {
-    public FairySporeLantern(Properties properties) {
+public class FairySporeLanternBlock extends LanternBlock {
+    public FairySporeLanternBlock(Properties properties) {
         super(properties);
     }
 

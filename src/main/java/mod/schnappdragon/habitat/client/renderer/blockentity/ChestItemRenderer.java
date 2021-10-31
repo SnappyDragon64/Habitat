@@ -1,8 +1,8 @@
-package mod.schnappdragon.habitat.client.renderer.tileentity;
+package mod.schnappdragon.habitat.client.renderer.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import mod.schnappdragon.habitat.common.tileentity.HabitatChestTileEntity;
-import mod.schnappdragon.habitat.common.tileentity.HabitatTrappedChestTileEntity;
+import mod.schnappdragon.habitat.common.blockentity.HabitatChestBlockEntity;
+import mod.schnappdragon.habitat.common.blockentity.HabitatTrappedChestBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -28,10 +28,10 @@ public class ChestItemRenderer<T extends BlockEntity> extends BlockEntityWithout
     }
 
     public static BlockEntityWithoutLevelRenderer getChestISTER() {
-        return new ChestItemRenderer<>(HabitatChestTileEntity::new);
+        return new ChestItemRenderer<>(HabitatChestBlockEntity::new);
     }
 
     public static BlockEntityWithoutLevelRenderer getTrappedChestISTER() {
-        return new ChestItemRenderer<>(HabitatTrappedChestTileEntity::new);
+        return new ChestItemRenderer<>(HabitatTrappedChestBlockEntity::new);
     }
 }

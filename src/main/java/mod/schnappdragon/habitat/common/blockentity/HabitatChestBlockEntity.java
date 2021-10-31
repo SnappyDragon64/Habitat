@@ -1,17 +1,17 @@
-package mod.schnappdragon.habitat.common.tileentity;
+package mod.schnappdragon.habitat.common.blockentity;
 
-import mod.schnappdragon.habitat.core.registry.HabitatTileEntityTypes;
+import mod.schnappdragon.habitat.core.registry.HabitatBlockEntityTypes;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.phys.AABB;
 
-public class HabitatChestTileEntity extends ChestBlockEntity {
-    protected HabitatChestTileEntity(BlockEntityType<?> typeIn) {
+public class HabitatChestBlockEntity extends ChestBlockEntity {
+    protected HabitatChestBlockEntity(BlockEntityType<?> typeIn) {
         super(typeIn);
     }
 
-    public HabitatChestTileEntity() {
-        super(HabitatTileEntityTypes.CHEST.get());
+    public HabitatChestBlockEntity() {
+        super(HabitatBlockEntityTypes.CHEST.get());
     }
 
     @Override

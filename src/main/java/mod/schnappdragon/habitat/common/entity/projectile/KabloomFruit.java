@@ -4,7 +4,11 @@ import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,30 +18,26 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.core.particles.ItemParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
+import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public class KabloomFruitEntity extends ThrowableItemProjectile {
-    public KabloomFruitEntity(EntityType<? extends KabloomFruitEntity> entity, Level world) {
+public class KabloomFruit extends ThrowableItemProjectile {
+    public KabloomFruit(EntityType<? extends KabloomFruit> entity, Level world) {
         super(entity, world);
     }
 
-    public KabloomFruitEntity(Level worldIn, LivingEntity throwerIn) {
+    public KabloomFruit(Level worldIn, LivingEntity throwerIn) {
         super(HabitatEntityTypes.KABLOOM_FRUIT.get(), throwerIn, worldIn);
     }
 
-    public KabloomFruitEntity(Level worldIn, double x, double y, double z) {
+    public KabloomFruit(Level worldIn, double x, double y, double z) {
         super(HabitatEntityTypes.KABLOOM_FRUIT.get(), x, y, z, worldIn);
     }
 
@@ -107,7 +107,7 @@ public class KabloomFruitEntity extends ThrowableItemProjectile {
                     double dx = entity.getX() - this.getX();
                     double dy = entity.getEyeY() - this.getY();
                     double dz = entity.getZ() - this.getZ();
-                    double dres = Mth.sqrt(dx * dx + dy * dy + dz * dz);
+                    double dres = Mth.sqrt((float) (dx * dx + dy * dy + dz * dz));
                     if (dres != 0.0D) {
                         dx = dx / dres;
                         dy = dy / dres;
@@ -123,7 +123,7 @@ public class KabloomFruitEntity extends ThrowableItemProjectile {
                         boolean knockback = true;
                         if (entity instanceof Player) {
                             Player playerentity = (Player) entity;
-                            if (playerentity.isSpectator() || (playerentity.isCreative() && playerentity.abilities.flying)) {
+                            if (playerentity.isSpectator() || (playerentity.isCreative() && playerentity.getAbilities().flying)) {
                                 knockback = false;
                             }
                         }
@@ -145,7 +145,7 @@ public class KabloomFruitEntity extends ThrowableItemProjectile {
 
         if (!this.level.isClientSide) {
             this.level.broadcastEntityEvent(this, (byte) 3);
-            this.remove();
+            this.kill();
         }
     }
 }

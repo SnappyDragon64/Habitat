@@ -4,7 +4,7 @@ import mod.schnappdragon.habitat.common.item.crafting.FairyRingMushroomSuspiciou
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 

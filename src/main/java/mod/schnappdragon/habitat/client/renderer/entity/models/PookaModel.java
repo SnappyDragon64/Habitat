@@ -3,12 +3,12 @@ package mod.schnappdragon.habitat.client.renderer.entity.models;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import mod.schnappdragon.habitat.common.entity.monster.PookaEntity;
+import mod.schnappdragon.habitat.common.entity.monster.Pooka;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
 
-public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
+public class PookaModel<T extends Pooka> extends EntityModel<T> {
     private final ModelPart pookaLeftFoot;
     private final ModelPart pookaRightFoot;
     private final ModelPart pookaLeftThigh;

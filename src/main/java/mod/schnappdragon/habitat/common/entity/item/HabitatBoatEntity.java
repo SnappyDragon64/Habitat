@@ -2,6 +2,7 @@ package mod.schnappdragon.habitat.common.entity.item;
 
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -18,7 +19,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class HabitatBoatEntity extends Boat {
@@ -79,9 +80,9 @@ public class HabitatBoatEntity extends Boat {
                         return;
                     }
 
-                    this.causeFallDamage(this.fallDistance, 1.0F);
-                    if (!this.level.isClientSide && !this.removed) {
-                        this.remove();
+                    this.causeFallDamage(this.fallDistance, 1.0F, DamageSource.FALL);
+                    if (!this.level.isClientSide && !this.isRemoved()) {
+                        this.kill();
                         if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                             Item planks = ForgeRegistries.ITEMS.getValue(new ResourceLocation(Habitat.MODID, this.getHabitatBoatType().getName() + "_planks"));
 

@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.common.world.gen.feature.structure;
+package mod.schnappdragon.habitat.common.levelgen.feature.structure;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
@@ -26,8 +26,6 @@ import net.minecraft.world.gen.feature.structure.*;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
 import java.util.List;
-
-import net.minecraft.world.level.levelgen.feature.StructureFeature.StructureStartFactory;
 
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;

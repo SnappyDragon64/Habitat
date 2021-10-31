@@ -1,6 +1,6 @@
-package mod.schnappdragon.habitat.common.tileentity;
+package mod.schnappdragon.habitat.common.blockentity;
 
-import mod.schnappdragon.habitat.core.registry.HabitatTileEntityTypes;
+import mod.schnappdragon.habitat.core.registry.HabitatBlockEntityTypes;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -12,11 +12,11 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class RafflesiaTileEntity extends BlockEntity {
+public class RafflesiaBlockEntity extends BlockEntity {
     public ListTag Effects = new ListTag();
 
-    public RafflesiaTileEntity() {
-        super(HabitatTileEntityTypes.RAFFLESIA.get());
+    public RafflesiaBlockEntity() {
+        super(HabitatBlockEntityTypes.RAFFLESIA.get());
         CompoundTag tag = new CompoundTag();
         tag.putByte("EffectId", (byte) 19);
         tag.putInt("EffectDuration", 240);

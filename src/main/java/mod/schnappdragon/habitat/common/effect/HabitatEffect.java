@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.common.potion;
+package mod.schnappdragon.habitat.common.effect;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;

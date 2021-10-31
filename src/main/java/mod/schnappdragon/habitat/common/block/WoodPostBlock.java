@@ -1,33 +1,32 @@
 package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.ChainBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.Lantern;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ChainBlock;
+import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class WoodPostBlock extends Block implements SimpleWaterloggedBlock {
     private static final VoxelShape SHAPE_X = box(0.0F, 6.0F, 6.0F, 16.0F, 10.0F, 10.0F);
@@ -103,15 +102,15 @@ public class WoodPostBlock extends Block implements SimpleWaterloggedBlock {
 
     @Nullable
     @Override
-    public BlockState getToolModifiedState(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, ToolType toolType) {
-        if (toolType == ToolType.AXE && strippedBlock != null && strippedBlock.get() instanceof WoodPostBlock) {
+    public BlockState getToolModifiedState(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, ToolAction toolAction) {
+        if (ToolActions.AXE_STRIP.equals(toolAction) && strippedBlock != null && strippedBlock.get() instanceof WoodPostBlock) {
             BlockState newState = strippedBlock.get().defaultBlockState().setValue(WATERLOGGED, state.getValue(WATERLOGGED)).setValue(AXIS, state.getValue(AXIS));
             for (BooleanProperty property : CHAINED) {
                 newState = newState.setValue(property, state.getValue(property));
             }
             return newState;
         }
-        return super.getToolModifiedState(state, world, pos, player, stack, toolType);
+        return super.getToolModifiedState(state, world, pos, player, stack, toolAction);
     }
 
     private BlockState getRelevantState(Level world, BlockPos pos, Axis axis) {
@@ -122,7 +121,7 @@ public class WoodPostBlock extends Block implements SimpleWaterloggedBlock {
                 continue;
 
             BlockState sideState = world.getBlockState(pos.relative(direction));
-            if ((sideState.getBlock() instanceof ChainBlock && sideState.getValue(ChainBlock.AXIS) == direction.getAxis()) || (direction == Direction.DOWN && sideState.getBlock() instanceof Lantern && sideState.getValue(Lantern.HANGING)))
+            if ((sideState.getBlock() instanceof ChainBlock && sideState.getValue(ChainBlock.AXIS) == direction.getAxis()) || (direction == Direction.DOWN && sideState.getBlock() instanceof LanternBlock && sideState.getValue(LanternBlock.HANGING)))
                 state = state.setValue(CHAINED[direction.ordinal()], true);
         }
 

@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.common.block.misc.ChestVariant;
-import mod.schnappdragon.habitat.core.registry.HabitatTileEntityTypes;
+import mod.schnappdragon.habitat.core.registry.HabitatBlockEntityTypes;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.stats.Stat;
@@ -16,13 +16,11 @@ import net.minecraft.world.level.BlockGetter;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class HabitatTrappedChestBlock extends ChestBlock implements IChestVariant {
     private final ChestVariant variant;
 
     public HabitatTrappedChestBlock(ChestVariant variantIn, Properties properties) {
-        super(properties, HabitatTileEntityTypes.TRAPPED_CHEST::get);
+        super(properties, HabitatBlockEntityTypes.TRAPPED_CHEST::get);
         this.variant = variantIn;
     }
 
@@ -34,7 +32,7 @@ public class HabitatTrappedChestBlock extends ChestBlock implements IChestVarian
     @Nullable
     @Override
     public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return HabitatTileEntityTypes.TRAPPED_CHEST.get().create();
+        return HabitatBlockEntityTypes.TRAPPED_CHEST.get().create();
     }
 
     protected Stat<ResourceLocation> getOpenChestStat() {

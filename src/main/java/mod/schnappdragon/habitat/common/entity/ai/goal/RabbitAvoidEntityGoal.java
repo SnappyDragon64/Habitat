@@ -13,6 +13,6 @@ public class RabbitAvoidEntityGoal<T extends LivingEntity> extends AvoidEntityGo
     }
 
     public boolean canUse() {
-        return this.rabbit.getRabbitType() != 99 && super.canUse();
+        return this.rabbit.getRabbitType() != Rabbit.TYPE_EVIL && super.canUse();
     }
 }
