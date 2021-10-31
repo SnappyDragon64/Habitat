@@ -31,7 +31,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class HabitatChestTileEntityRenderer<T extends BlockEntity & LidBlockEntity> extends BlockEntityRenderer<T> {
+public class HabitatChestBlockEntityRenderer<T extends BlockEntity & LidBlockEntity> extends BlockEntityRenderer<T> {
     public static Block itemBlock = null;
 
     public final ModelPart singleLid;
@@ -45,7 +45,7 @@ public class HabitatChestTileEntityRenderer<T extends BlockEntity & LidBlockEnti
     public final ModelPart leftLatch;
     public boolean isChristmas;
 
-    public HabitatChestTileEntityRenderer(BlockEntityRenderDispatcher rendererDispatcherIn) {
+    public HabitatChestBlockEntityRenderer(BlockEntityRenderDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
         Calendar calendar = Calendar.getInstance();
         if (calendar.get(Calendar.MONTH) + 1 == 12 && calendar.get(Calendar.DATE) >= 24 && calendar.get(Calendar.DATE) <= 26) {
