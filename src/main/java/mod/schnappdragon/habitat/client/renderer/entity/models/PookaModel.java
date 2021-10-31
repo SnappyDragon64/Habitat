@@ -99,6 +99,7 @@ public class PookaModel<T extends PookaEntity> extends EntityModel<T> {
         this.pookaLeftEar.addBox(0.5F, -10.0F, -1.0F, 3.0F, 5.0F, 1.0F);
         this.pookaLeftEar.setRotationPoint(0.0F, 16.0F, -1.0F);
         this.pookaLeftEar.mirror = true;
+        this.setRotationOffset(this.pookaLeftEar, 0.0F, 0.2617994F, 0.0F);
         this.pookaRightEarBase = new ModelRenderer(this, 1, 6);
         this.pookaRightEarBase.addBox(-3.5F, -5.0F, -0.5F, 3.0F, 1.0F, 0.0F);
         this.pookaRightEarBase.setRotationPoint(0.0F, 16.0F, -1.0F);
