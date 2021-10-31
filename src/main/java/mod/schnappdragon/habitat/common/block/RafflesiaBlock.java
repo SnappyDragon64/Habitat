@@ -6,47 +6,48 @@ import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockState
 import mod.schnappdragon.habitat.common.blockentity.RafflesiaBlockEntity;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.BushBlock;
-import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.FastColor;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.util.FastColor;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.util.Mth;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Random;
 
-public class RafflesiaBlock extends BushBlock implements IForgeBlock, BonemealableBlock {
+public class RafflesiaBlock extends BushBlock implements IForgeBlock, BonemealableBlock, EntityBlock {
     protected static final VoxelShape DEFAULT_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
     protected static final VoxelShape COOLDOWN_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
@@ -82,14 +83,11 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
      * Tile Entity Methods
      */
 
-    public boolean hasTileEntity(BlockState state) {
-        return true;
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new RafflesiaBlockEntity(pos, state);
     }
-
-    public BlockEntity createTileEntity(BlockState state, BlockGetter worldIn) {
-        return new RafflesiaBlockEntity();
-    }
-
     /*
      * Particle Animation Method
      */

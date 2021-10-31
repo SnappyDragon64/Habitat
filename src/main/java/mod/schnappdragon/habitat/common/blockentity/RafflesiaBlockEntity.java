@@ -1,6 +1,8 @@
 package mod.schnappdragon.habitat.common.blockentity;
 
 import mod.schnappdragon.habitat.core.registry.HabitatBlockEntityTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -15,13 +17,14 @@ import javax.annotation.Nullable;
 public class RafflesiaBlockEntity extends BlockEntity {
     public ListTag Effects = new ListTag();
 
-    public RafflesiaBlockEntity() {
-        super(HabitatBlockEntityTypes.RAFFLESIA.get());
+    public RafflesiaBlockEntity(BlockPos pos, BlockState state) {
+        super(HabitatBlockEntityTypes.RAFFLESIA.get(), pos, state);
         CompoundTag tag = new CompoundTag();
         tag.putByte("EffectId", (byte) 19);
         tag.putInt("EffectDuration", 240);
         this.Effects.add(tag);
     }
+
 
     @Nonnull
     @Override
@@ -32,10 +35,10 @@ public class RafflesiaBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(BlockState state, CompoundTag compound) {
+    public void load(CompoundTag compound) {
         this.Effects = compound.getList("Effects", 10);
 
-        super.load(state, compound);
+        super.load(compound);
     }
 
     @Nullable
@@ -52,13 +55,13 @@ public class RafflesiaBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void handleUpdateTag(BlockState state, CompoundTag compound) {
-        this.load(state, compound);
+    public void handleUpdateTag(CompoundTag compound) {
+        this.load(compound);
     }
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(this.getBlockState(), pkt.getTag());
+        this.load(pkt.getTag());
     }
 
     public void onChange(Level worldIn, BlockState newState) {
