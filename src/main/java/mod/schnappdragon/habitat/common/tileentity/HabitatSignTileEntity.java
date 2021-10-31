@@ -1,12 +1,12 @@
 package mod.schnappdragon.habitat.common.tileentity;
 
 import mod.schnappdragon.habitat.core.registry.HabitatTileEntityTypes;
-import net.minecraft.tileentity.SignTileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
-public class HabitatSignTileEntity extends SignTileEntity {
+public class HabitatSignTileEntity extends SignBlockEntity {
     @Override
-    public TileEntityType<?> getType() {
+    public BlockEntityType<?> getType() {
         return HabitatTileEntityTypes.SIGN.get();
     }
 }

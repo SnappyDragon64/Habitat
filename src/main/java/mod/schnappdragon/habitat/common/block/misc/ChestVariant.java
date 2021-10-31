@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.common.block.misc;
 
 import mod.schnappdragon.habitat.core.Habitat;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public enum ChestVariant {
     FAIY_RING_MUSHROOM_NORMAL("fairy_ring_mushroom"),

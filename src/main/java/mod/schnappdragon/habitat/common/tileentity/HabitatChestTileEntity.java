@@ -1,12 +1,12 @@
 package mod.schnappdragon.habitat.common.tileentity;
 
 import mod.schnappdragon.habitat.core.registry.HabitatTileEntityTypes;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.phys.AABB;
 
-public class HabitatChestTileEntity extends ChestTileEntity {
-    protected HabitatChestTileEntity(TileEntityType<?> typeIn) {
+public class HabitatChestTileEntity extends ChestBlockEntity {
+    protected HabitatChestTileEntity(BlockEntityType<?> typeIn) {
         super(typeIn);
     }
 
@@ -15,7 +15,7 @@ public class HabitatChestTileEntity extends ChestTileEntity {
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 2, pos.getY() + 2, pos.getZ() + 2);
+    public AABB getRenderBoundingBox() {
+        return new AABB(worldPosition.getX() - 1, worldPosition.getY(), worldPosition.getZ() - 1, worldPosition.getX() + 2, worldPosition.getY() + 2, worldPosition.getZ() + 2);
     }
 }

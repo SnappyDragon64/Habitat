@@ -1,25 +1,25 @@
 package mod.schnappdragon.habitat.common.item;
 
 import mod.schnappdragon.habitat.common.entity.item.HabitatBoatEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 public class HabitatBoatItem extends Item {
-    private static final Predicate<Entity> ENTITY_PREDICATE = EntityPredicates.NOT_SPECTATING.and(Entity::canBeCollidedWith);
+    private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
     private final HabitatBoatEntity.Type type;
 
     public HabitatBoatItem(HabitatBoatEntity.Type type, Item.Properties properties) {
@@ -27,44 +27,44 @@ public class HabitatBoatItem extends Item {
         this.type = type;
     }
 
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
-        RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.ANY);
-        if (raytraceresult.getType() == RayTraceResult.Type.MISS)
-            return ActionResult.resultPass(itemstack);
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+        ItemStack itemstack = playerIn.getItemInHand(handIn);
+        HitResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.ANY);
+        if (raytraceresult.getType() == HitResult.Type.MISS)
+            return InteractionResultHolder.pass(itemstack);
         else {
-            Vector3d vector3d = playerIn.getLook(1.0F);
+            Vec3 vector3d = playerIn.getViewVector(1.0F);
             double d0 = 5.0D;
-                List<Entity> list = worldIn.getEntitiesInAABBexcluding(playerIn, playerIn.getBoundingBox().expand(vector3d.scale(5.0D)).grow(1.0D), ENTITY_PREDICATE);
+                List<Entity> list = worldIn.getEntities(playerIn, playerIn.getBoundingBox().expandTowards(vector3d.scale(5.0D)).inflate(1.0D), ENTITY_PREDICATE);
             if (!list.isEmpty()) {
-                Vector3d vector3d1 = playerIn.getEyePosition(1.0F);
+                Vec3 vector3d1 = playerIn.getEyePosition(1.0F);
 
                 for(Entity entity : list) {
-                    AxisAlignedBB axisalignedbb = entity.getBoundingBox().grow((double)entity.getCollisionBorderSize());
+                    AABB axisalignedbb = entity.getBoundingBox().inflate((double)entity.getPickRadius());
                     if (axisalignedbb.contains(vector3d1))
-                        return ActionResult.resultPass(itemstack);
+                        return InteractionResultHolder.pass(itemstack);
                 }
             }
 
-            if (raytraceresult.getType() == RayTraceResult.Type.BLOCK) {
-                HabitatBoatEntity boatentity = new HabitatBoatEntity(worldIn, raytraceresult.getHitVec().x, raytraceresult.getHitVec().y, raytraceresult.getHitVec().z);
+            if (raytraceresult.getType() == HitResult.Type.BLOCK) {
+                HabitatBoatEntity boatentity = new HabitatBoatEntity(worldIn, raytraceresult.getLocation().x, raytraceresult.getLocation().y, raytraceresult.getLocation().z);
                 boatentity.setBoatType(this.type);
-                boatentity.rotationYaw = playerIn.rotationYaw;
-                if (!worldIn.hasNoCollisions(boatentity, boatentity.getBoundingBox().grow(-0.1D)))
-                    return ActionResult.resultFail(itemstack);
+                boatentity.yRot = playerIn.yRot;
+                if (!worldIn.noCollision(boatentity, boatentity.getBoundingBox().inflate(-0.1D)))
+                    return InteractionResultHolder.fail(itemstack);
                 else {
-                    if (!worldIn.isRemote) {
-                        worldIn.addEntity(boatentity);
-                        if (!playerIn.abilities.isCreativeMode)
+                    if (!worldIn.isClientSide) {
+                        worldIn.addFreshEntity(boatentity);
+                        if (!playerIn.abilities.instabuild)
                             itemstack.shrink(1);
                     }
 
-                    playerIn.addStat(Stats.ITEM_USED.get(this));
-                    return ActionResult.func_233538_a_(itemstack, worldIn.isRemote());
+                    playerIn.awardStat(Stats.ITEM_USED.get(this));
+                    return InteractionResultHolder.sidedSuccess(itemstack, worldIn.isClientSide());
                 }
             }
             else
-                return ActionResult.resultPass(itemstack);
+                return InteractionResultHolder.pass(itemstack);
         }
     }
 }

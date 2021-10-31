@@ -2,18 +2,20 @@ package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.common.block.misc.BallCactusColor;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class FloweringBallCactusBlock extends AbstractBallCactusBlock {
     public FloweringBallCactusBlock(BallCactusColor colorIn, Properties properties) {
@@ -21,7 +23,7 @@ public class FloweringBallCactusBlock extends AbstractBallCactusBlock {
     }
 
     @Override
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+    public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
         return new ItemStack(getColor().getBallCactus());
     }
 
@@ -30,16 +32,16 @@ public class FloweringBallCactusBlock extends AbstractBallCactusBlock {
      */
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (player.getHeldItem(handIn).getItem() instanceof ShearsItem) {
-            spawnAsEntity(worldIn, pos, new ItemStack(getColor().getFlower()));
-            player.getHeldItem(handIn).damageItem(1, player, (playerIn) -> {
-                playerIn.sendBreakAnimation(handIn);
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (player.getItemInHand(handIn).getItem() instanceof ShearsItem) {
+            popResource(worldIn, pos, new ItemStack(getColor().getFlower()));
+            player.getItemInHand(handIn).hurtAndBreak(1, player, (playerIn) -> {
+                playerIn.broadcastBreakEvent(handIn);
             });
-            worldIn.setBlockState(pos, getColor().getBallCactus().getDefaultState(), 2);
-            worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_FLOWERING_BALL_CACTUS_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-            return ActionResultType.func_233537_a_(worldIn.isRemote);
+            worldIn.setBlock(pos, getColor().getBallCactus().defaultBlockState(), 2);
+            worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_FLOWERING_BALL_CACTUS_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+            return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        return super.use(state, worldIn, pos, player, handIn, hit);
     }
 }

@@ -1,14 +1,14 @@
 package mod.schnappdragon.habitat.core.dispenser;
 
 import mod.schnappdragon.habitat.common.entity.item.HabitatBoatEntity;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.BlockSource;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class HabitatDispenseBoatBehavior extends DefaultDispenseItemBehavior {
     private final DefaultDispenseItemBehavior dispenseItemBehaviour = new DefaultDispenseItemBehavior();
@@ -18,18 +18,18 @@ public class HabitatDispenseBoatBehavior extends DefaultDispenseItemBehavior {
         this.type = type;
     }
 
-    public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-        Direction direction = source.getBlockState().get(DispenserBlock.FACING);
-        World world = source.getWorld();
-        double d0 = source.getX() + (double) ((float) direction.getXOffset() * 1.125F);
-        double d1 = source.getY() + (double) ((float) direction.getYOffset() * 1.125F);
-        double d2 = source.getZ() + (double) ((float) direction.getZOffset() * 1.125F);
-        BlockPos blockpos = source.getBlockPos().offset(direction);
+    public ItemStack execute(BlockSource source, ItemStack stack) {
+        Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+        Level world = source.getLevel();
+        double d0 = source.x() + (double) ((float) direction.getStepX() * 1.125F);
+        double d1 = source.y() + (double) ((float) direction.getStepY() * 1.125F);
+        double d2 = source.z() + (double) ((float) direction.getStepZ() * 1.125F);
+        BlockPos blockpos = source.getPos().relative(direction);
         double d3;
-        if (world.getFluidState(blockpos).isTagged(FluidTags.WATER))
+        if (world.getFluidState(blockpos).is(FluidTags.WATER))
             d3 = 1.0D;
         else {
-            if (!world.getBlockState(blockpos).isAir() || !world.getFluidState(blockpos.down()).isTagged(FluidTags.WATER))
+            if (!world.getBlockState(blockpos).isAir() || !world.getFluidState(blockpos.below()).is(FluidTags.WATER))
                 return this.dispenseItemBehaviour.dispense(source, stack);
 
             d3 = 0.0D;
@@ -37,13 +37,13 @@ public class HabitatDispenseBoatBehavior extends DefaultDispenseItemBehavior {
 
         HabitatBoatEntity boatentity = new HabitatBoatEntity(world, d0, d1 + d3, d2);
         boatentity.setBoatType(this.type);
-        boatentity.rotationYaw = direction.getHorizontalAngle();
-        world.addEntity(boatentity);
+        boatentity.yRot = direction.toYRot();
+        world.addFreshEntity(boatentity);
         stack.shrink(1);
         return stack;
     }
 
-    protected void playDispenseSound(IBlockSource source) {
-        source.getWorld().playEvent(1000, source.getBlockPos(), 0);
+    protected void playSound(BlockSource source) {
+        source.getLevel().levelEvent(1000, source.getPos(), 0);
     }
 }

@@ -2,12 +2,14 @@ package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.common.block.misc.ChestVariant;
 import mod.schnappdragon.habitat.core.registry.HabitatTileEntityTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.BlockGetter;
 
 import javax.annotation.Nullable;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class HabitatChestBlock extends ChestBlock implements IChestVariant {
     private final ChestVariant variant;
@@ -24,7 +26,7 @@ public class HabitatChestBlock extends ChestBlock implements IChestVariant {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
         return HabitatTileEntityTypes.CHEST.get().create();
     }
 

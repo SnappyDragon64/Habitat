@@ -3,61 +3,63 @@ package mod.schnappdragon.habitat.common.block;
 import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruitEntity;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BushBlock;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.item.ToolItem;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.PlantType;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class KabloomBushBlock extends BushBlock implements IGrowable, IHasPistonDestroyEffect {
-    protected static final VoxelShape[] SHAPES = {Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D)};
-    public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class KabloomBushBlock extends BushBlock implements BonemealableBlock, IHasPistonDestroyEffect {
+    protected static final VoxelShape[] SHAPES = {Block.box(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D)};
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
 
     public KabloomBushBlock(Properties properties) {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(AGE, 0));
+        this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(AGE);
     }
 
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return SHAPES[state.get(AGE)];
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return SHAPES[state.getValue(AGE)];
     }
 
     /*
@@ -65,73 +67,73 @@ public class KabloomBushBlock extends BushBlock implements IGrowable, IHasPiston
      */
 
     @Override
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn.getType() != EntityType.BEE) {
-            if (entityIn instanceof LivingEntity && state.get(AGE) > 1)
-                entityIn.setMotionMultiplier(state, new Vector3d(0.95F, 0.9D, 0.95F));
-            if (state.get(AGE) == 7) {
-                dropFruit(state, worldIn, pos,  entityIn instanceof ProjectileEntity ? ((ProjectileEntity) entityIn).func_234616_v_() : entityIn, true, false);
+            if (entityIn instanceof LivingEntity && state.getValue(AGE) > 1)
+                entityIn.makeStuckInBlock(state, new Vec3(0.95F, 0.9D, 0.95F));
+            if (state.getValue(AGE) == 7) {
+                dropFruit(state, worldIn, pos,  entityIn instanceof Projectile ? ((Projectile) entityIn).getOwner() : entityIn, true, false);
             }
         }
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (state.get(AGE) == 7) {
-            if (player.getHeldItem(handIn).getItem() instanceof ShearsItem) {
-                spawnAsEntity(worldIn, pos, new ItemStack(HabitatItems.KABLOOM_FRUIT.get(), 1));
-                player.getHeldItem(handIn).damageItem(1, player, (playerIn) -> {
-                    playerIn.sendBreakAnimation(handIn);
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (state.getValue(AGE) == 7) {
+            if (player.getItemInHand(handIn).getItem() instanceof ShearsItem) {
+                popResource(worldIn, pos, new ItemStack(HabitatItems.KABLOOM_FRUIT.get(), 1));
+                player.getItemInHand(handIn).hurtAndBreak(1, player, (playerIn) -> {
+                    playerIn.broadcastBreakEvent(handIn);
                 });
-                worldIn.setBlockState(pos, state.with(AGE, 3), 2);
-                worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+                worldIn.setBlock(pos, state.setValue(AGE, 3), 2);
+                worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             }
             else
                 dropFruit(state, worldIn, pos, player, true, false);
-            return ActionResultType.func_233537_a_(worldIn.isRemote);
+            return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        return super.use(state, worldIn, pos, player, handIn, hit);
     }
 
     @Override
-    public void catchFire(BlockState state, World worldIn, BlockPos pos, @Nullable Direction face, @Nullable LivingEntity igniter) {
-        if (state.get(AGE) == 7)
+    public void catchFire(BlockState state, Level worldIn, BlockPos pos, @Nullable Direction face, @Nullable LivingEntity igniter) {
+        if (state.getValue(AGE) == 7)
             dropFruit(state, worldIn, pos, igniter, true, true);
     }
 
     @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        ItemStack held = player.getHeldItemMainhand();
+    public void playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) {
+        ItemStack held = player.getMainHandItem();
 
-        if (state.get(AGE) == 7 && !player.abilities.isCreativeMode && !(held.getItem() instanceof ShearsItem) && (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, held) == 0 || !(held.getItem() instanceof ToolItem)))
+        if (state.getValue(AGE) == 7 && !player.abilities.instabuild && !(held.getItem() instanceof ShearsItem) && (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, held) == 0 || !(held.getItem() instanceof DiggerItem)))
             dropFruit(state, worldIn, pos, player, false, false);
 
-        super.onBlockHarvested(worldIn, pos, state, player);
+        super.playerWillDestroy(worldIn, pos, state, player);
     }
 
     @Override
-    public PushReaction getPushReaction(BlockState state) {
+    public PushReaction getPistonPushReaction(BlockState state) {
         return PushReaction.DESTROY;
     }
 
     @Override
-    public void onPistonDestroy(World worldIn, BlockPos pos, BlockState state) {
-        if (state.get(AGE) == 7)
+    public void onPistonDestroy(Level worldIn, BlockPos pos, BlockState state) {
+        if (state.getValue(AGE) == 7)
             dropFruit(state, worldIn, pos, null, false, false);
     }
 
-    private void dropFruit(BlockState state, World worldIn, BlockPos pos, @Nullable Entity activator, boolean replaceBush, boolean setFire) {
-        if (!worldIn.isRemote) {
+    private void dropFruit(BlockState state, Level worldIn, BlockPos pos, @Nullable Entity activator, boolean replaceBush, boolean setFire) {
+        if (!worldIn.isClientSide) {
             if (replaceBush) {
-                worldIn.setBlockState(pos, state.with(AGE, 3), 2);
-                worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_RUSTLE.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+                worldIn.setBlock(pos, state.setValue(AGE, 3), 2);
+                worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_RUSTLE.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             }
 
             KabloomFruitEntity kabloom = new KabloomFruitEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F);
-            kabloom.setShooter(activator);
+            kabloom.setOwner(activator);
             if (setFire)
-                kabloom.setFire(8);
-            worldIn.addEntity(kabloom);
+                kabloom.setSecondsOnFire(8);
+            worldIn.addFreshEntity(kabloom);
         }
     }
 
@@ -139,27 +141,27 @@ public class KabloomBushBlock extends BushBlock implements IGrowable, IHasPiston
      * Growth Methods
      */
 
-    public boolean ticksRandomly(BlockState state) {
-        return state.get(AGE) < 7;
+    public boolean isRandomlyTicking(BlockState state) {
+        return state.getValue(AGE) < 7;
     }
 
-    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if (state.get(AGE) < 7 && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(5) == 0)) {
-            worldIn.setBlockState(pos, state.with(AGE, state.get(AGE) + 1), 2);
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+        if (state.getValue(AGE) < 7 && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(5) == 0)) {
+            worldIn.setBlock(pos, state.setValue(AGE, state.getValue(AGE) + 1), 2);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
     }
 
-    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return state.get(AGE) < 7;
+    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+        return state.getValue(AGE) < 7;
     }
 
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
         return true;
     }
 
-    public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        worldIn.setBlockState(pos, state.with(AGE, Math.min(7, state.get(AGE) + MathHelper.nextInt(rand, 2, 4))), 2);
+    public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+        worldIn.setBlock(pos, state.setValue(AGE, Math.min(7, state.getValue(AGE) + Mth.nextInt(rand, 2, 4))), 2);
     }
 
     /*
@@ -167,7 +169,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable, IHasPiston
      */
 
     @Override
-    public PlantType getPlantType(IBlockReader world, BlockPos pos) {
+    public PlantType getPlantType(BlockGetter world, BlockPos pos) {
         return PlantType.PLAINS;
     }
 
@@ -177,7 +179,7 @@ public class KabloomBushBlock extends BushBlock implements IGrowable, IHasPiston
 
     @Nullable
     @Override
-    public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
-        return state.get(AGE) > 1 ? PathNodeType.DANGER_OTHER : null;
+    public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
+        return state.getValue(AGE) > 1 ? BlockPathTypes.DANGER_OTHER : null;
     }
 }

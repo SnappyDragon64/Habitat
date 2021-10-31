@@ -3,57 +3,64 @@ package mod.schnappdragon.habitat.common.block;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import net.minecraft.block.*;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public class WallSlimeFernBlock extends AbstractSlimeFernBlock {
-    private static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.makeCuboidShape(0.0D, 2.0D, 1.0D, 16.0D, 14.0D, 16.0D), Direction.SOUTH, Block.makeCuboidShape(0.0D, 2.0D, 0.0D, 16.0D, 14.0D, 15.0D), Direction.WEST, Block.makeCuboidShape(1.0D, 2.0D, 0.0D, 16.0D, 14.0D, 16.0D), Direction.EAST, Block.makeCuboidShape(0.0D, 2.0D, 0.0D, 15.0D, 14.0D, 16.0D)));
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-    public static final DirectionProperty HORIZONTAL_FACING = HorizontalBlock.HORIZONTAL_FACING;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class WallSlimeFernBlock extends AbstractSlimeFernBlock {
+    private static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.box(0.0D, 2.0D, 1.0D, 16.0D, 14.0D, 16.0D), Direction.SOUTH, Block.box(0.0D, 2.0D, 0.0D, 16.0D, 14.0D, 15.0D), Direction.WEST, Block.box(1.0D, 2.0D, 0.0D, 16.0D, 14.0D, 16.0D), Direction.EAST, Block.box(0.0D, 2.0D, 0.0D, 15.0D, 14.0D, 16.0D)));
+
+    public static final DirectionProperty HORIZONTAL_FACING = HorizontalDirectionalBlock.FACING;
 
     public WallSlimeFernBlock(Properties properties) {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH));
     }
 
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(HORIZONTAL_FACING);
     }
 
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return SHAPES.get(state.get(HORIZONTAL_FACING));
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return SHAPES.get(state.getValue(HORIZONTAL_FACING));
     }
 
     /*
      * Placement Methods
      */
 
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        Direction dir = state.get(HORIZONTAL_FACING);
-        BlockPos pos1 = pos.offset(dir.getOpposite());
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+        Direction dir = state.getValue(HORIZONTAL_FACING);
+        BlockPos pos1 = pos.relative(dir.getOpposite());
         BlockState state1 = worldIn.getBlockState(pos1);
-        return state1.isSolidSide(worldIn, pos1, dir);
+        return state1.isFaceSturdy(worldIn, pos1, dir);
     }
 
     @Nullable
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState state = this.getDefaultState();
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState state = this.defaultBlockState();
 
         for(Direction dir : context.getNearestLookingDirections()) {
             if (dir.getAxis().isHorizontal()) {
-                state = state.with(HORIZONTAL_FACING, dir.getOpposite());
-                if (state.isValidPosition(context.getWorld(), context.getPos())) {
+                state = state.setValue(HORIZONTAL_FACING, dir.getOpposite());
+                if (state.canSurvive(context.getLevel(), context.getClickedPos())) {
                     return state;
                 }
             }
@@ -61,7 +68,7 @@ public class WallSlimeFernBlock extends AbstractSlimeFernBlock {
         return null;
     }
 
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return facing.getOpposite() == stateIn.get(HORIZONTAL_FACING) && !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : stateIn;
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+        return facing.getOpposite() == stateIn.getValue(HORIZONTAL_FACING) && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : stateIn;
     }
 }

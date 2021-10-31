@@ -4,27 +4,34 @@ import com.google.common.collect.ImmutableSet;
 import mod.schnappdragon.habitat.common.block.KabloomBushBlock;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.HabitatConfig;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HugeMushroomBlock;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
-import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
-import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HugeMushroomBlock;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.world.level.levelgen.feature.blockplacers.SimpleBlockPlacer;
+import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.gen.feature.*;
 
+import net.minecraft.data.worldgen.Features;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+
 public class HabitatConfiguredFeatures {
-    public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(HabitatBlocks.RAFFLESIA.get().getDefaultState()), SimpleBlockPlacer.PLACER).xSpread(6).ySpread(1).zSpread(6).tries(2).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(HabitatConfig.COMMON.rafflesiaChance.get());
+    public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(HabitatBlocks.RAFFLESIA.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE).xspread(6).yspread(1).zspread(6).tries(2).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).build()).decorated(Features.Decorators.HEIGHTMAP_SQUARE).chance(HabitatConfig.COMMON.rafflesiaChance.get());
 
-    public static final ConfiguredFeature<?, ?> PATCH_KABLOOM_BUSH = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(HabitatBlocks.KABLOOM_BUSH.get().getDefaultState().with(KabloomBushBlock.AGE, 7)), SimpleBlockPlacer.PLACER).xSpread(4).ySpread(1).zSpread(4).tries(20).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(HabitatConfig.COMMON.kabloomBushChance.get());
+    public static final ConfiguredFeature<?, ?> PATCH_KABLOOM_BUSH = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(HabitatBlocks.KABLOOM_BUSH.get().defaultBlockState().setValue(KabloomBushBlock.AGE, 7)), SimpleBlockPlacer.INSTANCE).xspread(4).yspread(1).zspread(4).tries(20).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).build()).decorated(Features.Decorators.HEIGHTMAP_SQUARE).chance(HabitatConfig.COMMON.kabloomBushChance.get());
 
-    public static final ConfiguredFeature<?, ?> PATCH_SLIME_FERN = HabitatFeatures.SLIME_FERN_FEATURE.get().withConfiguration(new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(HabitatBlocks.SLIME_FERN.get().getDefaultState()), SimpleBlockPlacer.PLACER).xSpread(4).ySpread(5).zSpread(4).tries(50).build()).range(40).chance(HabitatConfig.COMMON.slimeFernChance.get());
+    public static final ConfiguredFeature<?, ?> PATCH_SLIME_FERN = HabitatFeatures.SLIME_FERN_FEATURE.get().configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(HabitatBlocks.SLIME_FERN.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE).xspread(4).yspread(5).zspread(4).tries(50).build()).range(40).chance(HabitatConfig.COMMON.slimeFernChance.get());
 
-    public static final ConfiguredFeature<?, ?> PATCH_BALL_CACTUS = Feature.RANDOM_PATCH.withConfiguration(new BlockClusterFeatureConfig.Builder(new WeightedBlockStateProvider().addWeightedBlockstate(HabitatBlocks.FLOWERING_ORANGE_BALL_CACTUS.get().getDefaultState(), 3).addWeightedBlockstate(HabitatBlocks.FLOWERING_PINK_BALL_CACTUS.get().getDefaultState(), 3).addWeightedBlockstate(HabitatBlocks.FLOWERING_RED_BALL_CACTUS.get().getDefaultState(), 2).addWeightedBlockstate(HabitatBlocks.FLOWERING_YELLOW_BALL_CACTUS.get().getDefaultState(), 1), SimpleBlockPlacer.PLACER).xSpread(5).ySpread(1).zSpread(5).tries(5).build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(HabitatConfig.COMMON.ballCactusChance.get());
+    public static final ConfiguredFeature<?, ?> PATCH_BALL_CACTUS = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new WeightedStateProvider().add(HabitatBlocks.FLOWERING_ORANGE_BALL_CACTUS.get().defaultBlockState(), 3).add(HabitatBlocks.FLOWERING_PINK_BALL_CACTUS.get().defaultBlockState(), 3).add(HabitatBlocks.FLOWERING_RED_BALL_CACTUS.get().defaultBlockState(), 2).add(HabitatBlocks.FLOWERING_YELLOW_BALL_CACTUS.get().defaultBlockState(), 1), SimpleBlockPlacer.INSTANCE).xspread(5).yspread(1).zspread(5).tries(5).build()).decorated(Features.Decorators.HEIGHTMAP_SQUARE).chance(HabitatConfig.COMMON.ballCactusChance.get());
 
-    public static final ConfiguredFeature<?, ?> FAIRY_RING = HabitatFeatures.FAIRY_RING_FEATURE.get().withConfiguration(new NoFeatureConfig());
-    public static final ConfiguredFeature<?, ?> HUGE_FAIRY_RING_MUSHROOM = HabitatFeatures.HUGE_FAIRY_RING_MUSHROOM_FEATURE.get().withConfiguration(new BigMushroomFeatureConfig(new SimpleBlockStateProvider(HabitatBlocks.FAIRY_RING_MUSHROOM_BLOCK.get().getDefaultState().with(HugeMushroomBlock.DOWN, false)), new SimpleBlockStateProvider(HabitatBlocks.FAIRY_RING_MUSHROOM_STEM.get().getDefaultState().with(HugeMushroomBlock.UP, false).with(HugeMushroomBlock.DOWN, false)), 2));
+    public static final ConfiguredFeature<?, ?> FAIRY_RING = HabitatFeatures.FAIRY_RING_FEATURE.get().configured(new NoneFeatureConfiguration());
+    public static final ConfiguredFeature<?, ?> HUGE_FAIRY_RING_MUSHROOM = HabitatFeatures.HUGE_FAIRY_RING_MUSHROOM_FEATURE.get().configured(new HugeMushroomFeatureConfiguration(new SimpleStateProvider(HabitatBlocks.FAIRY_RING_MUSHROOM_BLOCK.get().defaultBlockState().setValue(HugeMushroomBlock.DOWN, false)), new SimpleStateProvider(HabitatBlocks.FAIRY_RING_MUSHROOM_STEM.get().defaultBlockState().setValue(HugeMushroomBlock.UP, false).setValue(HugeMushroomBlock.DOWN, false)), 2));
 
     public static void registerConfiguredFeatures() {
         register("rafflesia_patch", PATCH_RAFFLESIA);
@@ -36,6 +43,6 @@ public class HabitatConfiguredFeatures {
     }
 
     private static void register(String id, ConfiguredFeature<?, ?> configuredFeature) {
-        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(Habitat.MODID, id), configuredFeature);
+        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(Habitat.MODID, id), configuredFeature);
     }
 }

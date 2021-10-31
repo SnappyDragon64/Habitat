@@ -1,23 +1,23 @@
 package mod.schnappdragon.habitat.common.tileentity;
 
 import mod.schnappdragon.habitat.core.registry.HabitatTileEntityTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class RafflesiaTileEntity extends TileEntity {
-    public ListNBT Effects = new ListNBT();
+public class RafflesiaTileEntity extends BlockEntity {
+    public ListTag Effects = new ListTag();
 
     public RafflesiaTileEntity() {
         super(HabitatTileEntityTypes.RAFFLESIA.get());
-        CompoundNBT tag = new CompoundNBT();
+        CompoundTag tag = new CompoundTag();
         tag.putByte("EffectId", (byte) 19);
         tag.putInt("EffectDuration", 240);
         this.Effects.add(tag);
@@ -25,44 +25,44 @@ public class RafflesiaTileEntity extends TileEntity {
 
     @Nonnull
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.put("Effects", this.Effects);
 
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void load(BlockState state, CompoundTag compound) {
         this.Effects = compound.getList("Effects", 10);
 
-        super.read(state, compound);
+        super.load(state, compound);
     }
 
     @Nullable
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.pos, -1, this.getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(this.worldPosition, -1, this.getUpdateTag());
     }
 
     @Nonnull
     @Override
-    public CompoundNBT getUpdateTag() {
-        CompoundNBT nbtTagCompound = new CompoundNBT();
-        write(nbtTagCompound);
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbtTagCompound = new CompoundTag();
+        save(nbtTagCompound);
         return nbtTagCompound;
     }
 
     @Override
-    public void handleUpdateTag(BlockState state, CompoundNBT compound) {
-        this.read(state, compound);
+    public void handleUpdateTag(BlockState state, CompoundTag compound) {
+        this.load(state, compound);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.read(this.getBlockState(), pkt.getNbtCompound());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        this.load(this.getBlockState(), pkt.getTag());
     }
 
-    public void onChange(World worldIn, BlockState newState) {
-        this.markDirty();
-        worldIn.notifyBlockUpdate(this.getPos(), this.getBlockState(), newState, -1);
+    public void onChange(Level worldIn, BlockState newState) {
+        this.setChanged();
+        worldIn.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), newState, -1);
     }
 }

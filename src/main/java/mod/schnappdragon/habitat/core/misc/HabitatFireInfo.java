@@ -1,9 +1,9 @@
 package mod.schnappdragon.habitat.core.misc;
 
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FireBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FireBlock;
 
 public class HabitatFireInfo {
     public static void registerFireInfo() {
@@ -34,6 +34,6 @@ public class HabitatFireInfo {
     }
 
     private static void setFireInfo(Block block, int encouragement, int flammability) {
-        ((FireBlock) Blocks.FIRE).setFireInfo(block, encouragement, flammability);
+        ((FireBlock) Blocks.FIRE).setFlammable(block, encouragement, flammability);
     }
 }

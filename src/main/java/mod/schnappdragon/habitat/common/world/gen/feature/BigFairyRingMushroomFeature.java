@@ -4,41 +4,41 @@ import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.common.block.FairyRingMushroomBlock;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.util.CompatHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HugeMushroomBlock;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
-import net.minecraft.world.gen.feature.AbstractBigMushroomFeature;
-import net.minecraft.world.gen.feature.BigMushroomFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.HugeMushroomBlock;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
+import net.minecraft.world.level.levelgen.feature.AbstractHugeMushroomFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
 
 import java.util.Random;
 
-public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
-    public BigFairyRingMushroomFeature(Codec<BigMushroomFeatureConfig> codec) {
+public class BigFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
+    public BigFairyRingMushroomFeature(Codec<HugeMushroomFeatureConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, BigMushroomFeatureConfig config) {
-        int i = this.func_227211_a_(rand);
-        BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
-        if (!this.func_227209_a_(reader, pos, i, blockpos$mutable, config)) {
+    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, HugeMushroomFeatureConfiguration config) {
+        int i = this.getTreeHeight(rand);
+        BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
+        if (!this.isValidPosition(reader, pos, i, blockpos$mutable, config)) {
             return false;
         } else {
-            this.func_225564_a_(reader, rand, pos, i, blockpos$mutable, config);
-            this.func_227210_a_(reader, rand, pos, config, i, blockpos$mutable);
+            this.makeCap(reader, rand, pos, i, blockpos$mutable, config);
+            this.placeTrunk(reader, rand, pos, config, i, blockpos$mutable);
             return true;
         }
     }
 
     @Override
-    protected int func_227211_a_(Random rand) {
+    protected int getTreeHeight(Random rand) {
         int i = rand.nextInt(2) + 10;
         if (rand.nextInt(12) == 0) {
             i *= 2;
@@ -48,28 +48,28 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
     }
 
     @Override
-    protected void func_227210_a_(IWorld world, Random rand, BlockPos pos, BigMushroomFeatureConfig config, int i0, BlockPos.Mutable blockpos$mutable) {
-        WeightedBlockStateProvider mushroomProvider = new WeightedBlockStateProvider().addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState(), 1).addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 2), 2).addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 3), 3).addWeightedBlockstate(HabitatBlocks.FAIRY_RING_MUSHROOM.get().getDefaultState().with(FairyRingMushroomBlock.MUSHROOMS, 4), 3);
+    protected void placeTrunk(LevelAccessor world, Random rand, BlockPos pos, HugeMushroomFeatureConfiguration config, int i0, BlockPos.MutableBlockPos blockpos$mutable) {
+        WeightedStateProvider mushroomProvider = new WeightedStateProvider().add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState(), 1).add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState().setValue(FairyRingMushroomBlock.MUSHROOMS, 2), 2).add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState().setValue(FairyRingMushroomBlock.MUSHROOMS, 3), 3).add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState().setValue(FairyRingMushroomBlock.MUSHROOMS, 4), 3);
 
-        BlockState stem = config.stemProvider.getBlockState(rand, pos);
+        BlockState stem = config.stemProvider.getState(rand, pos);
         boolean enhancedFlag = !CompatHelper.checkMods("enhanced_mushrooms");
         if (enhancedFlag)
-            stem = HabitatBlocks.ENHANCED_FAIRY_RING_MUSHROOM_STEM.get().getDefaultState();
+            stem = HabitatBlocks.ENHANCED_FAIRY_RING_MUSHROOM_STEM.get().defaultBlockState();
 
         for (int i = 0; i < i0; ++i) {
-            blockpos$mutable.setPos(pos).move(Direction.UP, i);
+            blockpos$mutable.set(pos).move(Direction.UP, i);
             if (world.getBlockState(blockpos$mutable).canBeReplacedByLogs(world, blockpos$mutable)) {
-                this.setBlockState(world, blockpos$mutable, stem);
+                this.setBlock(world, blockpos$mutable, stem);
             }
 
             boolean breakFlag = false;
             if (i > i0 - 7) {
                 for (int x = -1; x <= 1; ++x) {
                     for (int z = -1; z <= 1; ++z) {
-                        BlockPos.Mutable inPos = new BlockPos.Mutable().setAndOffset(blockpos$mutable, x, 0, z);
+                        BlockPos.MutableBlockPos inPos = new BlockPos.MutableBlockPos().setWithOffset(blockpos$mutable, x, 0, z);
                         if (world.getBlockState(inPos).canBeReplacedByLeaves(world, inPos)) {
-                            if (i > i0 - 6 && (x != 0 || z != 0) && rand.nextInt(12) == 0 && !world.getBlockState(inPos.down()).isIn(HabitatBlocks.FAIRYLIGHT.get())) {
-                                this.setBlockState(world, inPos, HabitatBlocks.FAIRYLIGHT.get().getDefaultState());
+                            if (i > i0 - 6 && (x != 0 || z != 0) && rand.nextInt(12) == 0 && !world.getBlockState(inPos.below()).is(HabitatBlocks.FAIRYLIGHT.get())) {
+                                this.setBlock(world, inPos, HabitatBlocks.FAIRYLIGHT.get().defaultBlockState());
                                 breakFlag = true;
                                 break;
                             }
@@ -82,25 +82,25 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
         }
 
         for (Direction dir : new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}) {
-            int len = rand.nextInt(3) > 0 ? rand.nextBoolean() ? 1 + MathHelper.ceil((float) rand.nextInt(i0 - 7) / 2) : MathHelper.ceil((float) rand.nextInt(i0 - 7) / 2) : 0;
-            blockpos$mutable.setAndOffset(pos, dir.getXOffset(), -1, dir.getZOffset());
+            int len = rand.nextInt(3) > 0 ? rand.nextBoolean() ? 1 + Mth.ceil((float) rand.nextInt(i0 - 7) / 2) : Mth.ceil((float) rand.nextInt(i0 - 7) / 2) : 0;
+            blockpos$mutable.setWithOffset(pos, dir.getStepX(), -1, dir.getStepZ());
 
             for (int i = 0; i < len + 1; ++i) {
                 blockpos$mutable.move(Direction.UP);
-                if (world.getBlockState(blockpos$mutable).canBeReplacedByLogs(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.down()).isOpaqueCube(world, blockpos$mutable.down())) {
+                if (world.getBlockState(blockpos$mutable).canBeReplacedByLogs(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.below()).isSolidRender(world, blockpos$mutable.below())) {
                     if (i < len) {
                         BlockState stemState = stem;
                         if (stemState.getBlock() instanceof HugeMushroomBlock) {
-                            stemState = stemState.with(HugeMushroomBlock.UP, i == len - 1);
-                            if (world.getBlockState(blockpos$mutable.offset(dir.getOpposite())).isIn(stemState.getBlock())) {
-                                stemState = stemState.with(getPropertyFromDirection(dir.getOpposite()), false);
-                                this.setBlockState(world, blockpos$mutable.offset(dir.getOpposite()), world.getBlockState(blockpos$mutable.offset(dir.getOpposite())).with(getPropertyFromDirection(dir), false));
+                            stemState = stemState.setValue(HugeMushroomBlock.UP, i == len - 1);
+                            if (world.getBlockState(blockpos$mutable.relative(dir.getOpposite())).is(stemState.getBlock())) {
+                                stemState = stemState.setValue(getPropertyFromDirection(dir.getOpposite()), false);
+                                this.setBlock(world, blockpos$mutable.relative(dir.getOpposite()), world.getBlockState(blockpos$mutable.relative(dir.getOpposite())).setValue(getPropertyFromDirection(dir), false));
                             }
                         }
-                        this.setBlockState(world, blockpos$mutable, stemState);
+                        this.setBlock(world, blockpos$mutable, stemState);
                     }
                     else if (rand.nextInt(3) == 0)
-                        this.setBlockState(world, blockpos$mutable, mushroomProvider.getBlockState(rand, blockpos$mutable));
+                        this.setBlock(world, blockpos$mutable, mushroomProvider.getState(rand, blockpos$mutable));
                 }
             }
         }
@@ -108,11 +108,11 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
         for (int i = -1; i <= 1; i += 2) {
             for (int k = -1; k <= 1; k += 2) {
                 for (int j = -1; j <= 1; ++j) {
-                    blockpos$mutable.setAndOffset(pos, i, j, k);
+                    blockpos$mutable.setWithOffset(pos, i, j, k);
 
-                    if (world.getBlockState(blockpos$mutable).isAir(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.down()).isOpaqueCube(world, blockpos$mutable.down())) {
+                    if (world.getBlockState(blockpos$mutable).isAir(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.below()).isSolidRender(world, blockpos$mutable.below())) {
                         if (rand.nextInt(3) == 0)
-                            this.setBlockState(world, blockpos$mutable, mushroomProvider.getBlockState(rand, blockpos$mutable));
+                            this.setBlock(world, blockpos$mutable, mushroomProvider.getState(rand, blockpos$mutable));
                         break;
                     }
                 }
@@ -133,7 +133,7 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
         }
     }
 
-    protected void func_225564_a_(IWorld world, Random rand, BlockPos pos, int i0, BlockPos.Mutable blockpos$mutable, BigMushroomFeatureConfig config) {
+    protected void makeCap(LevelAccessor world, Random rand, BlockPos pos, int i0, BlockPos.MutableBlockPos blockpos$mutable, HugeMushroomFeatureConfiguration config) {
         for (int i = i0 - 6; i <= i0; ++i) {
             int j = i < i0 ? config.foliageRadius : config.foliageRadius - 1;
             int k = config.foliageRadius - 2;
@@ -147,9 +147,9 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
                     boolean flag4 = flag || flag1;
                     boolean flag5 = flag2 || flag3;
                     if (i >= i0 || flag4 != flag5) {
-                        blockpos$mutable.setAndOffset(pos, l, i, i1);
+                        blockpos$mutable.setWithOffset(pos, l, i, i1);
                         if (world.getBlockState(blockpos$mutable).canBeReplacedByLeaves(world, blockpos$mutable)) {
-                            this.setBlockState(world, blockpos$mutable, config.capProvider.getBlockState(rand, pos).with(HugeMushroomBlock.UP, i >= i0 - 1).with(HugeMushroomBlock.WEST, l < -k).with(HugeMushroomBlock.EAST, l > k).with(HugeMushroomBlock.NORTH, i1 < -k).with(HugeMushroomBlock.SOUTH, i1 > k));
+                            this.setBlock(world, blockpos$mutable, config.capProvider.getState(rand, pos).setValue(HugeMushroomBlock.UP, i >= i0 - 1).setValue(HugeMushroomBlock.WEST, l < -k).setValue(HugeMushroomBlock.EAST, l > k).setValue(HugeMushroomBlock.NORTH, i1 < -k).setValue(HugeMushroomBlock.SOUTH, i1 > k));
                         }
                     }
                 }
@@ -157,7 +157,7 @@ public class BigFairyRingMushroomFeature extends AbstractBigMushroomFeature {
         }
     }
 
-    protected int func_225563_a_(int i1, int i2, int i3, int i4) {
+    protected int getTreeRadiusForHeight(int i1, int i2, int i3, int i4) {
         return i4 < i2 && i4 >= i2 - 3 || i4 == i2 ? i3 : 0;
     }
 }

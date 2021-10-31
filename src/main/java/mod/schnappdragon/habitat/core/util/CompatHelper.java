@@ -2,7 +2,7 @@ package mod.schnappdragon.habitat.core.util;
 
 import com.google.gson.JsonObject;
 import mod.schnappdragon.habitat.core.Habitat;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
@@ -29,7 +29,7 @@ public class CompatHelper {
         return Habitat.DEV;
     }
 
-    public static ItemGroup compatItemGroup(ItemGroup group, String... modids) {
+    public static CreativeModeTab compatItemGroup(CreativeModeTab group, String... modids) {
         return checkMods(modids) ? group : null;
     }
 }

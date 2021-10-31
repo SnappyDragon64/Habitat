@@ -1,8 +1,8 @@
 package mod.schnappdragon.habitat.common.block.state.properties;
 
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 public class HabitatBlockStateProperties {
     public static final BooleanProperty ON_COOLDOWN = BooleanProperty.create("on_cooldown");

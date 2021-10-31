@@ -1,8 +1,8 @@
 package mod.schnappdragon.habitat.common.block.state.properties;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum VerticalSlabType implements IStringSerializable {
+public enum VerticalSlabType implements StringRepresentable {
     HALF("half"),
     DOUBLE("double");
 
@@ -16,7 +16,7 @@ public enum VerticalSlabType implements IStringSerializable {
         return this.name;
     }
 
-    public String getString() {
+    public String getSerializedName() {
         return this.name;
     }
 }

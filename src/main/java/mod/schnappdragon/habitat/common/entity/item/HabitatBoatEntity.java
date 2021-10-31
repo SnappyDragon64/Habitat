@@ -2,107 +2,107 @@ package mod.schnappdragon.habitat.common.entity.item;
 
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.BoatEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class HabitatBoatEntity extends BoatEntity {
-    private static final DataParameter<Integer> BOAT_TYPE = EntityDataManager.createKey(HabitatBoatEntity.class, DataSerializers.VARINT);
+public class HabitatBoatEntity extends Boat {
+    private static final EntityDataAccessor<Integer> BOAT_TYPE = SynchedEntityData.defineId(HabitatBoatEntity.class, EntityDataSerializers.INT);
 
-    public HabitatBoatEntity(EntityType<? extends BoatEntity> typeIn, World worldIn) {
+    public HabitatBoatEntity(EntityType<? extends Boat> typeIn, Level worldIn) {
         super(typeIn, worldIn);
-        this.preventEntitySpawning = true;
+        this.blocksBuilding = true;
     }
 
-    public HabitatBoatEntity(World worldIn, double x, double y, double z) {
+    public HabitatBoatEntity(Level worldIn, double x, double y, double z) {
         this(HabitatEntityTypes.BOAT.get(), worldIn);
-        this.setPosition(x, y, z);
-        this.setMotion(Vector3d.ZERO);
-        this.prevPosX = x;
-        this.prevPosY = y;
-        this.prevPosZ = z;
+        this.setPos(x, y, z);
+        this.setDeltaMovement(Vec3.ZERO);
+        this.xo = x;
+        this.yo = y;
+        this.zo = z;
     }
 
     public HabitatBoatEntity.Type getHabitatBoatType() {
-        return HabitatBoatEntity.Type.byId(this.dataManager.get(BOAT_TYPE));
+        return HabitatBoatEntity.Type.byId(this.entityData.get(BOAT_TYPE));
     }
 
     @Override
-    public Item getItemBoat() {
+    public Item getDropItem() {
         return ForgeRegistries.ITEMS.getValue(new ResourceLocation(Habitat.MODID, this.getHabitatBoatType().getName() + "_boat"));
     }
 
     public void setBoatType(HabitatBoatEntity.Type boatType) {
-        this.dataManager.set(BOAT_TYPE, boatType.ordinal());
+        this.entityData.set(BOAT_TYPE, boatType.ordinal());
     }
 
     @Override
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(BOAT_TYPE, Type.FAIRY_RING_MUSHROOM.ordinal());
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(BOAT_TYPE, Type.FAIRY_RING_MUSHROOM.ordinal());
     }
 
     @Override
-    protected void writeAdditional(CompoundNBT compound) {
+    protected void addAdditionalSaveData(CompoundTag compound) {
         compound.putString("Type", this.getHabitatBoatType().getName());
     }
 
     @Override
-    protected void readAdditional(CompoundNBT compound) {
+    protected void readAdditionalSaveData(CompoundTag compound) {
         if (compound.contains("Type", 8))
             this.setBoatType(Type.getTypeFromString(compound.getString("Type")));
     }
 
     @Override
-    protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
-        this.lastYd = this.getMotion().y;
+    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+        this.lastYd = this.getDeltaMovement().y;
         if (!this.isPassenger()) {
             if (onGroundIn) {
                 if (this.fallDistance > 3.0F) {
-                    if (this.status != BoatEntity.Status.ON_LAND) {
+                    if (this.status != Boat.Status.ON_LAND) {
                         this.fallDistance = 0.0F;
                         return;
                     }
 
-                    this.onLivingFall(this.fallDistance, 1.0F);
-                    if (!this.world.isRemote && !this.removed) {
+                    this.causeFallDamage(this.fallDistance, 1.0F);
+                    if (!this.level.isClientSide && !this.removed) {
                         this.remove();
-                        if (this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+                        if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                             Item planks = ForgeRegistries.ITEMS.getValue(new ResourceLocation(Habitat.MODID, this.getHabitatBoatType().getName() + "_planks"));
 
                             for (int i = 0; i < 3; ++i)
-                                this.entityDropItem(planks);
+                                this.spawnAtLocation(planks);
 
                             for (int j = 0; j < 2; ++j)
-                                this.entityDropItem(Items.STICK);
+                                this.spawnAtLocation(Items.STICK);
                         }
                     }
                 }
 
                 this.fallDistance = 0.0F;
             }
-            else if (!this.world.getFluidState(this.getPosition().down()).isTagged(FluidTags.WATER) && y < 0.0D)
+            else if (!this.level.getFluidState(this.blockPosition().below()).is(FluidTags.WATER) && y < 0.0D)
                 this.fallDistance = (float) ((double) this.fallDistance - y);
         }
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

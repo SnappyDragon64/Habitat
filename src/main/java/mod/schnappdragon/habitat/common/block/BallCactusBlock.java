@@ -1,22 +1,24 @@
 package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.common.block.misc.BallCactusColor;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.SoundType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.Random;
 
-public class BallCactusBlock extends AbstractBallCactusBlock implements IGrowable {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class BallCactusBlock extends AbstractBallCactusBlock implements BonemealableBlock {
     public BallCactusBlock(BallCactusColor colorIn, Properties properties) {
         super(colorIn, properties);
     }
@@ -26,39 +28,39 @@ public class BallCactusBlock extends AbstractBallCactusBlock implements IGrowabl
      */
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (player.getHeldItem(handIn).getItem() == getColor().getFlower()) {
-            if (!player.abilities.isCreativeMode)
-                player.getHeldItem(handIn).shrink(1);
-            worldIn.setBlockState(pos, getColor().getFloweringBallCactus().getDefaultState(), 2);
-            worldIn.playSound(null, pos, SoundType.PLANT.getPlaceSound(), SoundCategory.BLOCKS, SoundType.PLANT.getVolume() + 1.0F / 2.0F, SoundType.PLANT.getPitch() * 0.8F);
-            return ActionResultType.func_233537_a_(worldIn.isRemote);
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (player.getItemInHand(handIn).getItem() == getColor().getFlower()) {
+            if (!player.abilities.instabuild)
+                player.getItemInHand(handIn).shrink(1);
+            worldIn.setBlock(pos, getColor().getFloweringBallCactus().defaultBlockState(), 2);
+            worldIn.playSound(null, pos, SoundType.GRASS.getPlaceSound(), SoundSource.BLOCKS, SoundType.GRASS.getVolume() + 1.0F / 2.0F, SoundType.GRASS.getPitch() * 0.8F);
+            return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        return super.use(state, worldIn, pos, player, handIn, hit);
     }
 
     /*
      * Growth Methods
      */
 
-    public boolean ticksRandomly(BlockState state) {
+    public boolean isRandomlyTicking(BlockState state) {
         return true;
     }
 
-    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
         if (random.nextInt(10) == 0)
-            worldIn.setBlockState(pos, getColor().getFloweringBallCactus().getDefaultState());
+            worldIn.setBlockAndUpdate(pos, getColor().getFloweringBallCactus().defaultBlockState());
     }
 
-    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return true;
     }
 
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
         return true;
     }
 
-    public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        worldIn.setBlockState(pos, getColor().getFloweringBallCactus().getDefaultState());
+    public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+        worldIn.setBlockAndUpdate(pos, getColor().getFloweringBallCactus().defaultBlockState());
     }
 }

@@ -4,12 +4,12 @@ import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
 import mod.schnappdragon.habitat.core.registry.HabitatConfiguredStructures;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
@@ -26,20 +26,20 @@ public class HabitatBiomeLoadingEvent {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void modifyBiomes(BiomeLoadingEvent event) {
-        if (event.getName() != null && BiomeDictionary.hasType(RegistryKey.getOrCreateKey(Registry.BIOME_KEY, event.getName()), BiomeDictionary.Type.OVERWORLD)) {
+        if (event.getName() != null && BiomeDictionary.hasType(ResourceKey.create(Registry.BIOME_REGISTRY, event.getName()), BiomeDictionary.Type.OVERWORLD)) {
             ModificationHelper helper = new ModificationHelper(event);
 
-            if (helper.check(helper.checkCategory(Biome.Category.JUNGLE) && !helper.checkName("bamboo"), HabitatConfig.COMMON.rafflesiaWhitelist, HabitatConfig.COMMON.rafflesiaBlacklist))
-                helper.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStage.Decoration.VEGETAL_DECORATION);
+            if (helper.check(helper.checkCategory(Biome.BiomeCategory.JUNGLE) && !helper.checkName("bamboo"), HabitatConfig.COMMON.rafflesiaWhitelist, HabitatConfig.COMMON.rafflesiaBlacklist))
+                helper.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
 
-            if (helper.check(helper.checkCategory(Biome.Category.PLAINS), HabitatConfig.COMMON.kabloomBushWhitelist, HabitatConfig.COMMON.kabloomBushBlacklist))
-                helper.addFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH, GenerationStage.Decoration.VEGETAL_DECORATION);
+            if (helper.check(helper.checkCategory(Biome.BiomeCategory.PLAINS), HabitatConfig.COMMON.kabloomBushWhitelist, HabitatConfig.COMMON.kabloomBushBlacklist))
+                helper.addFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH, GenerationStep.Decoration.VEGETAL_DECORATION);
 
             if (helper.check(HabitatConfig.COMMON.slimeFernWhitelist, HabitatConfig.COMMON.slimeFernBlacklist))
-                helper.addFeature(HabitatConfiguredFeatures.PATCH_SLIME_FERN, GenerationStage.Decoration.UNDERGROUND_DECORATION);
+                helper.addFeature(HabitatConfiguredFeatures.PATCH_SLIME_FERN, GenerationStep.Decoration.UNDERGROUND_DECORATION);
 
-            if (helper.check(helper.checkCategory(Biome.Category.DESERT) || helper.checkCategory(Biome.Category.MESA), HabitatConfig.COMMON.ballCactusWhitelist, HabitatConfig.COMMON.ballCactusBlacklist))
-                helper.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStage.Decoration.VEGETAL_DECORATION);
+            if (helper.check(helper.checkCategory(Biome.BiomeCategory.DESERT) || helper.checkCategory(Biome.BiomeCategory.MESA), HabitatConfig.COMMON.ballCactusWhitelist, HabitatConfig.COMMON.ballCactusBlacklist))
+                helper.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
 
             if (helper.check(helper.checkName("dark_forest"), HabitatConfig.COMMON.fairyRingWhitelist, HabitatConfig.COMMON.fairyRingBlacklist))
                 helper.addStructure(HabitatConfiguredStructures.FAIRY_RING);
@@ -64,7 +64,7 @@ public class HabitatBiomeLoadingEvent {
             return check(true, whitelistConfig, blacklistConfig);
         }
 
-        private boolean checkCategory(Biome.Category category) {
+        private boolean checkCategory(Biome.BiomeCategory category) {
             return event.getCategory() == category;
         }
 
@@ -72,11 +72,11 @@ public class HabitatBiomeLoadingEvent {
             return event.getName().toString().contains(name);
         }
 
-        private void addFeature(ConfiguredFeature<?, ?> feature, GenerationStage.Decoration stage) {
-            event.getGeneration().withFeature(stage, feature);
+        private void addFeature(ConfiguredFeature<?, ?> feature, GenerationStep.Decoration stage) {
+            event.getGeneration().addFeature(stage, feature);
         }
 
-        private void addStructure(StructureFeature<?, ?> structure) {
+        private void addStructure(ConfiguredStructureFeature<?, ?> structure) {
             event.getGeneration().getStructures().add(() -> structure);
         }
     }

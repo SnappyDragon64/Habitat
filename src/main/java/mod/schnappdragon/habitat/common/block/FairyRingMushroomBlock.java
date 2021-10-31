@@ -6,56 +6,64 @@ import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockState
 import mod.schnappdragon.habitat.common.entity.monster.PookaEntity;
 import mod.schnappdragon.habitat.core.registry.*;
 import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.RabbitEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.server.level.ServerLevel;
 
-public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
-    protected static final VoxelShape[] SHAPE = {Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 13.0D, 10.0D), Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 14.0D, 13.0D), Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)};
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlock {
+    protected static final VoxelShape[] SHAPE = {Block.box(6.0D, 0.0D, 6.0D, 10.0D, 13.0D, 10.0D), Block.box(3.0D, 0.0D, 3.0D, 13.0D, 14.0D, 13.0D), Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)};
 
     public static final IntegerProperty MUSHROOMS = HabitatBlockStateProperties.MUSHROOMS_1_4;
     public static final BooleanProperty DUSTED = HabitatBlockStateProperties.DUSTED;
 
     public FairyRingMushroomBlock(Properties properties) {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(MUSHROOMS, 1).with(DUSTED, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(MUSHROOMS, 1).setValue(DUSTED, false));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(MUSHROOMS, DUSTED);
     }
 
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return SHAPE[state.get(MUSHROOMS) - 1];
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return SHAPE[state.getValue(MUSHROOMS) - 1];
     }
 
     @Override
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.down()).isOpaqueCube(worldIn, pos.down());
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+        return worldIn.getBlockState(pos.below()).isSolidRender(worldIn, pos.below());
     }
 
     /*
@@ -63,15 +71,15 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
      */
 
     @Override
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn.getType() == EntityType.RABBIT) {
-            RabbitEntity rabbit = (RabbitEntity) entityIn;
-            rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isChild() ? (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.5F : (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.0F);
+            Rabbit rabbit = (Rabbit) entityIn;
+            rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
             rabbit.remove();
-            worldIn.addEntity(PookaEntity.convertRabbit(rabbit));
+            worldIn.addFreshEntity(PookaEntity.convertRabbit(rabbit));
 
             for (int i = 0; i < 8; i++)
-                ((ServerWorld) worldIn).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getPosXRandom(0.5D), rabbit.getPosYHeight(0.5D), rabbit.getPosZRandom(0.5D), 0, rabbit.getRNG().nextGaussian(), 0.0D, rabbit.getRNG().nextGaussian(), 0.01D);
+                ((ServerLevel) worldIn).sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getRandomX(0.5D), rabbit.getY(0.5D), rabbit.getRandomZ(0.5D), 0, rabbit.getRandom().nextGaussian(), 0.0D, rabbit.getRandom().nextGaussian(), 0.01D);
         }
     }
 
@@ -79,11 +87,11 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
      * Particle Animation Method
      */
 
-    public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
-        if (state.get(DUSTED) && rand.nextInt(18 - 2 * state.get(MUSHROOMS)) == 0)
-            worldIn.addParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), 0.0D, 0.0D, 0.0D);
+    public void animateTick(BlockState state, Level worldIn, BlockPos pos, Random rand) {
+        if (state.getValue(DUSTED) && rand.nextInt(18 - 2 * state.getValue(MUSHROOMS)) == 0)
+            worldIn.addParticle(DustParticleOptions.REDSTONE, pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), 0.0D, 0.0D, 0.0D);
 
-        if (rand.nextInt(9 - state.get(MUSHROOMS)) == 0)
+        if (rand.nextInt(9 - state.getValue(MUSHROOMS)) == 0)
             worldIn.addParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), rand.nextGaussian() * 0.01D, 0.0D, rand.nextGaussian() * 0.01D);
     }
 
@@ -92,32 +100,32 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
      */
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (player.getHeldItem(handIn).getItem() instanceof ShearsItem && state.get(MUSHROOMS) > 1) {
-            spawnAsEntity(worldIn, pos, new ItemStack(getBlock()));
-            player.getHeldItem(handIn).damageItem(1, player, (playerIn) -> {
-                playerIn.sendBreakAnimation(handIn);
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (player.getItemInHand(handIn).getItem() instanceof ShearsItem && state.getValue(MUSHROOMS) > 1) {
+            popResource(worldIn, pos, new ItemStack(getBlock()));
+            player.getItemInHand(handIn).hurtAndBreak(1, player, (playerIn) -> {
+                playerIn.broadcastBreakEvent(handIn);
             });
-            worldIn.setBlockState(pos, state.with(MUSHROOMS, state.get(MUSHROOMS) - 1), 2);
-            worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_FAIRY_RING_MUSHROOM_SHEAR.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-            return ActionResultType.func_233537_a_(worldIn.isRemote);
+            worldIn.setBlock(pos, state.setValue(MUSHROOMS, state.getValue(MUSHROOMS) - 1), 2);
+            worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_FAIRY_RING_MUSHROOM_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+            return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
-        if (player.getHeldItem(handIn).getItem() == HabitatItems.FAIRY_RING_MUSHROOM.get() && state.get(MUSHROOMS) < 4) {
-            if (!player.abilities.isCreativeMode)
-                player.getHeldItem(handIn).shrink(1);
-            worldIn.setBlockState(pos, state.with(MUSHROOMS, state.get(MUSHROOMS) + 1), 2);
-            worldIn.playSound(null, pos, SoundType.PLANT.getPlaceSound(), SoundCategory.BLOCKS, SoundType.PLANT.getVolume() + 1.0F / 2.0F, SoundType.PLANT.getPitch() * 0.8F);
-            return ActionResultType.func_233537_a_(worldIn.isRemote);
+        if (player.getItemInHand(handIn).getItem() == HabitatItems.FAIRY_RING_MUSHROOM.get() && state.getValue(MUSHROOMS) < 4) {
+            if (!player.abilities.instabuild)
+                player.getItemInHand(handIn).shrink(1);
+            worldIn.setBlock(pos, state.setValue(MUSHROOMS, state.getValue(MUSHROOMS) + 1), 2);
+            worldIn.playSound(null, pos, SoundType.GRASS.getPlaceSound(), SoundSource.BLOCKS, SoundType.GRASS.getVolume() + 1.0F / 2.0F, SoundType.GRASS.getPitch() * 0.8F);
+            return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
-        if (player.getHeldItem(handIn).getItem() == Items.REDSTONE && !state.get(DUSTED)) {
-            if (!player.abilities.isCreativeMode)
-                player.getHeldItem(handIn).shrink(1);
-            worldIn.setBlockState(pos, state.with(DUSTED, true), 2);
-            worldIn.addParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX() + 0.5D, pos.getY() + 0.125D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
-            worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_FAIRY_RING_MUSHROOM_DUST.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-            return ActionResultType.func_233537_a_(worldIn.isRemote);
+        if (player.getItemInHand(handIn).getItem() == Items.REDSTONE && !state.getValue(DUSTED)) {
+            if (!player.abilities.instabuild)
+                player.getItemInHand(handIn).shrink(1);
+            worldIn.setBlock(pos, state.setValue(DUSTED, true), 2);
+            worldIn.addParticle(DustParticleOptions.REDSTONE, pos.getX() + 0.5D, pos.getY() + 0.125D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+            worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_FAIRY_RING_MUSHROOM_DUST.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+            return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        return super.use(state, worldIn, pos, player, handIn, hit);
     }
 
     /*
@@ -125,43 +133,43 @@ public class FairyRingMushroomBlock extends BushBlock implements IGrowable {
      */
 
     @Override
-    public int getWeakPower(BlockState state, IBlockReader worldIn, BlockPos pos, Direction side) {
-        return state.get(DUSTED) ? state.get(MUSHROOMS) : 0;
+    public int getSignal(BlockState state, BlockGetter worldIn, BlockPos pos, Direction side) {
+        return state.getValue(DUSTED) ? state.getValue(MUSHROOMS) : 0;
     }
 
     /*
      * Growth Methods
      */
 
-    public boolean ticksRandomly(BlockState state) {
-        return state.get(MUSHROOMS) < 4 && !state.get(DUSTED);
+    public boolean isRandomlyTicking(BlockState state) {
+        return state.getValue(MUSHROOMS) < 4 && !state.getValue(DUSTED);
     }
 
-    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if (state.get(MUSHROOMS) < 4 && random.nextInt(25) == 0)
-            worldIn.setBlockState(pos, state.with(MUSHROOMS, state.get(MUSHROOMS) + 1), 2);
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+        if (state.getValue(MUSHROOMS) < 4 && random.nextInt(25) == 0)
+            worldIn.setBlock(pos, state.setValue(MUSHROOMS, state.getValue(MUSHROOMS) + 1), 2);
     }
 
-    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return !state.get(DUSTED);
+    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+        return !state.getValue(DUSTED);
     }
 
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return !state.get(DUSTED) && (state.get(MUSHROOMS) != 4 || rand.nextFloat() < (worldIn.getBlockState(pos.down()).isIn(BlockTags.MUSHROOM_GROW_BLOCK) ? 0.8F : 0.4F));
+    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
+        return !state.getValue(DUSTED) && (state.getValue(MUSHROOMS) != 4 || rand.nextFloat() < (worldIn.getBlockState(pos.below()).is(BlockTags.MUSHROOM_GROW_BLOCK) ? 0.8F : 0.4F));
     }
 
-    public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        if (state.get(MUSHROOMS) < 4)
-            worldIn.setBlockState(pos, state.with(MUSHROOMS, Math.min(4, state.get(MUSHROOMS) + MathHelper.nextInt(rand, 1, 2))), 2);
+    public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+        if (state.getValue(MUSHROOMS) < 4)
+            worldIn.setBlock(pos, state.setValue(MUSHROOMS, Math.min(4, state.getValue(MUSHROOMS) + Mth.nextInt(rand, 1, 2))), 2);
         else
             growHugeMushroom(worldIn, rand, pos, state);
     }
 
-    private void growHugeMushroom(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
+    private void growHugeMushroom(ServerLevel world, Random rand, BlockPos pos, BlockState state) {
         world.removeBlock(pos, false);
         ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM;
 
-        if (!configuredfeature.generate(world, world.getChunkProvider().getChunkGenerator(), rand, pos))
-            world.setBlockState(pos, state, 3);
+        if (!configuredfeature.place(world, world.getChunkSource().getGenerator(), rand, pos))
+            world.setBlock(pos, state, 3);
     }
 }

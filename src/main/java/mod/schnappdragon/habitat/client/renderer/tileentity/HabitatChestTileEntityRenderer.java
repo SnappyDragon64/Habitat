@@ -1,127 +1,133 @@
 package mod.schnappdragon.habitat.client.renderer.tileentity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import mod.schnappdragon.habitat.common.block.IChestVariant;
 import mod.schnappdragon.habitat.common.block.misc.ChestVariant;
 import net.minecraft.block.*;
-import net.minecraft.client.renderer.Atlases;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.client.renderer.model.RenderMaterial;
-import net.minecraft.client.renderer.tileentity.DualBrightnessCallback;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.state.properties.ChestType;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.IChestLid;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityMerger;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.World;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.renderer.blockentity.BrightnessCombiner;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.level.block.state.properties.ChestType;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.LidBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.DoubleBlockCombiner;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.Level;
 
 import java.util.Calendar;
 
-public class HabitatChestTileEntityRenderer<T extends TileEntity & IChestLid> extends TileEntityRenderer<T> {
+import net.minecraft.world.level.block.AbstractChestBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class HabitatChestTileEntityRenderer<T extends BlockEntity & LidBlockEntity> extends BlockEntityRenderer<T> {
     public static Block itemBlock = null;
 
-    public final ModelRenderer singleLid;
-    public final ModelRenderer singleBottom;
-    public final ModelRenderer singleLatch;
-    public final ModelRenderer rightLid;
-    public final ModelRenderer rightBottom;
-    public final ModelRenderer rightLatch;
-    public final ModelRenderer leftLid;
-    public final ModelRenderer leftBottom;
-    public final ModelRenderer leftLatch;
+    public final ModelPart singleLid;
+    public final ModelPart singleBottom;
+    public final ModelPart singleLatch;
+    public final ModelPart rightLid;
+    public final ModelPart rightBottom;
+    public final ModelPart rightLatch;
+    public final ModelPart leftLid;
+    public final ModelPart leftBottom;
+    public final ModelPart leftLatch;
     public boolean isChristmas;
 
-    public HabitatChestTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
+    public HabitatChestTileEntityRenderer(BlockEntityRenderDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
         Calendar calendar = Calendar.getInstance();
         if (calendar.get(Calendar.MONTH) + 1 == 12 && calendar.get(Calendar.DATE) >= 24 && calendar.get(Calendar.DATE) <= 26) {
             this.isChristmas = true;
         }
 
-        this.singleBottom = new ModelRenderer(64, 64, 0, 19);
+        this.singleBottom = new ModelPart(64, 64, 0, 19);
         this.singleBottom.addBox(1.0F, 0.0F, 1.0F, 14.0F, 10.0F, 14.0F, 0.0F);
-        this.singleLid = new ModelRenderer(64, 64, 0, 0);
+        this.singleLid = new ModelPart(64, 64, 0, 0);
         this.singleLid.addBox(1.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F, 0.0F);
-        this.singleLid.rotationPointY = 9.0F;
-        this.singleLid.rotationPointZ = 1.0F;
-        this.singleLatch = new ModelRenderer(64, 64, 0, 0);
+        this.singleLid.y = 9.0F;
+        this.singleLid.z = 1.0F;
+        this.singleLatch = new ModelPart(64, 64, 0, 0);
         this.singleLatch.addBox(7.0F, -1.0F, 15.0F, 2.0F, 4.0F, 1.0F, 0.0F);
-        this.singleLatch.rotationPointY = 8.0F;
-        this.rightBottom = new ModelRenderer(64, 64, 0, 19);
+        this.singleLatch.y = 8.0F;
+        this.rightBottom = new ModelPart(64, 64, 0, 19);
         this.rightBottom.addBox(1.0F, 0.0F, 1.0F, 15.0F, 10.0F, 14.0F, 0.0F);
-        this.rightLid = new ModelRenderer(64, 64, 0, 0);
+        this.rightLid = new ModelPart(64, 64, 0, 0);
         this.rightLid.addBox(1.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
-        this.rightLid.rotationPointY = 9.0F;
-        this.rightLid.rotationPointZ = 1.0F;
-        this.rightLatch = new ModelRenderer(64, 64, 0, 0);
+        this.rightLid.y = 9.0F;
+        this.rightLid.z = 1.0F;
+        this.rightLatch = new ModelPart(64, 64, 0, 0);
         this.rightLatch.addBox(15.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
-        this.rightLatch.rotationPointY = 8.0F;
-        this.leftBottom = new ModelRenderer(64, 64, 0, 19);
+        this.rightLatch.y = 8.0F;
+        this.leftBottom = new ModelPart(64, 64, 0, 19);
         this.leftBottom.addBox(0.0F, 0.0F, 1.0F, 15.0F, 10.0F, 14.0F, 0.0F);
-        this.leftLid = new ModelRenderer(64, 64, 0, 0);
+        this.leftLid = new ModelPart(64, 64, 0, 0);
         this.leftLid.addBox(0.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
-        this.leftLid.rotationPointY = 9.0F;
-        this.leftLid.rotationPointZ = 1.0F;
-        this.leftLatch = new ModelRenderer(64, 64, 0, 0);
+        this.leftLid.y = 9.0F;
+        this.leftLid.z = 1.0F;
+        this.leftLatch = new ModelPart(64, 64, 0, 0);
         this.leftLatch.addBox(0.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
-        this.leftLatch.rotationPointY = 8.0F;
+        this.leftLatch.y = 8.0F;
     }
 
-    public void render(T tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        World world = tileEntityIn.getWorld();
+    public void render(T tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+        Level world = tileEntityIn.getLevel();
         boolean flag = world != null;
-        BlockState blockstate = flag ? tileEntityIn.getBlockState() : Blocks.CHEST.getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
-        ChestType chesttype = blockstate.hasProperty(ChestBlock.TYPE) ? blockstate.get(ChestBlock.TYPE) : ChestType.SINGLE;
+        BlockState blockstate = flag ? tileEntityIn.getBlockState() : Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
+        ChestType chesttype = blockstate.hasProperty(ChestBlock.TYPE) ? blockstate.getValue(ChestBlock.TYPE) : ChestType.SINGLE;
         Block block = blockstate.getBlock();
         if (block instanceof AbstractChestBlock) {
             AbstractChestBlock<?> abstractchestblock = (AbstractChestBlock) block;
             boolean flag1 = chesttype != ChestType.SINGLE;
-            matrixStackIn.push();
-            float f = blockstate.get(ChestBlock.FACING).getHorizontalAngle();
+            matrixStackIn.pushPose();
+            float f = blockstate.getValue(ChestBlock.FACING).toYRot();
             matrixStackIn.translate(0.5D, 0.5D, 0.5D);
-            matrixStackIn.rotate(Vector3f.YP.rotationDegrees(-f));
+            matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(-f));
             matrixStackIn.translate(-0.5D, -0.5D, -0.5D);
-            TileEntityMerger.ICallbackWrapper<? extends ChestTileEntity> icallbackwrapper;
+            DoubleBlockCombiner.NeighborCombineResult<? extends ChestBlockEntity> icallbackwrapper;
             if (flag)
-                icallbackwrapper = abstractchestblock.combine(blockstate, world, tileEntityIn.getPos(), true);
+                icallbackwrapper = abstractchestblock.combine(blockstate, world, tileEntityIn.getBlockPos(), true);
             else
-                icallbackwrapper = TileEntityMerger.ICallback::func_225537_b_;
+                icallbackwrapper = DoubleBlockCombiner.Combiner::acceptNone;
 
-            float f1 = icallbackwrapper.apply(ChestBlock.getLidRotationCallback(tileEntityIn)).get(partialTicks);
+            float f1 = icallbackwrapper.apply(ChestBlock.opennessCombiner(tileEntityIn)).get(partialTicks);
             f1 = 1.0F - f1;
             f1 = 1.0F - f1 * f1 * f1;
-            int i = icallbackwrapper.apply(new DualBrightnessCallback<>()).applyAsInt(combinedLightIn);
-            IVertexBuilder ivertexbuilder = this.getChestMaterial(tileEntityIn, chesttype).getBuffer(bufferIn, RenderType::getEntityCutout);
+            int i = icallbackwrapper.apply(new BrightnessCombiner<>()).applyAsInt(combinedLightIn);
+            VertexConsumer ivertexbuilder = this.getChestMaterial(tileEntityIn, chesttype).buffer(bufferIn, RenderType::entityCutout);
             if (flag1) {
                 if (chesttype == ChestType.LEFT)
-                    this.func_228871_a_(matrixStackIn, ivertexbuilder, this.leftLid, this.leftLatch, this.leftBottom, f1, i, combinedOverlayIn);
+                    this.render(matrixStackIn, ivertexbuilder, this.leftLid, this.leftLatch, this.leftBottom, f1, i, combinedOverlayIn);
                 else
-                    this.func_228871_a_(matrixStackIn, ivertexbuilder, this.rightLid, this.rightLatch, this.rightBottom, f1, i, combinedOverlayIn);
+                    this.render(matrixStackIn, ivertexbuilder, this.rightLid, this.rightLatch, this.rightBottom, f1, i, combinedOverlayIn);
             }
             else
-                this.func_228871_a_(matrixStackIn, ivertexbuilder, this.singleLid, this.singleLatch, this.singleBottom, f1, i, combinedOverlayIn);
+                this.render(matrixStackIn, ivertexbuilder, this.singleLid, this.singleLatch, this.singleBottom, f1, i, combinedOverlayIn);
 
-            matrixStackIn.pop();
+            matrixStackIn.popPose();
         }
     }
 
-    public RenderMaterial getChestMaterial(T tileEntity, ChestType type) {
+    public Material getChestMaterial(T tileEntity, ChestType type) {
         if (this.isChristmas) {
             switch (type) {
                 case RIGHT:
-                    return Atlases.CHEST_XMAS_RIGHT_MATERIAL;
+                    return Sheets.CHEST_XMAS_LOCATION_RIGHT;
                 case LEFT:
-                    return Atlases.CHEST_XMAS_LEFT_MATERIAL;
+                    return Sheets.CHEST_XMAS_LOCATION_LEFT;
                 default:
-                    return Atlases.CHEST_XMAS_MATERIAL;
+                    return Sheets.CHEST_XMAS_LOCATION;
             }
         }
         else {
@@ -144,13 +150,13 @@ public class HabitatChestTileEntityRenderer<T extends TileEntity & IChestLid> ex
         }
     }
 
-    private RenderMaterial getRenderMaterial(ResourceLocation resource) {
-        return new RenderMaterial(Atlases.CHEST_ATLAS, resource);
+    private Material getRenderMaterial(ResourceLocation resource) {
+        return new Material(Sheets.CHEST_SHEET, resource);
     }
 
-    public void func_228871_a_(MatrixStack matrixStack, IVertexBuilder builder, ModelRenderer chestLid, ModelRenderer chestLatch, ModelRenderer chestBottom, float lidAngle, int combinedLightIn, int combinedOverlayIn) {
-        chestLid.rotateAngleX = -(lidAngle * ((float) Math.PI / 2F));
-        chestLatch.rotateAngleX = chestLid.rotateAngleX;
+    public void render(PoseStack matrixStack, VertexConsumer builder, ModelPart chestLid, ModelPart chestLatch, ModelPart chestBottom, float lidAngle, int combinedLightIn, int combinedOverlayIn) {
+        chestLid.xRot = -(lidAngle * ((float) Math.PI / 2F));
+        chestLatch.xRot = chestLid.xRot;
         chestLid.render(matrixStack, builder, combinedLightIn, combinedOverlayIn);
         chestLatch.render(matrixStack, builder, combinedLightIn, combinedOverlayIn);
         chestBottom.render(matrixStack, builder, combinedLightIn, combinedOverlayIn);

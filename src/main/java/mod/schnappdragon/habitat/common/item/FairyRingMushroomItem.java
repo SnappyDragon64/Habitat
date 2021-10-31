@@ -4,21 +4,21 @@ import mod.schnappdragon.habitat.common.entity.monster.PookaEntity;
 import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.MooshroomEntity;
-import net.minecraft.entity.passive.RabbitEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.MushroomCow;
+import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -26,62 +26,64 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.Arrays;
 import java.util.List;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class FairyRingMushroomItem extends BlockItem {
     public FairyRingMushroomItem(Block blockIn, Properties builder) {
         super(blockIn, builder);
     }
 
     @Override
-    public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
-        if (!playerIn.world.isRemote) {
-            if (target instanceof MooshroomEntity && ((MooshroomEntity) target).getMooshroomType() == MooshroomEntity.Type.BROWN) {
-                MooshroomEntity mooshroom = (MooshroomEntity) target;
+    public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
+        if (!playerIn.level.isClientSide) {
+            if (target instanceof MushroomCow && ((MushroomCow) target).getMushroomType() == MushroomCow.MushroomType.BROWN) {
+                MushroomCow mooshroom = (MushroomCow) target;
 
-                if (mooshroom.hasStewEffect == null) {
-                    Pair<Effect, Integer> effect = getStewEffect();
+                if (mooshroom.effect == null) {
+                    Pair<MobEffect, Integer> effect = getStewEffect();
 
-                    mooshroom.hasStewEffect = effect.getLeft();
+                    mooshroom.effect = effect.getLeft();
                     mooshroom.effectDuration = effect.getRight();
 
-                    if (!playerIn.abilities.isCreativeMode)
+                    if (!playerIn.abilities.instabuild)
                         stack.shrink(1);
 
                     for (int i = 0; i < 4; ++i) {
-                        ((ServerWorld) playerIn.world).spawnParticle(ParticleTypes.EFFECT, mooshroom.getPosXRandom(0.5D), mooshroom.getPosYHeight(0.5D), mooshroom.getPosZRandom(0.5D), 0, 0.0D, mooshroom.getRNG().nextDouble(), 0.0D, 0.2D);
-                        ((ServerWorld) playerIn.world).spawnParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0, mooshroom.getRNG().nextGaussian(), 0.0D, mooshroom.getRNG().nextGaussian(), 0.01D);
+                        ((ServerLevel) playerIn.level).sendParticles(ParticleTypes.EFFECT, mooshroom.getRandomX(0.5D), mooshroom.getY(0.5D), mooshroom.getRandomZ(0.5D), 0, 0.0D, mooshroom.getRandom().nextDouble(), 0.0D, 0.2D);
+                        ((ServerLevel) playerIn.level).sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), mooshroom.getX() + mooshroom.getRandom().nextDouble() / 2.0D, mooshroom.getY(0.5D), mooshroom.getZ() + mooshroom.getRandom().nextDouble() / 2.0D, 0, mooshroom.getRandom().nextGaussian(), 0.0D, mooshroom.getRandom().nextGaussian(), 0.01D);
                     }
 
-                    playerIn.world.playMovingSound(null, mooshroom, SoundEvents.ENTITY_MOOSHROOM_EAT, mooshroom.getSoundCategory(), 2.0F, 1.0F);
-                    return ActionResultType.SUCCESS;
+                    playerIn.level.playSound(null, mooshroom, SoundEvents.MOOSHROOM_EAT, mooshroom.getSoundSource(), 2.0F, 1.0F);
+                    return InteractionResult.SUCCESS;
                 }
 
                 for (int i = 0; i < 2; ++i)
-                    ((ServerWorld) playerIn.world).spawnParticle(ParticleTypes.SMOKE, mooshroom.getPosX() + mooshroom.getRNG().nextDouble() / 2.0D, mooshroom.getPosYHeight(0.5D), mooshroom.getPosZ() + mooshroom.getRNG().nextDouble() / 2.0D, 0, 0.0D, mooshroom.getRNG().nextDouble(), 0.0D, 0.2D);
-                return ActionResultType.SUCCESS;
+                    ((ServerLevel) playerIn.level).sendParticles(ParticleTypes.SMOKE, mooshroom.getX() + mooshroom.getRandom().nextDouble() / 2.0D, mooshroom.getY(0.5D), mooshroom.getZ() + mooshroom.getRandom().nextDouble() / 2.0D, 0, 0.0D, mooshroom.getRandom().nextDouble(), 0.0D, 0.2D);
+                return InteractionResult.SUCCESS;
             }
             else if (target.getType() == EntityType.RABBIT) {
-                RabbitEntity rabbit = (RabbitEntity) target;
-                rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isChild() ? (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.5F : (rabbit.getRNG().nextFloat() - rabbit.getRNG().nextFloat()) * 0.2F + 1.0F);
+                Rabbit rabbit = (Rabbit) target;
+                rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
                 rabbit.remove();
                 PookaEntity pooka = PookaEntity.convertRabbit(rabbit);
-                playerIn.world.addEntity(pooka);
-                playerIn.world.setEntityState(pooka, (byte) 15);
+                playerIn.level.addFreshEntity(pooka);
+                playerIn.level.broadcastEntityEvent(pooka, (byte) 15);
 
-                if (!playerIn.abilities.isCreativeMode)
+                if (!playerIn.abilities.instabuild)
                     stack.shrink(1);
 
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
 
-        return super.itemInteractionForEntity(stack, playerIn, target, hand);
+        return super.interactLivingEntity(stack, playerIn, target, hand);
     }
 
-    public static Pair<Effect, Integer> getStewEffect() {
+    public static Pair<MobEffect, Integer> getStewEffect() {
         List<String> stewEffectPairs = Arrays.asList(StringUtils.deleteWhitespace(HabitatConfig.COMMON.suspiciousStewEffects.get()).split(","));
         String[] pair = stewEffectPairs.get((int) (Math.random() * stewEffectPairs.size())).split(":");
-        Effect effect = Effect.get(Integer.parseInt(pair[0]));
+        MobEffect effect = MobEffect.byId(Integer.parseInt(pair[0]));
 
-        return Pair.of(effect != null ? effect : Effects.GLOWING, Integer.parseInt(pair[1]) * 20);
+        return Pair.of(effect != null ? effect : MobEffects.GLOWING, Integer.parseInt(pair[1]) * 20);
     }
 }

@@ -5,15 +5,15 @@ import mod.schnappdragon.habitat.common.entity.ai.goal.RabbitAvoidEntityGoal;
 import mod.schnappdragon.habitat.common.entity.monster.PookaEntity;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatEffects;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.passive.RabbitEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.util.Mth;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -31,11 +31,11 @@ public class HabitatEvents {
     public static void addGoals(EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
         if (entity.getType() == EntityType.BEE) {
-            BeeEntity bee = (BeeEntity) entity;
+            Bee bee = (Bee) entity;
             bee.goalSelector.addGoal(7, new HabitatFindPollinationTargetGoal(bee));
         }
         else if (entity.getType() == EntityType.RABBIT) {
-            RabbitEntity rabbit = (RabbitEntity) entity;
+            Rabbit rabbit = (Rabbit) entity;
             rabbit.goalSelector.addGoal(4, new RabbitAvoidEntityGoal<>(rabbit, PookaEntity.class, 2.25F, 2.2D, 2.2D));
         }
     }
@@ -46,20 +46,20 @@ public class HabitatEvents {
 
     @SubscribeEvent
     public static void reduceExplosionDamage(LivingDamageEvent event) {
-        if (event.getEntityLiving().isPotionActive(HabitatEffects.BLAST_ENDURANCE.get()) && event.getSource().isExplosion()) {
+        if (event.getEntityLiving().hasEffect(HabitatEffects.BLAST_ENDURANCE.get()) && event.getSource().isExplosion()) {
             LivingEntity livingEntity = event.getEntityLiving();
             DamageSource source = event.getSource();
 
-            int lvl = Math.min(livingEntity.getActivePotionEffect(HabitatEffects.BLAST_ENDURANCE.get()).getAmplifier(), 11);
-            float dmg = MathHelper.floor(event.getAmount() * (0.88F - 0.08F * lvl));
+            int lvl = Math.min(livingEntity.getEffect(HabitatEffects.BLAST_ENDURANCE.get()).getAmplifier(), 11);
+            float dmg = Mth.floor(event.getAmount() * (0.88F - 0.08F * lvl));
             int res = (int) (event.getAmount() - dmg);
 
             event.setAmount(dmg);
 
-            if (livingEntity instanceof ServerPlayerEntity) {
-                ((ServerPlayerEntity) livingEntity).addStat(Stats.DAMAGE_RESISTED, res * 10);
-            } else if (source.getTrueSource() instanceof ServerPlayerEntity) {
-                ((ServerPlayerEntity) source.getTrueSource()).addStat(Stats.DAMAGE_DEALT_RESISTED, res * 10);
+            if (livingEntity instanceof ServerPlayer) {
+                ((ServerPlayer) livingEntity).awardStat(Stats.DAMAGE_RESISTED, res * 10);
+            } else if (source.getEntity() instanceof ServerPlayer) {
+                ((ServerPlayer) source.getEntity()).awardStat(Stats.DAMAGE_DEALT_RESISTED, res * 10);
             }
         }
     }
@@ -70,14 +70,14 @@ public class HabitatEvents {
 
     @SubscribeEvent
     public static void causePricklingDamage(LivingHurtEvent event) {
-        if (event.getEntityLiving().isPotionActive(HabitatEffects.PRICKLING.get())) {
+        if (event.getEntityLiving().hasEffect(HabitatEffects.PRICKLING.get())) {
             LivingEntity livingEntity = event.getEntityLiving();
             DamageSource source = event.getSource();
-            int lvl = livingEntity.getActivePotionEffect(HabitatEffects.PRICKLING.get()).getAmplifier();
+            int lvl = livingEntity.getEffect(HabitatEffects.PRICKLING.get()).getAmplifier();
 
-            if (livingEntity.getRNG().nextInt(4) < 2 + lvl && !source.isMagicDamage() && !source.isExplosion() && (source.getImmediateSource() instanceof LivingEntity)) {
-                LivingEntity attacker = (LivingEntity) source.getImmediateSource();
-                attacker.attackEntityFrom(DamageSource.causeThornsDamage(livingEntity), 1.0F + (lvl > 0 ? livingEntity.getRNG().nextInt(lvl) : 0));
+            if (livingEntity.getRandom().nextInt(4) < 2 + lvl && !source.isMagic() && !source.isExplosion() && (source.getDirectEntity() instanceof LivingEntity)) {
+                LivingEntity attacker = (LivingEntity) source.getDirectEntity();
+                attacker.hurt(DamageSource.thorns(livingEntity), 1.0F + (lvl > 0 ? livingEntity.getRandom().nextInt(lvl) : 0));
             }
         }
     }

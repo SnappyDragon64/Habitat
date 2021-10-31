@@ -1,8 +1,8 @@
 package mod.schnappdragon.habitat.core.misc;
 
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
-import net.minecraft.block.ComposterBlock;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.ItemLike;
 
 public class HabitatComposterChances {
     public static void registerComposterChances() {
@@ -31,7 +31,7 @@ public class HabitatComposterChances {
         put(HabitatItems.FAIRYLIGHT.get(), 0.65F);
     }
 
-    private static void put(IItemProvider item, float value) {
-        ComposterBlock.CHANCES.put(item, value);
+    private static void put(ItemLike item, float value) {
+        ComposterBlock.COMPOSTABLES.put(item, value);
     }
 }

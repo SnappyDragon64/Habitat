@@ -5,14 +5,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatLootConditionTypes;
-import net.minecraft.loot.ILootSerializer;
-import net.minecraft.loot.LootConditionType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
+import net.minecraft.world.level.storage.loot.Serializer;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.util.GsonHelper;
 import net.minecraftforge.fml.ModList;
 
-public class IsModLoaded implements ILootCondition {
+public class IsModLoaded implements LootItemCondition {
     private final String modid;
 
     public IsModLoaded(String modid) {
@@ -20,7 +20,7 @@ public class IsModLoaded implements ILootCondition {
     }
 
     @Override
-    public LootConditionType func_230419_b_() {
+    public LootItemConditionType getType() {
         return HabitatLootConditionTypes.IS_MOD_LOADED;
     }
 
@@ -29,11 +29,11 @@ public class IsModLoaded implements ILootCondition {
         return ModList.get().isLoaded(modid)/* || Habitat.DEV*/;
     }
 
-    public static ILootCondition.IBuilder builder(String modid) {
+    public static LootItemCondition.Builder builder(String modid) {
         return () -> new IsModLoaded(modid);
     }
 
-    public static class Serializer implements ILootSerializer<IsModLoaded> {
+    public static class Serializer implements Serializer<IsModLoaded> {
         @Override
         public void serialize(JsonObject object, IsModLoaded instance, JsonSerializationContext context) {
             object.addProperty("modid", instance.modid);
@@ -41,7 +41,7 @@ public class IsModLoaded implements ILootCondition {
 
         @Override
         public IsModLoaded deserialize(JsonObject object, JsonDeserializationContext context) {
-            return new IsModLoaded(JSONUtils.getString(object, "modid"));
+            return new IsModLoaded(GsonHelper.getAsString(object, "modid"));
         }
     }
 }

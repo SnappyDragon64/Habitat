@@ -1,18 +1,18 @@
 package mod.schnappdragon.habitat.common.entity.ai.goal;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.entity.passive.RabbitEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.animal.Rabbit;
 
 public class RabbitAvoidEntityGoal<T extends LivingEntity> extends AvoidEntityGoal<T> {
-    private final RabbitEntity rabbit;
+    private final Rabbit rabbit;
 
-    public RabbitAvoidEntityGoal(RabbitEntity rabbit, Class<T> aClass, float range, double v1, double v2) {
+    public RabbitAvoidEntityGoal(Rabbit rabbit, Class<T> aClass, float range, double v1, double v2) {
         super(rabbit, aClass, range, v1, v2);
         this.rabbit = rabbit;
     }
 
-    public boolean shouldExecute() {
-        return this.rabbit.getRabbitType() != 99 && super.shouldExecute();
+    public boolean canUse() {
+        return this.rabbit.getRabbitType() != 99 && super.canUse();
     }
 }

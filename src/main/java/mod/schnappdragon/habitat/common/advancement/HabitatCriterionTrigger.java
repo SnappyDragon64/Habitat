@@ -2,13 +2,13 @@ package mod.schnappdragon.habitat.common.advancement;
 
 import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.ICriterionInstance;
-import net.minecraft.advancements.ICriterionTrigger;
-import net.minecraft.advancements.PlayerAdvancements;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.loot.ConditionArraySerializer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.advancements.CriterionTriggerInstance;
+import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.server.PlayerAdvancements;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.SerializationContext;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public final class HabitatCriterionTrigger implements ICriterionTrigger<HabitatCriterionTrigger.Instance> {
+import net.minecraft.advancements.CriterionTrigger.Listener;
+
+public final class HabitatCriterionTrigger implements CriterionTrigger<HabitatCriterionTrigger.Instance> {
     private final Map<PlayerAdvancements, Listeners> listeners = Maps.newHashMap();
     private final ResourceLocation id;
 
@@ -30,13 +32,13 @@ public final class HabitatCriterionTrigger implements ICriterionTrigger<HabitatC
     }
 
     @Override
-    public void addListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
+    public void addPlayerListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
         Listeners listeners = this.listeners.computeIfAbsent(playerAdvancements, Listeners::new);
         listeners.add(listener);
     }
 
     @Override
-    public void removeListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
+    public void removePlayerListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
         Listeners listeners = this.listeners.get(playerAdvancements);
         if (listeners != null) {
             listeners.remove(listener);
@@ -46,22 +48,22 @@ public final class HabitatCriterionTrigger implements ICriterionTrigger<HabitatC
     }
 
     @Override
-    public void removeAllListeners(PlayerAdvancements playerAdvancements) {
+    public void removePlayerListeners(PlayerAdvancements playerAdvancements) {
         this.listeners.remove(playerAdvancements);
     }
 
     @Override
-    public Instance deserialize(JsonObject object, ConditionArrayParser conditions) {
+    public Instance createInstance(JsonObject object, DeserializationContext conditions) {
         return new Instance(this.id);
     }
 
-    public void trigger(ServerPlayerEntity player) {
+    public void trigger(ServerPlayer player) {
         Listeners listeners = this.listeners.get(player.getAdvancements());
         if (listeners != null)
             listeners.trigger();
     }
 
-    public static class Instance implements ICriterionInstance {
+    public static class Instance implements CriterionTriggerInstance {
         private final ResourceLocation id;
 
         Instance(ResourceLocation id) {
@@ -70,12 +72,12 @@ public final class HabitatCriterionTrigger implements ICriterionTrigger<HabitatC
         }
 
         @Override
-        public ResourceLocation getId() {
+        public ResourceLocation getCriterion() {
             return this.id;
         }
 
         @Override
-        public JsonObject serialize(ConditionArraySerializer conditions) {
+        public JsonObject serializeToJson(SerializationContext conditions) {
             return new JsonObject();
         }
     }
@@ -103,7 +105,7 @@ public final class HabitatCriterionTrigger implements ICriterionTrigger<HabitatC
         public void trigger() {
             List<Listener<Instance>> listenerList = new ArrayList<>(this.listeners);
             for (Listener<Instance> instanceListener : listenerList)
-                instanceListener.grantCriterion(this.advancements);
+                instanceListener.run(this.advancements);
         }
     }
 }

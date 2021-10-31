@@ -3,7 +3,7 @@ package mod.schnappdragon.habitat.core.registry;
 import mod.schnappdragon.habitat.common.advancement.HabitatCriterionTrigger;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class HabitatCriterionTriggers {
     public static final HabitatCriterionTrigger PACIFY_POOKA = new HabitatCriterionTrigger(get("pacify_pooka"));

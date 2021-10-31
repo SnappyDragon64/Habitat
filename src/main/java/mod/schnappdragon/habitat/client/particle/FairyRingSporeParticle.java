@@ -1,57 +1,57 @@
 package mod.schnappdragon.habitat.client.particle;
 
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.SimpleParticleType;
 
-public class FairyRingSporeParticle extends SpriteTexturedParticle {
-    private final IAnimatedSprite spriteSetWithAge;
+public class FairyRingSporeParticle extends TextureSheetParticle {
+    private final SpriteSet spriteSetWithAge;
 
-    private FairyRingSporeParticle(ClientWorld world, double x, double y, double z, double motionX, double motionY, double motionZ, IAnimatedSprite spriteSetWithAge) {
+    private FairyRingSporeParticle(ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ, SpriteSet spriteSetWithAge) {
         super(world, x, y, z);
         this.spriteSetWithAge = spriteSetWithAge;
-        this.maxAge = (int) (40 + rand.nextDouble() * 40);
-        this.particleGravity = 0.0001F;
-        float f = 0.9F + this.rand.nextFloat() * 0.1F;
-        this.particleRed = f;
-        this.particleGreen = f * 0.98F;
-        this.particleBlue = f * 0.98F;
-        this.particleScale *= 0.8F;
-        this.motionX = motionX;
-        this.motionY = motionY;
-        this.motionZ = motionZ;
-        this.selectSpriteWithAge(spriteSetWithAge);
+        this.lifetime = (int) (40 + random.nextDouble() * 40);
+        this.gravity = 0.0001F;
+        float f = 0.9F + this.random.nextFloat() * 0.1F;
+        this.rCol = f;
+        this.gCol = f * 0.98F;
+        this.bCol = f * 0.98F;
+        this.quadSize *= 0.8F;
+        this.xd = motionX;
+        this.yd = motionY;
+        this.zd = motionZ;
+        this.setSpriteFromAge(spriteSetWithAge);
     }
 
     public void tick() {
-        this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
-        if (this.age++ >= this.maxAge) {
-            this.setExpired();
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
+        if (this.age++ >= this.lifetime) {
+            this.remove();
         } else {
-            this.motionY -= this.particleGravity;
-            this.move(this.motionX, this.motionY, this.motionZ);
-            this.selectSpriteWithAge(this.spriteSetWithAge);
+            this.yd -= this.gravity;
+            this.move(this.xd, this.yd, this.zd);
+            this.setSpriteFromAge(this.spriteSetWithAge);
         }
     }
 
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_LIT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_LIT;
     }
 
-    public int getBrightnessForRender(float partialTick) {
+    public int getLightColor(float partialTick) {
         return 240;
     }
 
-    public static class Factory implements IParticleFactory<BasicParticleType> {
-        private final IAnimatedSprite spriteSet;
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet spriteSet;
 
-        public Factory(IAnimatedSprite spriteSet) {
+        public Factory(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new FairyRingSporeParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
         }
     }

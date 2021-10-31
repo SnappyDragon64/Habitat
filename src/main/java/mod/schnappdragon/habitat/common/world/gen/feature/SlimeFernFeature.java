@@ -4,45 +4,45 @@ import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.common.block.SlimeFernBlock;
 import mod.schnappdragon.habitat.common.block.WallSlimeFernBlock;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.Tags;
 
 import java.util.Random;
 
-public class SlimeFernFeature extends Feature<BlockClusterFeatureConfig> {
-    public SlimeFernFeature(Codec<BlockClusterFeatureConfig> codec) {
+public class SlimeFernFeature extends Feature<RandomPatchConfiguration> {
+    public SlimeFernFeature(Codec<RandomPatchConfiguration> codec) {
         super(codec);
     }
 
-    public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, BlockClusterFeatureConfig config) {
+    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, RandomPatchConfiguration config) {
         ChunkPos chunkPos = new ChunkPos(pos);
-        if (SharedSeedRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, reader.getSeed(), 987234911L).nextInt(10) == 0) {
+        if (WorldgenRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, reader.getSeed(), 987234911L).nextInt(10) == 0) {
             int i = 0;
-            BlockPos pos1 = pos.add(7, 0, 7);
-            BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+            BlockPos pos1 = pos.offset(7, 0, 7);
+            BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
             Direction[] directions = new Direction[]{Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP};
 
-            for (int j = 0; j < config.tryCount; ++j) {
-                blockpos$mutable.setAndOffset(pos1, rand.nextInt(config.xSpread + 1) - rand.nextInt(config.xSpread + 1), rand.nextInt(config.ySpread + 1) - rand.nextInt(config.ySpread + 1), rand.nextInt(config.zSpread + 1) - rand.nextInt(config.zSpread + 1));
+            for (int j = 0; j < config.tries; ++j) {
+                blockpos$mutable.setWithOffset(pos1, rand.nextInt(config.xspread + 1) - rand.nextInt(config.xspread + 1), rand.nextInt(config.yspread + 1) - rand.nextInt(config.yspread + 1), rand.nextInt(config.zspread + 1) - rand.nextInt(config.zspread + 1));
 
-                if (reader.isAirBlock(blockpos$mutable) || config.isReplaceable && reader.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) {
+                if (reader.isEmptyBlock(blockpos$mutable) || config.canReplace && reader.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) {
                     for (Direction dir : directions) {
-                        if (reader.getBlockState(blockpos$mutable.offset(dir)).isIn(Tags.Blocks.STONE)) {
-                            BlockState state = config.stateProvider.getBlockState(rand, blockpos$mutable);
+                        if (reader.getBlockState(blockpos$mutable.relative(dir)).is(Tags.Blocks.STONE)) {
+                            BlockState state = config.stateProvider.getState(rand, blockpos$mutable);
 
                             if (state.getBlock() == HabitatBlocks.SLIME_FERN.get()) {
                                 if (dir == Direction.UP)
-                                    state = state.with(SlimeFernBlock.ON_CEILING, true);
+                                    state = state.setValue(SlimeFernBlock.ON_CEILING, true);
                                 else if (dir != Direction.DOWN)
-                                    state = HabitatBlocks.WALL_SLIME_FERN.get().getDefaultState().with(WallSlimeFernBlock.HORIZONTAL_FACING, dir.getOpposite());
+                                    state = HabitatBlocks.WALL_SLIME_FERN.get().defaultBlockState().setValue(WallSlimeFernBlock.HORIZONTAL_FACING, dir.getOpposite());
                             }
 
                             config.blockPlacer.place(reader, blockpos$mutable, state, rand);

@@ -1,8 +1,8 @@
 package mod.schnappdragon.habitat.common.item;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class HabitatSpawnEggItem extends SpawnEggItem {
     public static final List<HabitatSpawnEggItem> HABITAT_EGGS = new ArrayList<>();
@@ -22,12 +24,12 @@ public class HabitatSpawnEggItem extends SpawnEggItem {
     }
 
     @Override
-    public EntityType<?> getType(CompoundNBT compound) {
+    public EntityType<?> getType(CompoundTag compound) {
         return entityTypeSupplier.get();
     }
 
     public static void registerSpawnEggs() {
-        Map<EntityType<?>, SpawnEggItem> EGGS = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class, null, "field_195987_b");
+        Map<EntityType<?>, SpawnEggItem> EGGS = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class, null, "BY_ID");
         for (SpawnEggItem egg : HABITAT_EGGS) {
             EGGS.put(egg.getType(null), egg);
         }

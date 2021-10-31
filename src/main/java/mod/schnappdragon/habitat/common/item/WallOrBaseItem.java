@@ -1,14 +1,14 @@
 package mod.schnappdragon.habitat.common.item;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.Item;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.level.LevelReader;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -22,25 +22,25 @@ public class WallOrBaseItem extends BlockItem {
     }
 
     @Nullable
-    protected BlockState getStateForPlacement(BlockItemUseContext context) {
+    protected BlockState getPlacementState(BlockPlaceContext context) {
         BlockState state = this.wallBlock.getStateForPlacement(context);
         BlockState state1 = null;
-        IWorldReader world = context.getWorld();
-        BlockPos pos = context.getPos();
+        LevelReader world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
 
         for(Direction dir : context.getNearestLookingDirections()) {
             BlockState state2 = dir == Direction.DOWN || dir == Direction.UP ? this.getBlock().getStateForPlacement(context) : state;
-            if (state2 != null && state2.isValidPosition(world, pos)) {
+            if (state2 != null && state2.canSurvive(world, pos)) {
                 state1 = state2;
                 break;
             }
         }
 
-        return state1 != null && world.placedBlockCollides(state1, pos, ISelectionContext.dummy()) ? state1 : null;
+        return state1 != null && world.isUnobstructed(state1, pos, CollisionContext.empty()) ? state1 : null;
     }
 
-    public void addToBlockToItemMap(Map<Block, Item> blockToItemMap, Item itemIn) {
-        super.addToBlockToItemMap(blockToItemMap, itemIn);
+    public void registerBlocks(Map<Block, Item> blockToItemMap, Item itemIn) {
+        super.registerBlocks(blockToItemMap, itemIn);
         blockToItemMap.put(this.wallBlock, itemIn);
     }
 

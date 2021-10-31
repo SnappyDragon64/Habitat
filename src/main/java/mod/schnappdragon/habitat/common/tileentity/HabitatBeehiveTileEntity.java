@@ -1,12 +1,12 @@
 package mod.schnappdragon.habitat.common.tileentity;
 
 import mod.schnappdragon.habitat.core.registry.HabitatTileEntityTypes;
-import net.minecraft.tileentity.BeehiveTileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
-public class HabitatBeehiveTileEntity extends BeehiveTileEntity {
+public class HabitatBeehiveTileEntity extends BeehiveBlockEntity {
     @Override
-    public TileEntityType<?> getType() {
+    public BlockEntityType<?> getType() {
         return HabitatTileEntityTypes.BEEHIVE.get();
     }
 }

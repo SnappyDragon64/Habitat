@@ -3,9 +3,9 @@ package mod.schnappdragon.habitat.client.particle;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -21,7 +21,7 @@ public class HabitatParticleManager {
         registerFactory(HabitatParticleTypes.FAIRY_RING_SPORE.get(), FairyRingSporeParticle.Factory::new);
     }
 
-    private static <T extends IParticleData> void registerFactory(ParticleType<T> particle, ParticleManager.IParticleMetaFactory<T> factory) {
-        Minecraft.getInstance().particles.registerFactory(particle, factory);
+    private static <T extends ParticleOptions> void registerFactory(ParticleType<T> particle, ParticleEngine.SpriteParticleRegistration<T> factory) {
+        Minecraft.getInstance().particleEngine.register(particle, factory);
     }
 }

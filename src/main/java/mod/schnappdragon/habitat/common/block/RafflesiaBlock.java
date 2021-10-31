@@ -5,65 +5,67 @@ import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockState
 import mod.schnappdragon.habitat.common.tileentity.RafflesiaTileEntity;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BushBlock;
-import net.minecraft.block.IGrowable;
-import net.minecraft.entity.AreaEffectCloudEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.ColorHelper;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.util.FastColor;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Random;
 
-public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable {
-    protected static final VoxelShape DEFAULT_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
-    protected static final VoxelShape COOLDOWN_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class RafflesiaBlock extends BushBlock implements IForgeBlock, BonemealableBlock {
+    protected static final VoxelShape DEFAULT_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
+    protected static final VoxelShape COOLDOWN_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
     public static final BooleanProperty ON_COOLDOWN = HabitatBlockStateProperties.ON_COOLDOWN;
     public static final BooleanProperty HAS_STEW = HabitatBlockStateProperties.HAS_STEW;
 
     public RafflesiaBlock(Properties properties) {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(ON_COOLDOWN, false).with(HAS_STEW, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(ON_COOLDOWN, false).setValue(HAS_STEW, false));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(ON_COOLDOWN, HAS_STEW);
     }
 
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        if (state.get(ON_COOLDOWN))
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        if (state.getValue(ON_COOLDOWN))
             return COOLDOWN_SHAPE;
         else
             return DEFAULT_SHAPE;
@@ -73,8 +75,8 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
      * Position Validity Method
      */
 
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.down()).isIn(HabitatBlockTags.RAFFLESIA_PLANTABLE_ON);
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+        return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.RAFFLESIA_PLANTABLE_ON);
     }
 
     /*
@@ -85,7 +87,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
         return true;
     }
 
-    public TileEntity createTileEntity(BlockState state, IBlockReader worldIn) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter worldIn) {
         return new RafflesiaTileEntity();
     }
 
@@ -93,9 +95,9 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
      * Particle Animation Method
      */
 
-    public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
-        TileEntity tile = worldIn.getTileEntity(pos);
-        if (tile instanceof RafflesiaTileEntity && rand.nextInt(128) == 0 && !state.get(ON_COOLDOWN)) {
+    public void animateTick(BlockState state, Level worldIn, BlockPos pos, Random rand) {
+        BlockEntity tile = worldIn.getBlockEntity(pos);
+        if (tile instanceof RafflesiaTileEntity && rand.nextInt(128) == 0 && !state.getValue(ON_COOLDOWN)) {
             RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
             double X = (double) pos.getX() + 0.5D;
             double Z = (double) pos.getZ() + 0.5D;
@@ -107,46 +109,46 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
      * Cloud and Particle Helper Methods
      */
 
-    private void createCloud(World worldIn, BlockPos pos, ListNBT effects)
+    private void createCloud(Level worldIn, BlockPos pos, ListTag effects)
     {
-        AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(worldIn, pos.getX() + 0.5D, pos.getY() + 0.25D, pos.getZ() + 0.5D);
+        AreaEffectCloud cloud = new AreaEffectCloud(worldIn, pos.getX() + 0.5D, pos.getY() + 0.25D, pos.getZ() + 0.5D);
         cloud.setDuration(50);
         cloud.setRadius(1.0F);
-        cloud.setParticleData(getParticle(effects));
+        cloud.setParticle(getParticle(effects));
 
         for(int i = 0; i < effects.size(); ++i) {
             int j = 160;
-            CompoundNBT tag = effects.getCompound(i);
+            CompoundTag tag = effects.getCompound(i);
 
             if (tag.contains("EffectDuration", 3)) {
                 j = tag.getInt("EffectDuration");
             }
 
-            Effect effect = Effect.get(tag.getByte("EffectId"));
+            MobEffect effect = MobEffect.byId(tag.getByte("EffectId"));
             if (effect != null) {
-                cloud.addEffect(new EffectInstance(effect, j));
+                cloud.addEffect(new MobEffectInstance(effect, j));
             }
         }
 
-        worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_RAFFLESIA_SPEW.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-        worldIn.addEntity(cloud);
+        worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_RAFFLESIA_SPEW.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+        worldIn.addFreshEntity(cloud);
     }
 
-    private IParticleData getParticle(ListNBT effects)
+    private ParticleOptions getParticle(ListTag effects)
     {
-        Collection<EffectInstance> effectInstances = Lists.newArrayList();
+        Collection<MobEffectInstance> effectInstances = Lists.newArrayList();
         for(int i = 0; i < effects.size(); ++i) {
             int j = 160;
-            CompoundNBT tag = effects.getCompound(i);
+            CompoundTag tag = effects.getCompound(i);
 
-            Effect effect = Effect.get(tag.getByte("EffectId"));
+            MobEffect effect = MobEffect.byId(tag.getByte("EffectId"));
             if (effect != null) {
-                effectInstances.add(new EffectInstance(effect, j));
+                effectInstances.add(new MobEffectInstance(effect, j));
             }
         }
 
-        int color = PotionUtils.getPotionColorFromEffectList(effectInstances);
-        return new RedstoneParticleData((float) ColorHelper.PackedColor.getRed(color) / 255, (float) ColorHelper.PackedColor.getGreen(color) / 255, (float) ColorHelper.PackedColor.getBlue(color) / 255, 1.0F);
+        int color = PotionUtils.getColor(effectInstances);
+        return new DustParticleOptions((float) FastColor.ARGB32.red(color) / 255, (float) FastColor.ARGB32.green(color) / 255, (float) FastColor.ARGB32.blue(color) / 255, 1.0F);
     }
 
     /*
@@ -154,15 +156,15 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
      */
 
     @Override
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (!worldIn.isRemote) {
-            TileEntity tile = worldIn.getTileEntity(pos);
-            if (tile instanceof RafflesiaTileEntity && !state.get(ON_COOLDOWN)) {
+    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+        if (!worldIn.isClientSide) {
+            BlockEntity tile = worldIn.getBlockEntity(pos);
+            if (tile instanceof RafflesiaTileEntity && !state.getValue(ON_COOLDOWN)) {
                 RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
                 createCloud(worldIn, pos, rafflesia.Effects);
-                worldIn.setBlockState(pos, state.with(ON_COOLDOWN, true).with(HAS_STEW, false));
-                ListNBT Effects = new ListNBT();
-                CompoundNBT tag = new CompoundNBT();
+                worldIn.setBlockAndUpdate(pos, state.setValue(ON_COOLDOWN, true).setValue(HAS_STEW, false));
+                ListTag Effects = new ListTag();
+                CompoundTag tag = new CompoundTag();
                 tag.putByte("EffectId", (byte) 19);
                 tag.putInt("EffectDuration", 240);
                 Effects.add(tag);
@@ -170,72 +172,72 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
                 rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
             }
         }
-        super.onEntityCollision(state, worldIn, pos, entityIn);
+        super.entityInside(state, worldIn, pos, entityIn);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        ItemStack stack = player.getHeldItem(handIn);
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        ItemStack stack = player.getItemInHand(handIn);
 
-        if (!worldIn.isRemote && stack.getItem() == Items.SUSPICIOUS_STEW) {
-            TileEntity tile = worldIn.getTileEntity(pos);
-            if (tile instanceof RafflesiaTileEntity && !state.get(HAS_STEW)) {
+        if (!worldIn.isClientSide && stack.getItem() == Items.SUSPICIOUS_STEW) {
+            BlockEntity tile = worldIn.getBlockEntity(pos);
+            if (tile instanceof RafflesiaTileEntity && !state.getValue(HAS_STEW)) {
                 RafflesiaTileEntity rafflesia = (RafflesiaTileEntity) tile;
-                CompoundNBT tag = stack.getTag();
+                CompoundTag tag = stack.getTag();
                 if (tag != null && tag.contains("Effects", 9)) {
                     rafflesia.Effects = tag.getList("Effects", 10);
                 }
-                worldIn.setBlockState(pos, state.with(HAS_STEW, true));
+                worldIn.setBlockAndUpdate(pos, state.setValue(HAS_STEW, true));
                 rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
-                player.setHeldItem(handIn, player.abilities.isCreativeMode ? stack : new ItemStack(Items.BOWL));
-                worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_RAFFLESIA_SLURP.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
-                return ActionResultType.SUCCESS;
+                player.setItemInHand(handIn, player.abilities.instabuild ? stack : new ItemStack(Items.BOWL));
+                worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_RAFFLESIA_SLURP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+                return InteractionResult.SUCCESS;
             }
         }
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        return super.use(state, worldIn, pos, player, handIn, hit);
     }
 
     /*
      * Growth Methods
      */
 
-    public boolean ticksRandomly(BlockState state) {
-        return state.get(ON_COOLDOWN);
+    public boolean isRandomlyTicking(BlockState state) {
+        return state.getValue(ON_COOLDOWN);
     }
 
-    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if (state.get(ON_COOLDOWN) && random.nextInt(2) == 0)
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+        if (state.getValue(ON_COOLDOWN) && random.nextInt(2) == 0)
             cooldownReset(worldIn, pos, state);
     }
 
-    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return !state.get(HAS_STEW) || state.get(ON_COOLDOWN);
+    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+        return !state.getValue(HAS_STEW) || state.getValue(ON_COOLDOWN);
     }
 
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
         return true;
     }
 
-    public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        if (state.get(ON_COOLDOWN))
+    public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+        if (state.getValue(ON_COOLDOWN))
             cooldownReset(worldIn, pos, state);
-        else if (!state.get(HAS_STEW)) {
-            BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+        else if (!state.getValue(HAS_STEW)) {
+            BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
 
             for (int j = 0; j < 8; ++j) {
-                blockpos$mutable.setAndOffset(pos, MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2), MathHelper.nextInt(rand, 1, 2) - MathHelper.nextInt(rand, 1, 2));
+                blockpos$mutable.setWithOffset(pos, Mth.nextInt(rand, 1, 2) - Mth.nextInt(rand, 1, 2), Mth.nextInt(rand, 1, 2) - Mth.nextInt(rand, 1, 2), Mth.nextInt(rand, 1, 2) - Mth.nextInt(rand, 1, 2));
 
-                if ((worldIn.isAirBlock(blockpos$mutable) || worldIn.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) && worldIn.getBlockState(blockpos$mutable.down()).isIn(HabitatBlockTags.RAFFLESIA_PLANTABLE_ON)) {
-                    worldIn.setBlockState(blockpos$mutable, state, 3);
+                if ((worldIn.isEmptyBlock(blockpos$mutable) || worldIn.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) && worldIn.getBlockState(blockpos$mutable.below()).is(HabitatBlockTags.RAFFLESIA_PLANTABLE_ON)) {
+                    worldIn.setBlock(blockpos$mutable, state, 3);
                     break;
                 }
             }
         }
     }
 
-    private void cooldownReset(ServerWorld worldIn, BlockPos pos, BlockState state) {
-        worldIn.setBlockState(pos, state.with(ON_COOLDOWN, false));
-        worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_RAFFLESIA_POP.get(), SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
+    private void cooldownReset(ServerLevel worldIn, BlockPos pos, BlockState state) {
+        worldIn.setBlockAndUpdate(pos, state.setValue(ON_COOLDOWN, false));
+        worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_RAFFLESIA_POP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
     }
 
     /*
@@ -243,13 +245,13 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
      */
 
     @Override
-    public boolean hasComparatorInputOverride(BlockState state) {
-        return state.get(HAS_STEW);
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return state.getValue(HAS_STEW);
     }
 
     @Override
-    public int getComparatorInputOverride(BlockState state, World worldIn, BlockPos pos) {
-        return state.get(HAS_STEW) ?  1 : 0;
+    public int getAnalogOutputSignal(BlockState state, Level worldIn, BlockPos pos) {
+        return state.getValue(HAS_STEW) ?  1 : 0;
     }
 
     /*
@@ -258,7 +260,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, IGrowable 
 
     @Nullable
     @Override
-    public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
-        return PathNodeType.DANGER_OTHER;
+    public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
+        return BlockPathTypes.DANGER_OTHER;
     }
 }

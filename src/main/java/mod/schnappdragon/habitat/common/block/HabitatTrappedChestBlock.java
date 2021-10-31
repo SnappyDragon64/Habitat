@@ -2,19 +2,21 @@ package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.common.block.misc.ChestVariant;
 import mod.schnappdragon.habitat.core.registry.HabitatTileEntityTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ChestBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.stats.Stat;
 import net.minecraft.stats.Stats;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.BlockGetter;
 
 import javax.annotation.Nullable;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class HabitatTrappedChestBlock extends ChestBlock implements IChestVariant {
     private final ChestVariant variant;
@@ -31,24 +33,24 @@ public class HabitatTrappedChestBlock extends ChestBlock implements IChestVarian
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
         return HabitatTileEntityTypes.TRAPPED_CHEST.get().create();
     }
 
-    protected Stat<ResourceLocation> getOpenStat() {
+    protected Stat<ResourceLocation> getOpenChestStat() {
         return Stats.CUSTOM.get(Stats.TRIGGER_TRAPPED_CHEST);
     }
 
-    public boolean canProvidePower(BlockState state) {
+    public boolean isSignalSource(BlockState state) {
         return true;
     }
 
-    public int getWeakPower(BlockState state, IBlockReader world, BlockPos pos, Direction direction) {
-        return MathHelper.clamp(ChestTileEntity.getPlayersUsing(world, pos), 0, 15);
+    public int getSignal(BlockState state, BlockGetter world, BlockPos pos, Direction direction) {
+        return Mth.clamp(ChestBlockEntity.getOpenCount(world, pos), 0, 15);
     }
 
-    public int getStrongPower(BlockState state, IBlockReader world, BlockPos pos, Direction direction) {
-        return direction == Direction.UP ? state.getWeakPower(world, pos, direction) : 0;
+    public int getDirectSignal(BlockState state, BlockGetter world, BlockPos pos, Direction direction) {
+        return direction == Direction.UP ? state.getSignal(world, pos, direction) : 0;
     }
 
     @Override

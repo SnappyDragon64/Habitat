@@ -1,36 +1,38 @@
 package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ChainBlock;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.block.LanternBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.ChainBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.Lantern;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
-public class WoodPostBlock extends Block implements IWaterLoggable {
-    private static final VoxelShape SHAPE_X = makeCuboidShape(0.0F, 6.0F, 6.0F, 16.0F, 10.0F, 10.0F);
-    private static final VoxelShape SHAPE_Y = makeCuboidShape(6.0F, 0.0F, 6.0F, 10.0F, 16.0F, 10.0F);
-    private static final VoxelShape SHAPE_Z = makeCuboidShape(6.0F, 6.0F, 0.0F, 10.0F, 10.0F, 16.0F);
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class WoodPostBlock extends Block implements SimpleWaterloggedBlock {
+    private static final VoxelShape SHAPE_X = box(0.0F, 6.0F, 6.0F, 16.0F, 10.0F, 10.0F);
+    private static final VoxelShape SHAPE_Y = box(6.0F, 0.0F, 6.0F, 10.0F, 16.0F, 10.0F);
+    private static final VoxelShape SHAPE_Z = box(6.0F, 6.0F, 0.0F, 10.0F, 10.0F, 16.0F);
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final EnumProperty<Axis> AXIS = BlockStateProperties.AXIS;
@@ -52,15 +54,15 @@ public class WoodPostBlock extends Block implements IWaterLoggable {
     public WoodPostBlock(Supplier<Block> block, Properties properties) {
         super(properties);
         this.strippedBlock = block;
-        BlockState defaultState = this.stateContainer.getBaseState().with(WATERLOGGED, false).with(AXIS, Axis.Y);
+        BlockState defaultState = this.stateDefinition.any().setValue(WATERLOGGED, false).setValue(AXIS, Axis.Y);
         for (BooleanProperty property : CHAINED)
-            defaultState = defaultState.with(property, false);
-        this.setDefaultState(defaultState);
+            defaultState = defaultState.setValue(property, false);
+        this.registerDefaultState(defaultState);
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.get(AXIS)) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        switch (state.getValue(AXIS)) {
             case X:
                 return SHAPE_X;
             case Y:
@@ -71,57 +73,57 @@ public class WoodPostBlock extends Block implements IWaterLoggable {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(WATERLOGGED, AXIS);
         for (BooleanProperty property : CHAINED)
             builder.add(property);
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-        return !state.get(WATERLOGGED);
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+        return !state.getValue(WATERLOGGED);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : Fluids.EMPTY.getDefaultState();
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getRelevantState(context.getWorld(), context.getPos(), context.getFace().getAxis());
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.getRelevantState(context.getLevel(), context.getClickedPos(), context.getClickedFace().getAxis());
     }
 
     @Override
-    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        BlockState newState = this.getRelevantState(worldIn, pos, state.get(AXIS));
+    public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+        BlockState newState = this.getRelevantState(worldIn, pos, state.getValue(AXIS));
         if (!newState.equals(state))
-            worldIn.setBlockState(pos, newState);
+            worldIn.setBlockAndUpdate(pos, newState);
     }
 
     @Nullable
     @Override
-    public BlockState getToolModifiedState(BlockState state, World world, BlockPos pos, PlayerEntity player, ItemStack stack, ToolType toolType) {
+    public BlockState getToolModifiedState(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, ToolType toolType) {
         if (toolType == ToolType.AXE && strippedBlock != null && strippedBlock.get() instanceof WoodPostBlock) {
-            BlockState newState = strippedBlock.get().getDefaultState().with(WATERLOGGED, state.get(WATERLOGGED)).with(AXIS, state.get(AXIS));
+            BlockState newState = strippedBlock.get().defaultBlockState().setValue(WATERLOGGED, state.getValue(WATERLOGGED)).setValue(AXIS, state.getValue(AXIS));
             for (BooleanProperty property : CHAINED) {
-                newState = newState.with(property, state.get(property));
+                newState = newState.setValue(property, state.getValue(property));
             }
             return newState;
         }
         return super.getToolModifiedState(state, world, pos, player, stack, toolType);
     }
 
-    private BlockState getRelevantState(World world, BlockPos pos, Axis axis) {
-        BlockState state = this.getDefaultState().with(WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER).with(AXIS, axis);
+    private BlockState getRelevantState(Level world, BlockPos pos, Axis axis) {
+        BlockState state = this.defaultBlockState().setValue(WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER).setValue(AXIS, axis);
 
         for (Direction direction : Direction.values()) {
             if (direction.getAxis() == axis)
                 continue;
 
-            BlockState sideState = world.getBlockState(pos.offset(direction));
-            if ((sideState.getBlock() instanceof ChainBlock && sideState.get(ChainBlock.AXIS) == direction.getAxis()) || (direction == Direction.DOWN && sideState.getBlock() instanceof LanternBlock && sideState.get(LanternBlock.HANGING)))
-                state = state.with(CHAINED[direction.ordinal()], true);
+            BlockState sideState = world.getBlockState(pos.relative(direction));
+            if ((sideState.getBlock() instanceof ChainBlock && sideState.getValue(ChainBlock.AXIS) == direction.getAxis()) || (direction == Direction.DOWN && sideState.getBlock() instanceof Lantern && sideState.getValue(Lantern.HANGING)))
+                state = state.setValue(CHAINED[direction.ordinal()], true);
         }
 
         return state;

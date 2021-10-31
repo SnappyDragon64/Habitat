@@ -1,14 +1,14 @@
 package mod.schnappdragon.habitat.common.block.misc;
 
 import mod.schnappdragon.habitat.core.Habitat;
-import net.minecraft.block.WoodType;
-import net.minecraft.client.renderer.Atlases;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.resources.ResourceLocation;
 
 public class HabitatWoodTypes {
     public static final WoodType FAIRY_RING_MUSHROOM = WoodType.create(new ResourceLocation(Habitat.MODID, "fairy_ring_mushroom").toString());
 
     public static void setupAtlas() {
-        Atlases.addWoodType(FAIRY_RING_MUSHROOM);
+        Sheets.addWoodType(FAIRY_RING_MUSHROOM);
     }
 }

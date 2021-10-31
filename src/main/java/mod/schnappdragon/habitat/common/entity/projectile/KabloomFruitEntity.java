@@ -4,59 +4,59 @@ import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import net.minecraft.enchantment.ProtectionEnchantment;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
+import net.minecraft.world.item.enchantment.ProtectionEnchantment;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class KabloomFruitEntity extends ProjectileItemEntity {
-    public KabloomFruitEntity(EntityType<? extends KabloomFruitEntity> entity, World world) {
+public class KabloomFruitEntity extends ThrowableItemProjectile {
+    public KabloomFruitEntity(EntityType<? extends KabloomFruitEntity> entity, Level world) {
         super(entity, world);
     }
 
-    public KabloomFruitEntity(World worldIn, LivingEntity throwerIn) {
+    public KabloomFruitEntity(Level worldIn, LivingEntity throwerIn) {
         super(HabitatEntityTypes.KABLOOM_FRUIT.get(), throwerIn, worldIn);
     }
 
-    public KabloomFruitEntity(World worldIn, double x, double y, double z) {
+    public KabloomFruitEntity(Level worldIn, double x, double y, double z) {
         super(HabitatEntityTypes.KABLOOM_FRUIT.get(), x, y, z, worldIn);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void handleStatusUpdate(byte id) {
+    public void handleEntityEvent(byte id) {
         if (id == 3) {
-            this.world.playSound(this.getPosX(), this.getPosY(), this.getPosZ(), HabitatSoundEvents.ENTITY_KABLOOM_FRUIT_EXPLODE.get(), SoundCategory.NEUTRAL, 1.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F), true);
+            this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), HabitatSoundEvents.ENTITY_KABLOOM_FRUIT_EXPLODE.get(), SoundSource.NEUTRAL, 1.0F, (1.0F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.2F), true);
 
             for(int i = 0; i < 8; ++i)
-                this.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, this.getItem()), this.getPosX(), this.getPosY(), this.getPosZ(), (this.rand.nextFloat() - 0.5D) * 0.08D, (this.rand.nextFloat() - 0.5D) * 0.8D, (this.rand.nextFloat() - 0.5D) * 0.08D);
+                this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), (this.random.nextFloat() - 0.5D) * 0.08D, (this.random.nextFloat() - 0.5D) * 0.8D, (this.random.nextFloat() - 0.5D) * 0.08D);
 
-            this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 1.0D, 0.0D, 0.0D);
+            this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 1.0D, 0.0D, 0.0D);
         }
     }
 
     @Override
-    protected void onImpact(RayTraceResult result) {
-        super.onImpact(result);
+    protected void onHit(HitResult result) {
+        super.onHit(result);
         createExplosion();
     }
 
@@ -71,31 +71,31 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    protected Vector3d handlePistonMovement(Vector3d pos) {
+    protected Vec3 limitPistonMovement(Vec3 pos) {
         createExplosion();
-        return Vector3d.ZERO;
+        return Vec3.ZERO;
     }
 
     private void createExplosion() {
-        Vector3d vector3d = this.getPositionVec();
+        Vec3 vector3d = this.position();
 
-        if (this.world.getGameRules().get(GameRules.DO_ENTITY_DROPS).get()) {
-            ItemEntity item = new ItemEntity(this.world, vector3d.getX() + this.rand.nextGaussian() / 2, vector3d.getY() + this.rand.nextDouble() / 2, vector3d.getZ() + this.rand.nextGaussian() / 2, new ItemStack(HabitatItems.KABLOOM_PULP.get()));
-            item.setDefaultPickupDelay();
-            this.world.addEntity(item);
+        if (this.level.getGameRules().getRule(GameRules.RULE_DOENTITYDROPS).get()) {
+            ItemEntity item = new ItemEntity(this.level, vector3d.x() + this.random.nextGaussian() / 2, vector3d.y() + this.random.nextDouble() / 2, vector3d.z() + this.random.nextGaussian() / 2, new ItemStack(HabitatItems.KABLOOM_PULP.get()));
+            item.setDefaultPickUpDelay();
+            this.level.addFreshEntity(item);
         }
 
-        for (Entity entity : this.world.getEntitiesWithinAABBExcludingEntity(null, this.getBoundingBox().grow(0.75D))) {
+        for (Entity entity : this.level.getEntities(null, this.getBoundingBox().inflate(0.75D))) {
             boolean flag = false;
 
             for (int i = 0; i < 2; ++i) {
-                RayTraceResult raytraceresult = this.world.rayTraceBlocks(new RayTraceContext(vector3d, new Vector3d(entity.getPosX(), entity.getPosYHeight(0.5D * (double) i), entity.getPosZ()), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
-                if (raytraceresult.getType() == RayTraceResult.Type.MISS) {
+                HitResult raytraceresult = this.level.clip(new ClipContext(vector3d, new Vec3(entity.getX(), entity.getY(0.5D * (double) i), entity.getZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+                if (raytraceresult.getType() == HitResult.Type.MISS) {
                     flag = true;
                     break;
                 }
@@ -103,48 +103,48 @@ public class KabloomFruitEntity extends ProjectileItemEntity {
 
             if (flag) {
                 float dmg = 0;
-                if (!entity.isImmuneToExplosions()) {
-                    double dx = entity.getPosX() - this.getPosX();
-                    double dy = entity.getPosYEye() - this.getPosY();
-                    double dz = entity.getPosZ() - this.getPosZ();
-                    double dres = MathHelper.sqrt(dx * dx + dy * dy + dz * dz);
+                if (!entity.ignoreExplosion()) {
+                    double dx = entity.getX() - this.getX();
+                    double dy = entity.getEyeY() - this.getY();
+                    double dz = entity.getZ() - this.getZ();
+                    double dres = Mth.sqrt(dx * dx + dy * dy + dz * dz);
                     if (dres != 0.0D) {
                         dx = dx / dres;
                         dy = dy / dres;
                         dz = dz / dres;
-                        double df = this.getDistance(entity) > 1.0F ? 0.25D : 0.5D;
+                        double df = this.distanceTo(entity) > 1.0F ? 0.25D : 0.5D;
                         dmg = 4.0F + 4.0F * ((float) df);
                         double dred = df;
                         if (entity instanceof LivingEntity) {
                             LivingEntity livingEntity = (LivingEntity) entity;
-                            dred = ProtectionEnchantment.getBlastDamageReduction(livingEntity, df) * (1.0D - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+                            dred = ProtectionEnchantment.getExplosionKnockbackAfterDampener(livingEntity, df) * (1.0D - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                         }
 
                         boolean knockback = true;
-                        if (entity instanceof PlayerEntity) {
-                            PlayerEntity playerentity = (PlayerEntity) entity;
-                            if (playerentity.isSpectator() || (playerentity.isCreative() && playerentity.abilities.isFlying)) {
+                        if (entity instanceof Player) {
+                            Player playerentity = (Player) entity;
+                            if (playerentity.isSpectator() || (playerentity.isCreative() && playerentity.abilities.flying)) {
                                 knockback = false;
                             }
                         }
 
                         if (knockback)
-                            entity.setMotion(entity.getMotion().add(dx * dred, dy * dred, dz * dred));
+                            entity.setDeltaMovement(entity.getDeltaMovement().add(dx * dred, dy * dred, dz * dred));
                     }
                 }
 
                 if (entity instanceof LivingEntity)
-                    entity.attackEntityFrom(HabitatDamageSources.causeKabloomDamage(this, this.func_234616_v_()).setExplosion(), dmg);
-                else if (entity.canBeAttackedWithItem())
-                    entity.attackEntityFrom(HabitatDamageSources.causeKabloomDamage(this, this.func_234616_v_()), dmg);
+                    entity.hurt(HabitatDamageSources.causeKabloomDamage(this, this.getOwner()).setExplosion(), dmg);
+                else if (entity.isAttackable())
+                    entity.hurt(HabitatDamageSources.causeKabloomDamage(this, this.getOwner()), dmg);
 
-                if (this.isBurning() && !entity.isImmuneToFire())
-                    entity.setFire(1);
+                if (this.isOnFire() && !entity.fireImmune())
+                    entity.setSecondsOnFire(1);
             }
         }
 
-        if (!this.world.isRemote) {
-            this.world.setEntityState(this, (byte) 3);
+        if (!this.level.isClientSide) {
+            this.level.broadcastEntityEvent(this, (byte) 3);
             this.remove();
         }
     }
