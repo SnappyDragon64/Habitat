@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.common.entity.item;
+package mod.schnappdragon.habitat.common.entity.vehicle;
 
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
@@ -22,15 +22,15 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class HabitatBoatEntity extends Boat {
-    private static final EntityDataAccessor<Integer> BOAT_TYPE = SynchedEntityData.defineId(HabitatBoatEntity.class, EntityDataSerializers.INT);
+public class HabitatBoat extends Boat {
+    private static final EntityDataAccessor<Integer> BOAT_TYPE = SynchedEntityData.defineId(HabitatBoat.class, EntityDataSerializers.INT);
 
-    public HabitatBoatEntity(EntityType<? extends Boat> typeIn, Level worldIn) {
+    public HabitatBoat(EntityType<? extends Boat> typeIn, Level worldIn) {
         super(typeIn, worldIn);
         this.blocksBuilding = true;
     }
 
-    public HabitatBoatEntity(Level worldIn, double x, double y, double z) {
+    public HabitatBoat(Level worldIn, double x, double y, double z) {
         this(HabitatEntityTypes.BOAT.get(), worldIn);
         this.setPos(x, y, z);
         this.setDeltaMovement(Vec3.ZERO);
@@ -39,8 +39,8 @@ public class HabitatBoatEntity extends Boat {
         this.zo = z;
     }
 
-    public HabitatBoatEntity.Type getHabitatBoatType() {
-        return HabitatBoatEntity.Type.byId(this.entityData.get(BOAT_TYPE));
+    public HabitatBoat.Type getHabitatBoatType() {
+        return HabitatBoat.Type.byId(this.entityData.get(BOAT_TYPE));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class HabitatBoatEntity extends Boat {
         return ForgeRegistries.ITEMS.getValue(new ResourceLocation(Habitat.MODID, this.getHabitatBoatType().getName() + "_boat"));
     }
 
-    public void setBoatType(HabitatBoatEntity.Type boatType) {
+    public void setBoatType(HabitatBoat.Type boatType) {
         this.entityData.set(BOAT_TYPE, boatType.ordinal());
     }
 
@@ -120,16 +120,16 @@ public class HabitatBoatEntity extends Boat {
             return this.name;
         }
 
-        public static HabitatBoatEntity.Type byId(int id) {
-            HabitatBoatEntity.Type[] types = values();
+        public static HabitatBoat.Type byId(int id) {
+            HabitatBoat.Type[] types = values();
             if (id < 0 || id >= types.length)
                 id = 0;
 
             return types[id];
         }
 
-        public static HabitatBoatEntity.Type getTypeFromString(String nameIn) {
-            HabitatBoatEntity.Type[] types = values();
+        public static HabitatBoat.Type getTypeFromString(String nameIn) {
+            HabitatBoat.Type[] types = values();
 
             for (Type type : types) {
                 if (type.getName().equals(nameIn))

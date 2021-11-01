@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.common.blockentity;
+package mod.schnappdragon.habitat.common.block.entity;
 
 import mod.schnappdragon.habitat.core.registry.HabitatBlockEntityTypes;
 import net.minecraft.core.BlockPos;

@@ -1,7 +1,0 @@
-jar {
-    manifest {
-        attributes([
-            "MixinConfigs": "habitat.mixins.json"
-        ])
-    }
-}

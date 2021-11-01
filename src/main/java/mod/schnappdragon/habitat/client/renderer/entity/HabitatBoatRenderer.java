@@ -2,34 +2,33 @@ package mod.schnappdragon.habitat.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import mod.schnappdragon.habitat.common.entity.item.HabitatBoatEntity;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
+import mod.schnappdragon.habitat.common.entity.vehicle.HabitatBoat;
 import mod.schnappdragon.habitat.core.Habitat;
+import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.model.BoatModel;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 
-
-public class HabitatBoatRenderer extends EntityRenderer<HabitatBoatEntity> {
-
+public class HabitatBoatRenderer extends EntityRenderer<HabitatBoat> {
     private static final ResourceLocation[] BOAT_TEXTURES = new ResourceLocation[]{
             new ResourceLocation(Habitat.MODID, "textures/entity/boat/fairy_ring_mushroom.png")
     };
-    protected final BoatModel modelBoat = new BoatModel();
+    protected final BoatModel modelBoat;
 
-    public HabitatBoatRenderer(EntityRenderDispatcher renderManagerIn) {
-        super(renderManagerIn);
+    public HabitatBoatRenderer(EntityRendererProvider.Context context) {
+        super(context);
+        modelBoat = new BoatModel(BoatModel.createBodyModel().bakeRoot());
         this.shadowRadius = 0.8F;
     }
 
     @Override
-    public void render(HabitatBoatEntity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+    public void render(HabitatBoat entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         matrixStackIn.pushPose();
         matrixStackIn.translate(0.0D, 0.375D, 0.0D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
@@ -60,7 +59,7 @@ public class HabitatBoatRenderer extends EntityRenderer<HabitatBoatEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(HabitatBoatEntity entity) {
+    public ResourceLocation getTextureLocation(HabitatBoat entity) {
         return BOAT_TEXTURES[entity.getHabitatBoatType().ordinal()];
     }
 }

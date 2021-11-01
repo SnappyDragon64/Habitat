@@ -3,7 +3,7 @@ package mod.schnappdragon.habitat.common.block;
 import com.google.common.collect.Lists;
 import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
-import mod.schnappdragon.habitat.common.blockentity.RafflesiaBlockEntity;
+import mod.schnappdragon.habitat.common.block.entity.RafflesiaBlockEntity;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import net.minecraft.core.BlockPos;

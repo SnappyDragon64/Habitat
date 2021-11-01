@@ -2,6 +2,7 @@ package mod.schnappdragon.habitat.client.particle;
 
 import net.minecraft.client.particle.*;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 
 public class FairyRingSporeParticle extends TextureSheetParticle {
@@ -27,7 +28,7 @@ public class FairyRingSporeParticle extends TextureSheetParticle {
         this.xo = this.x;
         this.yo = this.y;
         this.zo = this.z;
-        if (this.age++ >= this.lifetime)
+        if (this.age++ >= this.lifetime || this.onGround || this.level.isFluidAtPosition(new BlockPos(this.x, this.y, this.z), (fluidState) -> !fluidState.isEmpty()))
             this.remove();
         else
             this.yd -= this.gravity;

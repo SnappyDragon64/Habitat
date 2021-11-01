@@ -112,10 +112,14 @@ public class PookaModel<T extends Pooka> extends EntityModel<T> {
         this.head.xRot = headPitch * ((float) Math.PI / 180F);
         this.rightEar.xRot = headPitch * ((float) Math.PI / 180F);
         this.leftEar.xRot = headPitch * ((float) Math.PI / 180F);
+        this.rightEarStalk.xRot = headPitch * ((float) Math.PI / 180F);
+        this.leftEarStalk.xRot = headPitch * ((float) Math.PI / 180F);
         this.nose.yRot = netHeadYaw * ((float) Math.PI / 180F);
         this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
         this.rightEar.yRot = this.nose.yRot - 0.2617994F;
         this.leftEar.yRot = this.nose.yRot + 0.2617994F;
+        this.rightEarStalk.yRot = this.nose.yRot - 0.2617994F;
+        this.leftEarStalk.yRot = this.nose.yRot + 0.2617994F;
         this.jumpRotation = Mth.sin(entityIn.getJumpCompletion(f) * (float) Math.PI);
         this.leftHaunch.xRot = (this.jumpRotation * 50.0F - 21.0F) * ((float) Math.PI / 180F);
         this.rightHaunch.xRot = (this.jumpRotation * 50.0F - 21.0F) * ((float) Math.PI / 180F);

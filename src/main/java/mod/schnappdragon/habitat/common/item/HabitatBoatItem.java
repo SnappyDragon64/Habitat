@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.common.item;
 
-import mod.schnappdragon.habitat.common.entity.item.HabitatBoatEntity;
+import mod.schnappdragon.habitat.common.entity.vehicle.HabitatBoat;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -20,9 +20,9 @@ import java.util.function.Predicate;
 
 public class HabitatBoatItem extends Item {
     private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
-    private final HabitatBoatEntity.Type type;
+    private final HabitatBoat.Type type;
 
-    public HabitatBoatItem(HabitatBoatEntity.Type type, Item.Properties properties) {
+    public HabitatBoatItem(HabitatBoat.Type type, Item.Properties properties) {
         super(properties);
         this.type = type;
     }
@@ -47,7 +47,7 @@ public class HabitatBoatItem extends Item {
             }
 
             if (raytraceresult.getType() == HitResult.Type.BLOCK) {
-                HabitatBoatEntity boatentity = new HabitatBoatEntity(worldIn, raytraceresult.getLocation().x, raytraceresult.getLocation().y, raytraceresult.getLocation().z);
+                HabitatBoat boatentity = new HabitatBoat(worldIn, raytraceresult.getLocation().x, raytraceresult.getLocation().y, raytraceresult.getLocation().z);
                 boatentity.setBoatType(this.type);
                 boatentity.setYRot(playerIn.getYRot());
                 if (!worldIn.noCollision(boatentity, boatentity.getBoundingBox().inflate(-0.1D)))

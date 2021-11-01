@@ -1,8 +1,7 @@
-package mod.schnappdragon.habitat.common.blockentity;
+package mod.schnappdragon.habitat.common.block.entity;
 
 import mod.schnappdragon.habitat.core.registry.HabitatBlockEntityTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

@@ -1,14 +1,10 @@
 package mod.schnappdragon.habitat.core;
 
-import mod.schnappdragon.habitat.client.renderer.entity.HabitatEntityRenderers;
-import mod.schnappdragon.habitat.client.renderer.blockentity.HabitatBlockEntityRenderers;
+import mod.schnappdragon.habitat.client.renderer.HabitatRenderLayers;
 import mod.schnappdragon.habitat.common.block.misc.HabitatWoodTypes;
 import mod.schnappdragon.habitat.core.api.conditions.RecipeConditions;
-import mod.schnappdragon.habitat.core.misc.*;
 import mod.schnappdragon.habitat.core.dispenser.HabitatDispenserBehaviours;
-import mod.schnappdragon.habitat.core.registry.HabitatFeatures;
-import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
-import mod.schnappdragon.habitat.client.renderer.HabitatRenderLayers;
+import mod.schnappdragon.habitat.core.misc.*;
 import mod.schnappdragon.habitat.core.registry.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -70,9 +66,6 @@ public class Habitat {
 
     private void clientSetup(FMLClientSetupEvent event) {
         HabitatRenderLayers.registerRenderLayers();
-        HabitatBlockEntityRenderers.registerRenderers();
-        HabitatEntityRenderers.registerRenderers(event.getMinecraftSupplier());
-
         event.enqueueWork(HabitatWoodTypes::setupAtlas);
     }
 

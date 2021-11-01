@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.core.dispenser;
 
-import mod.schnappdragon.habitat.common.entity.item.HabitatBoatEntity;
+import mod.schnappdragon.habitat.common.entity.vehicle.HabitatBoat;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.BlockSource;
@@ -12,9 +12,9 @@ import net.minecraft.world.level.Level;
 
 public class HabitatDispenseBoatBehavior extends DefaultDispenseItemBehavior {
     private final DefaultDispenseItemBehavior dispenseItemBehaviour = new DefaultDispenseItemBehavior();
-    private final HabitatBoatEntity.Type type;
+    private final HabitatBoat.Type type;
 
-    public HabitatDispenseBoatBehavior(HabitatBoatEntity.Type type) {
+    public HabitatDispenseBoatBehavior(HabitatBoat.Type type) {
         this.type = type;
     }
 
@@ -35,9 +35,9 @@ public class HabitatDispenseBoatBehavior extends DefaultDispenseItemBehavior {
             d3 = 0.0D;
         }
 
-        HabitatBoatEntity boatentity = new HabitatBoatEntity(world, d0, d1 + d3, d2);
+        HabitatBoat boatentity = new HabitatBoat(world, d0, d1 + d3, d2);
         boatentity.setBoatType(this.type);
-        boatentity.yRot = direction.toYRot();
+        boatentity.setYRot(direction.toYRot());
         world.addFreshEntity(boatentity);
         stack.shrink(1);
         return stack;

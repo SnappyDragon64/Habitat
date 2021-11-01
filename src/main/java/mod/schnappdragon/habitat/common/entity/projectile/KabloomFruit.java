@@ -42,6 +42,13 @@ public class KabloomFruit extends ThrowableItemProjectile {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        if (this.isOnFire())
+            createExplosion();
+    }
+
+    @Override
     @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte id) {
         if (id == 3) {
