@@ -3,13 +3,10 @@ package mod.schnappdragon.habitat.core.registry;
 import mod.schnappdragon.habitat.common.entity.vehicle.HabitatBoat;
 import mod.schnappdragon.habitat.common.entity.monster.Pooka;
 import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruit;
-import mod.schnappdragon.habitat.common.item.HabitatSpawnEggItem;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
@@ -27,10 +24,5 @@ public class HabitatEntityTypes {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(POOKA.get(), Pooka.registerAttributes().build());
-    }
-
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onPostRegisterEntities(RegistryEvent.Register<EntityType<?>> event) {
-        HabitatSpawnEggItem.registerSpawnEggs();
     }
 }
