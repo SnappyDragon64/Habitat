@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.client.renderer;
 
-import mod.schnappdragon.habitat.client.renderer.block.HabitatChestBlockEntityRenderer;
+import mod.schnappdragon.habitat.client.renderer.block.HabitatChestRenderer;
 import mod.schnappdragon.habitat.client.renderer.entity.HabitatBoatRenderer;
 import mod.schnappdragon.habitat.client.renderer.entity.PookaRenderer;
 import mod.schnappdragon.habitat.core.Habitat;
@@ -21,8 +21,8 @@ public class HabitatEntityRenderers {
         event.registerEntityRenderer(HabitatEntityTypes.BOAT.get(), HabitatBoatRenderer::new);
         event.registerEntityRenderer(HabitatEntityTypes.POOKA.get(), PookaRenderer::new);
 
-        event.registerBlockEntityRenderer(HabitatBlockEntityTypes.CHEST.get(), HabitatChestBlockEntityRenderer::new);
-        event.registerBlockEntityRenderer(HabitatBlockEntityTypes.TRAPPED_CHEST.get(), HabitatChestBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(HabitatBlockEntityTypes.CHEST.get(), HabitatChestRenderer::new);
+        event.registerBlockEntityRenderer(HabitatBlockEntityTypes.TRAPPED_CHEST.get(), HabitatChestRenderer::new);
         event.registerBlockEntityRenderer(HabitatBlockEntityTypes.SIGN.get(), SignRenderer::new);
     }
 }

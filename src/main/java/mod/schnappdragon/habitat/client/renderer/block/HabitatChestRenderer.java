@@ -11,12 +11,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.ChestType;
 
-public class HabitatChestBlockEntityRenderer extends ChestRenderer<HabitatChestBlockEntity> {
+public class HabitatChestRenderer extends ChestRenderer<HabitatChestBlockEntity> {
+    public static HabitatChestRenderer INSTANCE;
     public static Block block = null;
     public boolean xmasTextures;
 
-    public HabitatChestBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+    public HabitatChestRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
+        INSTANCE = this;
     }
 
     @Override

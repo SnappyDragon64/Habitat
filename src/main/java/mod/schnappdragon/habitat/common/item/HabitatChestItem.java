@@ -1,14 +1,18 @@
 package mod.schnappdragon.habitat.common.item;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import mod.schnappdragon.habitat.client.renderer.block.HabitatChestBlockEntityRenderer;
+import mod.schnappdragon.habitat.client.renderer.block.HabitatChestRenderer;
+import mod.schnappdragon.habitat.common.block.entity.HabitatChestBlockEntity;
+import mod.schnappdragon.habitat.core.registry.HabitatBlockEntityTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.common.util.NonNullLazy;
 
@@ -25,9 +29,9 @@ public class HabitatChestItem extends FuelBlockItem {
             static final NonNullLazy<BlockEntityWithoutLevelRenderer> renderer = NonNullLazy.of(() -> new BlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels()) {
                 @Override
                 public void renderByItem(ItemStack itemStackIn, ItemTransforms.TransformType transformType, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-                    HabitatChestBlockEntityRenderer.block = ((BlockItem) itemStackIn.getItem()).getBlock();
-                    super.renderByItem(itemStackIn, transformType, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
-                    HabitatChestBlockEntityRenderer.block = null;
+                    HabitatChestRenderer.block = ((BlockItem) itemStackIn.getItem()).getBlock();
+                    HabitatChestRenderer.INSTANCE.render((HabitatChestBlockEntity) ((EntityBlock) HabitatChestRenderer.block).newBlockEntity(BlockPos.ZERO, HabitatChestRenderer.block.defaultBlockState()), 0, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
+                    HabitatChestRenderer.block = null;
                 }
             });
 
