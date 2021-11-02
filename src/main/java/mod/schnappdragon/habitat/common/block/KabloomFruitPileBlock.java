@@ -32,8 +32,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 public class KabloomFruitPileBlock extends Block implements IHasPistonDestroyEffect {
-    protected static final VoxelShape SHAPE = Block.box(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D);
-
+    protected static final VoxelShape SHAPE = Block.box(4.0D, 4.0D, 4.0D, 12.0D, 12.0D, 12.0D);
     public KabloomFruitPileBlock(BlockBehaviour.Properties properties) {
         super(properties);
     }

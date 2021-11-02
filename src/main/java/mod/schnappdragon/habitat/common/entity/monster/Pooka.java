@@ -443,6 +443,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         boolean flag = entityIn.hurt(DamageSource.mobAttack(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
         if (flag) {
             this.doEnchantDamageEffects(this, entityIn);
+            this.setLastHurtMob(entityIn);
             this.playSound(HabitatSoundEvents.ENTITY_POOKA_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
             if (!this.isBaby() && entityIn instanceof LivingEntity) {

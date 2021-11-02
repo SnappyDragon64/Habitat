@@ -7,12 +7,10 @@ public enum ChestVariant {
     FAIY_RING_MUSHROOM_NORMAL("fairy_ring_mushroom"),
     FAIY_RING_MUSHROOM_TRAPPED("fairy_ring_mushroom", true);
 
-    private final String name;
-    private final boolean trapped;
+    private final String location;
 
     ChestVariant(String name, boolean trapped) {
-        this.name = name;
-        this.trapped = trapped;
+        this.location = name + "_" + (trapped ? "trapped" : "normal");
     }
 
     ChestVariant(String name) {
@@ -20,14 +18,14 @@ public enum ChestVariant {
     }
 
     public ResourceLocation getSingle() {
-        return new ResourceLocation(Habitat.MODID, "entity/chest/" + this.name + "_" + (this.trapped ? "trapped" : "normal"));
+        return new ResourceLocation(Habitat.MODID, "entity/chest/" + this.location);
     }
 
     public ResourceLocation getRight() {
-        return new ResourceLocation(Habitat.MODID, "entity/chest/" + this.name + "_" + (this.trapped ? "trapped" : "normal") + "_right");
+        return new ResourceLocation(Habitat.MODID, "entity/chest/" + this.location + "_right");
     }
 
     public ResourceLocation getLeft() {
-        return new ResourceLocation(Habitat.MODID, "entity/chest/" + this.name + "_" + (this.trapped ? "trapped" : "normal") + "_left");
+        return new ResourceLocation(Habitat.MODID, "entity/chest/" + this.location + "_left");
     }
 }

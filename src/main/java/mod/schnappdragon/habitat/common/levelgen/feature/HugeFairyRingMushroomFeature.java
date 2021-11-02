@@ -61,7 +61,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
 
         for (int i = 0; i < i0; ++i) {
             blockpos$mutable.set(pos).move(Direction.UP, i);
-            if (world.getBlockState(blockpos$mutable).isSolidRender(world, blockpos$mutable)) {
+            if (!world.getBlockState(blockpos$mutable).isSolidRender(world, blockpos$mutable)) {
                 this.setBlock(world, blockpos$mutable, stem);
             }
 
@@ -70,7 +70,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
                 for (int x = -1; x <= 1; ++x) {
                     for (int z = -1; z <= 1; ++z) {
                         BlockPos.MutableBlockPos inPos = new BlockPos.MutableBlockPos().setWithOffset(blockpos$mutable, x, 0, z);
-                        if (world.getBlockState(inPos).isSolidRender(world, inPos)) {
+                        if (!world.getBlockState(inPos).isSolidRender(world, inPos)) {
                             if (i > i0 - 6 && (x != 0 || z != 0) && rand.nextInt(12) == 0 && !world.getBlockState(inPos.below()).is(HabitatBlocks.FAIRYLIGHT.get())) {
                                 this.setBlock(world, inPos, HabitatBlocks.FAIRYLIGHT.get().defaultBlockState());
                                 breakFlag = true;
@@ -90,7 +90,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
 
             for (int i = 0; i < len + 1; ++i) {
                 blockpos$mutable.move(Direction.UP);
-                if (world.getBlockState(blockpos$mutable).isSolidRender(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.below()).isSolidRender(world, blockpos$mutable.below())) {
+                if (!world.getBlockState(blockpos$mutable).isSolidRender(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.below()).isSolidRender(world, blockpos$mutable.below())) {
                     if (i < len) {
                         BlockState stemState = stem;
                         if (stemState.getBlock() instanceof HugeMushroomBlock) {
@@ -113,7 +113,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
                 for (int j = -1; j <= 1; ++j) {
                     blockpos$mutable.setWithOffset(pos, i, j, k);
 
-                    if (world.getBlockState(blockpos$mutable).isAir() && world.getBlockState(blockpos$mutable.below()).isSolidRender(world, blockpos$mutable.below())) {
+                    if (world.getBlockState(blockpos$mutable).isAir() && !world.getBlockState(blockpos$mutable.below()).isSolidRender(world, blockpos$mutable.below())) {
                         if (rand.nextInt(3) == 0)
                             this.setBlock(world, blockpos$mutable, mushroomProvider.getState(rand, blockpos$mutable));
                         break;
@@ -124,16 +124,12 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
     }
 
     private BooleanProperty getPropertyFromDirection(Direction direction) {
-        switch (direction) {
-            case NORTH:
-                return HugeMushroomBlock.NORTH;
-            case EAST:
-                return HugeMushroomBlock.EAST;
-            case SOUTH:
-                return HugeMushroomBlock.SOUTH;
-            default:
-                return HugeMushroomBlock.WEST;
-        }
+        return switch (direction) {
+            case NORTH -> HugeMushroomBlock.NORTH;
+            case EAST -> HugeMushroomBlock.EAST;
+            case SOUTH -> HugeMushroomBlock.SOUTH;
+            default -> HugeMushroomBlock.WEST;
+        };
     }
 
     protected void makeCap(LevelAccessor world, Random rand, BlockPos pos, int i0, BlockPos.MutableBlockPos blockpos$mutable, HugeMushroomFeatureConfiguration config) {
@@ -151,7 +147,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
                     boolean flag5 = flag2 || flag3;
                     if (i >= i0 || flag4 != flag5) {
                         blockpos$mutable.setWithOffset(pos, l, i, i1);
-                        if (world.getBlockState(blockpos$mutable).isSolidRender(world, blockpos$mutable)) {
+                        if (!world.getBlockState(blockpos$mutable).isSolidRender(world, blockpos$mutable)) {
                             this.setBlock(world, blockpos$mutable, config.capProvider.getState(rand, pos).setValue(HugeMushroomBlock.UP, i >= i0 - 1).setValue(HugeMushroomBlock.WEST, l < -k).setValue(HugeMushroomBlock.EAST, l > k).setValue(HugeMushroomBlock.NORTH, i1 < -k).setValue(HugeMushroomBlock.SOUTH, i1 > k));
                         }
                     }
