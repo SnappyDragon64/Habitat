@@ -14,7 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Habitat.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class HabitatEntityRenderers {
+public class HabitatRenderers {
     @SubscribeEvent
     public static void rendererSetup(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(HabitatEntityTypes.KABLOOM_FRUIT.get(), ThrownItemRenderer::new);
