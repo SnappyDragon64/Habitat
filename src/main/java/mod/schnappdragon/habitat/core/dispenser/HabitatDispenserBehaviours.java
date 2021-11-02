@@ -8,7 +8,6 @@ import mod.schnappdragon.habitat.common.block.entity.RafflesiaBlockEntity;
 import mod.schnappdragon.habitat.common.entity.vehicle.HabitatBoat;
 import mod.schnappdragon.habitat.common.entity.monster.Pooka;
 import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruit;
-import mod.schnappdragon.habitat.common.item.HabitatSpawnEggItem;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
@@ -174,18 +173,6 @@ public class HabitatDispenserBehaviours {
                 return stack;
             }
         });
-
-        for (SpawnEggItem egg : HabitatSpawnEggItem.HABITAT_EGGS) {
-            DispenserBlock.registerBehavior(egg, new DefaultDispenseItemBehavior() {
-                protected ItemStack execute(BlockSource source, ItemStack stack) {
-                    Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
-                    EntityType<?> entitytype = ((SpawnEggItem) stack.getItem()).getType(stack.getTag());
-                    entitytype.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
-                    stack.shrink(1);
-                    return stack;
-                }
-            });
-        }
 
         DispenserBlock.registerBehavior(HabitatItems.FAIRY_RING_MUSHROOM.get(), new OptionalDispenseItemBehavior() {
             protected ItemStack execute(BlockSource source, ItemStack stack) {
