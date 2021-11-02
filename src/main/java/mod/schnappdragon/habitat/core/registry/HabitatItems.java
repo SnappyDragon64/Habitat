@@ -7,6 +7,7 @@ import mod.schnappdragon.habitat.core.misc.HabitatFoods;
 import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -87,7 +88,7 @@ public class HabitatItems {
             () -> new HabitatBoatItem(HabitatBoat.Type.FAIRY_RING_MUSHROOM, getProperties(CompatHelper.compatItemGroup(CreativeModeTab.TAB_TRANSPORTATION, "enhanced_mushrooms"))));
 
     public static final RegistryObject<Item> POOKA_SPAWN_EGG = ITEMS.register("pooka_spawn_egg",
-            () -> new HabitatSpawnEggItem(HabitatEntityTypes.POOKA, 15920353, 16771962, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+            () -> new ForgeSpawnEggItem(HabitatEntityTypes.POOKA, 15920353, 16771962, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 
     private static Item.Properties getProperties(CreativeModeTab group) {
         return new Item.Properties().tab(group);
