@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.core;
 
 import mod.schnappdragon.habitat.client.renderer.HabitatRenderLayers;
-import mod.schnappdragon.habitat.common.block.misc.HabitatWoodTypes;
+import mod.schnappdragon.habitat.common.block.HabitatWoodType;
 import mod.schnappdragon.habitat.core.api.conditions.RecipeConditions;
 import mod.schnappdragon.habitat.core.dispenser.HabitatDispenserBehaviours;
 import mod.schnappdragon.habitat.core.misc.*;
@@ -66,7 +66,6 @@ public class Habitat {
 
     private void clientSetup(FMLClientSetupEvent event) {
         HabitatRenderLayers.registerRenderLayers();
-        event.enqueueWork(HabitatWoodTypes::setupAtlas);
     }
 
     public static Logger getLOGGER() {

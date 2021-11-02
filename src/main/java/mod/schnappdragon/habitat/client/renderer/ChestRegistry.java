@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.client.renderer;
 
-import mod.schnappdragon.habitat.common.block.misc.ChestVariant;
+import mod.schnappdragon.habitat.common.block.ChestVariant;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraftforge.api.distmarker.Dist;

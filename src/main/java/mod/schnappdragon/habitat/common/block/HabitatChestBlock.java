@@ -1,6 +1,5 @@
 package mod.schnappdragon.habitat.common.block;
 
-import mod.schnappdragon.habitat.common.block.misc.ChestVariant;
 import mod.schnappdragon.habitat.core.registry.HabitatBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.ChestBlock;

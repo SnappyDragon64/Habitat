@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.client.renderer.block;
 
 import mod.schnappdragon.habitat.common.block.IChestVariant;
-import mod.schnappdragon.habitat.common.block.misc.ChestVariant;
+import mod.schnappdragon.habitat.common.block.ChestVariant;
 import mod.schnappdragon.habitat.common.block.entity.HabitatChestBlockEntity;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;

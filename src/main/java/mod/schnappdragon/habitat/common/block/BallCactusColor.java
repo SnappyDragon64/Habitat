@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.common.block.misc;
+package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.world.level.block.Block;

@@ -1,9 +1,9 @@
 package mod.schnappdragon.habitat.core.registry;
 
 import mod.schnappdragon.habitat.common.block.*;
-import mod.schnappdragon.habitat.common.block.misc.BallCactusColor;
-import mod.schnappdragon.habitat.common.block.misc.ChestVariant;
-import mod.schnappdragon.habitat.common.block.misc.HabitatWoodTypes;
+import mod.schnappdragon.habitat.common.block.BallCactusColor;
+import mod.schnappdragon.habitat.common.block.ChestVariant;
+import mod.schnappdragon.habitat.common.block.HabitatWoodType;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.*;
@@ -74,8 +74,8 @@ public class HabitatBlocks {
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_BUTTON = BLOCKS.register("fairy_ring_mushroom_button", () -> new WoodButtonBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.5F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_TRAPDOOR = BLOCKS.register("fairy_ring_mushroom_trapdoor", () -> new TrapDoorBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).strength(3.0F).sound(SoundType.WOOD).noOcclusion().isValidSpawn((state, reader, pos, entity) -> false)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_DOOR = BLOCKS.register("fairy_ring_mushroom_door", () -> new DoorBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).strength(3.0F).sound(SoundType.WOOD).noOcclusion()));
-    public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_SIGN = BLOCKS.register("fairy_ring_mushroom_sign", () -> new HabitatStandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).noCollission().strength(1.0F).sound(SoundType.WOOD), HabitatWoodTypes.FAIRY_RING_MUSHROOM));
-    public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_WALL_SIGN = BLOCKS.register("fairy_ring_mushroom_wall_sign", () -> new HabitatWallSignBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).noCollission().strength(1.0F).sound(SoundType.WOOD).lootFrom(FAIRY_RING_MUSHROOM_SIGN), HabitatWoodTypes.FAIRY_RING_MUSHROOM));
+    public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_SIGN = BLOCKS.register("fairy_ring_mushroom_sign", () -> new HabitatStandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).noCollission().strength(1.0F).sound(SoundType.WOOD), HabitatWoodType.FAIRY_RING_MUSHROOM));
+    public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_WALL_SIGN = BLOCKS.register("fairy_ring_mushroom_wall_sign", () -> new HabitatWallSignBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).noCollission().strength(1.0F).sound(SoundType.WOOD).lootFrom(FAIRY_RING_MUSHROOM_SIGN), HabitatWoodType.FAIRY_RING_MUSHROOM));
 
     public static final RegistryObject<Block> VERTICAL_FAIRY_RING_MUSHROOM_PLANKS = BLOCKS.register("vertical_fairy_ring_mushroom_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_VERTICAL_SLAB = BLOCKS.register("fairy_ring_mushroom_vertical_slab", () -> new VerticalSlabBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
