@@ -155,7 +155,7 @@ public class KabloomFruit extends ThrowableItemProjectile {
 
             if (!this.level.isClientSide) {
                 this.level.broadcastEntityEvent(this, (byte) 3);
-                this.kill();
+                this.discard();
             }
         }
     }

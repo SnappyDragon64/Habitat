@@ -74,7 +74,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
         if (entityIn.getType() == EntityType.RABBIT) {
             Rabbit rabbit = (Rabbit) entityIn;
             rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
-            rabbit.kill();
+            rabbit.discard();
             worldIn.addFreshEntity(Pooka.convertRabbit(rabbit));
 
             for (int i = 0; i < 8; i++)

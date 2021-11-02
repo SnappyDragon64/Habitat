@@ -61,7 +61,7 @@ public class FairyRingMushroomItem extends BlockItem {
             else if (target.getType() == EntityType.RABBIT) {
                 Rabbit rabbit = (Rabbit) target;
                 rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
-                rabbit.kill();
+                rabbit.discard();
                 Pooka pooka = Pooka.convertRabbit(rabbit);
                 playerIn.level.addFreshEntity(pooka);
                 playerIn.level.broadcastEntityEvent(pooka, (byte) 15);

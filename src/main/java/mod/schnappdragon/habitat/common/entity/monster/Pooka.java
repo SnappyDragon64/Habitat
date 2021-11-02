@@ -183,7 +183,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         world.playSound(null, this, HabitatSoundEvents.ENTITY_POOKA_SHEAR.get(), SoundSource.HOSTILE, 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
         if (!this.level.isClientSide()) {
             ((ServerLevel) this.level).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
-            this.kill();
+            this.discard();
             world.addFreshEntity(convertPooka(this));
         }
         return Collections.singletonList(new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get()));
@@ -432,7 +432,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
             Rabbit rabbit = (Rabbit) entityIn;
             rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
-            rabbit.kill();
+            rabbit.discard();
             this.level.addFreshEntity(convertRabbit(rabbit));
 
             for (int i = 0; i < 8; i++)
