@@ -174,7 +174,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     @Override
     public boolean isShearable(@Nonnull ItemStack item, Level world, BlockPos pos) {
-        return this.isPacified();
+        return this.isAlive() && this.isPacified() && !this.isBaby();
     }
 
     @Nonnull
@@ -427,7 +427,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      */
 
     public boolean doHurtTarget(Entity entityIn) {
-        if (entityIn.getType() == EntityType.RABBIT && !entityIn.isInvulnerableTo(DamageSource.mobAttack(this))) {
+        if (entityIn.getType() == EntityType.RABBIT && entityIn.isAlive() && !entityIn.isInvulnerableTo(DamageSource.mobAttack(this))) {
             this.playSound(HabitatSoundEvents.ENTITY_POOKA_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
             Rabbit rabbit = (Rabbit) entityIn;

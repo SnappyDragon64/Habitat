@@ -90,7 +90,7 @@ public class HabitatDispenserBehaviours {
                 BlockState state = worldIn.getBlockState(pos);
                 if (!worldIn.isClientSide) {
                     for (Pooka pooka : worldIn.getEntitiesOfClass(Pooka.class, new AABB(pos), EntitySelector.NO_SPECTATORS)) {
-                        if (pooka.isPacified()) {
+                        if (pooka.isShearable(ItemStack.EMPTY, worldIn, pos)) {
                             worldIn.playSound(null, pooka, HabitatSoundEvents.ENTITY_POOKA_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                             ((ServerLevel) worldIn).sendParticles(ParticleTypes.EXPLOSION, pooka.getX(), pooka.getY(0.5D), pooka.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
                             pooka.discard();
