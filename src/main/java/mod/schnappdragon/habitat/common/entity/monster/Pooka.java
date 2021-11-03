@@ -2,6 +2,7 @@ package mod.schnappdragon.habitat.common.entity.monster;
 
 import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.*;
+import mod.schnappdragon.habitat.core.tags.HabitatEntityTypeTags;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -67,15 +68,11 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new Pooka.PanicGoal(this, 2.2D));
         this.targetSelector.addGoal(1, (new Pooka.HurtByTargetGoal(this)).setAlertOthers());
-        this.targetSelector.addGoal(2, new Pooka.NearestAttackableTargetGoal<>(this, Rabbit.class, 10, true, false, livingEntity -> livingEntity.getType() == EntityType.RABBIT));
-        this.targetSelector.addGoal(2, new Pooka.NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.targetSelector.addGoal(2, new Pooka.NearestAttackableTargetGoal<>(this, Wolf.class, true));
-        this.targetSelector.addGoal(2, new Pooka.NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+        this.targetSelector.addGoal(2, new Pooka.NearestAttackableTargetGoal<>(this, LivingEntity.class, 10, true, false, livingEntity -> HabitatEntityTypeTags.POOKA_ATTACK_TARGETS.contains(livingEntity.getType())));
         this.goalSelector.addGoal(2, new BreedGoal(this, 0.8D));
         this.goalSelector.addGoal(3, new Pooka.TemptGoal(this, 1.25D, Ingredient.of(HabitatItemTags.POOKA_FOOD), false));
         this.goalSelector.addGoal(4, new Pooka.AttackGoal(this));
-        this.goalSelector.addGoal(4, new Pooka.AvoidEntityGoal<>(this, Wolf.class, 10.0F, 2.2D, 2.2D));
-        this.goalSelector.addGoal(4, new Pooka.AvoidEntityGoal<>(this, IronGolem.class, 4.0F, 2.2D, 2.2D));
+        this.goalSelector.addGoal(4, new Pooka.AvoidEntityGoal<>(this, LivingEntity.class, 10.0F, 2.2D, 2.2D, livingEntity -> HabitatEntityTypeTags.PACIFIED_POOKA_SCARED_BY.contains(livingEntity.getType())));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.6D));
         this.goalSelector.addGoal(11, new LookAtPlayerGoal(this, Player.class, 10.0F));
     }
@@ -620,11 +617,6 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     static class NearestAttackableTargetGoal<T extends LivingEntity> extends net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal<T> {
         private final Pooka pooka;
 
-        public NearestAttackableTargetGoal(Pooka pooka, Class<T> targetClassIn, boolean checkSight) {
-            super(pooka, targetClassIn, checkSight);
-            this.pooka = pooka;
-        }
-
         public NearestAttackableTargetGoal(Pooka pooka, Class<T> targetClassIn, int targetChanceIn, boolean checkSight, boolean nearbyOnlyIn, @Nullable Predicate<LivingEntity> targetPredicate) {
             super(pooka, targetClassIn, targetChanceIn, checkSight, nearbyOnlyIn, targetPredicate);
             this.pooka = pooka;
@@ -639,8 +631,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     static class AvoidEntityGoal<T extends LivingEntity> extends net.minecraft.world.entity.ai.goal.AvoidEntityGoal<T> {
         private final Pooka pooka;
 
-        public AvoidEntityGoal(Pooka pooka, Class<T> entity, float range, double v1, double v2) {
-            super(pooka, entity, range, v1, v2);
+        public AvoidEntityGoal(Pooka pooka, Class<T> entity, float range, double v1, double v2, Predicate<LivingEntity> predicate) {
+            super(pooka, entity, range, v1, v2, predicate);
             this.pooka = pooka;
         }
 
