@@ -49,9 +49,8 @@ public class Habitat {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        HabitatParrotImitationSounds.registerParrotImitationSounds();
-
         event.enqueueWork(() -> {
+            HabitatParrotImitationSounds.registerParrotImitationSounds();
             HabitatStructures.setupStructures();
             HabitatBrewingMixes.registerBrewingMixes();
             HabitatConfiguredFeatures.registerConfiguredFeatures();
