@@ -7,6 +7,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 
 public class HabitatSpawns {
     public static void registerSpawns() {
-        SpawnPlacements.register(HabitatEntityTypes.POOKA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Pooka::canPookaSpawn);
+        SpawnPlacements.register(HabitatEntityTypes.POOKA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Pooka::checkPookaSpawnRules);
     }
 }

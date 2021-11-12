@@ -27,9 +27,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Rabbit;
-import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +36,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -360,8 +357,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      * Spawn Methods
      */
 
-    public static boolean canPookaSpawn(EntityType<Pooka> pooka, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random rand) {
         return world.getBlockState(pos.below()).is(Blocks.GRASS_BLOCK);
+    public static boolean checkPookaSpawnRules(EntityType<Pooka> pooka, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random rand) {
     }
 
     @Nullable
@@ -375,8 +372,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         int aidD = aid.getRight();
         int ailI = ailment.getLeft();
         int ailD = ailment.getRight();
-        if (spawnDataIn instanceof Pooka.PookaData) {
-            Pooka.PookaData data = (Pooka.PookaData) spawnDataIn;
+        if (spawnDataIn instanceof PookaGroupData) {
+            PookaGroupData data = (PookaGroupData) spawnDataIn;
             i = data.rabbitType;
             aidI = data.aidIdData;
             aidD = data.aidDurationData;
@@ -385,7 +382,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             pacified = data.pacifiedData;
         }
         else
-            spawnDataIn = new Pooka.PookaData(i, aidI, aidD, ailI, ailD, false);
+            spawnDataIn = new PookaGroupData(i, aidI, aidD, ailI, ailD, false);
 
         this.setRabbitType(i);
         this.setAidAndAilment(aidI, aidD, ailI, ailD);
@@ -510,14 +507,14 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      * Data
      */
 
-    public static class PookaData extends Rabbit.RabbitGroupData {
+    public static class PookaGroupData extends Rabbit.RabbitGroupData {
         int aidIdData;
         int aidDurationData;
         int ailmentIdData;
         int ailmentDurationData;
         boolean pacifiedData;
 
-        public PookaData(int type, int aidId, int aidDuration, int ailmentId, int ailmentDuration, boolean pacified) {
+        public PookaGroupData(int type, int aidId, int aidDuration, int ailmentId, int ailmentDuration, boolean pacified) {
             super(type);
             aidIdData = aidId;
             aidDurationData = aidDuration;
