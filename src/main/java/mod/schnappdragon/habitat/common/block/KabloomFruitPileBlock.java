@@ -31,7 +31,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 
-public class KabloomFruitPileBlock extends Block implements IHasPistonDestroyEffect {
+public class KabloomFruitPileBlock extends Block implements HasPistonDestroyEffect {
     protected static final VoxelShape SHAPE = Block.box(4.0D, 4.0D, 4.0D, 12.0D, 12.0D, 12.0D);
     public KabloomFruitPileBlock(BlockBehaviour.Properties properties) {
         super(properties);
@@ -48,6 +48,11 @@ public class KabloomFruitPileBlock extends Block implements IHasPistonDestroyEff
     @Override
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         explode(worldIn, pos, entityIn instanceof Projectile ? ((Projectile) entityIn).getOwner() : entityIn, true, false);
+    }
+
+    @Override
+    public void onProjectileHit(Level worldIn, BlockState state, BlockHitResult hitResult, Projectile projectile) {
+        explode(worldIn, hitResult.getBlockPos(), projectile.getOwner(), true, false);
     }
 
     @Override
