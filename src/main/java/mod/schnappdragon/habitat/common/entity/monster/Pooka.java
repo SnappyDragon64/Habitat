@@ -147,6 +147,15 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      * Update AI Tasks
     */
 
+    @Override
+    public void jumpFromGround() {
+        if (!this.level.isClientSide)
+            this.level.broadcastEntityEvent(this, (byte) 14);
+
+        super.jumpFromGround();
+    }
+
+    @Override
     public void customServerAiStep() {
         if (this.forgiveTicks > 0)
             forgiveTicks--;
@@ -448,12 +457,9 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
             if (!this.isBaby() && entityIn instanceof LivingEntity) {
                 MobEffect effect = MobEffect.byId(ailmentId);
-                if (effect != null) {
-                    ((LivingEntity) entityIn).addEffect(new MobEffectInstance(effect, ailmentDuration * (this.level.getDifficulty() == Difficulty.HARD ? 2 : 1)));
 
-                    for (int i = 0; i < 2; i++)
-                        ((ServerLevel) this.level).sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), entityIn.getRandomX(0.5D), entityIn.getY(0.5D), entityIn.getRandomZ(0.5D), 0, this.random.nextGaussian(), 0.0D, this.random.nextGaussian(), 0.01D);
-                }
+                if (effect != null)
+                    ((LivingEntity) entityIn).addEffect(new MobEffectInstance(effect, ailmentDuration * (this.level.getDifficulty() == Difficulty.HARD ? 2 : 1)));
             }
         }
 
@@ -465,10 +471,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             return false;
         else {
             MobEffect effect = MobEffect.byId(aidId);
-            if (!this.isBaby() && effect != null) {
+            if (!this.isBaby() && effect != null)
                 this.addEffect(new MobEffectInstance(effect, aidDuration));
-                this.level.broadcastEntityEvent(this, (byte) 14);
-            }
 
             if (this.isPacified() && source.getEntity() instanceof Player && !source.isCreativePlayer()) {
                 this.setPacified(false);
@@ -485,18 +489,14 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      */
 
     public void handleEntityEvent(byte id) {
-        if (id == 11)
-            spawnParticles(ParticleTypes.HEART, 5, true);
-        else if (id == 12)
-            spawnParticles(ParticleTypes.SMOKE, 5, true);
-        else if (id == 13)
-            spawnParticles(ParticleTypes.ANGRY_VILLAGER, 5, true);
-        else if (id == 14)
-            spawnParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), 2, false);
-        else if (id == 15)
-            spawnParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), 8, false);
-        else
-            super.handleEntityEvent(id);
+        switch (id) {
+            case 11 -> spawnParticles(ParticleTypes.HEART, 5, true);
+            case 12 -> spawnParticles(ParticleTypes.SMOKE, 5, true);
+            case 13 -> spawnParticles(ParticleTypes.ANGRY_VILLAGER, 5, true);
+            case 14 -> spawnParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), 1, false);
+            case 15 -> spawnParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), 8, false);
+            default -> super.handleEntityEvent(id);
+        }
     }
 
     protected void spawnParticles(ParticleOptions particle, int number, boolean vanillaPresets) {
