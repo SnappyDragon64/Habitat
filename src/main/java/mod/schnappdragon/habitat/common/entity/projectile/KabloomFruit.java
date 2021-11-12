@@ -45,7 +45,7 @@ public class KabloomFruit extends ThrowableItemProjectile {
     public void tick() {
         super.tick();
         if (this.isOnFire())
-            createExplosion();
+            explode();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class KabloomFruit extends ThrowableItemProjectile {
     @Override
     protected void onHit(HitResult result) {
         super.onHit(result);
-        createExplosion();
+        explode();
     }
 
     @Override
@@ -84,79 +84,75 @@ public class KabloomFruit extends ThrowableItemProjectile {
 
     @Override
     protected Vec3 limitPistonMovement(Vec3 pos) {
-        createExplosion();
+        explode();
         return Vec3.ZERO;
     }
 
-    private void createExplosion() {
-        if (!this.level.isClientSide) {
-            Vec3 vector3d = this.position();
+    private void explode() {
+        Vec3 vector3d = this.position();
 
-            for (Entity entity : this.level.getEntities(null, this.getBoundingBox().inflate(0.75D))) {
-                boolean flag = false;
+        for (Entity entity : this.level.getEntities(null, this.getBoundingBox().inflate(0.75D))) {
+            boolean flag = false;
 
-                for (int i = 0; i < 2; ++i) {
-                    HitResult raytraceresult = this.level.clip(new ClipContext(vector3d, new Vec3(entity.getX(), entity.getY(0.5D * (double) i), entity.getZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
-                    if (raytraceresult.getType() == HitResult.Type.MISS) {
-                        flag = true;
-                        break;
-                    }
+            for (int i = 0; i < 2; ++i) {
+                HitResult raytraceresult = this.level.clip(new ClipContext(vector3d, new Vec3(entity.getX(), entity.getY(0.5D * (double) i), entity.getZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+                if (raytraceresult.getType() == HitResult.Type.MISS) {
+                    flag = true;
+                    break;
                 }
+            }
 
-                if (flag) {
-                    float dmg = 0;
-                    if (!entity.ignoreExplosion()) {
-                        double dx = entity.getX() - this.getX();
-                        double dy = entity.getEyeY() - this.getY();
-                        double dz = entity.getZ() - this.getZ();
-                        double dres = Mth.sqrt((float) (dx * dx + dy * dy + dz * dz));
-                        if (dres != 0.0D) {
-                            dx = dx / dres;
-                            dy = dy / dres;
-                            dz = dz / dres;
-                            double df = this.distanceTo(entity) > 1.0F ? 0.25D : 0.5D;
-                            dmg = 4.0F + 4.0F * ((float) df);
-                            double dred = df;
-                            if (entity instanceof LivingEntity) {
-                                LivingEntity livingEntity = (LivingEntity) entity;
-                                dred = ProtectionEnchantment.getExplosionKnockbackAfterDampener(livingEntity, df) * (1.0D - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+            if (flag) {
+                float dmg = 0;
+                if (!entity.ignoreExplosion()) {
+                    double dx = entity.getX() - this.getX();
+                    double dy = entity.getEyeY() - this.getY();
+                    double dz = entity.getZ() - this.getZ();
+                    double dres = Mth.sqrt((float) (dx * dx + dy * dy + dz * dz));
+                    if (dres != 0.0D) {
+                        dx = dx / dres;
+                        dy = dy / dres;
+                        dz = dz / dres;
+                        double df = this.distanceTo(entity) > 1.0F ? 0.25D : 0.5D;
+                        dmg = 4.0F + 4.0F * (float) df;
+                        double dred = df;
+                        if (entity instanceof LivingEntity livingEntity)
+                            dred = ProtectionEnchantment.getExplosionKnockbackAfterDampener(livingEntity, df) * (1.0D - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+
+                        boolean knockback = true;
+                        if (entity instanceof Player) {
+                            Player playerentity = (Player) entity;
+                            if (playerentity.isSpectator() || (playerentity.isCreative() && playerentity.getAbilities().flying)) {
+                                knockback = false;
                             }
-
-                            boolean knockback = true;
-                            if (entity instanceof Player) {
-                                Player playerentity = (Player) entity;
-                                if (playerentity.isSpectator() || (playerentity.isCreative() && playerentity.getAbilities().flying)) {
-                                    knockback = false;
-                                }
-                            }
-
-                            if (knockback)
-                                entity.setDeltaMovement(entity.getDeltaMovement().add(dx * dred, dy * dred, dz * dred));
                         }
+
+                        if (knockback)
+                            entity.setDeltaMovement(entity.getDeltaMovement().add(dx * dred, dy * dred, dz * dred));
                     }
-
-                    if (entity instanceof LivingEntity)
-                        entity.hurt(HabitatDamageSources.causeKabloomDamage(this, this.getOwner()).setExplosion(), dmg);
-                    else if (entity.isAttackable())
-                        entity.hurt(HabitatDamageSources.causeKabloomDamage(this, this.getOwner()), dmg);
-
-                    if (this.isOnFire() && !entity.fireImmune())
-                        entity.setSecondsOnFire(1);
                 }
-            }
 
-            if (this.level.getGameRules().getRule(GameRules.RULE_DOENTITYDROPS).get()) {
-                ItemEntity item = new ItemEntity(this.level, vector3d.x() + this.random.nextDouble() * (this.random.nextBoolean() ? 1 : -1) * 0.5F, vector3d.y() + this.random.nextDouble() / 2, vector3d.z() + this.random.nextDouble() * (this.random.nextBoolean() ? 1 : -1) * 0.5F, new ItemStack(HabitatItems.KABLOOM_PULP.get()));
-                item.setDefaultPickUpDelay();
-                if (this.isOnFire() && !item.fireImmune())
-                    item.setSecondsOnFire(1);
-                this.level.addFreshEntity(item);
-            }
+                if (entity instanceof LivingEntity)
+                    entity.hurt(HabitatDamageSources.causeKabloomDamage(this, this.getOwner(), true), dmg);
+                else if (entity.isAttackable())
+                    entity.hurt(HabitatDamageSources.causeKabloomDamage(this, this.getOwner(), false), dmg);
 
-            if (!this.level.isClientSide) {
-                this.level.broadcastEntityEvent(this, (byte) 3);
-                this.discard();
+                if (this.isOnFire() && !entity.fireImmune())
+                    entity.setSecondsOnFire(1);
             }
+        }
+
+        if (this.level.getGameRules().getRule(GameRules.RULE_DOENTITYDROPS).get()) {
+            ItemEntity item = new ItemEntity(this.level, vector3d.x() + this.random.nextDouble() * (this.random.nextBoolean() ? 1 : -1) * 0.5F, vector3d.y() + this.random.nextDouble() / 2, vector3d.z() + this.random.nextDouble() * (this.random.nextBoolean() ? 1 : -1) * 0.5F, new ItemStack(HabitatItems.KABLOOM_PULP.get()));
+            item.setDefaultPickUpDelay();
+            if (this.isOnFire() && !item.fireImmune())
+                item.setSecondsOnFire(1);
+            this.level.addFreshEntity(item);
+        }
+
+        if (!this.level.isClientSide) {
+            this.level.broadcastEntityEvent(this, (byte) 3);
+            this.discard();
         }
     }
 }
