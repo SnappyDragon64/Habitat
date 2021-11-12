@@ -49,6 +49,8 @@ public class Habitat {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
+        HabitatParrotImitationSounds.registerParrotImitationSounds();
+
         event.enqueueWork(() -> {
             HabitatStructures.setupStructures();
             HabitatBrewingMixes.registerBrewingMixes();
@@ -61,7 +63,6 @@ public class Habitat {
             HabitatFireInfo.registerFireInfo();
             HabitatPOI.addBeehivePOI();
             HabitatSpawns.registerSpawns();
-            HabitatParrotImitationSounds.registerParrotImitationSounds();
         });
     }
 

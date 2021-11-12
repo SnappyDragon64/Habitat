@@ -59,6 +59,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     public Pooka(EntityType<? extends Pooka> entityType, Level world) {
         super(entityType, world);
+        this.xpReward = 3;
     }
 
     protected void registerGoals() {
@@ -85,6 +86,11 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(HabitatItems.POOKA_SPAWN_EGG.get());
+    }
+
+    @Override
+    protected int getExperienceReward(Player pPlayer) {
+        return this.xpReward;
     }
 
     /*

@@ -169,19 +169,19 @@
     "sounds": [
       {
         "name": "mob/rabbit/idle1",
-        "volume": 0.25
+        "volume": 0.5
       },
       {
         "name": "mob/rabbit/idle2",
-        "volume": 0.25
+        "volume": 0.5
       },
       {
         "name": "mob/rabbit/idle3",
-        "volume": 0.25
+        "volume": 0.5
       },
       {
         "name": "mob/rabbit/idle4",
-        "volume": 0.25
+        "volume": 0.5
       }
     ]
   },
@@ -254,19 +254,19 @@
     "sounds": [
       {
         "name": "mob/rabbit/idle1",
-        "volume": 0.25
+        "volume": 0.5
       },
       {
         "name": "mob/rabbit/idle2",
-        "volume": 0.25
+        "volume": 0.5
       },
       {
         "name": "mob/rabbit/idle3",
-        "volume": 0.25
+        "volume": 0.5
       },
       {
         "name": "mob/rabbit/idle4",
-        "volume": 0.25
+        "volume": 0.5
       }
     ]
   },
@@ -284,22 +284,18 @@
     "sounds": [
       {
         "name": "mob/rabbit/idle1",
-        "volume": 0.25,
         "pitch": 1.8
       },
       {
         "name": "mob/rabbit/idle2",
-        "volume": 0.25,
         "pitch": 1.8
       },
       {
         "name": "mob/rabbit/idle3",
-        "volume": 0.25,
         "pitch": 1.8
       },
       {
         "name": "mob/rabbit/idle4",
-        "volume": 0.25,
         "pitch": 1.8
       }
     ]
