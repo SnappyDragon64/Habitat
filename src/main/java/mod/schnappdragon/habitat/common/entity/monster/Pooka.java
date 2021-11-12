@@ -50,7 +50,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class Pooka extends Rabbit implements Enemy, IForgeShearable {
-    private static final EntityDataAccessor<Boolean> PACIFIED = SynchedEntityData.defineId(Pooka.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_PACIFIED = SynchedEntityData.defineId(Pooka.class, EntityDataSerializers.BOOLEAN);
     private int aidId;
     private int aidDuration;
     private int ailmentId;
@@ -93,7 +93,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(PACIFIED, false);
+        this.entityData.define(DATA_PACIFIED, false);
     }
 
     public void addAdditionalSaveData(CompoundTag compound) {
@@ -126,11 +126,11 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     private void setPacified(boolean isPacified) {
-        this.entityData.set(PACIFIED, isPacified);
+        this.entityData.set(DATA_PACIFIED, isPacified);
     }
 
     public boolean isPacified() {
-        return this.entityData.get(PACIFIED);
+        return this.entityData.get(DATA_PACIFIED);
     }
 
     private void setForgiveTimer() {
