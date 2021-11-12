@@ -1,5 +1,5 @@
 package mod.schnappdragon.habitat.common.block;
 
-public interface IChestVariant {
+public interface VariantChest {
     ChestVariant getVariant();
 }

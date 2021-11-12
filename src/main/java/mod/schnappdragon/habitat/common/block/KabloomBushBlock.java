@@ -42,7 +42,7 @@ import net.minecraftforge.common.PlantType;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class KabloomBushBlock extends BushBlock implements BonemealableBlock, IHasPistonDestroyEffect {
+public class KabloomBushBlock extends BushBlock implements BonemealableBlock, HasPistonDestroyEffect {
     protected static final VoxelShape[] SHAPES = {Block.box(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D)};
     public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
 

@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.core.mixin;
 
-import mod.schnappdragon.habitat.common.block.IHasPistonDestroyEffect;
+import mod.schnappdragon.habitat.common.block.HasPistonDestroyEffect;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -24,7 +24,7 @@ public class PistonDestroyEffectsMixin {
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void habitat_pistonDestroyEffectsMixin(Level worldIn, BlockPos pos, Direction directionIn, boolean extending, CallbackInfoReturnable<Boolean> cir, BlockPos blockpos, PistonStructureResolver pistonblockstructurehelper, Map<BlockPos, BlockState> map, List<BlockPos> list, List<BlockState> list1, List<BlockPos> list2, BlockState[] ablockstate, Direction direction, int j, int k, BlockPos blockpos2, BlockState blockstate1) {
-        if (blockstate1.getBlock() instanceof IHasPistonDestroyEffect)
-            ((IHasPistonDestroyEffect) blockstate1.getBlock()).onPistonDestroy(worldIn, blockpos2, blockstate1);
+        if (blockstate1.getBlock() instanceof HasPistonDestroyEffect)
+            ((HasPistonDestroyEffect) blockstate1.getBlock()).onPistonDestroy(worldIn, blockpos2, blockstate1);
     }
 }

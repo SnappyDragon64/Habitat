@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.client.renderer.block;
 
-import mod.schnappdragon.habitat.common.block.IChestVariant;
+import mod.schnappdragon.habitat.common.block.VariantChest;
 import mod.schnappdragon.habitat.common.block.ChestVariant;
 import mod.schnappdragon.habitat.common.block.entity.HabitatChestBlockEntity;
 import net.minecraft.client.renderer.Sheets;
@@ -34,7 +34,7 @@ public class HabitatChestRenderer extends ChestRenderer<HabitatChestBlockEntity>
             Block chestBlock = block;
             if (chestBlock == null)
                 chestBlock = blockEntity.getBlockState().getBlock();
-            ChestVariant chestVariant = ((IChestVariant) chestBlock).getVariant();
+            ChestVariant chestVariant = ((VariantChest) chestBlock).getVariant();
 
             if (chestVariant == null)
                 return null;

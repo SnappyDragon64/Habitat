@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class HabitatTrappedChestBlock extends ChestBlock implements IChestVariant {
+public class HabitatTrappedChestBlock extends ChestBlock implements VariantChest {
     private final ChestVariant variant;
 
     public HabitatTrappedChestBlock(ChestVariant variantIn, Properties properties) {

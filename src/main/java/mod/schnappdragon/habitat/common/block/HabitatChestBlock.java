@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class HabitatChestBlock extends ChestBlock implements IChestVariant {
+public class HabitatChestBlock extends ChestBlock implements VariantChest {
     private final ChestVariant variant;
 
     public HabitatChestBlock(ChestVariant variantIn, Properties properties) {
