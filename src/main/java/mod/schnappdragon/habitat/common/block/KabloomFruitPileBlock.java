@@ -91,7 +91,7 @@ public class KabloomFruitPileBlock extends Block implements IHasPistonDestroyEff
             if (destroyBlock)
                 worldIn.destroyBlock(pos, false);
 
-            worldIn.playLocalSound(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, HabitatSoundEvents.ENTITY_KABLOOM_FRUIT_EXPLODE.get(), SoundSource.NEUTRAL, 1.0F, (1.0F + (worldIn.random.nextFloat() - worldIn.random.nextFloat()) * 0.2F), true);
+            worldIn.playLocalSound(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, HabitatSoundEvents.KABLOOM_FRUIT_EXPLODE.get(), SoundSource.NEUTRAL, 1.0F, (1.0F + (worldIn.random.nextFloat() - worldIn.random.nextFloat()) * 0.2F), true);
             worldIn.addParticle(ParticleTypes.EXPLOSION, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, 1.0D, 0.0D, 0.0D);
 
             for (int i = 1; i <= 9; i++) {

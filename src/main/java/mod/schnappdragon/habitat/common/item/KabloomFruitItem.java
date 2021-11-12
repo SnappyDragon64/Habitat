@@ -19,7 +19,7 @@ public class KabloomFruitItem extends Item {
 
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack itemstack = playerIn.getItemInHand(handIn);
-        worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), HabitatSoundEvents.ENTITY_KABLOOM_FRUIT_THROW.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (playerIn.getRandom().nextFloat() * 0.4F + 0.8F));
+        worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), HabitatSoundEvents.KABLOOM_FRUIT_THROW.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (playerIn.getRandom().nextFloat() * 0.4F + 0.8F));
         playerIn.getCooldowns().addCooldown(this, 20);
 
         if (!playerIn.getAbilities().instabuild) {

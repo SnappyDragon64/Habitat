@@ -174,7 +174,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     @Nonnull
     @Override
     public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
-        world.playSound(null, this, HabitatSoundEvents.ENTITY_POOKA_SHEAR.get(), SoundSource.HOSTILE, 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
+        world.playSound(null, this, HabitatSoundEvents.POOKA_SHEAR.get(), SoundSource.HOSTILE, 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
         if (!this.level.isClientSide()) {
             ((ServerLevel) this.level).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
             this.discard();
@@ -235,19 +235,19 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     protected SoundEvent getJumpSound() {
-        return HabitatSoundEvents.ENTITY_POOKA_JUMP.get();
+        return HabitatSoundEvents.POOKA_JUMP.get();
     }
 
     protected SoundEvent getAmbientSound() {
-        return HabitatSoundEvents.ENTITY_POOKA_AMBIENT.get();
+        return HabitatSoundEvents.POOKA_AMBIENT.get();
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return HabitatSoundEvents.ENTITY_POOKA_HURT.get();
+        return HabitatSoundEvents.POOKA_HURT.get();
     }
 
     protected SoundEvent getDeathSound() {
-        return HabitatSoundEvents.ENTITY_POOKA_DEATH.get();
+        return HabitatSoundEvents.POOKA_DEATH.get();
     }
 
     /*
@@ -267,7 +267,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
                 this.heal((float) stack.getItem().getFoodProperties().getNutrition());
             else if (this.forgiveTicks == 0 && (this.isBaby() && roll > 0 || roll == 0) && this.isAlone()) {
                 this.setPacified(true);
-                this.playSound(HabitatSoundEvents.ENTITY_POOKA_PACIFY.get(), 1.0F, 1.0F);
+                this.playSound(HabitatSoundEvents.POOKA_PACIFY.get(), 1.0F, 1.0F);
                 HabitatCriterionTriggers.PACIFY_POOKA.trigger((ServerPlayer) player);
                 this.navigation.stop();
                 this.setTarget(null);
@@ -422,10 +422,10 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     public boolean doHurtTarget(Entity entityIn) {
         if (entityIn.getType() == EntityType.RABBIT && entityIn.isAlive() && !entityIn.isInvulnerableTo(DamageSource.mobAttack(this))) {
-            this.playSound(HabitatSoundEvents.ENTITY_POOKA_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.playSound(HabitatSoundEvents.POOKA_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
             Rabbit rabbit = (Rabbit) entityIn;
-            rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
+            rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
             rabbit.discard();
             this.level.addFreshEntity(convertRabbit(rabbit));
 
@@ -438,7 +438,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         if (flag) {
             this.doEnchantDamageEffects(this, entityIn);
             this.setLastHurtMob(entityIn);
-            this.playSound(HabitatSoundEvents.ENTITY_POOKA_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.playSound(HabitatSoundEvents.POOKA_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
             if (!this.isBaby() && entityIn instanceof LivingEntity) {
                 MobEffect effect = MobEffect.byId(ailmentId);

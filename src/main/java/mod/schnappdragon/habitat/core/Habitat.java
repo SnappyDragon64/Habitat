@@ -61,6 +61,7 @@ public class Habitat {
             HabitatFireInfo.registerFireInfo();
             HabitatPOI.addBeehivePOI();
             HabitatSpawns.registerSpawns();
+            HabitatParrotImitationSounds.registerParrotImitationSounds();
         });
     }
 

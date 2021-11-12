@@ -27,7 +27,7 @@ public class HugeFairyRingMushroomBlock extends HugeMushroomBlock {
     public void stepOn(Level worldIn, BlockPos pos, BlockState state, Entity entityIn) {
         if (entityIn.getType() == EntityType.RABBIT && entityIn.isAlive()) {
             Rabbit rabbit = (Rabbit) entityIn;
-            rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
+            rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
             rabbit.discard();
             worldIn.addFreshEntity(Pooka.convertRabbit(rabbit));
 

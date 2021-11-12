@@ -73,7 +73,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn.getType() == EntityType.RABBIT && entityIn.isAlive()) {
             Rabbit rabbit = (Rabbit) entityIn;
-            rabbit.playSound(HabitatSoundEvents.ENTITY_RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
+            rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
             rabbit.discard();
             worldIn.addFreshEntity(Pooka.convertRabbit(rabbit));
 
@@ -106,7 +106,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
                 playerIn.broadcastBreakEvent(handIn);
             });
             worldIn.setBlock(pos, state.setValue(MUSHROOMS, state.getValue(MUSHROOMS) - 1), 2);
-            worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_FAIRY_RING_MUSHROOM_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+            worldIn.playSound(null, pos, HabitatSoundEvents.FAIRY_RING_MUSHROOM_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
         if (player.getItemInHand(handIn).getItem() == HabitatItems.FAIRY_RING_MUSHROOM.get() && state.getValue(MUSHROOMS) < 4) {
@@ -121,7 +121,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
                 player.getItemInHand(handIn).shrink(1);
             worldIn.setBlock(pos, state.setValue(DUSTED, true), 2);
             worldIn.addParticle(DustParticleOptions.REDSTONE, pos.getX() + 0.5D, pos.getY() + 0.125D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
-            worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_FAIRY_RING_MUSHROOM_DUST.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+            worldIn.playSound(null, pos, HabitatSoundEvents.FAIRY_RING_MUSHROOM_DUST.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
         return super.use(state, worldIn, pos, player, handIn, hit);

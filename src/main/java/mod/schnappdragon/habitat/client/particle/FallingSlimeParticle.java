@@ -22,7 +22,7 @@ public class FallingSlimeParticle extends DripParticle.FallAndLandParticle {
         if (this.onGround) {
             this.remove();
             this.level.addParticle(this.landParticle, this.x, this.y, this.z, 0.0D, 0.0D, 0.0D);
-            this.level.playLocalSound(this.x + 0.5D, this.y, this.z + 0.5D, HabitatSoundEvents.BLOCK_SLIME_FERN_DROP.get(), SoundSource.BLOCKS, 0.3F + this.level.random.nextFloat() * 2.0F / 3.0F, 1.0F, false);
+            this.level.playLocalSound(this.x + 0.5D, this.y, this.z + 0.5D, HabitatSoundEvents.SLIME_FERN_DROP.get(), SoundSource.BLOCKS, 0.3F + this.level.random.nextFloat() * 2.0F / 3.0F, 1.0F, false);
         }
     }
 

@@ -84,7 +84,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock, IH
                     playerIn.broadcastBreakEvent(handIn);
                 });
                 worldIn.setBlock(pos, state.setValue(AGE, 3), 2);
-                worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+                worldIn.playSound(null, pos, HabitatSoundEvents.KABLOOM_BUSH_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             }
             else
                 dropFruit(state, worldIn, pos, player, true, false);
@@ -124,7 +124,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock, IH
         if (!worldIn.isClientSide) {
             if (replaceBush) {
                 worldIn.setBlock(pos, state.setValue(AGE, 3), 2);
-                worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_KABLOOM_BUSH_RUSTLE.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+                worldIn.playSound(null, pos, HabitatSoundEvents.KABLOOM_BUSH_RUSTLE.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             }
 
             KabloomFruit kabloom = new KabloomFruit(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F);

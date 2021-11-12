@@ -36,7 +36,7 @@ public class FloweringBallCactusBlock extends AbstractBallCactusBlock {
                 playerIn.broadcastBreakEvent(handIn);
             });
             worldIn.setBlock(pos, getColor().getBallCactus().defaultBlockState(), 2);
-            worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_FLOWERING_BALL_CACTUS_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+            worldIn.playSound(null, pos, HabitatSoundEvents.FLOWERING_BALL_CACTUS_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
         return super.use(state, worldIn, pos, player, handIn, hit);

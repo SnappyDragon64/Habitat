@@ -127,7 +127,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
             }
         }
 
-        worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_RAFFLESIA_SPEW.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+        worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_SPEW.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
         worldIn.addFreshEntity(cloud);
     }
 
@@ -185,7 +185,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
                 worldIn.setBlockAndUpdate(pos, state.setValue(HAS_STEW, true));
                 rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
                 player.setItemInHand(handIn, player.getAbilities().instabuild ? stack : new ItemStack(Items.BOWL));
-                worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_RAFFLESIA_SLURP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+                worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_SLURP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                 return InteractionResult.SUCCESS;
             }
         }
@@ -232,7 +232,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
 
     private void cooldownReset(ServerLevel worldIn, BlockPos pos, BlockState state) {
         worldIn.setBlockAndUpdate(pos, state.setValue(ON_COOLDOWN, false));
-        worldIn.playSound(null, pos, HabitatSoundEvents.BLOCK_RAFFLESIA_POP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+        worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_POP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
     }
 
     /*
