@@ -45,7 +45,7 @@ public class KabloomFruit extends ThrowableItemProjectile {
     public void tick() {
         super.tick();
         if (this.isOnFire())
-            explode();
+            explode(this.position());
     }
 
     @Override
@@ -64,7 +64,7 @@ public class KabloomFruit extends ThrowableItemProjectile {
     @Override
     protected void onHit(HitResult result) {
         super.onHit(result);
-        explode();
+        explode(result.getLocation());
     }
 
     @Override
@@ -84,13 +84,11 @@ public class KabloomFruit extends ThrowableItemProjectile {
 
     @Override
     protected Vec3 limitPistonMovement(Vec3 pos) {
-        explode();
+        explode(this.position());
         return Vec3.ZERO;
     }
 
-    private void explode() {
-        Vec3 vector3d = this.position();
-
+    private void explode(Vec3 vector3d) {
         for (Entity entity : this.level.getEntities(null, this.getBoundingBox().inflate(0.75D))) {
             boolean flag = false;
 
