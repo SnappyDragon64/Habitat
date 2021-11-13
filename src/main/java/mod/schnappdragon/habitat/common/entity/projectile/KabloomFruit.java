@@ -1,6 +1,5 @@
 package mod.schnappdragon.habitat.common.entity.projectile;
 
-import com.google.common.collect.Maps;
 import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
@@ -8,8 +7,7 @@ import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundExplodePacket;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -18,7 +16,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -31,9 +28,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
-
-import java.util.Collections;
-import java.util.Map;
 
 public class KabloomFruit extends ThrowableItemProjectile {
     public KabloomFruit(EntityType<? extends KabloomFruit> entity, Level world) {
@@ -97,8 +91,6 @@ public class KabloomFruit extends ThrowableItemProjectile {
 
     private void explode(Vec3 vector3d) {
         if (!this.level.isClientSide) {
-            Map<Player, Vec3> hitPlayers = Maps.newHashMap();
-
             for (Entity entity : this.level.getEntities(null, this.getBoundingBox().inflate(0.8D))) {
                 boolean flag = false;
 
@@ -127,10 +119,11 @@ public class KabloomFruit extends ThrowableItemProjectile {
                             if (entity instanceof LivingEntity livingEntity)
                                 dred = ProtectionEnchantment.getExplosionKnockbackAfterDampener(livingEntity, df) * (1.0D - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
 
-                            entity.setDeltaMovement(entity.getDeltaMovement().add(dx * dred, dy * dred, dz * dred));
-                            if (entity instanceof Player player) {
+                            Vec3 motionVec = entity.getDeltaMovement().add(dx * dred, dy * dred, dz * dred);
+                            entity.setDeltaMovement(motionVec);
+                            if (entity instanceof ServerPlayer player) {
                                 if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying))
-                                    hitPlayers.put(player, new Vec3(dx * df, dy * df, dz * df));
+                                    player.connection.send(new ClientboundSetEntityMotionPacket(player.getId(), motionVec));
                             }
                         }
                     }
@@ -143,11 +136,6 @@ public class KabloomFruit extends ThrowableItemProjectile {
                     if (this.isOnFire() && !entity.fireImmune())
                         entity.setSecondsOnFire(1);
                 }
-            }
-
-            for (ServerPlayer serverplayer : ((ServerLevel) this.level).players()) {
-                if (serverplayer.distanceToSqr(vector3d.x, vector3d.y, vector3d.z) < 4096.0D)
-                    serverplayer.connection.send(new ClientboundExplodePacket(0.0D, 0.0D, 0.0D, 0.0F, Collections.emptyList(), hitPlayers.get(serverplayer)));
             }
 
             if (this.level.getGameRules().getRule(GameRules.RULE_DOENTITYDROPS).get()) {
