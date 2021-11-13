@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.Random;
 
@@ -45,8 +46,10 @@ public class BallCactusBlock extends AbstractBallCactusBlock implements Bonemeal
     }
 
     public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
-        if (random.nextInt(10) == 0)
+        if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(10) == 0)) {
             worldIn.setBlockAndUpdate(pos, getColor().getFloweringBallCactus().defaultBlockState());
+            ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+        }
     }
 
     public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {

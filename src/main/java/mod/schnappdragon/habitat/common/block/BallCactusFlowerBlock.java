@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -56,8 +57,10 @@ public class BallCactusFlowerBlock extends HabitatFlowerBlock implements Bonemea
     }
 
     public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
-        if (canGrow(worldIn, pos) && random.nextInt(10) == 0)
+        if (canGrow(worldIn, pos) && ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(10) == 0)) {
             worldIn.setBlockAndUpdate(pos, color.getGrowingBallCactus().defaultBlockState());
+            ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+        }
     }
 
     public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {

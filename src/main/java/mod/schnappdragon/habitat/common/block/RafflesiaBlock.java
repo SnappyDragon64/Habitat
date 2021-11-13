@@ -41,6 +41,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
 import javax.annotation.Nullable;
@@ -201,8 +202,10 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
     }
 
     public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
-        if (state.getValue(ON_COOLDOWN) && random.nextInt(2) == 0)
+        if (state.getValue(ON_COOLDOWN) && ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(2) == 0)) {
             cooldownReset(worldIn, pos, state);
+            ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+        }
     }
 
     public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {

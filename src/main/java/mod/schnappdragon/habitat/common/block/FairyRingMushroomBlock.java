@@ -37,6 +37,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.Random;
 
@@ -145,8 +146,10 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
     }
 
     public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
-        if (state.getValue(MUSHROOMS) < 4 && random.nextInt(25) == 0)
+        if (state.getValue(MUSHROOMS) < 4 && ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(25) == 0)) {
             worldIn.setBlock(pos, state.setValue(MUSHROOMS, state.getValue(MUSHROOMS) + 1), 2);
+            ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+        }
     }
 
     public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {

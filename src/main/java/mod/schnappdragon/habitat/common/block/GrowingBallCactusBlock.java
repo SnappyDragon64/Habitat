@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.Random;
 
@@ -41,8 +42,10 @@ public class GrowingBallCactusBlock extends AbstractBallCactusBlock implements B
     }
 
     public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
-        if (random.nextInt(10) == 0)
+        if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(10) == 0)) {
             worldIn.setBlockAndUpdate(pos, getColor().getBallCactus().defaultBlockState());
+            ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+        }
     }
 
     public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
