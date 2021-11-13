@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.common.entity.projectile;
 
+import com.google.common.collect.Maps;
 import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
@@ -7,6 +8,9 @@ import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundExplodePacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -27,6 +31,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
+import java.util.Collections;
+import java.util.Map;
 
 public class KabloomFruit extends ThrowableItemProjectile {
     public KabloomFruit(EntityType<? extends KabloomFruit> entity, Level world) {
@@ -89,68 +96,72 @@ public class KabloomFruit extends ThrowableItemProjectile {
     }
 
     private void explode(Vec3 vector3d) {
-        for (Entity entity : this.level.getEntities(null, this.getBoundingBox().inflate(0.75D))) {
-            boolean flag = false;
+        if (!this.level.isClientSide) {
+            Map<Player, Vec3> hitPlayers = Maps.newHashMap();
 
-            for (int i = 0; i < 2; ++i) {
-                HitResult raytraceresult = this.level.clip(new ClipContext(vector3d, new Vec3(entity.getX(), entity.getY(0.5D * (double) i), entity.getZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
-                if (raytraceresult.getType() == HitResult.Type.MISS) {
-                    flag = true;
-                    break;
-                }
-            }
+            for (Entity entity : this.level.getEntities(null, this.getBoundingBox().inflate(0.8D))) {
+                boolean flag = false;
 
-            if (flag) {
-                float dmg = 0;
-                if (!entity.ignoreExplosion()) {
-                    double dx = entity.getX() - this.getX();
-                    double dy = entity.getEyeY() - this.getY();
-                    double dz = entity.getZ() - this.getZ();
-                    double dres = Mth.sqrt((float) (dx * dx + dy * dy + dz * dz));
-                    if (dres != 0.0D) {
-                        dx = dx / dres;
-                        dy = dy / dres;
-                        dz = dz / dres;
-                        double df = this.distanceTo(entity) > 1.0F ? 0.25D : 0.5D;
-                        dmg = 4.0F + 4.0F * (float) df;
-                        double dred = df;
-                        if (entity instanceof LivingEntity livingEntity)
-                            dred = ProtectionEnchantment.getExplosionKnockbackAfterDampener(livingEntity, df) * (1.0D - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
-
-                        boolean knockback = true;
-                        if (entity instanceof Player) {
-                            Player playerentity = (Player) entity;
-                            if (playerentity.isSpectator() || (playerentity.isCreative() && playerentity.getAbilities().flying)) {
-                                knockback = false;
-                            }
-                        }
-
-                        if (knockback)
-                            entity.setDeltaMovement(entity.getDeltaMovement().add(dx * dred, dy * dred, dz * dred));
+                for (int i = 0; i < 2; ++i) {
+                    HitResult raytraceresult = this.level.clip(new ClipContext(vector3d, new Vec3(entity.getX(), entity.getY(0.5D * (double) i), entity.getZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+                    if (raytraceresult.getType() == HitResult.Type.MISS) {
+                        flag = true;
+                        break;
                     }
                 }
 
-                if (entity instanceof LivingEntity)
-                    entity.hurt(HabitatDamageSources.causeKabloomDamage(this, this.getOwner(), true), dmg);
-                else if (entity.isAttackable())
-                    entity.hurt(HabitatDamageSources.causeKabloomDamage(this, this.getOwner(), false), dmg);
+                if (flag) {
+                    float dmg = 0;
+                    if (!entity.ignoreExplosion()) {
+                        double dx = entity.getX() - this.getX();
+                        double dy = entity.getEyeY() - this.getY();
+                        double dz = entity.getZ() - this.getZ();
+                        double dres = Mth.sqrt((float) (dx * dx + dy * dy + dz * dz));
+                        if (dres != 0.0D) {
+                            dx = dx / dres;
+                            dy = dy / dres;
+                            dz = dz / dres;
+                            double df = this.distanceTo(entity) > 1.0F ? 0.25D : 0.5D;
+                            dmg = 4.0F + 4.0F * (float) df;
+                            double dred = df;
+                            if (entity instanceof LivingEntity livingEntity)
+                                dred = ProtectionEnchantment.getExplosionKnockbackAfterDampener(livingEntity, df) * (1.0D - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
 
-                if (this.isOnFire() && !entity.fireImmune())
-                    entity.setSecondsOnFire(1);
+                            entity.setDeltaMovement(entity.getDeltaMovement().add(dx * dred, dy * dred, dz * dred));
+                            if (entity instanceof Player player) {
+                                if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying))
+                                    hitPlayers.put(player, new Vec3(dx * df, dy * df, dz * df));
+                            }
+                        }
+                    }
+
+                    if (entity instanceof LivingEntity)
+                        entity.hurt(HabitatDamageSources.causeKabloomDamage(this, this.getOwner(), true), dmg);
+                    else if (entity.isAttackable())
+                        entity.hurt(HabitatDamageSources.causeKabloomDamage(this, this.getOwner(), false), dmg);
+
+                    if (this.isOnFire() && !entity.fireImmune())
+                        entity.setSecondsOnFire(1);
+                }
             }
-        }
 
-        if (this.level.getGameRules().getRule(GameRules.RULE_DOENTITYDROPS).get()) {
-            ItemEntity item = new ItemEntity(this.level, vector3d.x() + this.random.nextDouble() * (this.random.nextBoolean() ? 1 : -1) * 0.5F, vector3d.y() + this.random.nextDouble() / 2, vector3d.z() + this.random.nextDouble() * (this.random.nextBoolean() ? 1 : -1) * 0.5F, new ItemStack(HabitatItems.KABLOOM_PULP.get()));
-            item.setDefaultPickUpDelay();
-            if (this.isOnFire() && !item.fireImmune())
-                item.setSecondsOnFire(1);
-            this.level.addFreshEntity(item);
-        }
+            for (ServerPlayer serverplayer : ((ServerLevel) this.level).players()) {
+                if (serverplayer.distanceToSqr(vector3d.x, vector3d.y, vector3d.z) < 4096.0D)
+                    serverplayer.connection.send(new ClientboundExplodePacket(0.0D, 0.0D, 0.0D, 0.0F, Collections.emptyList(), hitPlayers.get(serverplayer)));
+            }
 
-        if (!this.level.isClientSide) {
-            this.level.broadcastEntityEvent(this, (byte) 3);
-            this.discard();
+            if (this.level.getGameRules().getRule(GameRules.RULE_DOENTITYDROPS).get()) {
+                ItemEntity item = new ItemEntity(this.level, vector3d.x() + this.random.nextDouble() * (this.random.nextBoolean() ? 1 : -1) * 0.5F, vector3d.y() + this.random.nextDouble() / 2, vector3d.z() + this.random.nextDouble() * (this.random.nextBoolean() ? 1 : -1) * 0.5F, new ItemStack(HabitatItems.KABLOOM_PULP.get()));
+                item.setDefaultPickUpDelay();
+                if (this.isOnFire() && !item.fireImmune())
+                    item.setSecondsOnFire(1);
+                this.level.addFreshEntity(item);
+            }
+
+            if (!this.level.isClientSide) {
+                this.level.broadcastEntityEvent(this, (byte) 3);
+                this.discard();
+            }
         }
     }
 }
