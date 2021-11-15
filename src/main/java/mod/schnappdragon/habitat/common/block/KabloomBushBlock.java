@@ -3,39 +3,39 @@ package mod.schnappdragon.habitat.common.block;
 import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruit;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.BushBlock;
-import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
-import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.util.Mth;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.PlantType;
 
@@ -70,7 +70,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock, Ha
             if (entityIn instanceof LivingEntity && state.getValue(AGE) > 1)
                 entityIn.makeStuckInBlock(state, new Vec3(0.95F, 0.9D, 0.95F));
             if (state.getValue(AGE) == 7) {
-                dropFruit(state, worldIn, pos,  entityIn instanceof Projectile ? ((Projectile) entityIn).getOwner() : entityIn, true, false);
+                dropFruit(state, worldIn, pos, entityIn instanceof Projectile ? ((Projectile) entityIn).getOwner() : entityIn, true, false);
             }
         }
     }
@@ -85,8 +85,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock, Ha
                 });
                 worldIn.setBlock(pos, state.setValue(AGE, 3), 2);
                 worldIn.playSound(null, pos, HabitatSoundEvents.KABLOOM_BUSH_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
-            }
-            else
+            } else
                 dropFruit(state, worldIn, pos, player, true, false);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
@@ -144,7 +143,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock, Ha
     }
 
     public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
-        if (state.getValue(AGE) < 7 && ForgeHooks.onCropsGrowPre(worldIn, pos, state,random.nextInt(5) == 0)) {
+        if (state.getValue(AGE) < 7 && ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(5) == 0)) {
             worldIn.setBlock(pos, state.setValue(AGE, state.getValue(AGE) + 1), 2);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }

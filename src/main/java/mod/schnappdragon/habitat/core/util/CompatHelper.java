@@ -5,7 +5,6 @@ import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLLoader;
 
 public class CompatHelper {
     public static boolean checkMods(String... modids) {

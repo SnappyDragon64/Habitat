@@ -93,7 +93,7 @@ public class HabitatItems {
     private static Item.Properties getProperties(CreativeModeTab group) {
         return new Item.Properties().tab(group);
     }
-    
+
     private static RegistryObject<Item> registerBlockItem(String name, Supplier<Block> block, CreativeModeTab group) {
         return registerBlockItem(name, block, getProperties(group));
     }

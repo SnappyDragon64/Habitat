@@ -1,7 +1,6 @@
 package mod.schnappdragon.habitat.core.api.conditions;
 
 import com.google.gson.JsonObject;
-
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.resources.ResourceLocation;

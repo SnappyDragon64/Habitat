@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.core.registry;
 
-import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.common.effect.HabitatEffect;
+import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.fmllegacy.RegistryObject;

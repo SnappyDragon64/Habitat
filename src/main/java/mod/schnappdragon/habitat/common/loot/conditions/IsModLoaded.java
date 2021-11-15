@@ -3,14 +3,12 @@ package mod.schnappdragon.habitat.common.loot.conditions;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatLootConditionTypes;
 import mod.schnappdragon.habitat.core.util.CompatHelper;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.util.GsonHelper;
-import net.minecraftforge.fml.ModList;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
 public class IsModLoaded implements LootItemCondition {
     private final String modid;

@@ -59,7 +59,7 @@ public class WallSlimeFernBlock extends AbstractSlimeFernBlock {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState state = this.defaultBlockState();
 
-        for(Direction dir : context.getNearestLookingDirections()) {
+        for (Direction dir : context.getNearestLookingDirections()) {
             if (dir.getAxis().isHorizontal()) {
                 state = state.setValue(HORIZONTAL_FACING, dir.getOpposite());
                 if (state.canSurvive(context.getLevel(), context.getClickedPos())) {

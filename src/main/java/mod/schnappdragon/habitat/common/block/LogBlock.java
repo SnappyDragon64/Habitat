@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public class LogBlock extends RotatedPillarBlock {
-        private final Supplier<Block> strippedBlock;
+    private final Supplier<Block> strippedBlock;
 
     public LogBlock(Supplier<Block> strippedBlock, Properties properties) {
         super(properties);

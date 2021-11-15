@@ -146,7 +146,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     /*
      * Update AI Tasks
-    */
+     */
 
     @Override
     public void jumpFromGround() {
@@ -289,8 +289,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
                 this.setTarget(null);
                 this.setLastHurtByMob(null);
                 this.level.broadcastEntityEvent(this, (byte) 11);
-            }
-            else {
+            } else {
                 if (this.forgiveTicks > 0)
                     this.forgiveTicks -= this.forgiveTicks * 0.1D;
 
@@ -339,8 +338,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
                 if (this.random.nextBoolean()) {
                     aidI = parent.aidId;
                     aidD = parent.aidDuration;
-                }
-                else {
+                } else {
                     aidI = this.aidId;
                     aidD = this.aidDuration;
                 }
@@ -350,8 +348,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
                 if (this.random.nextBoolean()) {
                     ailI = parent.ailmentId;
                     ailD = parent.ailmentDuration;
-                }
-                else {
+                } else {
                     ailI = this.ailmentId;
                     ailD = this.ailmentDuration;
                 }
@@ -396,8 +393,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             ailI = data.ailmentIdData;
             ailD = data.ailmentDurationData;
             pacified = data.pacifiedData;
-        }
-        else
+        } else
             spawnDataIn = new PookaGroupData(i, aidI, aidD, ailI, ailD, false);
 
         this.setRabbitType(i);

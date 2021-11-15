@@ -42,7 +42,7 @@ public class SlimeFernBlock extends AbstractSlimeFernBlock {
 
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        for(Direction dir : context.getNearestLookingDirections()) {
+        for (Direction dir : context.getNearestLookingDirections()) {
             if (dir.getAxis() == Direction.Axis.Y) {
                 return this.defaultBlockState().setValue(ON_CEILING, (dir == Direction.UP));
             }

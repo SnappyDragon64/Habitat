@@ -2,8 +2,8 @@ package mod.schnappdragon.habitat.core.tags;
 
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.tags.Tag.Named;
+import net.minecraft.world.entity.EntityType;
 
 public class HabitatEntityTypeTags {
     public static final Named<EntityType<?>> POOKA_ATTACK_TARGETS = makeTag("pooka_attack_targets");

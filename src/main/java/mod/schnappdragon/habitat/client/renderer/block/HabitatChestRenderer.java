@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.client.renderer.block;
 
-import mod.schnappdragon.habitat.common.block.VariantChest;
 import mod.schnappdragon.habitat.common.block.ChestVariant;
+import mod.schnappdragon.habitat.common.block.VariantChest;
 import mod.schnappdragon.habitat.common.block.entity.HabitatChestBlockEntity;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -29,8 +29,7 @@ public class HabitatChestRenderer extends ChestRenderer<HabitatChestBlockEntity>
                 case LEFT -> Sheets.CHEST_XMAS_LOCATION_LEFT;
                 default -> Sheets.CHEST_XMAS_LOCATION;
             };
-        }
-        else {
+        } else {
             Block chestBlock = block;
             if (chestBlock == null)
                 chestBlock = blockEntity.getBlockState().getBlock();

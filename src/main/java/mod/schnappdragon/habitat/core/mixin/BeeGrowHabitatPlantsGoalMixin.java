@@ -20,7 +20,9 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(Bee.BeeGrowCropGoal.class)
 public abstract class BeeGrowHabitatPlantsGoalMixin {
-    @Shadow @Final Bee this$0;
+    @Shadow
+    @Final
+    Bee this$0;
 
     @Inject(
             method = "tick()V",

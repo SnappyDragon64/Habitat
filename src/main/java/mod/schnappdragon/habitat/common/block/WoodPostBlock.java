@@ -35,7 +35,7 @@ public class WoodPostBlock extends Block implements SimpleWaterloggedBlock {
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final EnumProperty<Axis> AXIS = BlockStateProperties.AXIS;
-    public static final BooleanProperty[] CHAINED = new BooleanProperty[] {
+    public static final BooleanProperty[] CHAINED = new BooleanProperty[]{
             HabitatBlockStateProperties.CHAINED_DOWN,
             HabitatBlockStateProperties.CHAINED_UP,
             HabitatBlockStateProperties.CHAINED_NORTH,

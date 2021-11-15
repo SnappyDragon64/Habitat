@@ -2,21 +2,15 @@ package mod.schnappdragon.habitat.common.advancement;
 
 import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.CriterionTrigger;
-import net.minecraft.server.PlayerAdvancements;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.PlayerAdvancements;
+import net.minecraft.server.level.ServerPlayer;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import net.minecraft.advancements.CriterionTrigger.Listener;
+import java.util.*;
 
 public final class HabitatCriterionTrigger implements CriterionTrigger<HabitatCriterionTrigger.Instance> {
     private final Map<PlayerAdvancements, Listeners> listeners = Maps.newHashMap();

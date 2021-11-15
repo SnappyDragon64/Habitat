@@ -1,13 +1,13 @@
 package mod.schnappdragon.habitat.client.particle;
 
-import net.minecraft.client.particle.DripParticle;
-import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.DripParticle;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.core.particles.SimpleParticleType;
 
 public class LandingSlimeParticle extends DripParticle.DripLandParticle {
     public LandingSlimeParticle(ClientLevel world, double x, double y, double z, Fluid fluid) {

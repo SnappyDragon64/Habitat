@@ -38,7 +38,7 @@ public class HabitatSoundEvents {
     public static final RegistryObject<SoundEvent> RABBIT_CONVERTED_TO_POOKA = register("entity.rabbit.converted_to_pooka");
 
     public static final RegistryObject<SoundEvent> PARROT_IMITATE_POOKA = register("entity.parrot.imitate.pooka");
-    
+
     private static RegistryObject<SoundEvent> register(String name) {
         return SOUND_EVENTS.register(name, () -> new SoundEvent((new ResourceLocation(Habitat.MODID, name))));
     }

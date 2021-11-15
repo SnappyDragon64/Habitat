@@ -101,8 +101,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
                             }
                         }
                         this.setBlock(world, blockpos$mutable, stemState);
-                    }
-                    else if (rand.nextInt(3) == 0)
+                    } else if (rand.nextInt(3) == 0)
                         this.setBlock(world, blockpos$mutable, mushroomProvider.getState(rand, blockpos$mutable));
                 }
             }

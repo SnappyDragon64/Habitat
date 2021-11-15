@@ -3,7 +3,6 @@ package mod.schnappdragon.habitat.common.item;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mod.schnappdragon.habitat.client.renderer.block.HabitatChestRenderer;
 import mod.schnappdragon.habitat.common.block.entity.HabitatChestBlockEntity;
-import mod.schnappdragon.habitat.core.registry.HabitatBlockEntityTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;

@@ -1,9 +1,9 @@
 package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.core.Habitat;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public enum BallCactusColor {

@@ -33,6 +33,7 @@ import javax.annotation.Nullable;
 
 public class KabloomFruitPileBlock extends Block implements HasPistonDestroyEffect {
     protected static final VoxelShape SHAPE = Block.box(4.0D, 4.0D, 4.0D, 12.0D, 12.0D, 12.0D);
+
     public KabloomFruitPileBlock(BlockBehaviour.Properties properties) {
         super(properties);
     }

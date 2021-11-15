@@ -1,9 +1,9 @@
 package mod.schnappdragon.habitat.core.tags;
 
 import mod.schnappdragon.habitat.core.Habitat;
-import net.minecraft.world.item.Item;
-import net.minecraft.tags.Tag.Named;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag.Named;
+import net.minecraft.world.item.Item;
 
 public class HabitatItemTags {
     public static final Named<Item> BALL_CACTUS_FLOWERS = makeTag("ball_cactus_flowers");

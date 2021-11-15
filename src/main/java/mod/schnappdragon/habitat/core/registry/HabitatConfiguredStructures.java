@@ -1,13 +1,13 @@
 package mod.schnappdragon.habitat.core.registry;
 
 import mod.schnappdragon.habitat.core.Habitat;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
 
 public class HabitatConfiguredStructures {
     public static final ConfiguredStructureFeature<?, ?> FAIRY_RING = HabitatStructures.FAIRY_RING_STRUCTURE.get().configured(FeatureConfiguration.NONE);

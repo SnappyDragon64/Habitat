@@ -37,7 +37,7 @@ public class FairyRingStructure extends StructureFeature<NoneFeatureConfiguratio
     }
 
     @Override
-    public  StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
+    public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
         return FairyRingStructure.Start::new;
     }
 
@@ -56,7 +56,7 @@ public class FairyRingStructure extends StructureFeature<NoneFeatureConfiguratio
     }
 
     @Override
-    protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long seed, WorldgenRandom chunkRandom, ChunkPos chunkPos1 , Biome biome, ChunkPos chunkPos2, NoneFeatureConfiguration featureConfig, LevelHeightAccessor accessor) {
+    protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long seed, WorldgenRandom chunkRandom, ChunkPos chunkPos1, Biome biome, ChunkPos chunkPos2, NoneFeatureConfiguration featureConfig, LevelHeightAccessor accessor) {
         BlockPos centerOfChunk = new BlockPos(chunkPos1.x * 16, 0, chunkPos1.z * 16);
         int landHeight = chunkGenerator.getFirstOccupiedHeight(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Types.WORLD_SURFACE_WG, accessor);
         NoiseColumn columnOfBlocks = chunkGenerator.getBaseColumn(centerOfChunk.getX(), centerOfChunk.getZ(), accessor);
@@ -64,7 +64,7 @@ public class FairyRingStructure extends StructureFeature<NoneFeatureConfiguratio
         return topBlock.getFluidState().isEmpty();
     }
 
-    public static class Start extends StructureStart<NoneFeatureConfiguration>  {
+    public static class Start extends StructureStart<NoneFeatureConfiguration> {
         public Start(StructureFeature<NoneFeatureConfiguration> structure, ChunkPos chunkPos, int reference, long seed) {
             super(structure, chunkPos, reference, seed);
         }
@@ -94,7 +94,7 @@ public class FairyRingStructure extends StructureFeature<NoneFeatureConfiguratio
             Vec3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
             int xOffset = centerPos.getX() - structureCenter.getX();
             int zOffset = centerPos.getZ() - structureCenter.getZ();
-            for (StructurePiece structurePiece : this.pieces){
+            for (StructurePiece structurePiece : this.pieces) {
                 structurePiece.move(xOffset, 0, zOffset);
             }
 

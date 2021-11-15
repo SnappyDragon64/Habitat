@@ -1,9 +1,6 @@
 package mod.schnappdragon.habitat.core.registry;
 
 import mod.schnappdragon.habitat.common.block.*;
-import mod.schnappdragon.habitat.common.block.BallCactusColor;
-import mod.schnappdragon.habitat.common.block.ChestVariant;
-import mod.schnappdragon.habitat.common.block.HabitatWoodType;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.*;

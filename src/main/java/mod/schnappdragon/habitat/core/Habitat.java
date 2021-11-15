@@ -1,7 +1,6 @@
 package mod.schnappdragon.habitat.core;
 
 import mod.schnappdragon.habitat.client.renderer.HabitatRenderLayers;
-import mod.schnappdragon.habitat.common.block.HabitatWoodType;
 import mod.schnappdragon.habitat.core.api.conditions.RecipeConditions;
 import mod.schnappdragon.habitat.core.dispenser.HabitatDispenserBehaviours;
 import mod.schnappdragon.habitat.core.misc.*;

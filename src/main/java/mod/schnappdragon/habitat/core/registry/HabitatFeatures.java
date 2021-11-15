@@ -1,13 +1,13 @@
 package mod.schnappdragon.habitat.core.registry;
 
-import mod.schnappdragon.habitat.common.levelgen.feature.HugeFairyRingMushroomFeature;
 import mod.schnappdragon.habitat.common.levelgen.feature.FairyRingFeature;
+import mod.schnappdragon.habitat.common.levelgen.feature.HugeFairyRingMushroomFeature;
 import mod.schnappdragon.habitat.common.levelgen.feature.SlimeFernFeature;
 import mod.schnappdragon.habitat.core.Habitat;
-import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

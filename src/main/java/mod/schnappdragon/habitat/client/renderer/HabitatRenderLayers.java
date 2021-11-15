@@ -1,9 +1,9 @@
 package mod.schnappdragon.habitat.client.renderer;
 
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.level.block.Block;
 
 public class HabitatRenderLayers {
     public static void registerRenderLayers() {

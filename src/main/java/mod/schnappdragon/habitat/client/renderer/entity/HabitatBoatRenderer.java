@@ -32,7 +32,7 @@ public class HabitatBoatRenderer extends EntityRenderer<HabitatBoat> {
         matrixStackIn.pushPose();
         matrixStackIn.translate(0.0D, 0.375D, 0.0D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
-        float f = (float)entityIn.getHurtTime() - partialTicks;
+        float f = (float) entityIn.getHurtTime() - partialTicks;
         float f1 = entityIn.getDamage() - partialTicks;
         if (f1 < 0.0F)
             f1 = 0.0F;

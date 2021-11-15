@@ -1,14 +1,14 @@
 package mod.schnappdragon.habitat.core.dispenser;
 
 import mod.schnappdragon.habitat.common.entity.vehicle.HabitatBoat;
-import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.core.BlockSource;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
 
 public class HabitatDispenseBoatBehavior extends DefaultDispenseItemBehavior {
     private final DefaultDispenseItemBehavior dispenseItemBehaviour = new DefaultDispenseItemBehavior();

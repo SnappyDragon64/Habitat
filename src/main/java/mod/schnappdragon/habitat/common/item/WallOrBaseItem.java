@@ -28,7 +28,7 @@ public class WallOrBaseItem extends BlockItem {
         LevelReader world = context.getLevel();
         BlockPos pos = context.getClickedPos();
 
-        for(Direction dir : context.getNearestLookingDirections()) {
+        for (Direction dir : context.getNearestLookingDirections()) {
             BlockState state2 = dir == Direction.DOWN || dir == Direction.UP ? this.getBlock().getStateForPlacement(context) : state;
             if (state2 != null && state2.canSurvive(world, pos)) {
                 state1 = state2;

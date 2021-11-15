@@ -1,9 +1,9 @@
 package mod.schnappdragon.habitat.core.tags;
 
 import mod.schnappdragon.habitat.core.Habitat;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag.Named;
+import net.minecraft.world.level.block.Block;
 
 public class HabitatBlockTags {
     public static final Named<Block> RAFFLESIA_PLANTABLE_ON = makeTag("rafflesia_plantable_on");

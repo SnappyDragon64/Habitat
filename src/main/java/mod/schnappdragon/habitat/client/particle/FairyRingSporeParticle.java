@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.client.particle;
 
-import net.minecraft.client.particle.*;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 
@@ -32,8 +32,8 @@ public class FairyRingSporeParticle extends TextureSheetParticle {
             this.remove();
         else
             this.yd -= this.gravity;
-            this.move(this.xd, this.yd, this.zd);
-            this.setSpriteFromAge(this.spriteSetWithAge);
+        this.move(this.xd, this.yd, this.zd);
+        this.setSpriteFromAge(this.spriteSetWithAge);
     }
 
     public ParticleRenderType getRenderType() {

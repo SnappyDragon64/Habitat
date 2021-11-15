@@ -4,7 +4,13 @@ import mod.schnappdragon.habitat.common.entity.monster.Pooka;
 import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.MushroomCow;
@@ -12,13 +18,7 @@ import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Block;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -57,8 +57,7 @@ public class FairyRingMushroomItem extends BlockItem {
                 for (int i = 0; i < 2; ++i)
                     ((ServerLevel) playerIn.level).sendParticles(ParticleTypes.SMOKE, mooshroom.getX() + mooshroom.getRandom().nextDouble() / 2.0D, mooshroom.getY(0.5D), mooshroom.getZ() + mooshroom.getRandom().nextDouble() / 2.0D, 0, 0.0D, mooshroom.getRandom().nextDouble(), 0.0D, 0.2D);
                 return InteractionResult.SUCCESS;
-            }
-            else if (target.getType() == EntityType.RABBIT && target.isAlive()) {
+            } else if (target.getType() == EntityType.RABBIT && target.isAlive()) {
                 Rabbit rabbit = (Rabbit) target;
                 rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
                 rabbit.discard();

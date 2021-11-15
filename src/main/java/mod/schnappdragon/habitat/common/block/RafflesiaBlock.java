@@ -2,8 +2,8 @@ package mod.schnappdragon.habitat.common.block;
 
 import com.google.common.collect.Lists;
 import com.mojang.math.Vector3f;
-import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
 import mod.schnappdragon.habitat.common.block.entity.RafflesiaBlockEntity;
+import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import net.minecraft.core.BlockPos;
@@ -107,14 +107,13 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
      * Cloud and Particle Helper Methods
      */
 
-    private void createCloud(Level worldIn, BlockPos pos, ListTag effects)
-    {
+    private void createCloud(Level worldIn, BlockPos pos, ListTag effects) {
         AreaEffectCloud cloud = new AreaEffectCloud(worldIn, pos.getX() + 0.5D, pos.getY() + 0.25D, pos.getZ() + 0.5D);
         cloud.setDuration(50);
         cloud.setRadius(1.0F);
         cloud.setParticle(getParticle(effects));
 
-        for(int i = 0; i < effects.size(); ++i) {
+        for (int i = 0; i < effects.size(); ++i) {
             int j = 160;
             CompoundTag tag = effects.getCompound(i);
 
@@ -132,10 +131,9 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
         worldIn.addFreshEntity(cloud);
     }
 
-    private ParticleOptions getParticle(ListTag effects)
-    {
+    private ParticleOptions getParticle(ListTag effects) {
         Collection<MobEffectInstance> effectInstances = Lists.newArrayList();
-        for(int i = 0; i < effects.size(); ++i) {
+        for (int i = 0; i < effects.size(); ++i) {
             int j = 160;
             CompoundTag tag = effects.getCompound(i);
 
@@ -249,7 +247,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
 
     @Override
     public int getAnalogOutputSignal(BlockState state, Level worldIn, BlockPos pos) {
-        return state.getValue(HAS_STEW) ?  1 : 0;
+        return state.getValue(HAS_STEW) ? 1 : 0;
     }
 
     /*

@@ -6,9 +6,9 @@ import mod.schnappdragon.habitat.common.levelgen.feature.structure.FairyRingStru
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.HabitatConfig;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.StructureSettings;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -41,8 +41,7 @@ public class HabitatStructures {
                 Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(structureMap);
                 tempMap.put(structure, structureSeparationSettings);
                 settings.getValue().structureSettings().structureConfig = tempMap;
-            }
-            else
+            } else
                 structureMap.put(structure, structureSeparationSettings);
         });
     }

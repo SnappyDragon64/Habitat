@@ -1,8 +1,8 @@
 package mod.schnappdragon.habitat.core.misc;
 
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
-import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.ComposterBlock;
 
 public class HabitatComposterChances {
     public static void registerComposterChances() {
