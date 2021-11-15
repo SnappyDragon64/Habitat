@@ -21,7 +21,9 @@
       "conditions": {
         "location": {
           "block": {
-            "block": "habitat:kabloom_bush"
+            "blocks": [
+              "habitat:kabloom_bush"
+            ]
           }
         },
         "item": {

@@ -21,7 +21,9 @@
       "conditions": {
         "location": {
           "block": {
-            "block": "habitat:rafflesia"
+            "blocks": [
+              "habitat:rafflesia"
+            ]
           }
         },
         "item": {
