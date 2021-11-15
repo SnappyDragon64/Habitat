@@ -101,7 +101,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
                             }
                         }
                         this.setBlock(world, blockpos$mutable, stemState);
-                    } else if (rand.nextInt(3) == 0)
+                    } else if (world.getBlockState(blockpos$mutable).isAir() && rand.nextInt(3) == 0)
                         this.setBlock(world, blockpos$mutable, mushroomProvider.getState(rand, blockpos$mutable));
                 }
             }
@@ -112,7 +112,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
                 for (int j = -1; j <= 1; ++j) {
                     blockpos$mutable.setWithOffset(pos, i, j, k);
 
-                    if (world.getBlockState(blockpos$mutable).isAir() && !world.getBlockState(blockpos$mutable.below()).isSolidRender(world, blockpos$mutable.below())) {
+                    if (world.getBlockState(blockpos$mutable).isAir() && world.getBlockState(blockpos$mutable.below()).isSolidRender(world, blockpos$mutable.below())) {
                         if (rand.nextInt(3) == 0)
                             this.setBlock(world, blockpos$mutable, mushroomProvider.getState(rand, blockpos$mutable));
                         break;
