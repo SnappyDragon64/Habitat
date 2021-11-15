@@ -32,6 +32,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -44,6 +45,7 @@ import java.util.Random;
 
 public class KabloomBushBlock extends BushBlock implements BonemealableBlock, HasPistonDestroyEffect {
     protected static final VoxelShape[] SHAPES = {Block.box(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D)};
+    protected static final AABB TOUCH_AABB = new AABB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.9375D, 0.9375D);
     public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
 
     public KabloomBushBlock(Properties properties) {
@@ -66,13 +68,8 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock, Ha
 
     @Override
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn.getType() != EntityType.BEE) {
-            if (entityIn instanceof LivingEntity && state.getValue(AGE) > 1)
-                entityIn.makeStuckInBlock(state, new Vec3(0.95F, 0.9D, 0.95F));
-            if (state.getValue(AGE) == 7) {
-                dropFruit(state, worldIn, pos, entityIn instanceof Projectile ? ((Projectile) entityIn).getOwner() : entityIn, true, false);
-            }
-        }
+        if (state.getValue(AGE) == 7 && entityIn.getType() != EntityType.BEE && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn))
+            dropFruit(state, worldIn, pos, entityIn instanceof Projectile ? ((Projectile) entityIn).getOwner() : entityIn, true, false);
     }
 
     @Override
