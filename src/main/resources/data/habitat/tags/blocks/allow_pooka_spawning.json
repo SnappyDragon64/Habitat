@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "habitat:fairy_ring_mushroom",
+    "habitat:fairy_ring_mushroom_block",
+    "habitat:fairy_spore_lantern"
+  ]
+}

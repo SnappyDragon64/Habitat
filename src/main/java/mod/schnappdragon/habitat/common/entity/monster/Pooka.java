@@ -2,6 +2,7 @@ package mod.schnappdragon.habitat.common.entity.monster;
 
 import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.*;
+import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import mod.schnappdragon.habitat.core.tags.HabitatEntityTypeTags;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import net.minecraft.core.BlockPos;
@@ -36,7 +37,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -371,7 +371,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      */
 
     public static boolean checkPookaSpawnRules(EntityType<Pooka> pooka, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random rand) {
-        return world.getBlockState(pos.below()).is(Blocks.GRASS_BLOCK);
+        return world.getBlockStates(new AABB(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))).anyMatch(state -> state.is(HabitatBlockTags.ALLOW_POOKA_SPAWNING));
     }
 
     @Nullable
