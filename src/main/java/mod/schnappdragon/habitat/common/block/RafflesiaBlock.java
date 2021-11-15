@@ -167,7 +167,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
                 rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
             }
         }
-        super.entityInside(state, worldIn, pos, entityIn);
     }
 
     @Override
