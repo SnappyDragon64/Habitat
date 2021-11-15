@@ -42,7 +42,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
 import javax.annotation.Nullable;
@@ -167,6 +166,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
                 Effects.add(tag);
                 rafflesia.Effects = Effects;
                 rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
+                worldIn.getBlockTicks().scheduleTick(pos, this, 600);
             }
         }
     }
@@ -196,17 +196,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
      * Growth Methods
      */
 
-    public boolean isRandomlyTicking(BlockState state) {
-        return state.getValue(ON_COOLDOWN);
-    }
-
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
-        if (state.getValue(ON_COOLDOWN) && ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(2) == 0)) {
-            cooldownReset(worldIn, pos, state);
-            ForgeHooks.onCropsGrowPost(worldIn, pos, state);
-        }
-    }
-
     public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return !state.getValue(HAS_STEW) || state.getValue(ON_COOLDOWN);
     }
@@ -230,6 +219,12 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
                 }
             }
         }
+    }
+
+    @Override
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+        if (state.getValue(ON_COOLDOWN))
+            cooldownReset(worldIn, pos, state);
     }
 
     private void cooldownReset(ServerLevel worldIn, BlockPos pos, BlockState state) {
