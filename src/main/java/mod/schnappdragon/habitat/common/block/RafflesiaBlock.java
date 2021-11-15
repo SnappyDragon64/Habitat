@@ -38,6 +38,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -51,6 +52,7 @@ import java.util.Random;
 public class RafflesiaBlock extends BushBlock implements IForgeBlock, BonemealableBlock, EntityBlock {
     protected static final VoxelShape DEFAULT_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
     protected static final VoxelShape COOLDOWN_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+    protected static final AABB TOUCH_AABB =  new AABB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
 
     public static final BooleanProperty ON_COOLDOWN = HabitatBlockStateProperties.ON_COOLDOWN;
     public static final BooleanProperty HAS_STEW = HabitatBlockStateProperties.HAS_STEW;
@@ -155,7 +157,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (!worldIn.isClientSide) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof RafflesiaBlockEntity rafflesia && !state.getValue(ON_COOLDOWN)) {
+            if (tile instanceof RafflesiaBlockEntity rafflesia && !state.getValue(ON_COOLDOWN) && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
                 createCloud(worldIn, pos, rafflesia.Effects);
                 worldIn.setBlockAndUpdate(pos, state.setValue(ON_COOLDOWN, true).setValue(HAS_STEW, false));
                 ListTag Effects = new ListTag();
