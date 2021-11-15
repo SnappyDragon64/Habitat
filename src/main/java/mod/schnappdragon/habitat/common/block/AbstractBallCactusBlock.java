@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -21,6 +22,7 @@ import javax.annotation.Nullable;
 
 public abstract class AbstractBallCactusBlock extends BushBlock {
     protected static final VoxelShape SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D);
+    protected static final AABB TOUCH_AABB = new AABB(0.125D, 0, 0.125D, 0.875D, 0.4375D, 0.875D);
     private final BallCactusColor color;
 
     public AbstractBallCactusBlock(BallCactusColor colorIn, Properties properties) {
@@ -49,7 +51,7 @@ public abstract class AbstractBallCactusBlock extends BushBlock {
      */
 
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE) {
+        if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
             entityIn.hurt(DamageSource.CACTUS, 1.0F);
         }
     }

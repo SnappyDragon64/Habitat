@@ -2,6 +2,10 @@ package mod.schnappdragon.habitat.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -9,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -18,6 +23,7 @@ import java.util.Random;
 
 public class GrowingBallCactusBlock extends AbstractBallCactusBlock implements BonemealableBlock {
     protected static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 3.0D, 11.0D);
+    protected static final AABB TOUCH_AABB = new AABB(0.25D, 0, 0.25D, 0.75D, 0.25D, 0.75D);
 
     public GrowingBallCactusBlock(BallCactusColor colorIn, Properties properties) {
         super(colorIn, properties);
@@ -31,6 +37,16 @@ public class GrowingBallCactusBlock extends AbstractBallCactusBlock implements B
     @Override
     public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
         return new ItemStack(getColor().getFlower());
+    }
+
+    /*
+     * Entity Collision Method
+     */
+
+    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+        if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
+            entityIn.hurt(DamageSource.CACTUS, 1.0F);
+        }
     }
 
     /*
