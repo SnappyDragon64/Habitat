@@ -6,7 +6,6 @@ import mod.schnappdragon.habitat.common.block.GrowingBallCactusBlock;
 import mod.schnappdragon.habitat.common.block.KabloomBushBlock;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,33 +24,29 @@ public abstract class BeeGrowHabitatPlantsGoalMixin {
 
     @Inject(
             method = "tick()V",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;", ordinal = 0),
+            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/tags/Tag;)Z"),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void habitat_beeGrowHabitatPlantsGoalMixin(CallbackInfo ci, int chance, BlockPos pos, BlockState state, Block block) {
-        if (state.is(BlockTags.BEE_GROWABLES)) {
-            IntegerProperty property = null;
-            BlockState nextState = null;
+        IntegerProperty property = null;
+        BlockState nextState = null;
 
-            if (block == HabitatBlocks.KABLOOM_BUSH.get()) {
-                if (state.getValue(KabloomBushBlock.AGE) < 7)
-                    property = KabloomBushBlock.AGE;
-            }
-            else if (block instanceof BallCactusFlowerBlock flower && flower.canGrow(this$0.level, pos))
-                nextState = flower.getColor().getGrowingBallCactus().defaultBlockState();
-            else if (block instanceof GrowingBallCactusBlock cactus)
-                nextState = cactus.getColor().getBallCactus().defaultBlockState();
-            else if (block instanceof BallCactusBlock cactus)
-                nextState = cactus.getColor().getFloweringBallCactus().defaultBlockState();
+        if (block == HabitatBlocks.KABLOOM_BUSH.get() && state.getValue(KabloomBushBlock.AGE) < 7)
+            property = KabloomBushBlock.AGE;
+        else if (block instanceof BallCactusFlowerBlock flower && flower.canGrow(this$0.level, pos))
+            nextState = flower.getColor().getGrowingBallCactus().defaultBlockState();
+        else if (block instanceof GrowingBallCactusBlock cactus)
+            nextState = cactus.getColor().getBallCactus().defaultBlockState();
+        else if (block instanceof BallCactusBlock cactus)
+            nextState = cactus.getColor().getFloweringBallCactus().defaultBlockState();
 
-            if (property != null)
-                nextState = state.setValue(property, state.getValue(property) + 1);
+        if (property != null)
+            nextState = state.setValue(property, state.getValue(property) + 1);
 
-            if (nextState != null) {
-                this$0.level.setBlockAndUpdate(pos, nextState);
-                this$0.level.levelEvent(2005, pos, 0);
-                this$0.incrementNumCropsGrownSincePollination();
-            }
+        if (nextState != null) {
+            this$0.level.setBlockAndUpdate(pos, nextState);
+            this$0.level.levelEvent(2005, pos, 0);
+            this$0.incrementNumCropsGrownSincePollination();
         }
     }
 }
