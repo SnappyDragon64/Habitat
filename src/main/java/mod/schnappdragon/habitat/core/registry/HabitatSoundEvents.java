@@ -13,6 +13,7 @@ public class HabitatSoundEvents {
     public static final RegistryObject<SoundEvent> RAFFLESIA_SPEW = register("block.rafflesia.spew");
     public static final RegistryObject<SoundEvent> RAFFLESIA_POP = register("block.rafflesia.pop");
     public static final RegistryObject<SoundEvent> RAFFLESIA_SLURP = register("block.rafflesia.slurp");
+    public static final RegistryObject<SoundEvent> RAFFLESIA_FILL_BOWL = register("block.rafflesia.fill_bowl");
 
     public static final RegistryObject<SoundEvent> KABLOOM_BUSH_RUSTLE = register("block.kabloom_bush.rustle");
     public static final RegistryObject<SoundEvent> KABLOOM_BUSH_SHEAR = register("block.kabloom_bush.shear");

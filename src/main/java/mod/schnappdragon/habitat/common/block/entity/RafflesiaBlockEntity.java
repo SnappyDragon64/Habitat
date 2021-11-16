@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.common.block.entity;
 
+import mod.schnappdragon.habitat.common.block.RafflesiaBlock;
 import mod.schnappdragon.habitat.core.registry.HabitatBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -14,16 +15,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class RafflesiaBlockEntity extends BlockEntity {
-    public ListTag Effects = new ListTag();
+    public ListTag Effects;
 
     public RafflesiaBlockEntity(BlockPos pos, BlockState state) {
         super(HabitatBlockEntityTypes.RAFFLESIA.get(), pos, state);
-        CompoundTag tag = new CompoundTag();
-        tag.putByte("EffectId", (byte) 19);
-        tag.putInt("EffectDuration", 240);
-        this.Effects.add(tag);
+        this.Effects = RafflesiaBlock.getDefault();
     }
-
 
     @Nonnull
     @Override

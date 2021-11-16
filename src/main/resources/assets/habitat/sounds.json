@@ -11,6 +11,15 @@
     "subtitle": "habitat.subtitle.block.rafflesia.slurp",
     "sounds": [ "habitat:block/rafflesia/slurp" ]
   },
+  "block.rafflesia.fill_bowl": {
+    "subtitle": "habitat.subtitle.block.rafflesia.slurp",
+    "sounds": [
+      {
+        "name": "habitat:block/rafflesia/slurp",
+        "volume": 0.6
+      }
+    ]
+  },
   "block.kabloom_bush.rustle": {
     "subtitle": "habitat.subtitle.block.kabloom_bush.rustle",
     "sounds": [ "habitat:block/kabloom_bush/rustle" ]
