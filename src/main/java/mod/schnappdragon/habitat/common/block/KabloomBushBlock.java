@@ -45,7 +45,6 @@ import java.util.Random;
 
 public class KabloomBushBlock extends BushBlock implements BonemealableBlock, HasPistonDestroyEffect {
     protected static final VoxelShape[] SHAPES = {Block.box(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D)};
-    protected static final AABB TOUCH_AABB = new AABB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.9375D, 0.9375D);
     public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
 
     public KabloomBushBlock(Properties properties) {
@@ -68,7 +67,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock, Ha
 
     @Override
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-        if (state.getValue(AGE) == 7 && entityIn.getType() != EntityType.BEE && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn))
+        if (state.getValue(AGE) == 7 && entityIn.getType() != EntityType.BEE)
             dropFruit(state, worldIn, pos, entityIn instanceof Projectile ? ((Projectile) entityIn).getOwner() : entityIn, true, false);
     }
 
