@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(Bee.BeeGrowCropGoal.class)
-public class BeeGrowHabitatPlantsGoalMixin {
+public class BeeGrowCropsGoalMixin {
     @Shadow
     @Final
     Bee this$0;
@@ -29,7 +29,7 @@ public class BeeGrowHabitatPlantsGoalMixin {
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/tags/Tag;)Z"),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
-    private void habitat_beeGrowHabitatPlantsGoalMixin(CallbackInfo ci, int chance, BlockPos pos, BlockState state, Block block) {
+    private void habitat_beeGrowCropsGoalMixin(CallbackInfo ci, int chance, BlockPos pos, BlockState state, Block block) {
         IntegerProperty property = null;
         BlockState nextState = null;
 

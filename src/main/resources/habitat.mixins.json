@@ -4,11 +4,11 @@
   "compatibilityLevel": "JAVA_16",
   "refmap": "habitat.refmap.json",
   "mixins": [
+    "BeeGrowCropsGoalMixin",
+    "NoBigMushroomsInStructuresMixin",
     "NoLakesInStructuresMixin",
     "NoTreesInStructuresMixin",
-    "NoBigMushroomsInStructuresMixin",
-    "PistonDestroyEffectsMixin",
-    "BeeGrowHabitatPlantsGoalMixin"
+    "PistonDestroyEffectsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
