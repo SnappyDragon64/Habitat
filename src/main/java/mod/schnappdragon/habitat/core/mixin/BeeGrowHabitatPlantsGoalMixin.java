@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(Bee.BeeGrowCropGoal.class)
-public abstract class BeeGrowHabitatPlantsGoalMixin {
+public class BeeGrowHabitatPlantsGoalMixin {
     @Shadow
     @Final
     Bee this$0;
