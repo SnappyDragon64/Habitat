@@ -134,7 +134,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
         worldIn.addFreshEntity(cloud);
     }
 
-    private ParticleOptions getParticle(ListTag effects) {
+    public static ParticleOptions getParticle(ListTag effects) {
         Collection<MobEffectInstance> effectInstances = Lists.newArrayList();
         for (int i = 0; i < effects.size(); ++i) {
             int j = 160;
