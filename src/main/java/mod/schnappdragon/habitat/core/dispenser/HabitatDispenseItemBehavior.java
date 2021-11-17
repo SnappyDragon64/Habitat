@@ -108,8 +108,8 @@ public class HabitatDispenseItemBehavior {
 
                         return stack;
                     }
-                } else if (SuspiciousStewBehavior != null)
-                    SuspiciousStewBehavior.dispense(source, stack);
+                } else if (BowlItemBehavior != null)
+                    BowlItemBehavior.dispense(source, stack);
                 this.setSuccess(false);
                 return stack;
             }
