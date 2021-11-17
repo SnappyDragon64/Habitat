@@ -2,7 +2,7 @@ package mod.schnappdragon.habitat.core;
 
 import mod.schnappdragon.habitat.client.renderer.HabitatRenderLayers;
 import mod.schnappdragon.habitat.core.api.conditions.RecipeConditions;
-import mod.schnappdragon.habitat.core.dispenser.HabitatDispenserBehaviours;
+import mod.schnappdragon.habitat.core.dispenser.HabitatDispenseItemBehavior;
 import mod.schnappdragon.habitat.core.misc.*;
 import mod.schnappdragon.habitat.core.registry.*;
 import net.minecraftforge.common.MinecraftForge;
@@ -55,7 +55,7 @@ public class Habitat {
             HabitatConfiguredFeatures.registerConfiguredFeatures();
             HabitatConfiguredStructures.registerConfiguredStructures();
             HabitatComposterChances.registerComposterChances();
-            HabitatDispenserBehaviours.registerDispenserBehaviour();
+            HabitatDispenseItemBehavior.registerDispenserBehaviour();
             HabitatCriterionTriggers.registerCriteriaTriggers();
             HabitatLootConditionTypes.registerLootConditionTypes();
             HabitatFireInfo.registerFireInfo();

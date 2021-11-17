@@ -39,7 +39,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class HabitatDispenserBehaviours {
+public class HabitatDispenseItemBehavior {
     private static DispenseItemBehavior SuspiciousStewBehavior;
     private static DispenseItemBehavior ShearsBehavior;
     private static DispenseItemBehavior RedstoneBehavior;
