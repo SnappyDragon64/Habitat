@@ -173,37 +173,36 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
     }
 
     @Override
+    @SuppressWarnings("ConstantConditions")
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(handIn);
 
-        if (!worldIn.isClientSide && worldIn.getBlockEntity(pos) instanceof RafflesiaBlockEntity rafflesia) {
-            if (stack.getItem() == Items.SUSPICIOUS_STEW) {
-                if (!state.getValue(HAS_STEW)) {
-                    CompoundTag tag = stack.getTag();
-                    if (tag != null && tag.contains("Effects", 9))
-                        rafflesia.Effects = tag.getList("Effects", 10);
-                    worldIn.setBlockAndUpdate(pos, state.setValue(HAS_STEW, true));
-                    rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
-                    player.setItemInHand(handIn, player.getAbilities().instabuild ? stack : new ItemStack(Items.BOWL));
-                    worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_SLURP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
-                    ((ServerLevel) worldIn).sendParticles(getParticle(rafflesia.Effects), pos.getX() + 0.5D + (2 * worldIn.random.nextDouble() - 1.0F) / 3.0D, pos.getY() + 0.25F + worldIn.random.nextDouble() / 2, pos.getZ() + 0.5D + (2 * worldIn.random.nextDouble() - 1.0F) / 3.0D, 0, 0.0D, 0.1D, 0.0D, 1.0D);
-                    return InteractionResult.SUCCESS;
-                }
-            } else if (stack.getItem() == Items.BOWL) {
-                if (state.getValue(HAS_STEW)) {
-                    ItemStack stew = new ItemStack(Items.SUSPICIOUS_STEW);
-                    rafflesia.Effects.forEach(tag -> {
-                        CompoundTag compound = (CompoundTag) tag;
-                        SuspiciousStewItem.saveMobEffect(stew, MobEffect.byId(compound.getByte("EffectId")), compound.getInt("EffectDuration"));
-                    });
-                    worldIn.setBlockAndUpdate(pos, state.setValue(HAS_STEW, false));
-                    rafflesia.Effects = getDefault();
-                    rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
-                    player.setItemInHand(handIn, ItemUtils.createFilledResult(stack, player, stew, false));
-                    worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_FILL_BOWL.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
-                    return InteractionResult.SUCCESS;
-                }
+        if (stack.getItem() == Items.SUSPICIOUS_STEW && !state.getValue(HAS_STEW)) {
+            if (!worldIn.isClientSide && worldIn.getBlockEntity(pos) instanceof RafflesiaBlockEntity rafflesia) {
+                CompoundTag tag = stack.getTag();
+                if (tag != null && tag.contains("Effects", 9))
+                    rafflesia.Effects = tag.getList("Effects", 10);
+                worldIn.setBlockAndUpdate(pos, state.setValue(HAS_STEW, true));
+                rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
+                player.setItemInHand(handIn, player.getAbilities().instabuild ? stack : new ItemStack(Items.BOWL));
+                worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_SLURP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+                ((ServerLevel) worldIn).sendParticles(getParticle(rafflesia.Effects), pos.getX() + 0.5D + (2 * worldIn.random.nextDouble() - 1.0F) / 3.0D, pos.getY() + 0.25F + worldIn.random.nextDouble() / 2, pos.getZ() + 0.5D + (2 * worldIn.random.nextDouble() - 1.0F) / 3.0D, 0, 0.0D, 0.1D, 0.0D, 1.0D);
             }
+            return InteractionResult.sidedSuccess(worldIn.isClientSide);
+        } else if (stack.getItem() == Items.BOWL && state.getValue(HAS_STEW)) {
+            if (!worldIn.isClientSide && worldIn.getBlockEntity(pos) instanceof RafflesiaBlockEntity rafflesia) {
+                ItemStack stew = new ItemStack(Items.SUSPICIOUS_STEW);
+                rafflesia.Effects.forEach(tag -> {
+                    CompoundTag compound = (CompoundTag) tag;
+                    SuspiciousStewItem.saveMobEffect(stew, MobEffect.byId(compound.getByte("EffectId")), compound.getInt("EffectDuration"));
+                });
+                worldIn.setBlockAndUpdate(pos, state.setValue(HAS_STEW, false));
+                rafflesia.Effects = getDefault();
+                rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
+                player.setItemInHand(handIn, ItemUtils.createFilledResult(stack, player, stew, false));
+                worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_FILL_BOWL.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+            }
+            return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
         return super.use(state, worldIn, pos, player, handIn, hit);
     }
