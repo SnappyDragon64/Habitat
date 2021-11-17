@@ -19,7 +19,7 @@ public class HabitatBlocks {
 
     public static final RegistryObject<Block> KABLOOM_BUSH = BLOCKS.register("kabloom_bush", () -> new KabloomBushBlock(BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.GRASS).randomTicks().noCollission().noOcclusion()));
     public static final RegistryObject<Block> POTTED_KABLOOM_BUSH = BLOCKS.register("potted_kabloom_bush", () -> new FlowerPotBlock(KABLOOM_BUSH.get(), BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
-    public static final RegistryObject<Block> KABLOOM_FRUIT_PILE = BLOCKS.register("kabloom_fruit_pile", () -> new KabloomFruitPileBlock(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).strength(0.4F).sound(SoundType.WOOL).noOcclusion()));
+    public static final RegistryObject<Block> KABLOOM_FRUIT_PILE = BLOCKS.register("kabloom_fruit_pile", () -> new KabloomFruitPileBlock(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).instabreak().sound(SoundType.WOOL).noOcclusion()));
     public static final RegistryObject<Block> KABLOOM_PULP_BLOCK = BLOCKS.register("kabloom_pulp_block", () -> new KabloomPulpBlock(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.GRASS).sound(SoundType.SLIME_BLOCK).noOcclusion()));
 
     public static final RegistryObject<Block> SLIME_FERN = BLOCKS.register("slime_fern", () -> new SlimeFernBlock(BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.GRASS).noCollission().noOcclusion()));
