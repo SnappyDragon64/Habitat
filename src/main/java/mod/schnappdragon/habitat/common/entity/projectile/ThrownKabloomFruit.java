@@ -29,16 +29,16 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public class KabloomFruit extends ThrowableItemProjectile {
-    public KabloomFruit(EntityType<? extends KabloomFruit> entity, Level world) {
+public class ThrownKabloomFruit extends ThrowableItemProjectile {
+    public ThrownKabloomFruit(EntityType<? extends ThrownKabloomFruit> entity, Level world) {
         super(entity, world);
     }
 
-    public KabloomFruit(Level worldIn, LivingEntity throwerIn) {
+    public ThrownKabloomFruit(Level worldIn, LivingEntity throwerIn) {
         super(HabitatEntityTypes.KABLOOM_FRUIT.get(), throwerIn, worldIn);
     }
 
-    public KabloomFruit(Level worldIn, double x, double y, double z) {
+    public ThrownKabloomFruit(Level worldIn, double x, double y, double z) {
         super(HabitatEntityTypes.KABLOOM_FRUIT.get(), x, y, z, worldIn);
     }
 

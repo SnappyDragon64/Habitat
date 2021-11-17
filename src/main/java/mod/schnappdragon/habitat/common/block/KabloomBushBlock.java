@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.common.block;
 
-import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruit;
+import mod.schnappdragon.habitat.common.entity.projectile.ThrownKabloomFruit;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.core.BlockPos;
@@ -32,9 +32,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
@@ -122,7 +120,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock, Ha
                 worldIn.playSound(null, pos, HabitatSoundEvents.KABLOOM_BUSH_RUSTLE.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             }
 
-            KabloomFruit kabloom = new KabloomFruit(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F);
+            ThrownKabloomFruit kabloom = new ThrownKabloomFruit(worldIn, pos.getX() + 0.5F, pos.getY() + 0.6F, pos.getZ() + 0.5F);
             kabloom.setOwner(activator);
             if (setFire)
                 kabloom.setSecondsOnFire(8);

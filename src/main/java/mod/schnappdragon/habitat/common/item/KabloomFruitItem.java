@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.common.item;
 
-import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruit;
+import mod.schnappdragon.habitat.common.entity.projectile.ThrownKabloomFruit;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -27,7 +27,7 @@ public class KabloomFruitItem extends Item {
         }
 
         if (!worldIn.isClientSide) {
-            KabloomFruit kabloomfruitentity = new KabloomFruit(worldIn, playerIn);
+            ThrownKabloomFruit kabloomfruitentity = new ThrownKabloomFruit(worldIn, playerIn);
             kabloomfruitentity.setItem(new ItemStack(HabitatItems.KABLOOM_FRUIT.get()));
             kabloomfruitentity.shootFromRotation(playerIn, playerIn.getXRot(), playerIn.getYRot(), 0.0F, 0.5F, 0.9F);
             worldIn.addFreshEntity(kabloomfruitentity);

@@ -6,7 +6,7 @@ import mod.schnappdragon.habitat.common.block.KabloomBushBlock;
 import mod.schnappdragon.habitat.common.block.RafflesiaBlock;
 import mod.schnappdragon.habitat.common.block.entity.RafflesiaBlockEntity;
 import mod.schnappdragon.habitat.common.entity.monster.Pooka;
-import mod.schnappdragon.habitat.common.entity.projectile.KabloomFruit;
+import mod.schnappdragon.habitat.common.entity.projectile.ThrownKabloomFruit;
 import mod.schnappdragon.habitat.common.entity.vehicle.HabitatBoat;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
@@ -33,13 +33,11 @@ import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SuspiciousStewItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -166,7 +164,7 @@ public class HabitatDispenseItemBehavior {
 
         DispenserBlock.registerBehavior(HabitatItems.KABLOOM_FRUIT.get(), new AbstractProjectileDispenseBehavior() {
             protected Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
-                return Util.make(new KabloomFruit(worldIn, position.x(), position.y(), position.z()), (kabloomfruit) -> {
+                return Util.make(new ThrownKabloomFruit(worldIn, position.x(), position.y(), position.z()), (kabloomfruit) -> {
                     kabloomfruit.setItem(stackIn);
                 });
             }
