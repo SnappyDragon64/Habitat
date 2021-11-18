@@ -7,8 +7,7 @@
     "BeeGrowCropsGoalMixin",
     "NoBigMushroomsInStructuresMixin",
     "NoLakesInStructuresMixin",
-    "NoTreesInStructuresMixin",
-    "PistonDestroyEffectsMixin"
+    "NoTreesInStructuresMixin"
   ],
   "injectors": {
     "defaultRequire": 1
