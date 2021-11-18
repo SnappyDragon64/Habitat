@@ -211,6 +211,7 @@ public class HabitatDispenseItemBehavior {
                 for (LivingEntity livingentity : worldIn.getEntitiesOfClass(LivingEntity.class, new AABB(pos), EntitySelector.NO_SPECTATORS)) {
                     if (livingentity.getType() == EntityType.RABBIT) {
                         Rabbit rabbit = (Rabbit) livingentity;
+                        worldIn.gameEvent(GameEvent.MOB_INTERACT, rabbit.eyeBlockPosition());
                         rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
                         rabbit.discard();
                         worldIn.addFreshEntity(Pooka.convertRabbit(rabbit));

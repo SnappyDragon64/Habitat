@@ -281,8 +281,10 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
                 stack.shrink(1);
             int roll = random.nextInt(5);
 
-            if (this.isPacified())
+            if (this.isPacified()) {
                 this.heal((float) stack.getItem().getFoodProperties().getNutrition());
+                this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
+            }
             else if (this.forgiveTicks == 0 && (this.isBaby() && roll > 0 || roll == 0) && this.isAlone()) {
                 this.setPacified(true);
                 this.playSound(HabitatSoundEvents.POOKA_PACIFY.get(), 1.0F, 1.0F);
@@ -437,6 +439,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     public boolean doHurtTarget(Entity entityIn) {
         if (entityIn.getType() == EntityType.RABBIT && entityIn.isAlive() && !entityIn.isInvulnerableTo(DamageSource.mobAttack(this))) {
             this.playSound(HabitatSoundEvents.POOKA_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.gameEvent(GameEvent.ENTITY_DAMAGED, this);
 
             Rabbit rabbit = (Rabbit) entityIn;
             rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);

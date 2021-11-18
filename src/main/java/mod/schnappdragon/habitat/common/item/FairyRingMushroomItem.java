@@ -19,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -57,6 +58,7 @@ public class FairyRingMushroomItem extends BlockItem {
                 return InteractionResult.SUCCESS;
             } else if (target.getType() == EntityType.RABBIT && target.isAlive()) {
                 Rabbit rabbit = (Rabbit) target;
+                playerIn.level.gameEvent(GameEvent.MOB_INTERACT, rabbit.eyeBlockPosition());
                 rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
                 rabbit.discard();
                 Pooka pooka = Pooka.convertRabbit(rabbit);
