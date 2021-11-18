@@ -40,6 +40,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 
 public class HabitatDispenseItemBehavior {
@@ -70,6 +71,7 @@ public class HabitatDispenseItemBehavior {
                     rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
                     worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_SLURP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                     worldIn.sendParticles(RafflesiaBlock.getParticle(rafflesia.Effects), pos.getX() + 0.5D + (2 * worldIn.random.nextDouble() - 1.0F) / 3.0D, pos.getY() + 0.25F + worldIn.random.nextDouble() / 2, pos.getZ() + 0.5D + (2 * worldIn.random.nextDouble() - 1.0F) / 3.0D, 0, 0.0D, 0.1D, 0.0D, 1.0D);
+                    worldIn.gameEvent(GameEvent.FLUID_PLACE, pos);
                     stack = new ItemStack(Items.BOWL, 1);
                     this.setSuccess(true);
                     return stack;
@@ -95,6 +97,7 @@ public class HabitatDispenseItemBehavior {
                     rafflesia.Effects = RafflesiaBlock.getDefault();
                     rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
                     worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_FILL_BOWL.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+                    worldIn.gameEvent(GameEvent.FLUID_PICKUP, pos);
                     this.setSuccess(true);
                     stack.shrink(1);
 
@@ -126,6 +129,7 @@ public class HabitatDispenseItemBehavior {
                         pooka.discard();
                         worldIn.addFreshEntity(Pooka.convertPooka(pooka));
                         worldIn.addFreshEntity(new ItemEntity(worldIn, pooka.getX(), pooka.getY(1.0D), pooka.getZ(), new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get())));
+                        worldIn.gameEvent(GameEvent.SHEAR, pos);
 
                         if (stack.hurt(1, worldIn.getRandom(), null))
                             stack.setCount(0);
@@ -140,14 +144,15 @@ public class HabitatDispenseItemBehavior {
                     worldIn.playSound(null, pos, HabitatSoundEvents.KABLOOM_BUSH_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                     if (stack.hurt(1, worldIn.getRandom(), null))
                         stack.setCount(0);
+                    worldIn.gameEvent(GameEvent.SHEAR, pos);
                     this.setSuccess(true);
-                } else if (state.getBlock() instanceof FloweringBallCactusBlock) {
-                    FloweringBallCactusBlock cactus = (FloweringBallCactusBlock) state.getBlock();
+                } else if (state.getBlock() instanceof FloweringBallCactusBlock cactus) {
                     Block.popResource(worldIn, pos, new ItemStack(cactus.getColor().getFlower()));
                     worldIn.setBlockAndUpdate(pos, cactus.getColor().getBallCactus().defaultBlockState());
                     worldIn.playSound(null, pos, HabitatSoundEvents.FLOWERING_BALL_CACTUS_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                     if (stack.hurt(1, worldIn.getRandom(), null))
                         stack.setCount(0);
+                    worldIn.gameEvent(GameEvent.SHEAR, pos);
                     this.setSuccess(true);
                 } else if (state.is(HabitatBlocks.FAIRY_RING_MUSHROOM.get()) && state.getValue(FairyRingMushroomBlock.MUSHROOMS) > 1) {
                     Block.popResource(worldIn, pos, new ItemStack(state.getBlock()));
@@ -155,6 +160,7 @@ public class HabitatDispenseItemBehavior {
                     worldIn.playSound(null, pos, HabitatSoundEvents.FAIRY_RING_MUSHROOM_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                     if (stack.hurt(1, worldIn.getRandom(), null))
                         stack.setCount(0);
+                    worldIn.gameEvent(GameEvent.SHEAR, pos);
                     this.setSuccess(true);
                 } else
                     return ShearsBehavior.dispense(source, stack);
@@ -187,6 +193,7 @@ public class HabitatDispenseItemBehavior {
                     worldIn.setBlockAndUpdate(pos, state.setValue(FairyRingMushroomBlock.DUSTED, true));
                     worldIn.addParticle(DustParticleOptions.REDSTONE, pos.getX() + 0.5D, pos.getY() + 0.125D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
                     worldIn.playSound(null, pos, HabitatSoundEvents.FAIRY_RING_MUSHROOM_DUST.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+                    worldIn.gameEvent(GameEvent.BLOCK_CHANGE, pos);
                     stack.shrink(1);
                     this.setSuccess(true);
                     return stack;
@@ -209,7 +216,7 @@ public class HabitatDispenseItemBehavior {
                         worldIn.addFreshEntity(Pooka.convertRabbit(rabbit));
                         stack.shrink(1);
                         for (int j = 0; j < 8; ++j)
-                            ((ServerLevel) worldIn).sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getRandomX(0.5D), rabbit.getY(0.5D), rabbit.getRandomZ(0.5D), 0, rabbit.getRandom().nextGaussian(), 0.0D, rabbit.getRandom().nextGaussian(), 0.01D);
+                            worldIn.sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getRandomX(0.5D), rabbit.getY(0.5D), rabbit.getRandomZ(0.5D), 0, rabbit.getRandom().nextGaussian(), 0.0D, rabbit.getRandom().nextGaussian(), 0.01D);
                         this.setSuccess(true);
                         return stack;
                     }
