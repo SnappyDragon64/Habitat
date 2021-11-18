@@ -33,9 +33,7 @@ public class FairyRingMushroomItem extends BlockItem {
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
         if (!playerIn.level.isClientSide) {
-            if (target instanceof MushroomCow && ((MushroomCow) target).getMushroomType() == MushroomCow.MushroomType.BROWN) {
-                MushroomCow mooshroom = (MushroomCow) target;
-
+            if (target instanceof MushroomCow mooshroom && ((MushroomCow) target).getMushroomType() == MushroomCow.MushroomType.BROWN) {
                 if (mooshroom.effect == null) {
                     Pair<MobEffect, Integer> effect = getStewEffect();
 

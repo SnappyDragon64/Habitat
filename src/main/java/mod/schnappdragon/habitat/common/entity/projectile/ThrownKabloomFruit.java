@@ -23,6 +23,7 @@ import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -91,6 +92,8 @@ public class ThrownKabloomFruit extends ThrowableItemProjectile {
 
     private void explode(Vec3 vector3d) {
         if (!this.level.isClientSide) {
+            this.gameEvent(GameEvent.EXPLODE, this.getOwner(), this.blockPosition());
+
             for (Entity entity : this.level.getEntities(null, this.getBoundingBox().inflate(0.8D))) {
                 boolean flag = false;
 

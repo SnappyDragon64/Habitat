@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.ForgeHooks;
 
@@ -32,6 +33,7 @@ public class BallCactusBlock extends AbstractBallCactusBlock implements Bonemeal
                 player.getItemInHand(handIn).shrink(1);
             worldIn.setBlock(pos, getColor().getFloweringBallCactus().defaultBlockState(), 2);
             worldIn.playSound(null, pos, SoundType.GRASS.getPlaceSound(), SoundSource.BLOCKS, SoundType.GRASS.getVolume() + 1.0F / 2.0F, SoundType.GRASS.getPitch() * 0.8F);
+            worldIn.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
         return super.use(state, worldIn, pos, player, handIn, hit);

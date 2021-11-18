@@ -33,6 +33,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -106,6 +107,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
             player.getItemInHand(handIn).hurtAndBreak(1, player, (playerIn) -> {
                 playerIn.broadcastBreakEvent(handIn);
             });
+            worldIn.gameEvent(player, GameEvent.SHEAR, pos);
             worldIn.setBlock(pos, state.setValue(MUSHROOMS, state.getValue(MUSHROOMS) - 1), 2);
             worldIn.playSound(null, pos, HabitatSoundEvents.FAIRY_RING_MUSHROOM_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
@@ -115,6 +117,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
                 player.getItemInHand(handIn).shrink(1);
             worldIn.setBlock(pos, state.setValue(MUSHROOMS, state.getValue(MUSHROOMS) + 1), 2);
             worldIn.playSound(null, pos, SoundType.GRASS.getPlaceSound(), SoundSource.BLOCKS, SoundType.GRASS.getVolume() + 1.0F / 2.0F, SoundType.GRASS.getPitch() * 0.8F);
+            worldIn.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
         if (player.getItemInHand(handIn).getItem() == Items.REDSTONE && !state.getValue(DUSTED)) {
@@ -123,6 +126,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
             worldIn.setBlock(pos, state.setValue(DUSTED, true), 2);
             worldIn.addParticle(DustParticleOptions.REDSTONE, pos.getX() + 0.5D, pos.getY() + 0.125D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
             worldIn.playSound(null, pos, HabitatSoundEvents.FAIRY_RING_MUSHROOM_DUST.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
+            worldIn.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
         return super.use(state, worldIn, pos, player, handIn, hit);

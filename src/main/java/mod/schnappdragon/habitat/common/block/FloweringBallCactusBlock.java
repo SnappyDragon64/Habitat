@@ -11,6 +11,7 @@ import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
@@ -35,6 +36,7 @@ public class FloweringBallCactusBlock extends AbstractBallCactusBlock {
             player.getItemInHand(handIn).hurtAndBreak(1, player, (playerIn) -> {
                 playerIn.broadcastBreakEvent(handIn);
             });
+            worldIn.gameEvent(player, GameEvent.SHEAR, pos);
             worldIn.setBlock(pos, getColor().getBallCactus().defaultBlockState(), 2);
             worldIn.playSound(null, pos, HabitatSoundEvents.FLOWERING_BALL_CACTUS_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);

@@ -40,6 +40,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -159,6 +160,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
         if (!worldIn.isClientSide) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RafflesiaBlockEntity rafflesia && !state.getValue(ON_COOLDOWN) && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
+                worldIn.gameEvent(entityIn, GameEvent.BLOCK_PRESS, pos);
                 createCloud(worldIn, pos, rafflesia.Effects, entityIn instanceof LivingEntity living ? living : null);
                 worldIn.setBlockAndUpdate(pos, state.setValue(ON_COOLDOWN, true).setValue(HAS_STEW, false));
                 ListTag Effects = new ListTag();
@@ -188,6 +190,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
                 worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_SLURP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                 ((ServerLevel) worldIn).sendParticles(getParticle(rafflesia.Effects), pos.getX() + 0.5D + (2 * worldIn.random.nextDouble() - 1.0F) / 3.0D, pos.getY() + 0.25F + worldIn.random.nextDouble() / 2, pos.getZ() + 0.5D + (2 * worldIn.random.nextDouble() - 1.0F) / 3.0D, 0, 0.0D, 0.1D, 0.0D, 1.0D);
             }
+            worldIn.gameEvent(player, GameEvent.FLUID_PLACE, pos);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
         } else if (stack.getItem() == Items.BOWL && state.getValue(HAS_STEW)) {
             if (!worldIn.isClientSide && worldIn.getBlockEntity(pos) instanceof RafflesiaBlockEntity rafflesia) {
@@ -202,6 +205,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
                 player.setItemInHand(handIn, ItemUtils.createFilledResult(stack, player, stew, false));
                 worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_FILL_BOWL.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             }
+            worldIn.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
         return super.use(state, worldIn, pos, player, handIn, hit);
@@ -257,6 +261,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
     }
 
     private void cooldownReset(ServerLevel worldIn, BlockPos pos, BlockState state) {
+        worldIn.gameEvent(GameEvent.BLOCK_UNPRESS, pos);
         worldIn.setBlockAndUpdate(pos, state.setValue(ON_COOLDOWN, false));
         worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_POP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
     }

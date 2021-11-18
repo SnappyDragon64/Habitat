@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
@@ -77,6 +78,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock, Ha
                 player.getItemInHand(handIn).hurtAndBreak(1, player, (playerIn) -> {
                     playerIn.broadcastBreakEvent(handIn);
                 });
+                worldIn.gameEvent(player, GameEvent.SHEAR, pos);
                 worldIn.setBlock(pos, state.setValue(AGE, 3), 2);
                 worldIn.playSound(null, pos, HabitatSoundEvents.KABLOOM_BUSH_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             } else
@@ -116,6 +118,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock, Ha
     private void dropFruit(BlockState state, Level worldIn, BlockPos pos, @Nullable Entity activator, boolean replaceBush, boolean setFire) {
         if (!worldIn.isClientSide) {
             if (replaceBush) {
+                worldIn.gameEvent(activator, GameEvent.BLOCK_CHANGE, pos);
                 worldIn.setBlock(pos, state.setValue(AGE, 3), 2);
                 worldIn.playSound(null, pos, HabitatSoundEvents.KABLOOM_BUSH_RUSTLE.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             }
