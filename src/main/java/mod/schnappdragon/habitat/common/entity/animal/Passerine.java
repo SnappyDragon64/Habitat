@@ -177,7 +177,7 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     @Override
-    public boolean causeFallDamage(float f0, float f1, DamageSource source) {
+    public boolean causeFallDamage(float f, float f1, DamageSource source) {
         return false;
     }
 

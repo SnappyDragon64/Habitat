@@ -9,6 +9,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 
 public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	private final ModelPart root;
@@ -38,15 +39,15 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
-		partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -3.0F, -2.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.001F)), PartPose.offset(0.0F, -4.0F + 24.0F, -2.0F));
-		partdefinition.addOrReplaceChild("crest", CubeListBuilder.create().texOffs(22, 2).addBox(0.0F, -6.0F, -2.0F, 0.0F, 5.0F, 5.0F), PartPose.offset(0.0F, -4.0F + 24.0F, -2.0F));
-		partdefinition.addOrReplaceChild("beak", CubeListBuilder.create().texOffs(0, 0).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 1.0F, 1.0F), PartPose.offset(0.0F, -4.0F + 24.0F, -2.0F));
-		partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(16, 0).addBox(-2.0F, -1.5F, -2.0F, 4.0F, 3.0F, 4.0F), PartPose.offsetAndRotation(0.0F, -2.5F + 24.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
-		partdefinition.addOrReplaceChild("right_wing", CubeListBuilder.create().texOffs(0, 8).addBox(-1.0F, -1.0F, -1.0F, 1.0F, 3.0F, 4.0F), PartPose.offsetAndRotation(-2.0F, -3.0F + 24.0F, -1.0F, -0.1963F, 0.0F, 0.0F));
-		partdefinition.addOrReplaceChild("left_wing", CubeListBuilder.create().texOffs(0, 8).addBox(0.0F, -1.0F, -1.0F, 1.0F, 3.0F, 4.0F), PartPose.offsetAndRotation(2.0F, -3.0F + 24.0F, -1.0F, -0.1963F, 0.0F, 0.0F));
-		partdefinition.addOrReplaceChild("right_foot", CubeListBuilder.create().texOffs(12, 0).addBox(-2.0F, 0.0F, -2.0F, 2.0F, 1.0F, 2.0F), PartPose.offsetAndRotation(0.0F, -1.0F + 24.0F, 1.0F, 0.0F, 0.2618F, 0.0F));
-		partdefinition.addOrReplaceChild("left_foot", CubeListBuilder.create().texOffs(12, 0).mirror().addBox(0.0F, 0.0F, -2.0F, 2.0F, 1.0F, 2.0F), PartPose.offsetAndRotation(0.0F, -1.0F + 24.0F, 1.0F, 0.0F, -0.2618F, 0.0F));
-		partdefinition.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(4, 8).addBox(-2.0F, 0.0F, -1.0F, 4.0F, 0.0F, 6.0F), PartPose.offsetAndRotation(0.0F, -2.0F + 24.0F, 2.0F, 0.3927F, 0.0F, 0.0F));
+		partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -3.0F, -2.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.001F)), PartPose.offset(0.0F, 20.0F, -2.0F));
+		partdefinition.addOrReplaceChild("crest", CubeListBuilder.create().texOffs(22, 2).addBox(0.0F, -6.0F, -2.0F, 0.0F, 5.0F, 5.0F), PartPose.offset(0.0F, 20.0F, -2.0F));
+		partdefinition.addOrReplaceChild("beak", CubeListBuilder.create().texOffs(0, 0).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 1.0F, 1.0F), PartPose.offset(0.0F, 20.0F, -2.0F));
+		partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(16, 0).addBox(-2.0F, -1.5F, -2.0F, 4.0F, 3.0F, 4.0F), PartPose.offset(0.0F, 21.5F, 0.0F));
+		partdefinition.addOrReplaceChild("right_wing", CubeListBuilder.create().texOffs(0, 8).addBox(-1.0F, -1.0F, -1.0F, 1.0F, 3.0F, 4.0F), PartPose.offset(-2.0F, 21.0F, -1.0F));
+		partdefinition.addOrReplaceChild("left_wing", CubeListBuilder.create().texOffs(0, 8).addBox(0.0F, -1.0F, -1.0F, 1.0F, 3.0F, 4.0F), PartPose.offset(2.0F, 21.0F, -1.0F));
+		partdefinition.addOrReplaceChild("right_foot", CubeListBuilder.create().texOffs(12, 0).addBox(-2.0F, 0.0F, -2.0F, 2.0F, 1.0F, 2.0F), PartPose.offset(0.0F, 23.0F, 1.0F));
+		partdefinition.addOrReplaceChild("left_foot", CubeListBuilder.create().texOffs(12, 0).mirror().addBox(0.0F, 0.0F, -2.0F, 2.0F, 1.0F, 2.0F), PartPose.offset(0.0F, 23.0F, 1.0F));
+		partdefinition.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(4, 8).addBox(-2.0F, 0.0F, -1.0F, 4.0F, 0.0F, 6.0F), PartPose.offset(0.0F, 22.0F, 2.0F));
 		return LayerDefinition.create(meshdefinition, 32, 16);
 	}
 
@@ -55,10 +56,59 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	}
 
 	@Override
-	public void prepareMobModel(Passerine passerine, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+	public void prepareMobModel(Passerine passerine, float limbSwing, float limbSwingAmount, float partialTick) {
+		if (passerine.isFlying()) {
+			this.body.xRot = -0.3927F;
+			this.rightWing.xRot = -0.5236F;
+			this.leftWing.xRot = -0.5236F;
+			this.rightFoot.xRot = 0.2618F;
+			this.leftFoot.xRot = 0.2618F;
+			this.rightFoot.yRot = 0.1571F;
+			this.leftFoot.yRot = -0.1571F;
+			this.tail.xRot = -0.2618F;
+		} else {
+			this.body.xRot = -0.0873F;
+			this.rightWing.xRot = -0.1963F;
+			this.leftWing.xRot = -0.1963F;
+			this.rightFoot.yRot = 0.1745F;
+			this.leftFoot.yRot = -0.1745F;
+			this.tail.xRot = 0.3927F;
+		}
 	}
 
 	public void setupAnim(Passerine passerine, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		// after entity
+		float f = headPitch * ((float) Math.PI / 180F);
+		float f1 = netHeadYaw * ((float) Math.PI / 180F);
+
+		this.head.xRot = f;
+		this.crest.xRot = f;
+		this.beak.xRot = f;
+
+		this.head.yRot = f1;
+		this.crest.yRot = f1;
+		this.beak.yRot = f1;
+
+		if (passerine.isFlying()) {
+			float f2 = ageInTicks * 0.2F;
+			float f3 = ageInTicks * 0.8F;
+
+			//this.head.y = f2;
+			//this.crest.y = f2;
+			//this.beak.y = f2;
+			//this.body.y = f2;
+			//this.leftWing.y = f2;
+			//this.rightWing.y = f2;
+			//this.leftFoot.y = f2;
+			//this.rightFoot.y = f2;
+			//this.tail.y = f2;
+
+			this.tail.xRot += Mth.cos(limbSwing * 0.6662F) * 0.2F * limbSwingAmount;
+
+			this.rightWing.zRot = 0.0873F + f3;
+			this.leftWing.zRot = -0.0873F - f3;
+		} else {
+			this.rightFoot.xRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+			this.leftFoot.xRot += Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+		}
 	}
 }
