@@ -83,6 +83,8 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 			this.leftWing.xRot = -0.1963F;
 			this.rightWing.zRot = 0.0F;
 			this.leftWing.zRot = 0.0F;
+			this.rightFoot.xRot = 0.0F;
+			this.leftFoot.xRot = 0.0F;
 			this.rightFoot.yRot = 0.1745F;
 			this.leftFoot.yRot = -0.1745F;
 			this.tail.xRot = 0.3927F;
