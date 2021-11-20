@@ -4,6 +4,7 @@ import mod.schnappdragon.habitat.client.model.PasserineModel;
 import mod.schnappdragon.habitat.client.renderer.HabitatModelLayers;
 import mod.schnappdragon.habitat.common.entity.animal.Passerine;
 import mod.schnappdragon.habitat.core.Habitat;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +20,7 @@ public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Pas
             new ResourceLocation(Habitat.MODID, "textures/entity/passerine/eurasian_bullfinch.png"),
             new ResourceLocation(Habitat.MODID, "textures/entity/passerine/red_cardinal.png"),
     };
+    public static final ResourceLocation PASSERINE_BERDLY_LOCATION = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/berdly.png");
 
     public PasserineRenderer(EntityRendererProvider.Context context) {
         super(context, new PasserineModel<>(context.bakeLayer(HabitatModelLayers.PASSERINE)), 0.25F);
@@ -26,7 +28,11 @@ public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Pas
 
     @Override
     public ResourceLocation getTextureLocation(Passerine passerine) {
-        return PASSERINE_LOCATIONS[passerine.getVariant()];
+        String s = ChatFormatting.stripFormatting(passerine.getName().getString());
+        if ("Berdly".equals(s))
+            return PASSERINE_BERDLY_LOCATION;
+        else
+            return PASSERINE_LOCATIONS[passerine.getVariant()];
     }
 
     @Override

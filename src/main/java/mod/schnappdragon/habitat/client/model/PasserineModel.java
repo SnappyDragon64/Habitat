@@ -1,6 +1,7 @@
 package mod.schnappdragon.habitat.client.model;
 
 import mod.schnappdragon.habitat.common.entity.animal.Passerine;
+import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -61,15 +62,27 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 			this.body.xRot = -0.3927F;
 			this.rightWing.xRot = -0.5236F;
 			this.leftWing.xRot = -0.5236F;
-			this.rightFoot.xRot = 0.2618F;
-			this.leftFoot.xRot = 0.2618F;
+			this.rightFoot.xRot = -0.5236F;
+			this.leftFoot.xRot = -0.5236F;
 			this.rightFoot.yRot = 0.1571F;
 			this.leftFoot.yRot = -0.1571F;
 			this.tail.xRot = -0.2618F;
 		} else {
+			this.head.y = 20.0F;
+			this.crest.y = 20.0F;
+			this.beak.y = 20.0F;
+			this.body.y = 21.5F;
+			this.rightWing.y = 21.0F;
+			this.leftWing.y = 21.0F;
+			this.rightFoot.y = 23.0F;
+			this.leftFoot.y = 23.0F;
+			this.tail.y = 22.0F;
+
 			this.body.xRot = -0.0873F;
 			this.rightWing.xRot = -0.1963F;
 			this.leftWing.xRot = -0.1963F;
+			this.rightWing.zRot = 0.0F;
+			this.leftWing.zRot = 0.0F;
 			this.rightFoot.yRot = 0.1745F;
 			this.leftFoot.yRot = -0.1745F;
 			this.tail.xRot = 0.3927F;
@@ -89,23 +102,22 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 		this.beak.yRot = f1;
 
 		if (passerine.isFlying()) {
-			float f2 = ageInTicks * 0.2F;
-			float f3 = ageInTicks * 0.8F;
+			float f2 = ageInTicks * 0.3F;
 
-			//this.head.y = f2;
-			//this.crest.y = f2;
-			//this.beak.y = f2;
-			//this.body.y = f2;
-			//this.leftWing.y = f2;
-			//this.rightWing.y = f2;
-			//this.leftFoot.y = f2;
-			//this.rightFoot.y = f2;
-			//this.tail.y = f2;
+			this.head.y = 20.0F + f2;
+			this.crest.y = 20.0F + f2;
+			this.beak.y = 20.0F + f2;
+			this.body.y = 21.5F + f2;
+			this.rightWing.y = 21.0F + f2;
+			this.leftWing.y = 21.0F + f2;
+			this.rightFoot.y = 23.0F + f2;
+			this.leftFoot.y = 23.0F + f2;
+			this.tail.y = 22.0F + f2;
 
-			this.tail.xRot += Mth.cos(limbSwing * 0.6662F) * 0.2F * limbSwingAmount;
+			this.tail.xRot += Mth.cos(limbSwing * 0.6662F) * 0.35F * limbSwingAmount;
 
-			this.rightWing.zRot = 0.0873F + f3;
-			this.leftWing.zRot = -0.0873F - f3;
+			this.rightWing.zRot = 0.2618F + ageInTicks;
+			this.leftWing.zRot = -0.2618F - ageInTicks;
 		} else {
 			this.rightFoot.xRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
 			this.leftFoot.xRot += Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;

@@ -69,8 +69,8 @@ public class Passerine extends Animal implements FlyingAnimal {
     public static AttributeSupplier.Builder registerAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5.0D)
-                .add(Attributes.FLYING_SPEED, 0.4F)
-                .add(Attributes.MOVEMENT_SPEED, 0.2F);
+                .add(Attributes.FLYING_SPEED, 0.6F)
+                .add(Attributes.MOVEMENT_SPEED, 0.3F);
     }
 
     protected PathNavigation createNavigation(Level pLevel) {
@@ -112,6 +112,10 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
     }
 
+    public boolean isFlying() {
+        return !this.onGround;
+    }
+
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(HabitatItems.PASSERINE_SPAWN_EGG.get());
@@ -120,11 +124,6 @@ public class Passerine extends Animal implements FlyingAnimal {
     @Override
     public Vec3 getLeashOffset() {
         return new Vec3(0.0D, 0.5F * this.getEyeHeight(), this.getBbWidth() * 0.3F);
-    }
-
-    @Override
-    public boolean isFlying() {
-        return !this.onGround;
     }
 
     /*
