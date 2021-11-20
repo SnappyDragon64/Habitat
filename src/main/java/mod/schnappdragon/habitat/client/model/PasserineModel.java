@@ -92,29 +92,26 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	}
 
 	public void setupAnim(Passerine passerine, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		float f = headPitch * ((float) Math.PI / 180F);
-		float f1 = netHeadYaw * ((float) Math.PI / 180F);
+		this.head.xRot = headPitch * ((float) Math.PI / 180F);
+		this.crest.xRot = this.head.xRot;
+		this.beak.xRot = this.head.xRot;
 
-		this.head.xRot = f;
-		this.crest.xRot = f;
-		this.beak.xRot = f;
-
-		this.head.yRot = f1;
-		this.crest.yRot = f1;
-		this.beak.yRot = f1;
+		this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
+		this.crest.yRot = this.head.yRot;
+		this.beak.yRot = this.head.yRot;
 
 		if (passerine.isFlying()) {
-			float f2 = ageInTicks * 0.3F;
+			float f = ageInTicks * 0.3F;
 
-			this.head.y = 20.0F + f2;
-			this.crest.y = 20.0F + f2;
-			this.beak.y = 20.0F + f2;
-			this.body.y = 21.5F + f2;
-			this.rightWing.y = 21.0F + f2;
-			this.leftWing.y = 21.0F + f2;
-			this.rightFoot.y = 23.0F + f2;
-			this.leftFoot.y = 23.0F + f2;
-			this.tail.y = 22.0F + f2;
+			this.head.y = 20.0F + f;
+			this.crest.y = 20.0F + f;
+			this.beak.y = 20.0F + f;
+			this.body.y = 21.5F + f;
+			this.rightWing.y = 21.0F + f;
+			this.leftWing.y = 21.0F + f;
+			this.rightFoot.y = 23.0F + f;
+			this.leftFoot.y = 23.0F + f;
+			this.tail.y = 22.0F + f;
 
 			this.tail.xRot += Mth.cos(limbSwing * 0.6662F) * 0.35F * limbSwingAmount;
 
