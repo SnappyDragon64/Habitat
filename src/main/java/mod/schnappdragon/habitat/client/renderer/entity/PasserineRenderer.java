@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.animal.Parrot;
 
 public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Passerine>> {
     public static final ResourceLocation[] PASSERINE_LOCATIONS = new ResourceLocation[]{
@@ -37,8 +36,8 @@ public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Pas
 
     @Override
     public float getBob(Passerine passerine, float partialTicks) {
-        float f = Mth.lerp(partialTicks, passerine.oFlap, passerine.flap);
-        float f1 = Mth.lerp(partialTicks, passerine.oFlapSpeed, passerine.flapSpeed);
+        float f = Mth.lerp(partialTicks, passerine.initialFlap, passerine.flap);
+        float f1 = Mth.lerp(partialTicks, passerine.initialFlapSpeed, passerine.flapSpeed);
         return (Mth.sin(f) + 1.0F) * f1;
     }
 }

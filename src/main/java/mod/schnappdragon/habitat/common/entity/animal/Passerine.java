@@ -46,8 +46,8 @@ public class Passerine extends Animal implements FlyingAnimal {
     private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     public float flap;
     public float flapSpeed;
-    public float oFlapSpeed;
-    public float oFlap;
+    public float initialFlapSpeed;
+    public float initialFlap;
     private float flapping = 1.0F;
     private float nextFlap = 1.0F;
 
@@ -73,6 +73,20 @@ public class Passerine extends Animal implements FlyingAnimal {
                 .add(Attributes.MOVEMENT_SPEED, 0.3F);
     }
 
+    @Override
+    public ItemStack getPickedResult(HitResult target) {
+        return new ItemStack(HabitatItems.PASSERINE_SPAWN_EGG.get());
+    }
+
+    @Override
+    public Vec3 getLeashOffset() {
+        return new Vec3(0.0D, 0.5F * this.getEyeHeight(), this.getBbWidth() * 0.3F);
+    }
+
+    /*
+     * Flying Methods
+     */
+
     protected PathNavigation createNavigation(Level pLevel) {
         FlyingPathNavigation flyingpathnavigation = new FlyingPathNavigation(this, pLevel);
         flyingpathnavigation.setCanOpenDoors(false);
@@ -87,19 +101,17 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private void calculateFlapping() {
-        this.oFlap = this.flap;
-        this.oFlapSpeed = this.flapSpeed;
+        this.initialFlap = this.flap;
+        this.initialFlapSpeed = this.flapSpeed;
         this.flapSpeed = (float) ((double) this.flapSpeed + (double) (!this.onGround && !this.isPassenger() ? 4 : -1) * 0.3D);
         this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
-        if (!this.onGround && this.flapping < 1.0F) {
+        if (!this.onGround && this.flapping < 1.0F)
             this.flapping = 1.0F;
-        }
 
         this.flapping = (float) ((double) this.flapping * 0.9D);
         Vec3 vec3 = this.getDeltaMovement();
-        if (!this.onGround && vec3.y < 0.0D) {
+        if (!this.onGround && vec3.y < 0.0D)
             this.setDeltaMovement(vec3.multiply(1.0D, 0.6D, 1.0D));
-        }
 
         this.flap += this.flapping * 2.0F;
     }
@@ -114,16 +126,6 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     public boolean isFlying() {
         return !this.onGround;
-    }
-
-    @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(HabitatItems.PASSERINE_SPAWN_EGG.get());
-    }
-
-    @Override
-    public Vec3 getLeashOffset() {
-        return new Vec3(0.0D, 0.5F * this.getEyeHeight(), this.getBbWidth() * 0.3F);
     }
 
     /*
