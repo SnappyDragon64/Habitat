@@ -27,11 +27,7 @@ public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Pas
 
     @Override
     public ResourceLocation getTextureLocation(Passerine passerine) {
-        String s = ChatFormatting.stripFormatting(passerine.getName().getString());
-        if ("Berdly".equals(s))
-            return PASSERINE_BERDLY_LOCATION;
-        else
-            return PASSERINE_LOCATIONS[passerine.getVariant()];
+        return passerine.isBerdly() ? PASSERINE_BERDLY_LOCATION : PASSERINE_LOCATIONS[passerine.getVariant()];
     }
 
     @Override

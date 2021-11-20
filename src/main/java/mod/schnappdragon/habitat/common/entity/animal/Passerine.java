@@ -4,9 +4,12 @@ import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.core.particles.FeatherParticleOption;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
+import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -29,6 +32,7 @@ import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -225,6 +229,24 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     private static Vector3f unpackColor(int packed) {
         return new Vector3f(Vec3.fromRGB24(packed));
+    }
+
+    /*
+     * Berdly Methods
+     */
+
+    public boolean isBerdly() {
+        return "Berdly".equals(ChatFormatting.stripFormatting(this.getName().getString()));
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        super.die(source);
+
+        if (!this.level.isClientSide && this.isBerdly() && this.dead && source == DamageSource.FREEZE && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES)) {
+            this.getCombatTracker().recordDamage(source, this.getHealth(), 1.0F);
+            ((ServerLevel) this.level).getServer().getPlayerList().broadcastMessage(this.getCombatTracker().getDeathMessage(), ChatType.SYSTEM, Util.NIL_UUID);
+        }
     }
 
     /*
