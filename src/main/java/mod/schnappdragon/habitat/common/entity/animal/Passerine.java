@@ -1,8 +1,11 @@
 package mod.schnappdragon.habitat.common.entity.animal;
 
+import com.mojang.math.Vector3f;
+import mod.schnappdragon.habitat.core.particles.FeatherParticleOption;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -96,6 +99,9 @@ public class Passerine extends Animal implements FlyingAnimal {
     public void aiStep() {
         super.aiStep();
         this.calculateFlapping();
+
+        if (!this.level.isClientSide && this.isFlying() && this.flapSpeed == 1.0F && random.nextInt(4) == 0)
+            this.level.broadcastEntityEvent(this, (byte) 11);
     }
 
     private void calculateFlapping() {
@@ -136,7 +142,6 @@ public class Passerine extends Animal implements FlyingAnimal {
 
         if (stack.is(HabitatItemTags.PASSERINE_FOOD)) {
             if (!this.level.isClientSide) {
-                this.setPersistenceRequired();
                 if (!player.getAbilities().instabuild)
                     stack.shrink(1);
 
@@ -168,6 +173,58 @@ public class Passerine extends Animal implements FlyingAnimal {
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, Random random) {
         BlockState state = worldIn.getBlockState(pos.below());
         return (state.is(BlockTags.LEAVES) || state.is(Blocks.GRASS_BLOCK) || state.is(BlockTags.LOGS) || state.is(Blocks.AIR)) && worldIn.getRawBrightness(pos, 0) > 8;
+    }
+
+    /*
+     * Hurt Method
+     */
+
+    @Override
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        if (this.isInvulnerableTo(pSource)) {
+            return false;
+        } else {
+            this.level.broadcastEntityEvent(this, (byte) 12);
+            return super.hurt(pSource, pAmount);
+        }
+    }
+
+    /*
+     * Particle Methods
+     */
+
+    public void handleEntityEvent(byte id) {
+        switch (id) {
+            case 11 -> spawnFeathers(this.getParticle(), 1);
+            case 12 -> spawnFeathers(this.getParticle(), 2);
+            default -> super.handleEntityEvent(id);
+        }
+    }
+
+    protected void spawnFeathers(ParticleOptions particle, int number) {
+        for (int i = 0; i < number; i++) {
+            this.level.addParticle(particle, this.getRandomX(1.0D), this.getRandomY(), this.getRandomZ(1.0D), 0.0D, 0.0D, 0.0D);
+        }
+    }
+
+    private ParticleOptions getParticle() {
+        if (this.isBerdly()) return new FeatherParticleOption(unpackColor(4699131), 0.33F);
+
+        ParticleOptions particle;
+        switch (this.getVariant()) {
+            case 0 -> particle = new FeatherParticleOption(unpackColor(16052497), 0.33F);
+            case 1 -> particle = new FeatherParticleOption(unpackColor(16777215), 0.33F);
+            case 2 -> particle = new FeatherParticleOption(unpackColor(7488818), 0.33F);
+            case 3 -> particle = new FeatherParticleOption(unpackColor(5012138), 0.33F);
+            case 4 -> particle = new FeatherParticleOption(unpackColor(796479), 0.33F);
+            case 5 -> particle = new FeatherParticleOption(unpackColor(13183262), 0.33F);
+            default -> particle = new FeatherParticleOption(unpackColor(0), 0.33F);
+        }
+        return particle;
+    }
+
+    private static Vector3f unpackColor(int packed) {
+        return new Vector3f(Vec3.fromRGB24(packed));
     }
 
     /*

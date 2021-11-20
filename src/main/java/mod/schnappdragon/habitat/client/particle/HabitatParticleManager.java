@@ -19,6 +19,7 @@ public class HabitatParticleManager {
         registerFactory(HabitatParticleTypes.FALLING_SLIME.get(), FallingSlimeParticle.FallingSlimeFactory::new);
         registerFactory(HabitatParticleTypes.LANDING_SLIME.get(), LandingSlimeParticle.LandingSlimeFactory::new);
         registerFactory(HabitatParticleTypes.FAIRY_RING_SPORE.get(), FairyRingSporeParticle.Factory::new);
+        registerFactory(HabitatParticleTypes.FEATHER.get(), FeatherParticle.Provider::new);
     }
 
     private static <T extends ParticleOptions> void registerFactory(ParticleType<T> particle, ParticleEngine.SpriteParticleRegistration<T> factory) {
