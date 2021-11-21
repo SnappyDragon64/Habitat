@@ -11,20 +11,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 
 public class FeatherParticle<T extends FeatherParticleOption> extends TextureSheetParticle {
+    boolean stop;
+
     private FeatherParticle(ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ, T particle) {
         super(world, x, y, z);
         this.hasPhysics = true;
-        this.friction = 0.98F;
         this.lifetime = 360 + this.random.nextInt(40);
+        this.scale(particle.getScale());
         this.quadSize = particle.getScale() * 0.3F;
         this.gravity = 0.001F;
         float f = 0.98F + this.random.nextFloat() * 0.02F;
         this.rCol = particle.getColor().x() * f;
         this.gCol = particle.getColor().y() * f;
         this.bCol = particle.getColor().z() * f;
-        this.xd = motionX;
-        this.yd = motionY;
-        this.zd = motionZ;
     }
 
     public ParticleRenderType getRenderType() {
@@ -40,15 +39,13 @@ public class FeatherParticle<T extends FeatherParticleOption> extends TextureShe
             this.remove();
         else if (!(this.onGround || this.level.isFluidAtPosition(new BlockPos(this.x, this.y, this.z), (fluidState) -> !fluidState.isEmpty()))) {
             float f = age * ((float) Math.PI / 18.0F);
-            this.xd += (double) Mth.cos(f) * 0.02D;
+            this.xd += stop ? this.random.nextGaussian() * 0.0005D : (double) Mth.cos(f) * 0.02D;
             this.yd -= this.gravity * (1.0D + (double) Mth.cos(f * 2.0F));
             this.zd += this.random.nextGaussian() * 0.0005D;
 
             this.move(this.xd, this.yd, this.zd);
 
-            this.xd *= this.friction;
-            this.yd *= this.friction;
-            this.zd *= this.friction;
+            if (this.x == this.xo) stop = true;
         } else {
             this.age++;
             this.xd *= 0.7F;
