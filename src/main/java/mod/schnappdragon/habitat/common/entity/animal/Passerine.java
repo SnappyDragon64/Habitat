@@ -207,7 +207,7 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     protected void spawnFeathers(ParticleOptions particle, int number) {
         for (int i = 0; i < number; i++)
-            this.level.addParticle(particle, this.getRandomX(0.5D), this.getY(this.random.nextDouble() * 0.8D), this.getRandomZ(0.5D), this.random.nextGaussian() * 0.02D, 0.0D, this.random.nextGaussian() * 0.02D);
+            this.level.addParticle(particle, this.getRandomX(0.5D), this.getY(this.random.nextDouble() * 0.8D), this.getRandomZ(0.5D), this.random.nextGaussian() * 0.01D, 0.0D, this.random.nextGaussian() * 0.01D);
     }
 
     private ParticleOptions getParticle() {
