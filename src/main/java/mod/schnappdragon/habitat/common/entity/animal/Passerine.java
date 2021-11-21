@@ -128,7 +128,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     protected void onFlap() {
         this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
 
-        if (random.nextInt(45) == 0)
+        if (random.nextInt(30) == 0)
             this.level.broadcastEntityEvent(this, (byte) 11);
     }
 
@@ -188,7 +188,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         if (this.isInvulnerableTo(source))
             return false;
         else {
-            if (source.getDirectEntity() != null) this.level.broadcastEntityEvent(this, (byte) 12);
+            if (source.getDirectEntity() != null && !this.isInWater()) this.level.broadcastEntityEvent(this, (byte) 12);
             return super.hurt(source, amount);
         }
     }
@@ -207,7 +207,7 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     protected void spawnFeathers(ParticleOptions particle, int number) {
         for (int i = 0; i < number; i++)
-            this.level.addParticle(particle, this.getRandomX(0.8D), this.getY(this.random.nextDouble() * 0.8D), this.getRandomZ(0.8D), 0.0D, 0.0D, 0.0D);
+            this.level.addParticle(particle, this.getRandomX(0.5D), this.getY(this.random.nextDouble() * 0.8D), this.getRandomZ(0.5D), this.random.nextGaussian() * 0.02D, 0.0D, this.random.nextGaussian() * 0.02D);
     }
 
     private ParticleOptions getParticle() {
