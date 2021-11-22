@@ -68,11 +68,11 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new Pooka.PanicGoal(this, 2.2D));
         this.targetSelector.addGoal(1, (new Pooka.HurtByTargetGoal(this)).setAlertOthers());
-        this.targetSelector.addGoal(2, new Pooka.NearestAttackableTargetGoal<>(this, Mob.class, 10, true, false, livingEntity -> HabitatEntityTypeTags.POOKA_ATTACK_TARGETS.contains(livingEntity.getType())));
+        this.targetSelector.addGoal(2, new Pooka.NearestAttackableTargetGoal<>(this, Mob.class, 10, true, false, mob -> mob.getType().is(HabitatEntityTypeTags.POOKA_ATTACK_TARGETS)));
         this.goalSelector.addGoal(2, new BreedGoal(this, 0.8D));
         this.goalSelector.addGoal(3, new Pooka.TemptGoal(this, 1.25D, Ingredient.of(HabitatItemTags.POOKA_FOOD), false));
         this.goalSelector.addGoal(4, new Pooka.AttackGoal(this));
-        this.goalSelector.addGoal(4, new Pooka.AvoidEntityGoal<>(this, Mob.class, 10.0F, 2.2D, 2.2D, livingEntity -> HabitatEntityTypeTags.PACIFIED_POOKA_SCARED_BY.contains(livingEntity.getType())));
+        this.goalSelector.addGoal(4, new Pooka.AvoidEntityGoal<>(this, Mob.class, 10.0F, 2.2D, 2.2D, mob -> mob.getType().is(HabitatEntityTypeTags.PACIFIED_POOKA_SCARED_BY)));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.6D));
         this.goalSelector.addGoal(11, new LookAtPlayerGoal(this, Player.class, 10.0F));
     }
