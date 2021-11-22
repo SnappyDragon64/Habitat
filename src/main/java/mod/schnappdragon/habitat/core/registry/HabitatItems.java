@@ -91,7 +91,7 @@ public class HabitatItems {
             () -> new ForgeSpawnEggItem(HabitatEntityTypes.POOKA, 15920353, 16771962, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 
     public static final RegistryObject<Item> PASSERINE_SPAWN_EGG = ITEMS.register("passerine_spawn_egg",
-            () -> new ForgeSpawnEggItem(HabitatEntityTypes.PASSERINE, 16777215, 7488818, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+            () -> new ForgeSpawnEggItem(HabitatEntityTypes.PASSERINE, 796479, 11675961, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 
     private static Item.Properties getProperties(CreativeModeTab group) {
         return new Item.Properties().tab(group);
