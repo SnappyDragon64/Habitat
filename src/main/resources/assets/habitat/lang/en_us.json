@@ -57,6 +57,7 @@
   "item.habitat.dried_ball_cactus": "Dried Ball Cactus",
   "item.habitat.fairy_ring_mushroom_boat": "Fairy Ring Mushroom Boat",
   "item.habitat.pooka_spawn_egg": "Pooka Spawn Egg",
+  "item.habitat.passerine_spawn_egg": "Passerine Spawn Egg",
 
   "item.minecraft.potion.effect.blast_endurance": "Potion of Blast Endurance",
   "item.minecraft.splash_potion.effect.blast_endurance": "Splash Potion of Blast Endurance",
@@ -86,6 +87,7 @@
   "entity.habitat.kabloom_fruit": "Thrown Kabloom Fruit",
   "entity.habitat.fairy_ring_mushroom_boat": "Fairy Ring Mushroom Boat",
   "entity.habitat.pooka": "Pooka",
+  "entity.habitat.passerine": "Passerine",
 
   "habitat.subtitle.block.rafflesia.spew": "Rafflesia spews",
   "habitat.subtitle.block.rafflesia.pop": "Rafflesia pops",

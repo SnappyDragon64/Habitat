@@ -12,6 +12,7 @@ public class HabitatItemTags {
     public static final Named<Item> POOKA_BREEDING_FOOD = makeTag("pooka_breeding_food");
     public static final Named<Item> POOKA_FEEDING_FOOD = makeTag("pooka_feeding_food");
     public static final Named<Item> POOKA_FOOD = makeTag("pooka_food");
+    public static final Named<Item> PASSERINE_FOOD = makeTag("passerine_food");
 
     private static Named<Item> makeTag(String id) {
         return ItemTags.bind(Habitat.MODID + ":" + id);
