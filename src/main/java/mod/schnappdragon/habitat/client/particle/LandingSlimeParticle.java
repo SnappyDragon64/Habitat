@@ -14,10 +14,10 @@ public class LandingSlimeParticle extends DripParticle.DripLandParticle {
         super(world, x, y, z, fluid);
     }
 
-    public static class LandingSlimeFactory implements ParticleProvider<SimpleParticleType> {
+    public static class LandingSlimeProvider implements ParticleProvider<SimpleParticleType> {
         protected final SpriteSet spriteSet;
 
-        public LandingSlimeFactory(SpriteSet spriteSet) {
+        public LandingSlimeProvider(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 

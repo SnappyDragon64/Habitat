@@ -26,10 +26,10 @@ public class FallingSlimeParticle extends DripParticle.FallAndLandParticle {
         }
     }
 
-    public static class FallingSlimeFactory implements ParticleProvider<SimpleParticleType> {
+    public static class FallingSlimeProvider implements ParticleProvider<SimpleParticleType> {
         protected final SpriteSet spriteSet;
 
-        public FallingSlimeFactory(SpriteSet spriteSet) {
+        public FallingSlimeProvider(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 

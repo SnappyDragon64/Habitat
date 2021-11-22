@@ -13,12 +13,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Habitat.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class HabitatParticleManager {
+public class HabitatParticleProviders {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerParticleFactories(ParticleFactoryRegisterEvent event) {
-        registerFactory(HabitatParticleTypes.FALLING_SLIME.get(), FallingSlimeParticle.FallingSlimeFactory::new);
-        registerFactory(HabitatParticleTypes.LANDING_SLIME.get(), LandingSlimeParticle.LandingSlimeFactory::new);
-        registerFactory(HabitatParticleTypes.FAIRY_RING_SPORE.get(), FairyRingSporeParticle.Factory::new);
+        registerFactory(HabitatParticleTypes.FALLING_SLIME.get(), FallingSlimeParticle.FallingSlimeProvider::new);
+        registerFactory(HabitatParticleTypes.LANDING_SLIME.get(), LandingSlimeParticle.LandingSlimeProvider::new);
+        registerFactory(HabitatParticleTypes.FAIRY_RING_SPORE.get(), FairyRingSporeParticle.Provider::new);
         registerFactory(HabitatParticleTypes.FEATHER.get(), FeatherParticle.Provider::new);
     }
 

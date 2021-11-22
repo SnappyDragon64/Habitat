@@ -30,10 +30,11 @@ public class FairyRingSporeParticle extends TextureSheetParticle {
         this.zo = this.z;
         if (this.age++ >= this.lifetime || this.onGround || this.level.isFluidAtPosition(new BlockPos(this.x, this.y, this.z), (fluidState) -> !fluidState.isEmpty()))
             this.remove();
-        else
+        else {
             this.yd -= this.gravity;
-        this.move(this.xd, this.yd, this.zd);
-        this.setSpriteFromAge(this.spriteSetWithAge);
+            this.move(this.xd, this.yd, this.zd);
+            this.setSpriteFromAge(this.spriteSetWithAge);
+        }
     }
 
     public ParticleRenderType getRenderType() {
@@ -44,10 +45,10 @@ public class FairyRingSporeParticle extends TextureSheetParticle {
         return 240;
     }
 
-    public static class Factory implements ParticleProvider<SimpleParticleType> {
+    public static class Provider implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteSet;
 
-        public Factory(SpriteSet spriteSet) {
+        public Provider(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
