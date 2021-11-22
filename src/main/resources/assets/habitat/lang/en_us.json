@@ -116,6 +116,10 @@
   "subtitles.entity.parrot.imitate.pooka": "Parrot squeaks",
 
   "death.attack.habitat.kabloom": "%1$s went kabloom",
+  "death.attack.habitat.kabloom.player": "%1$s went kabloom whilst fighting %2$s",
+  "death.attack.habitat.kabloom.item": "%1$s went kabloom due to %3$s whilst fighting %2$s",
+  "death.attack.habitat.snowgrave": "%1$s was buried in a snow grave",
+  "death.attack.habitat.snowgrave.player": "%1$s was buried in a snow grave by %2$s",
 
   "effect.habitat.blast_endurance": "Blast Endurance",
   "effect.habitat.prickling": "Prickling",
