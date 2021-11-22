@@ -1,6 +1,7 @@
 package mod.schnappdragon.habitat.common.entity.animal;
 
 import com.mojang.math.Vector3f;
+import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.particles.FeatherParticleOption;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
@@ -242,8 +243,8 @@ public class Passerine extends Animal implements FlyingAnimal {
     public void die(DamageSource source) {
         super.die(source);
 
-        if (!this.level.isClientSide && this.isBerdly() && this.dead && source == DamageSource.FREEZE && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES)) {
-            this.getCombatTracker().recordDamage(source, this.getHealth(), 1.0F);
+        if (!this.level.isClientSide && this.dead && this.isBerdly() && source == DamageSource.FREEZE && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES)) {
+            this.getCombatTracker().recordDamage(HabitatDamageSources.SNOWGRAVE, this.getHealth(), this.getMaxHealth());
             ((ServerLevel) this.level).getServer().getPlayerList().broadcastMessage(this.getCombatTracker().getDeathMessage(), ChatType.SYSTEM, Util.NIL_UUID);
         }
     }
