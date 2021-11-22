@@ -31,6 +31,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -281,18 +282,19 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
                 stack.shrink(1);
             int roll = random.nextInt(5);
 
-            if (this.isPacified()) {
-                this.heal((float) stack.getItem().getFoodProperties().getNutrition());
+            if (this.isPacified() && this.getHealth() < this.getMaxHealth()) {
+                FoodProperties food = stack.getItem().getFoodProperties();
+                this.heal(food != null ? food.getNutrition() : 1.0F);
                 this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
-            }
-            else if (this.forgiveTicks == 0 && (this.isBaby() && roll > 0 || roll == 0) && this.isAlone()) {
+                this.level.broadcastEntityEvent(this, (byte) 18);
+            } else if (this.forgiveTicks == 0 && (this.isBaby() && roll > 0 || roll == 0) && this.isAlone()) {
                 this.setPacified(true);
                 this.playSound(HabitatSoundEvents.POOKA_PACIFY.get(), 1.0F, 1.0F);
                 HabitatCriterionTriggers.PACIFY_POOKA.trigger((ServerPlayer) player);
                 this.navigation.stop();
                 this.setTarget(null);
                 this.setLastHurtByMob(null);
-                this.level.broadcastEntityEvent(this, (byte) 11);
+                this.level.broadcastEntityEvent(this, (byte) 18);
             } else {
                 if (this.forgiveTicks > 0)
                     this.forgiveTicks -= this.forgiveTicks * 0.1D;
@@ -491,9 +493,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     public void handleEntityEvent(byte id) {
         switch (id) {
-            case 11 -> spawnParticles(ParticleTypes.HEART, 5, true);
-            case 12 -> spawnParticles(ParticleTypes.SMOKE, 5, true);
-            case 13 -> spawnParticles(ParticleTypes.ANGRY_VILLAGER, 5, true);
+            case 12 -> spawnParticles(ParticleTypes.SMOKE, 7, true);
+            case 13 -> spawnParticles(ParticleTypes.ANGRY_VILLAGER, 7, true);
             case 14 -> spawnParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), 1, false);
             case 15 -> spawnParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), 8, false);
             default -> super.handleEntityEvent(id);
