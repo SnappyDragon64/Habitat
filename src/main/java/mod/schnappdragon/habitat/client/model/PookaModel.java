@@ -109,24 +109,24 @@ public class PookaModel<T extends Pooka> extends EntityModel<T> {
     public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float f = ageInTicks - (float) entityIn.tickCount;
         this.nose.xRot = headPitch * ((float) Math.PI / 180F);
-        this.head.xRot = headPitch * ((float) Math.PI / 180F);
-        this.rightEar.xRot = headPitch * ((float) Math.PI / 180F);
-        this.leftEar.xRot = headPitch * ((float) Math.PI / 180F);
-        this.rightEarStalk.xRot = headPitch * ((float) Math.PI / 180F);
-        this.leftEarStalk.xRot = headPitch * ((float) Math.PI / 180F);
+        this.head.xRot = this.nose.xRot;
+        this.rightEar.xRot = this.nose.xRot;
+        this.leftEar.xRot = this.nose.xRot;
+        this.rightEarStalk.xRot = this.nose.xRot;
+        this.leftEarStalk.xRot = this.nose.xRot;
         this.nose.yRot = netHeadYaw * ((float) Math.PI / 180F);
-        this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
+        this.head.yRot = this.nose.yRot;
         this.rightEar.yRot = this.nose.yRot - 0.2617994F;
         this.leftEar.yRot = this.nose.yRot + 0.2617994F;
-        this.rightEarStalk.yRot = this.nose.yRot - 0.2617994F;
-        this.leftEarStalk.yRot = this.nose.yRot + 0.2617994F;
+        this.rightEarStalk.yRot = this.rightEar.yRot;
+        this.leftEarStalk.yRot = this.leftEar.yRot;
         this.jumpRotation = Mth.sin(entityIn.getJumpCompletion(f) * (float) Math.PI);
         this.leftHaunch.xRot = (this.jumpRotation * 50.0F - 21.0F) * ((float) Math.PI / 180F);
-        this.rightHaunch.xRot = (this.jumpRotation * 50.0F - 21.0F) * ((float) Math.PI / 180F);
+        this.rightHaunch.xRot = this.leftHaunch.xRot;
         this.leftRearFoot.xRot = this.jumpRotation * 50.0F * ((float) Math.PI / 180F);
-        this.rightRearFoot.xRot = this.jumpRotation * 50.0F * ((float) Math.PI / 180F);
+        this.rightRearFoot.xRot = this.leftRearFoot.xRot;
         this.leftFrontLeg.xRot = (this.jumpRotation * -40.0F - 11.0F) * ((float) Math.PI / 180F);
-        this.rightFrontLeg.xRot = (this.jumpRotation * -40.0F - 11.0F) * ((float) Math.PI / 180F);
+        this.rightFrontLeg.xRot = this.leftFrontLeg.xRot;
     }
 
     public void prepareMobModel(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
