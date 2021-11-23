@@ -69,14 +69,14 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PookaPanicGoal(this, 2.2D));
-        this.targetSelector.addGoal(1, (new PookaHurtByTargetGoal(this)).setAlertOthers());
-        this.targetSelector.addGoal(2, new PookaNearestAttackableTargetGoal<>(this, Player.class, true));
-        this.targetSelector.addGoal(2, new PookaNearestAttackableTargetGoal<>(this, Mob.class, 10, true, false, mob -> mob.getType().is(HabitatEntityTypeTags.POOKA_ATTACK_TARGETS)));
+        this.goalSelector.addGoal(1, new PookaPanicGoal(2.2D));
+        this.targetSelector.addGoal(1, (new PookaHurtByTargetGoal()).setAlertOthers());
+        this.targetSelector.addGoal(2, new PookaNearestAttackableTargetGoal<>(Player.class));
+        this.targetSelector.addGoal(2, new PookaNearestAttackableTargetGoal<>(Mob.class, mob -> mob.getType().is(HabitatEntityTypeTags.POOKA_ATTACK_TARGETS)));
         this.goalSelector.addGoal(2, new BreedGoal(this, 0.8D));
-        this.goalSelector.addGoal(3, new PookaTemptGoal(this, 1.25D, Ingredient.of(HabitatItemTags.POOKA_FOOD), false));
-        this.goalSelector.addGoal(4, new PookaMeleeAttackGoal(this));
-        this.goalSelector.addGoal(4, new PookaAvoidEntityGoal<>(this, Mob.class, 10.0F, 2.2D, 2.2D, mob -> mob.getType().is(HabitatEntityTypeTags.PACIFIED_POOKA_SCARED_BY)));
+        this.goalSelector.addGoal(3, new PookaTemptGoal(1.25D, Ingredient.of(HabitatItemTags.POOKA_FOOD), false));
+        this.goalSelector.addGoal(4, new PookaMeleeAttackGoal());
+        this.goalSelector.addGoal(4, new PookaAvoidEntityGoal<>(Mob.class, 10.0F, 2.2D, 2.2D, mob -> mob.getType().is(HabitatEntityTypeTags.PACIFIED_POOKA_SCARED_BY)));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.6D));
         this.goalSelector.addGoal(11, new LookAtPlayerGoal(this, Player.class, 10.0F));
     }
@@ -609,8 +609,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      */
 
     class PookaPanicGoal extends PanicGoal {
-        public PookaPanicGoal(Pooka pooka, double speedIn) {
-            super(pooka, speedIn);
+        public PookaPanicGoal(double speedIn) {
+            super(Pooka.this, speedIn);
         }
 
         @Override
@@ -621,8 +621,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     class PookaTemptGoal extends TemptGoal {
-        public PookaTemptGoal(Pooka pooka, double speed, Ingredient temptItem, boolean scaredByMovement) {
-            super(pooka, speed, temptItem, scaredByMovement);
+        public PookaTemptGoal(double speed, Ingredient temptItem, boolean scaredByMovement) {
+            super(Pooka.this, speed, temptItem, scaredByMovement);
         }
 
         @Override
@@ -641,49 +641,32 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     class PookaHurtByTargetGoal extends HurtByTargetGoal {
-        public PookaHurtByTargetGoal(Pooka pooka) {
-            super(pooka);
+        public PookaHurtByTargetGoal() {
+            super(Pooka.this);
         }
 
         @Override
-        public boolean canUse() {
-            return Pooka.this.isHostile() && super.canUse();
-        }
-
-        @Override
-        protected void alertOthers() {
-            double d0 = this.getFollowDistance();
-            AABB axisalignedbb = AABB.unitCubeFromLowerCorner(this.mob.position()).inflate(d0, 10.0D, d0);
-            List<Pooka> list = this.mob.level.getEntitiesOfClass(Pooka.class, axisalignedbb);
-            Iterator<Pooka> iterator = list.iterator();
-
-            while (true) {
-                Pooka pooka;
-                do {
-                    if (!iterator.hasNext())
-                        return;
-
-                    pooka = iterator.next();
-                }
-                while (this.mob == pooka || pooka.getTarget() != null || pooka.isAlliedTo(this.mob.getLastHurtByMob()));
-
-                if (this.mob.getLastHurtByMob() instanceof Player && pooka.isPacified()) {
+        protected void alertOther(Mob mob, LivingEntity target) {
+            if (mob instanceof Pooka pooka) {
+                if (pooka.isHostile()) {
+                    super.alertOther(mob, target);
+                } else if (pooka.isPacified() && target instanceof Player) {
                     pooka.setState(Pooka.State.HOSTILE);
                     pooka.setForgiveTimer();
                     pooka.level.broadcastEntityEvent(pooka, (byte) 13);
+                    super.alertOther(mob, target);
                 }
-                this.alertOther(pooka, this.mob.getLastHurtByMob());
             }
         }
     }
 
     class PookaNearestAttackableTargetGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
-        public PookaNearestAttackableTargetGoal(Pooka pooka, Class<T> targetClassIn, int targetChanceIn, boolean checkSight, boolean nearbyOnlyIn, @Nullable Predicate<LivingEntity> targetPredicate) {
-            super(pooka, targetClassIn, targetChanceIn, checkSight, nearbyOnlyIn, targetPredicate);
+        public PookaNearestAttackableTargetGoal(Class<T> targetClassIn, @Nullable Predicate<LivingEntity> targetPredicate) {
+            super(Pooka.this, targetClassIn, 10, true, false, targetPredicate);
         }
 
-        public PookaNearestAttackableTargetGoal(Pooka pooka, Class<T> targetClassIn, boolean checkSight) {
-            super(pooka, targetClassIn, checkSight);
+        public PookaNearestAttackableTargetGoal(Class<T> targetClassIn) {
+            super(Pooka.this, targetClassIn, true);
         }
 
         @Override
@@ -693,8 +676,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     class PookaAvoidEntityGoal<T extends LivingEntity> extends AvoidEntityGoal<T> {
-        public PookaAvoidEntityGoal(Pooka pooka, Class<T> entity, float range, double v1, double v2, Predicate<LivingEntity> predicate) {
-            super(pooka, entity, range, v1, v2, predicate);
+        public PookaAvoidEntityGoal(Class<T> entity, float range, double v1, double v2, Predicate<LivingEntity> predicate) {
+            super(Pooka.this, entity, range, v1, v2, predicate);
         }
 
         @Override
@@ -704,8 +687,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     class PookaMeleeAttackGoal extends MeleeAttackGoal {
-        public PookaMeleeAttackGoal(Pooka pooka) {
-            super(pooka, 1.4D, true);
+        public PookaMeleeAttackGoal() {
+            super(Pooka.this, 1.4D, true);
         }
 
         @Override
