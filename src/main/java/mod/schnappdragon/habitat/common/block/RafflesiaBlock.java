@@ -13,7 +13,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -44,6 +43,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
@@ -147,8 +147,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
             }
         }
 
-        int color = PotionUtils.getColor(effectInstances);
-        return new DustParticleOptions(new Vector3f((float) FastColor.ARGB32.red(color) / 255, (float) FastColor.ARGB32.green(color) / 255, (float) FastColor.ARGB32.blue(color) / 255), 1.0F);
+        return new DustParticleOptions(new Vector3f(Vec3.fromRGB24(PotionUtils.getColor(effectInstances))), 1.0F);
     }
 
     /*
@@ -277,7 +276,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
 
     @Override
     public int getAnalogOutputSignal(BlockState state, Level worldIn, BlockPos pos) {
-        return state.getValue(HAS_STEW) ? 1 : 0;
+        return 1;
     }
 
     /*

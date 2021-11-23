@@ -57,9 +57,9 @@ public class FeatherParticle<T extends FeatherParticleOption> extends TextureShe
         if (this.age++ >= this.lifetime || this.level.getFluidState(new BlockPos(this.x, this.y, this.z)).is(FluidTags.LAVA))
             this.remove();
         else if (!this.level.getFluidState(new BlockPos(this.x, this.y, this.z)).isEmpty()) {
-            this.xd *= 0.98D;
+            this.xd *= 0.99D;
             this.yd = 0.0D;
-            this.zd *= 0.98D;
+            this.zd *= 0.99D;
             this.roll = 0.0F;
             this.age++;
         } else {

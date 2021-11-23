@@ -13,6 +13,7 @@ public class FairyRingSporeParticle extends TextureSheetParticle {
         this.spriteSetWithAge = spriteSetWithAge;
         this.lifetime = (int) (60 + random.nextDouble() * 60);
         this.gravity = 0.0001F;
+        this.friction = 0.99F;
         float f = 0.9F + this.random.nextFloat() * 0.1F;
         this.rCol = f;
         this.gCol = f * 0.98F;
@@ -34,6 +35,10 @@ public class FairyRingSporeParticle extends TextureSheetParticle {
             this.yd -= this.gravity;
             this.move(this.xd, this.yd, this.zd);
             this.setSpriteFromAge(this.spriteSetWithAge);
+
+            this.xd *= this.friction;
+            this.yd *= this.friction;
+            this.zd *= this.friction;
         }
     }
 

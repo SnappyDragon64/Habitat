@@ -189,7 +189,8 @@ public class Passerine extends Animal implements FlyingAnimal {
         if (this.isInvulnerableTo(source))
             return false;
         else {
-            if (source.getDirectEntity() != null && !this.isInWater()) this.level.broadcastEntityEvent(this, (byte) 12);
+            if (source.getDirectEntity() != null)
+                this.level.broadcastEntityEvent(this, (byte) 12);
             return super.hurt(source, amount);
         }
     }
