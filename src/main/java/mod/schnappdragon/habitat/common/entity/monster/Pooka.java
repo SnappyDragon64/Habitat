@@ -115,7 +115,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         compound.putInt("AilmentId", this.ailmentId);
         compound.putInt("AilmentDuration", this.ailmentDuration);
         compound.putInt("ForgiveTicks", this.forgiveTicks);
-        compound.putString("State", this.getState().id);
+        compound.putString("State", this.getStateId());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
