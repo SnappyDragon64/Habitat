@@ -28,6 +28,8 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
@@ -67,13 +69,14 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new Pooka.PanicGoal(this, 2.2D));
-        this.targetSelector.addGoal(1, (new Pooka.HurtByTargetGoal(this)).setAlertOthers());
-        this.targetSelector.addGoal(2, new Pooka.NearestAttackableTargetGoal<>(this, Mob.class, 10, true, false, mob -> mob.getType().is(HabitatEntityTypeTags.POOKA_ATTACK_TARGETS)));
+        this.goalSelector.addGoal(1, new PookaPanicGoal(this, 2.2D));
+        this.targetSelector.addGoal(1, (new PookaHurtByTargetGoal(this)).setAlertOthers());
+        this.targetSelector.addGoal(2, new PookaNearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(2, new PookaNearestAttackableTargetGoal<>(this, Mob.class, 10, true, false, mob -> mob.getType().is(HabitatEntityTypeTags.POOKA_ATTACK_TARGETS)));
         this.goalSelector.addGoal(2, new BreedGoal(this, 0.8D));
-        this.goalSelector.addGoal(3, new Pooka.TemptGoal(this, 1.25D, Ingredient.of(HabitatItemTags.POOKA_FOOD), false));
-        this.goalSelector.addGoal(4, new Pooka.AttackGoal(this));
-        this.goalSelector.addGoal(4, new Pooka.AvoidEntityGoal<>(this, Mob.class, 10.0F, 2.2D, 2.2D, mob -> mob.getType().is(HabitatEntityTypeTags.PACIFIED_POOKA_SCARED_BY)));
+        this.goalSelector.addGoal(3, new PookaTemptGoal(this, 1.25D, Ingredient.of(HabitatItemTags.POOKA_FOOD), false));
+        this.goalSelector.addGoal(4, new PookaMeleeAttackGoal(this));
+        this.goalSelector.addGoal(4, new PookaAvoidEntityGoal<>(this, Mob.class, 10.0F, 2.2D, 2.2D, mob -> mob.getType().is(HabitatEntityTypeTags.PACIFIED_POOKA_SCARED_BY)));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.6D));
         this.goalSelector.addGoal(11, new LookAtPlayerGoal(this, Player.class, 10.0F));
     }
@@ -282,7 +285,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
                 stack.shrink(1);
             int roll = random.nextInt(5);
 
-            if (this.isPacified() && this.getHealth() < this.getMaxHealth()) {
+            if (this.isPacified()) {
                 FoodProperties food = stack.getItem().getFoodProperties();
                 this.heal(food != null ? food.getNutrition() : 1.0F);
                 this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
@@ -536,60 +539,46 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      * AI Goals
      */
 
-    static class PanicGoal extends net.minecraft.world.entity.ai.goal.PanicGoal {
-        private final Pooka pooka;
-
-        public PanicGoal(Pooka pooka, double speedIn) {
+    class PookaPanicGoal extends PanicGoal {
+        public PookaPanicGoal(Pooka pooka, double speedIn) {
             super(pooka, speedIn);
-            this.pooka = pooka;
         }
 
         @Override
         public void tick() {
             super.tick();
-            this.pooka.setSpeedModifier(this.speedModifier);
+            Pooka.this.setSpeedModifier(this.speedModifier);
         }
     }
 
-    static class TemptGoal extends net.minecraft.world.entity.ai.goal.TemptGoal {
-        private final Pooka pooka;
-
-        public TemptGoal(Pooka pooka, double speed, Ingredient temptItem, boolean scaredByMovement) {
+    class PookaTemptGoal extends TemptGoal {
+        public PookaTemptGoal(Pooka pooka, double speed, Ingredient temptItem, boolean scaredByMovement) {
             super(pooka, speed, temptItem, scaredByMovement);
-            this.pooka = pooka;
         }
 
         @Override
         public boolean canUse() {
-            return this.pooka.isPacified() && super.canUse();
+            return Pooka.this.isPacified() && super.canUse();
         }
 
         @Override
         public void tick() {
             super.tick();
-            MobEffect aid = MobEffect.byId(this.pooka.aidId);
+            MobEffect aid = MobEffect.byId(Pooka.this.aidId);
 
-            if (!this.pooka.isBaby() && this.pooka.getRandom().nextInt(100) == 0 && aid != null)
-                this.player.addEffect(new MobEffectInstance(aid, this.pooka.aidDuration));
+            if (!Pooka.this.isBaby() && Pooka.this.getRandom().nextInt(240) == 0 && aid != null)
+                this.player.addEffect(new MobEffectInstance(aid, Pooka.this.aidDuration));
         }
     }
 
-    static class HurtByTargetGoal extends net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal {
-        private final Pooka pooka;
-
-        public HurtByTargetGoal(Pooka pooka) {
+    class PookaHurtByTargetGoal extends HurtByTargetGoal {
+        public PookaHurtByTargetGoal(Pooka pooka) {
             super(pooka);
-            this.pooka = pooka;
         }
 
         @Override
         public boolean canUse() {
-            return !this.pooka.isPacified() && super.canUse();
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return !this.pooka.isPacified() && super.canContinueToUse();
+            return !Pooka.this.isPacified() && super.canUse();
         }
 
         @Override
@@ -619,40 +608,35 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         }
     }
 
-    static class NearestAttackableTargetGoal<T extends LivingEntity> extends net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal<T> {
-        private final Pooka pooka;
-
-        public NearestAttackableTargetGoal(Pooka pooka, Class<T> targetClassIn, int targetChanceIn, boolean checkSight, boolean nearbyOnlyIn, @Nullable Predicate<LivingEntity> targetPredicate) {
+    class PookaNearestAttackableTargetGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
+        public PookaNearestAttackableTargetGoal(Pooka pooka, Class<T> targetClassIn, int targetChanceIn, boolean checkSight, boolean nearbyOnlyIn, @Nullable Predicate<LivingEntity> targetPredicate) {
             super(pooka, targetClassIn, targetChanceIn, checkSight, nearbyOnlyIn, targetPredicate);
-            this.pooka = pooka;
+        }
+
+        public PookaNearestAttackableTargetGoal(Pooka pooka, Class<T> targetClassIn, boolean checkSight) {
+            super(pooka, targetClassIn, checkSight);
         }
 
         @Override
         public boolean canUse() {
-            return !this.pooka.isPacified() && super.canUse();
+            return !Pooka.this.isPacified() && super.canUse();
         }
     }
 
-    static class AvoidEntityGoal<T extends LivingEntity> extends net.minecraft.world.entity.ai.goal.AvoidEntityGoal<T> {
-        private final Pooka pooka;
-
-        public AvoidEntityGoal(Pooka pooka, Class<T> entity, float range, double v1, double v2, Predicate<LivingEntity> predicate) {
+    class PookaAvoidEntityGoal<T extends LivingEntity> extends AvoidEntityGoal<T> {
+        public PookaAvoidEntityGoal(Pooka pooka, Class<T> entity, float range, double v1, double v2, Predicate<LivingEntity> predicate) {
             super(pooka, entity, range, v1, v2, predicate);
-            this.pooka = pooka;
         }
 
         @Override
         public boolean canUse() {
-            return this.pooka.isPacified() && super.canUse();
+            return Pooka.this.isPacified() && super.canUse();
         }
     }
 
-    static class AttackGoal extends MeleeAttackGoal {
-        private final Pooka pooka;
-
-        public AttackGoal(Pooka pooka) {
+    class PookaMeleeAttackGoal extends MeleeAttackGoal {
+        public PookaMeleeAttackGoal(Pooka pooka) {
             super(pooka, 1.4D, true);
-            this.pooka = pooka;
         }
 
         @Override
@@ -662,12 +646,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
         @Override
         public boolean canUse() {
-            return !pooka.isPacified() && super.canUse();
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return !pooka.isPacified() && super.canContinueToUse();
+            return !Pooka.this.isPacified() && super.canUse();
         }
     }
 }

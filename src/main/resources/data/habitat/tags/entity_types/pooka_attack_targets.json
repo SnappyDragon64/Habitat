@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minecraft:player",
     "minecraft:rabbit",
     "minecraft:iron_golem",
     "minecraft:snow_golem",
