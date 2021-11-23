@@ -146,7 +146,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     public Pooka.State getState() {
-        return Pooka.State.valueOf(this.getStateId());
+        return Pooka.State.getById(this.getStateId());
     }
 
     public String getStateId() {
@@ -572,6 +572,14 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
         State(String id) {
             this.id = id;
+        }
+
+        public static Pooka.State getById(String id) {
+            return switch(id) {
+                case "pacified" -> Pooka.State.PACIFIED;
+                case "passive" -> Pooka.State.PASSIVE;
+                default -> Pooka.State.HOSTILE;
+            };
         }
     }
 
