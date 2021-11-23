@@ -127,7 +127,8 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
             case NORTH -> HugeMushroomBlock.NORTH;
             case EAST -> HugeMushroomBlock.EAST;
             case SOUTH -> HugeMushroomBlock.SOUTH;
-            default -> HugeMushroomBlock.WEST;
+            case WEST -> HugeMushroomBlock.WEST;
+            default -> null;
         };
     }
 
