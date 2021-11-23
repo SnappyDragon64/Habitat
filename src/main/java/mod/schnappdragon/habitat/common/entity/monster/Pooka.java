@@ -324,7 +324,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
                 int roll = random.nextInt(5);
 
                 if (!this.isHostile()) {
-                    if (this.isPacified() && this.random.nextInt(50) == 1)
+                    if (this.isPacified() && this.random.nextInt(50) == 0)
                         this.setState(Pooka.State.PASSIVE);
 
                     FoodProperties food = stack.getItem().getFoodProperties();
