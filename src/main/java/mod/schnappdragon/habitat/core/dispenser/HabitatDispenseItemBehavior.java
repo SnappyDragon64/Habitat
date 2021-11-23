@@ -125,7 +125,7 @@ public class HabitatDispenseItemBehavior {
                 for (Pooka pooka : worldIn.getEntitiesOfClass(Pooka.class, new AABB(pos), EntitySelector.NO_SPECTATORS)) {
                     if (pooka.isShearable(ItemStack.EMPTY, worldIn, pos)) {
                         worldIn.playSound(null, pooka, HabitatSoundEvents.POOKA_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
-                        ((ServerLevel) worldIn).sendParticles(ParticleTypes.EXPLOSION, pooka.getX(), pooka.getY(0.5D), pooka.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                        worldIn.sendParticles(ParticleTypes.EXPLOSION, pooka.getX(), pooka.getY(0.5D), pooka.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
                         pooka.discard();
                         worldIn.addFreshEntity(Pooka.convertPooka(pooka));
                         worldIn.addFreshEntity(new ItemEntity(worldIn, pooka.getX(), pooka.getY(1.0D), pooka.getZ(), new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get())));
