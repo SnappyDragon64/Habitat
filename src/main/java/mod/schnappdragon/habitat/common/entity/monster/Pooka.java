@@ -569,7 +569,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             super.tick();
             MobEffect aid = MobEffect.byId(this.pooka.aidId);
 
-            if (!this.pooka.isBaby() && this.pooka.getRandom().nextInt(30) == 0 && aid != null)
+            if (!this.pooka.isBaby() && this.pooka.getRandom().nextInt(100) == 0 && aid != null)
                 this.player.addEffect(new MobEffectInstance(aid, this.pooka.aidDuration));
         }
     }
