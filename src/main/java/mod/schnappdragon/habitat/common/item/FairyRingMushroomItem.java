@@ -33,8 +33,8 @@ public class FairyRingMushroomItem extends BlockItem {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
-        if (!playerIn.level.isClientSide) {
-            if (target instanceof MushroomCow mooshroom && ((MushroomCow) target).getMushroomType() == MushroomCow.MushroomType.BROWN) {
+        if (target instanceof MushroomCow mooshroom && ((MushroomCow) target).getMushroomType() == MushroomCow.MushroomType.BROWN) {
+            if (!playerIn.level.isClientSide) {
                 if (mooshroom.effect == null) {
                     Pair<MobEffect, Integer> effect = getStewEffect();
 
@@ -55,8 +55,11 @@ public class FairyRingMushroomItem extends BlockItem {
 
                 for (int i = 0; i < 2; ++i)
                     ((ServerLevel) playerIn.level).sendParticles(ParticleTypes.SMOKE, mooshroom.getX() + mooshroom.getRandom().nextDouble() / 2.0D, mooshroom.getY(0.5D), mooshroom.getZ() + mooshroom.getRandom().nextDouble() / 2.0D, 0, 0.0D, mooshroom.getRandom().nextDouble(), 0.0D, 0.2D);
-                return InteractionResult.SUCCESS;
-            } else if (target.getType() == EntityType.RABBIT && target.isAlive()) {
+            }
+
+            return InteractionResult.sidedSuccess(playerIn.level.isClientSide);
+        } else if (target.getType() == EntityType.RABBIT && target.isAlive()) {
+            if (!playerIn.level.isClientSide) {
                 Rabbit rabbit = (Rabbit) target;
                 playerIn.level.gameEvent(GameEvent.MOB_INTERACT, rabbit.eyeBlockPosition());
                 rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
@@ -67,9 +70,9 @@ public class FairyRingMushroomItem extends BlockItem {
 
                 if (!playerIn.getAbilities().instabuild)
                     stack.shrink(1);
-
-                return InteractionResult.SUCCESS;
             }
+
+            return InteractionResult.sidedSuccess(playerIn.level.isClientSide);
         }
 
         return super.interactLivingEntity(stack, playerIn, target, hand);

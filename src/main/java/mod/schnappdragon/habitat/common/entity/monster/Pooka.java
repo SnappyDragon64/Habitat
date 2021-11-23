@@ -279,33 +279,35 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     @Override
     public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!this.level.isClientSide && stack.is(HabitatItemTags.POOKA_FEEDING_FOOD)) {
-            this.setPersistenceRequired();
-            if (!player.getAbilities().instabuild)
-                stack.shrink(1);
-            int roll = random.nextInt(5);
+        if (stack.is(HabitatItemTags.POOKA_FEEDING_FOOD)) {
+            if (!this.level.isClientSide) {
+                this.setPersistenceRequired();
+                if (!player.getAbilities().instabuild)
+                    stack.shrink(1);
+                int roll = random.nextInt(5);
 
-            if (this.isPacified()) {
-                FoodProperties food = stack.getItem().getFoodProperties();
-                this.heal(food != null ? food.getNutrition() : 1.0F);
-                this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
-                this.level.broadcastEntityEvent(this, (byte) 18);
-            } else if (this.forgiveTicks == 0 && (this.isBaby() && roll > 0 || roll == 0) && this.isAlone()) {
-                this.setPacified(true);
-                this.playSound(HabitatSoundEvents.POOKA_PACIFY.get(), 1.0F, 1.0F);
-                HabitatCriterionTriggers.PACIFY_POOKA.trigger((ServerPlayer) player);
-                this.navigation.stop();
-                this.setTarget(null);
-                this.setLastHurtByMob(null);
-                this.level.broadcastEntityEvent(this, (byte) 18);
-            } else {
-                if (this.forgiveTicks > 0)
-                    this.forgiveTicks -= this.forgiveTicks * 0.1D;
+                if (this.isPacified()) {
+                    FoodProperties food = stack.getItem().getFoodProperties();
+                    this.heal(food != null ? food.getNutrition() : 1.0F);
+                    this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
+                    this.level.broadcastEntityEvent(this, (byte) 18);
+                } else if (this.forgiveTicks == 0 && (this.isBaby() && roll > 0 || roll == 0) && this.isAlone()) {
+                    this.setPacified(true);
+                    this.playSound(HabitatSoundEvents.POOKA_PACIFY.get(), 1.0F, 1.0F);
+                    HabitatCriterionTriggers.PACIFY_POOKA.trigger((ServerPlayer) player);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.setLastHurtByMob(null);
+                    this.level.broadcastEntityEvent(this, (byte) 18);
+                } else {
+                    if (this.forgiveTicks > 0)
+                        this.forgiveTicks -= this.forgiveTicks * 0.1D;
 
-                this.level.broadcastEntityEvent(this, (byte) 12);
+                    this.level.broadcastEntityEvent(this, (byte) 12);
+                }
             }
 
-            return InteractionResult.SUCCESS;
+            return InteractionResult.sidedSuccess(this.level.isClientSide);
         }
 
         return super.interactAt(player, vec, hand);
