@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#habitat:pooka_breeding_food",
-    "#habitat:pooka_feeding_food"
+    "minecraft:golden_carrot"
   ]
 }

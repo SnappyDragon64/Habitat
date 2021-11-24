@@ -31,10 +31,11 @@ public class HabitatSoundEvents {
     public static final RegistryObject<SoundEvent> POOKA_AMBIENT = register("entity.pooka.ambient");
     public static final RegistryObject<SoundEvent> POOKA_ATTACK = register("entity.pooka.attack");
     public static final RegistryObject<SoundEvent> POOKA_DEATH = register("entity.pooka.death");
+    public static final RegistryObject<SoundEvent> POOKA_EAT = register("entity.pooka.eat");
     public static final RegistryObject<SoundEvent> POOKA_HURT = register("entity.pooka.hurt");
     public static final RegistryObject<SoundEvent> POOKA_JUMP = register("entity.pooka.jump");
-    public static final RegistryObject<SoundEvent> POOKA_SHEAR = register("entity.pooka.shear");
     public static final RegistryObject<SoundEvent> POOKA_PACIFY = register("entity.pooka.pacify");
+    public static final RegistryObject<SoundEvent> POOKA_SHEAR = register("entity.pooka.shear");
 
     public static final RegistryObject<SoundEvent> RABBIT_CONVERTED_TO_POOKA = register("entity.rabbit.converted_to_pooka");
 

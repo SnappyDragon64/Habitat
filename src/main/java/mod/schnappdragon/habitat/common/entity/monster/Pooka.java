@@ -33,7 +33,6 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -43,7 +42,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.IForgeShearable;
 import org.apache.commons.lang3.StringUtils;
@@ -51,7 +49,10 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 import java.util.function.Predicate;
 
 public class Pooka extends Rabbit implements Enemy, IForgeShearable {
@@ -314,47 +315,71 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      */
 
     @Override
-    public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (stack.is(HabitatItemTags.POOKA_FEEDING_FOOD)) {
-            if (!this.level.isClientSide) {
-                this.setPersistenceRequired();
-                if (!player.getAbilities().instabuild)
-                    stack.shrink(1);
-                int roll = random.nextInt(5);
+        if (stack.is(HabitatItemTags.POOKA_FOOD)) {
+            if (this.isHostile()) {
+                if (!this.level.isClientSide) {
+                    this.setPersistenceRequired();
+                    this.usePlayerItem(player, hand, stack);
 
-                if (!this.isHostile()) {
-                    if (this.isPacified() && this.random.nextInt(50) == 0)
-                        this.setState(Pooka.State.PASSIVE);
+                    if (this.forgiveTicks == 0) {
+                        int roll = random.nextInt(5);
 
-                    FoodProperties food = stack.getItem().getFoodProperties();
-                    this.heal(food != null ? food.getNutrition() : 1.0F);
+                        if ((this.isBaby() && roll > 0 || roll == 0) && this.isAlone()) {
+                            this.setState(State.PACIFIED);
+                            this.playSound(HabitatSoundEvents.POOKA_PACIFY.get(), 1.0F, 1.0F);
+                            HabitatCriterionTriggers.PACIFY_POOKA.trigger((ServerPlayer) player);
+                            this.navigation.stop();
+                            this.setTarget(null);
+                            this.setLastHurtByMob(null);
+                            this.level.broadcastEntityEvent(this, (byte) 18);
+                        } else
+                            this.level.broadcastEntityEvent(this, (byte) 12);
+                    } else {
+                        this.forgiveTicks -= (double) this.forgiveTicks * 0.1D;
+                        this.level.broadcastEntityEvent(this, (byte) 12);
+                    }
+
                     this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
-                    this.level.broadcastEntityEvent(this, (byte) 18);
-                } else if (this.forgiveTicks == 0 && (this.isBaby() && roll > 0 || roll == 0) && this.isAlone()) {
-                    this.setState(Pooka.State.PACIFIED);
-                    this.playSound(HabitatSoundEvents.POOKA_PACIFY.get(), 1.0F, 1.0F);
-                    HabitatCriterionTriggers.PACIFY_POOKA.trigger((ServerPlayer) player);
-                    this.navigation.stop();
-                    this.setTarget(null);
-                    this.setLastHurtByMob(null);
-                    this.level.broadcastEntityEvent(this, (byte) 18);
-                } else {
-                    if (this.forgiveTicks > 0)
-                        this.forgiveTicks -= this.forgiveTicks * 0.1D;
-
-                    this.level.broadcastEntityEvent(this, (byte) 12);
                 }
-            }
 
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+                return InteractionResult.sidedSuccess(this.level.isClientSide);
+            }
+            else if (this.getHealth() < this.getMaxHealth() && stack.isEdible()) {
+                if (!this.level.isClientSide) {
+                    this.usePlayerItem(player, hand, stack);
+                    this.heal(stack.getItem().getFoodProperties().getNutrition());
+                    this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
+                }
+
+                return InteractionResult.sidedSuccess(this.level.isClientSide);
+            }
         }
 
-        return super.interactAt(player, vec, hand);
+        InteractionResult result = super.mobInteract(player, hand);
+        if (result.consumesAction())
+            this.setPersistenceRequired();
+
+        return result;
+    }
+
+    protected void usePlayerItem(Player player, InteractionHand hand, ItemStack stack) {
+        if (stack.is(HabitatItemTags.POOKA_FOOD))
+            this.playSound(HabitatSoundEvents.POOKA_EAT.get(), 1.0F, 1.0F);
+
+        super.usePlayerItem(player, hand, stack);
     }
 
     private boolean isAlone() {
         return this.level.getEntitiesOfClass(Pooka.class, this.getBoundingBox().inflate(16.0D, 10.0D, 16.0D), Pooka::isHostile).size() == 1;
+    }
+
+    public void unpacify() {
+        this.resetLove();
+        this.setForgiveTimer();
+        this.setState(Pooka.State.HOSTILE);
+        this.level.broadcastEntityEvent(this, (byte) 13);
     }
 
     /*
@@ -364,7 +389,6 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     @Override
     public Pooka getBreedOffspring(ServerLevel serverWorld, AgeableMob entity) {
         Pooka pooka = HabitatEntityTypes.POOKA.get().create(serverWorld);
-        Pooka.State state = Pooka.State.HOSTILE;
         int i = this.getRandomRabbitType(serverWorld);
 
         Pair<Integer, Integer> aid = this.getRandomAid();
@@ -376,11 +400,6 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         int ailD = ailment.getRight();
 
         if (entity instanceof Pooka parent) {
-            if (!this.isHostile() && !parent.isHostile())
-                state = Pooka.State.PASSIVE;
-            else if (this.isHostile() && parent.isPassive() || this.isPassive() && parent.isHostile())
-                state = Pooka.State.PACIFIED;
-
             if (this.random.nextInt(20) != 0) {
                 if (this.random.nextBoolean())
                     i = parent.getRabbitType();
@@ -409,7 +428,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             }
         }
 
-        pooka.setState(state);
+        pooka.setState(Pooka.State.PASSIVE);
         pooka.setRabbitType(i);
         pooka.setAidAndAilment(aidI, aidD, ailI, ailD);
         pooka.setPersistenceRequired();
@@ -417,7 +436,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     public boolean isFood(ItemStack stack) {
-        return stack.is(HabitatItemTags.POOKA_BREEDING_FOOD);
+        return !this.isHostile() && stack.is(HabitatItemTags.POOKA_FOOD);
     }
 
     /*
@@ -525,11 +544,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             if (!this.isBaby() && effect != null)
                 this.addEffect(new MobEffectInstance(effect, aidDuration));
 
-            if (this.isPacified() && source.getEntity() instanceof Player && !source.isCreativePlayer()) {
-                this.setState(Pooka.State.HOSTILE);
-                this.setForgiveTimer();
-                this.level.broadcastEntityEvent(this, (byte) 13);
-            }
+            if (this.isPacified() && source.getEntity() instanceof Player && !source.isCreativePlayer())
+                this.unpacify();
 
             return super.hurt(source, amount);
         }
@@ -648,12 +664,10 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         @Override
         protected void alertOther(Mob mob, LivingEntity target) {
             if (mob instanceof Pooka pooka) {
-                if (pooka.isHostile()) {
+                if (pooka.isHostile())
                     super.alertOther(mob, target);
-                } else if (pooka.isPacified() && target instanceof Player) {
-                    pooka.setState(Pooka.State.HOSTILE);
-                    pooka.setForgiveTimer();
-                    pooka.level.broadcastEntityEvent(pooka, (byte) 13);
+                else if (pooka.isPacified() && target instanceof Player) {
+                    pooka.unpacify();
                     super.alertOther(mob, target);
                 }
             }
