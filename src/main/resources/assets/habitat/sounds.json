@@ -172,7 +172,7 @@
   },
   "entity.kabloom_fruit.explode": {
     "subtitle": "habitat.subtitle.entity.kabloom_fruit.explosion",
-    "sounds": [ "habitat:entity/kabloom_fruit/explode" ]
+    "sounds": [ "habitat:random/kabloom" ]
   },
   "entity.pooka.ambient": {
     "subtitle": "subtitles.entity.pooka.ambient",
@@ -210,6 +210,19 @@
       {
         "name": "mob/rabbit/bunnymurder",
         "volume": 0.5
+      }
+    ]
+  },
+  "entity.pooka.eat": {
+    "subtitle": "subtitles.entity.pooka.eat",
+    "sounds": [
+      {
+        "name": "habitat:mob/pooka/eat1",
+        "volume": 0.4
+      },
+      {
+        "name": "habitat:mob/pooka/eat2",
+        "volume": 0.4
       }
     ]
   },
@@ -255,10 +268,6 @@
       }
     ]
   },
-  "entity.pooka.shear": {
-    "subtitle": "subtitles.entity.pooka.shear",
-    "sounds": [ "habitat:block/fairy_ring_mushroom/shear" ]
-  },
   "entity.pooka.pacify": {
     "subtitle": "subtitles.entity.pooka.pacify",
     "sounds": [
@@ -279,6 +288,10 @@
         "volume": 0.5
       }
     ]
+  },
+  "entity.pooka.shear": {
+    "subtitle": "subtitles.entity.pooka.shear",
+    "sounds": [ "habitat:block/fairy_ring_mushroom/shear" ]
   },
   "entity.rabbit.converted_to_pooka": {
     "subtitle": "subtitles.entity.rabbit.converted_to_pooka",
