@@ -80,11 +80,6 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(HabitatItems.PASSERINE_SPAWN_EGG.get());
-    }
-
-    @Override
     public Vec3 getLeashOffset() {
         return new Vec3(0.0D, 0.5F * this.getEyeHeight(), this.getBbWidth() * 0.3F);
     }

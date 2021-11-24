@@ -91,11 +91,6 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(HabitatItems.POOKA_SPAWN_EGG.get());
-    }
-
-    @Override
     protected int getExperienceReward(Player player) {
         return this.xpReward;
     }
