@@ -312,7 +312,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (stack.is(HabitatItemTags.POOKA_FOOD)) {
+        if (this.isFood(stack)) {
             if (this.isHostile()) {
                 if (!this.level.isClientSide) {
                     this.setPersistenceRequired();
@@ -360,7 +360,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     protected void usePlayerItem(Player player, InteractionHand hand, ItemStack stack) {
-        if (stack.is(HabitatItemTags.POOKA_FOOD))
+        if (this.isFood(stack))
             this.playSound(HabitatSoundEvents.POOKA_EAT.get(), 1.0F, 1.0F);
 
         super.usePlayerItem(player, hand, stack);
@@ -384,6 +384,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     @Override
     public Pooka getBreedOffspring(ServerLevel serverWorld, AgeableMob entity) {
         Pooka pooka = HabitatEntityTypes.POOKA.get().create(serverWorld);
+        Pooka.State state = Pooka.State.HOSTILE;
         int i = this.getRandomRabbitType(serverWorld);
 
         Pair<Integer, Integer> aid = this.getRandomAid();
@@ -395,6 +396,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         int ailD = ailment.getRight();
 
         if (entity instanceof Pooka parent) {
+            if (!this.isHostile() && !parent.isHostile()) state = Pooka.State.PASSIVE;
+
             if (this.random.nextInt(20) != 0) {
                 if (this.random.nextBoolean())
                     i = parent.getRabbitType();
@@ -423,7 +426,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             }
         }
 
-        pooka.setState(Pooka.State.PASSIVE);
+        pooka.setState(state);
         pooka.setRabbitType(i);
         pooka.setAidAndAilment(aidI, aidD, ailI, ailD);
         pooka.setPersistenceRequired();
@@ -431,7 +434,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     public boolean isFood(ItemStack stack) {
-        return !this.isHostile() && stack.is(HabitatItemTags.POOKA_FOOD);
+        return stack.is(HabitatItemTags.POOKA_FOOD);
     }
 
     /*
