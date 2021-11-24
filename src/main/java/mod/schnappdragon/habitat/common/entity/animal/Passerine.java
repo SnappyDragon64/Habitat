@@ -90,6 +90,33 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     /*
+     * Data Methods
+     */
+
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_VARIANT_ID, 0);
+    }
+
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putInt("Variant", this.getVariant());
+    }
+
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        this.setVariant(compound.getInt("Variant"));
+    }
+
+    public void setVariant(int id) {
+        this.entityData.set(DATA_VARIANT_ID, id);
+    }
+
+    public int getVariant() {
+        return Mth.clamp(this.entityData.get(DATA_VARIANT_ID), 0, 5);
+    }
+
+    /*
      * Flying Methods
      */
 
@@ -142,22 +169,20 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     @Override
-    public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
         if (stack.is(HabitatItemTags.PASSERINE_FOOD)) {
             if (!this.level.isClientSide) {
-                if (!player.getAbilities().instabuild)
-                    stack.shrink(1);
-
                 this.heal(1.0F);
+                this.usePlayerItem(player, hand, stack);
                 this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
             }
 
             return InteractionResult.sidedSuccess(this.level.isClientSide);
         }
 
-        return super.interactAt(player, vec, hand);
+        return super.mobInteract(player, hand);
     }
 
     /*
@@ -286,32 +311,5 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     @Override
     protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pps) {
-    }
-
-    /*
-     * Data Methods
-     */
-
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_VARIANT_ID, 0);
-    }
-
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        compound.putInt("Variant", this.getVariant());
-    }
-
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        this.setVariant(compound.getInt("Variant"));
-    }
-
-    public void setVariant(int id) {
-        this.entityData.set(DATA_VARIANT_ID, id);
-    }
-
-    public int getVariant() {
-        return Mth.clamp(this.entityData.get(DATA_VARIANT_ID), 0, 5);
     }
 }
