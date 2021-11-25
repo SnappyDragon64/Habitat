@@ -3,6 +3,7 @@ package mod.schnappdragon.habitat.common.entity.animal;
 import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.particles.FeatherParticleOption;
+import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -13,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
@@ -148,6 +150,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     protected void onFlap() {
+        this.playSound(HabitatSoundEvents.PASSERINE_FLAP.get(), 1.0F, 1.0F);
         this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
 
         if (random.nextInt(30) == 0)
@@ -159,7 +162,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     /*
-     * Interaction Method
+     * Interaction Methods
      */
 
     @Override
@@ -168,6 +171,7 @@ public class Passerine extends Animal implements FlyingAnimal {
 
         if (stack.is(HabitatItemTags.PASSERINE_FOOD)) {
             if (!this.level.isClientSide) {
+                this.playAmbientSound();
                 this.heal(1.0F);
                 this.usePlayerItem(player, hand, stack);
                 this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
@@ -210,8 +214,33 @@ public class Passerine extends Animal implements FlyingAnimal {
         else {
             if (!this.level.isClientSide && source.getDirectEntity() != null)
                 this.level.broadcastEntityEvent(this, (byte) 12);
+
             return super.hurt(source, amount);
         }
+    }
+
+    /*
+     * Sound Methods
+     */
+
+    public SoundEvent getAmbientSound() {
+        return HabitatSoundEvents.PASSERINE_AMBIENT.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return HabitatSoundEvents.PASSERINE_HURT.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return HabitatSoundEvents.PASSERINE_DEATH.get();
+    }
+
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(HabitatSoundEvents.PASSERINE_STEP.get(), 0.15F, 1.0F);
+    }
+
+    public float getVoicePitch() {
+        return (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F;
     }
 
     /*
@@ -258,12 +287,12 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     @Override
-    public boolean canMate(Animal pOtherAnimal) {
+    public boolean canMate(Animal animal) {
         return false;
     }
 
     @Override
-    public boolean isFood(ItemStack pStack) {
+    public boolean isFood(ItemStack stack) {
         return false;
     }
 

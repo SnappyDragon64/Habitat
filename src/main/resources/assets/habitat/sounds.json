@@ -1,18 +1,18 @@
 {
   "block.rafflesia.spew": {
-    "subtitle": "habitat.subtitle.block.rafflesia.spew",
+    "subtitle": "habitat.subtitles.block.rafflesia.spew",
     "sounds": [ "habitat:block/rafflesia/spew" ]
   },
   "block.rafflesia.pop": {
-    "subtitle": "habitat.subtitle.block.rafflesia.pop",
+    "subtitle": "habitat.subtitles.block.rafflesia.pop",
     "sounds": [ "habitat:block/rafflesia/pop" ]
   },
   "block.rafflesia.slurp": {
-    "subtitle": "habitat.subtitle.block.rafflesia.slurp",
+    "subtitle": "habitat.subtitles.block.rafflesia.slurp",
     "sounds": [ "habitat:block/rafflesia/slurp" ]
   },
   "block.rafflesia.fill_bowl": {
-    "subtitle": "habitat.subtitle.block.rafflesia.slurp",
+    "subtitle": "habitat.subtitles.block.rafflesia.slurp",
     "sounds": [
       {
         "name": "habitat:block/rafflesia/slurp",
@@ -22,11 +22,11 @@
     ]
   },
   "block.kabloom_bush.rustle": {
-    "subtitle": "habitat.subtitle.block.kabloom_bush.rustle",
+    "subtitle": "habitat.subtitles.block.kabloom_bush.rustle",
     "sounds": [ "habitat:block/kabloom_bush/rustle" ]
   },
   "block.kabloom_bush.shear": {
-    "subtitle": "habitat.subtitle.block.kabloom_bush.shear",
+    "subtitle": "habitat.subtitles.block.kabloom_bush.shear",
     "sounds": [
       {
         "name": "habitat:block/kabloom_bush/shear",
@@ -46,7 +46,7 @@
     ]
   },
   "block.slime_fern.drip": {
-    "subtitle": "habitat.subtitle.block.slime_fern.drip",
+    "subtitle": "habitat.subtitles.block.slime_fern.drip",
     "sounds": [
       {
         "attenuation_distance": 8,
@@ -123,7 +123,7 @@
     ]
   },
   "block.flowering_ball_cactus.shear": {
-    "subtitle": "habitat.subtitle.block.flowering_ball_cactus.shear",
+    "subtitle": "habitat.subtitles.block.flowering_ball_cactus.shear",
     "sounds": [
       {
         "name": "habitat:block/flowering_ball_cactus/shear",
@@ -143,7 +143,7 @@
     ]
   },
   "block.fairy_ring_mushroom.shear": {
-    "subtitle": "habitat.subtitle.block.fairy_ring_mushroom.shear",
+    "subtitle": "habitat.subtitles.block.fairy_ring_mushroom.shear",
     "sounds": [
       {
         "name": "habitat:block/fairy_ring_mushroom/shear",
@@ -163,19 +163,19 @@
     ]
   },
   "block.fairy_ring_mushroom.dust": {
-    "subtitle": "habitat.subtitle.block.fairy_ring_mushroom.dust",
+    "subtitle": "habitat.subtitles.block.fairy_ring_mushroom.dust",
     "sounds": [ "habitat:block/fairy_ring_mushroom/dust" ]
   },
   "entity.kabloom_fruit.throw": {
-    "subtitle": "habitat.subtitle.entity.kabloom_fruit.throw",
+    "subtitle": "habitat.subtitles.entity.kabloom_fruit.throw",
     "sounds": [ "minecraft:random/bow" ]
   },
   "entity.kabloom_fruit.explode": {
-    "subtitle": "habitat.subtitle.entity.kabloom_fruit.explosion",
+    "subtitle": "habitat.subtitles.entity.kabloom_fruit.explosion",
     "sounds": [ "habitat:random/kabloom" ]
   },
   "entity.pooka.ambient": {
-    "subtitle": "subtitles.entity.pooka.ambient",
+    "subtitle": "habitat.subtitles.entity.pooka.ambient",
     "sounds": [
       {
         "name": "mob/rabbit/idle1",
@@ -196,7 +196,7 @@
     ]
   },
   "entity.pooka.attack": {
-    "subtitle": "subtitles.entity.pooka.attack",
+    "subtitle": "habitat.subtitles.entity.pooka.attack",
     "sounds": [
       "entity/rabbit/attack1",
       "entity/rabbit/attack2",
@@ -205,7 +205,7 @@
     ]
   },
   "entity.pooka.death": {
-    "subtitle": "subtitles.entity.pooka.death",
+    "subtitle": "habitat.subtitles.entity.pooka.death",
     "sounds": [
       {
         "name": "mob/rabbit/bunnymurder",
@@ -214,7 +214,7 @@
     ]
   },
   "entity.pooka.eat": {
-    "subtitle": "subtitles.entity.pooka.eat",
+    "subtitle": "habitat.subtitles.entity.pooka.eat",
     "sounds": [
       {
         "name": "habitat:mob/pooka/eat1",
@@ -227,7 +227,7 @@
     ]
   },
   "entity.pooka.hurt": {
-    "subtitle": "subtitles.entity.pooka.hurt",
+    "subtitle": "habitat.subtitles.entity.pooka.hurt",
     "sounds": [
       {
         "name": "mob/rabbit/hurt1",
@@ -248,7 +248,7 @@
     ]
   },
   "entity.pooka.jump": {
-    "subtitle": "subtitles.entity.pooka.jump",
+    "subtitle": "habitat.subtitles.entity.pooka.jump",
     "sounds": [
       {
         "name": "mob/rabbit/hop1",
@@ -269,7 +269,7 @@
     ]
   },
   "entity.pooka.pacify": {
-    "subtitle": "subtitles.entity.pooka.pacify",
+    "subtitle": "habitat.subtitles.entity.pooka.pacify",
     "sounds": [
       {
         "name": "mob/rabbit/idle1",
@@ -290,11 +290,11 @@
     ]
   },
   "entity.pooka.shear": {
-    "subtitle": "subtitles.entity.pooka.shear",
+    "subtitle": "habitat.subtitles.entity.pooka.shear",
     "sounds": [ "habitat:block/fairy_ring_mushroom/shear" ]
   },
   "entity.rabbit.converted_to_pooka": {
-    "subtitle": "subtitles.entity.rabbit.converted_to_pooka",
+    "subtitle": "habitat.subtitles.entity.rabbit.converted_to_pooka",
     "sounds": [
       {
         "name": "mob/rabbit/bunnymurder",
@@ -303,7 +303,7 @@
     ]
   },
   "entity.parrot.imitate.pooka": {
-    "subtitle": "subtitles.entity.parrot.imitate.pooka",
+    "subtitle": "habitat.subtitles.entity.parrot.imitate.pooka",
     "sounds": [
       {
         "name": "mob/rabbit/idle1",
@@ -321,6 +321,68 @@
         "name": "mob/rabbit/idle4",
         "pitch": 1.8
       }
+    ]
+  },
+  "entity.passerine.ambient": {
+    "subtitle": "habitat.subtitles.entity.passerine.ambient",
+    "sounds": [
+      "habitat:mob/passerine/sing1",
+      "habitat:mob/passerine/sing2",
+      "habitat:mob/passerine/sing3",
+      "habitat:mob/passerine/sing4",
+      "habitat:mob/passerine/sing5",
+      "habitat:mob/passerine/sing6",
+      "habitat:mob/passerine/sing7",
+      "habitat:mob/passerine/sing8",
+      "habitat:mob/passerine/sing9",
+      "habitat:mob/passerine/sing10"
+    ]
+  },
+  "entity.passerine.death": {
+    "subtitle": "habitat.subtitles.entity.passerine.death",
+    "sounds": [
+      {
+        "name": "habitat:mob/passerine/death1",
+        "pitch": 0.9
+      },
+      {
+        "name": "habitat:mob/passerine/death2",
+        "pitch": 0.9
+      },
+      {
+        "name": "habitat:mob/passerine/death3",
+        "pitch": 0.9
+      }
+    ]
+  },
+  "entity.passerine.flap": {
+    "subtitle": "habitat.subtitles.entity.passerine.flap",
+    "sounds": [
+    ]
+  },
+  "entity.passerine.hurt": {
+    "subtitle": "habitat.subtitles.entity.passerine.hurt",
+    "sounds": [
+      {
+        "name": "habitat:mob/passerine/hurt1",
+        "pitch": 0.9
+      },
+      {
+        "name": "habitat:mob/passerine/hurt2",
+        "pitch": 0.8
+      },
+      {
+        "name": "habitat:mob/passerine/hurt2",
+        "pitch": 0.9
+      }
+    ]
+  },
+  "entity.passerine_step": {
+    "sounds": [
+      "habitat:mob/passerine/step1",
+      "habitat:mob/passerine/step2",
+      "habitat:mob/passerine/step3",
+      "habitat:mob/passerine/step4"
     ]
   }
 }

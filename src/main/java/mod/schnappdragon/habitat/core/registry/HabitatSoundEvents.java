@@ -36,10 +36,14 @@ public class HabitatSoundEvents {
     public static final RegistryObject<SoundEvent> POOKA_JUMP = register("entity.pooka.jump");
     public static final RegistryObject<SoundEvent> POOKA_PACIFY = register("entity.pooka.pacify");
     public static final RegistryObject<SoundEvent> POOKA_SHEAR = register("entity.pooka.shear");
-
     public static final RegistryObject<SoundEvent> RABBIT_CONVERTED_TO_POOKA = register("entity.rabbit.converted_to_pooka");
-
     public static final RegistryObject<SoundEvent> PARROT_IMITATE_POOKA = register("entity.parrot.imitate.pooka");
+
+    public static final RegistryObject<SoundEvent> PASSERINE_AMBIENT = register("entity.passerine.ambient");
+    public static final RegistryObject<SoundEvent> PASSERINE_DEATH = register("entity.passerine.death");
+    public static final RegistryObject<SoundEvent> PASSERINE_FLAP = register("entity.passerine.flap");
+    public static final RegistryObject<SoundEvent> PASSERINE_HURT = register("entity.passerine.hurt");
+    public static final RegistryObject<SoundEvent> PASSERINE_STEP = register("entity.passerine.step");
 
     private static RegistryObject<SoundEvent> register(String name) {
         return SOUND_EVENTS.register(name, () -> new SoundEvent((new ResourceLocation(Habitat.MODID, name))));
