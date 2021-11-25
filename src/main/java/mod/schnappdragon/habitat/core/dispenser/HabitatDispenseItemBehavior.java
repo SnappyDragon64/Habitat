@@ -127,7 +127,7 @@ public class HabitatDispenseItemBehavior {
                         worldIn.playSound(null, pooka, HabitatSoundEvents.POOKA_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                         worldIn.sendParticles(ParticleTypes.EXPLOSION, pooka.getX(), pooka.getY(0.5D), pooka.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
                         pooka.discard();
-                        worldIn.addFreshEntity(Pooka.convertPooka(pooka));
+                        worldIn.addFreshEntity(Pooka.convertPookaToRabbit(pooka));
                         worldIn.addFreshEntity(new ItemEntity(worldIn, pooka.getX(), pooka.getY(1.0D), pooka.getZ(), new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get())));
                         worldIn.gameEvent(GameEvent.SHEAR, pos);
 
@@ -214,7 +214,7 @@ public class HabitatDispenseItemBehavior {
                         worldIn.gameEvent(GameEvent.MOB_INTERACT, rabbit.eyeBlockPosition());
                         rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
                         rabbit.discard();
-                        worldIn.addFreshEntity(Pooka.convertRabbit(rabbit));
+                        worldIn.addFreshEntity(Pooka.convertRabbitToPooka(rabbit));
                         stack.shrink(1);
                         for (int j = 0; j < 8; ++j)
                             worldIn.sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getRandomX(0.5D), rabbit.getY(0.5D), rabbit.getRandomZ(0.5D), 0, rabbit.getRandom().nextGaussian(), 0.0D, rabbit.getRandom().nextGaussian(), 0.01D);

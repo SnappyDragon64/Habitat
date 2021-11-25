@@ -41,7 +41,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.IForgeShearable;
 import org.apache.commons.lang3.StringUtils;
@@ -61,7 +60,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     private int aidDuration;
     private int ailmentId;
     private int ailmentDuration;
-    private int forgiveTicks = 0;
+    private int forgiveTicks;
+    private int aidTicks;
 
     public Pooka(EntityType<? extends Pooka> entityType, Level world) {
         super(entityType, world);
@@ -111,6 +111,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         compound.putInt("AilmentId", this.ailmentId);
         compound.putInt("AilmentDuration", this.ailmentDuration);
         compound.putInt("ForgiveTicks", this.forgiveTicks);
+        compound.putInt("AidTicks", this.aidTicks);
         compound.putString("State", this.getStateId());
     }
 
@@ -123,6 +124,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
                 compound.getInt("AilmentDuration")
         );
         this.forgiveTicks = compound.getInt("ForgiveTicks");
+        this.aidTicks = compound.getInt("AidTicks");
         this.setState(compound.getString("State"));
     }
 
@@ -161,6 +163,14 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         this.forgiveTicks = 12000;
     }
 
+    private void setAidTimer() {
+        this.aidTicks = 20 * HabitatConfig.COMMON.pookaAidCooldown.get();
+    }
+
+    private void resetAidTimer() {
+        this.aidTicks = 0;
+    }
+
     /*
      * Update AI Tasks
      */
@@ -177,6 +187,9 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     public void customServerAiStep() {
         if (this.forgiveTicks > 0)
             forgiveTicks--;
+
+        if (this.aidTicks > 0)
+            aidTicks--;
 
         if (this.onGround && this.isHostile() && this.jumpDelayTicks == 0) {
             LivingEntity livingentity = this.getTarget();
@@ -229,12 +242,12 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         if (!this.level.isClientSide()) {
             ((ServerLevel) this.level).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
             this.discard();
-            world.addFreshEntity(convertPooka(this));
+            world.addFreshEntity(convertPookaToRabbit(this));
         }
         return Collections.singletonList(new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get()));
     }
 
-    public static Rabbit convertPooka(Pooka pooka) {
+    public static Rabbit convertPookaToRabbit(Pooka pooka) {
         Rabbit rabbit = EntityType.RABBIT.create(pooka.level);
         rabbit.moveTo(pooka.getX(), pooka.getY(), pooka.getZ(), pooka.getYRot(), pooka.getXRot());
         rabbit.setHealth(pooka.getHealth());
@@ -244,9 +257,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             rabbit.setCustomNameVisible(pooka.isCustomNameVisible());
         }
 
-        if (pooka.isPersistenceRequired()) {
+        if (pooka.isPersistenceRequired())
             rabbit.setPersistenceRequired();
-        }
 
         rabbit.setRabbitType(pooka.getRabbitType());
         rabbit.setBaby(pooka.isBaby());
@@ -254,7 +266,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         return rabbit;
     }
 
-    public static Pooka convertRabbit(Rabbit rabbit) {
+    public static Pooka convertRabbitToPooka(Rabbit rabbit) {
         Pooka pooka = HabitatEntityTypes.POOKA.get().create(rabbit.level);
         pooka.moveTo(rabbit.getX(), rabbit.getY(), rabbit.getZ(), rabbit.getYRot(), rabbit.getXRot());
         pooka.setHealth(rabbit.getHealth());
@@ -368,6 +380,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     public void unpacify() {
         this.resetLove();
+        this.resetAidTimer();
         this.setForgiveTimer();
         this.setState(Pooka.State.HOSTILE);
         this.level.broadcastEntityEvent(this, (byte) 13);
@@ -506,7 +519,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             Rabbit rabbit = (Rabbit) entityIn;
             rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
             rabbit.discard();
-            this.level.addFreshEntity(convertRabbit(rabbit));
+            this.level.addFreshEntity(convertRabbitToPooka(rabbit));
 
             for (int i = 0; i < 8; i++)
                 ((ServerLevel) this.level).sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getRandomX(0.5D), rabbit.getY(0.5D), rabbit.getRandomZ(0.5D), 0, rabbit.getRandom().nextGaussian(), 0.0D, rabbit.getRandom().nextGaussian(), 0.01D);
@@ -646,8 +659,10 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             super.tick();
             MobEffect aid = MobEffect.byId(Pooka.this.aidId);
 
-            if (!Pooka.this.isBaby() && Pooka.this.getRandom().nextInt(240) == 0 && aid != null)
-                this.player.addEffect(new MobEffectInstance(aid, Pooka.this.aidDuration));
+            if (!Pooka.this.isBaby() && Pooka.this.aidTicks == 0 && Pooka.this.getRandom().nextInt(100) == 0 && aid != null) {
+                this.player.addEffect(new MobEffectInstance(aid, Pooka.this.aidDuration * 2));
+                Pooka.this.setAidTimer();
+            }
         }
     }
 
