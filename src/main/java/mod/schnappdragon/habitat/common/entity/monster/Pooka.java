@@ -31,6 +31,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
@@ -446,6 +447,10 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     public boolean isFood(ItemStack stack) {
         return stack.is(HabitatItemTags.POOKA_FOOD);
+    }
+
+    public boolean canMate(Animal animal) {
+        return animal instanceof Pooka pooka && !this.isHostile() && !pooka.isHostile() && super.canMate(animal);
     }
 
     /*
