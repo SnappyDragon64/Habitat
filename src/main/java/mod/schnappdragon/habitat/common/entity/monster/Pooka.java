@@ -547,12 +547,14 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         if (this.isInvulnerableTo(source))
             return false;
         else {
-            MobEffect effect = MobEffect.byId(aidId);
-            if (!this.isBaby() && effect != null)
-                this.addEffect(new MobEffectInstance(effect, aidDuration));
+            if (!this.level.isClientSide) {
+                MobEffect effect = MobEffect.byId(aidId);
+                if (!this.isBaby() && effect != null)
+                    this.addEffect(new MobEffectInstance(effect, aidDuration));
 
-            if (this.isPacified() && source.getEntity() instanceof Player && !source.isCreativePlayer())
-                this.unpacify();
+                if (this.isPacified() && source.getEntity() instanceof Player && !source.isCreativePlayer())
+                    this.unpacify();
+            }
 
             return super.hurt(source, amount);
         }
@@ -672,6 +674,11 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         }
 
         @Override
+        public boolean canContinueToUse() {
+            return Pooka.this.isHostile() && super.canContinueToUse();
+        }
+
+        @Override
         protected void alertOther(Mob mob, LivingEntity target) {
             if (mob instanceof Pooka pooka) {
                 if (pooka.isHostile())
@@ -723,6 +730,11 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         @Override
         public boolean canUse() {
             return Pooka.this.isHostile() && super.canUse();
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return Pooka.this.isHostile() && super.canContinueToUse();
         }
     }
 }

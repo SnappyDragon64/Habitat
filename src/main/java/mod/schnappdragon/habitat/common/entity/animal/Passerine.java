@@ -61,6 +61,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.moveControl = new FlyingMoveControl(this, 10, false);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.COCOA, -1.0F);
     }
 
     protected void registerGoals() {
@@ -209,7 +210,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         if (this.isInvulnerableTo(source))
             return false;
         else {
-            if (source.getDirectEntity() != null)
+            if (!this.level.isClientSide && source.getDirectEntity() != null)
                 this.level.broadcastEntityEvent(this, (byte) 12);
             return super.hurt(source, amount);
         }
