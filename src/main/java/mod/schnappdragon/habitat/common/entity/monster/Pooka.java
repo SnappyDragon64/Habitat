@@ -30,11 +30,13 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -669,8 +671,21 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     class PookaHurtByTargetGoal extends HurtByTargetGoal {
+        private int timestamp;
+
         public PookaHurtByTargetGoal() {
             super(Pooka.this);
+        }
+
+        @Override
+        public void start() {
+            this.timestamp = this.mob.getLastHurtByMobTimestamp();
+            super.start();
+        }
+
+        @Override
+        public boolean canUse() {
+            return this.mob.getLastHurtByMobTimestamp() != this.timestamp && this.mob.getLastHurtByMob() != null && this.canAttack(this.mob.getLastHurtByMob(), TargetingConditions.forCombat().ignoreLineOfSight().ignoreInvisibilityTesting());
         }
 
         @Override
@@ -680,7 +695,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
         @Override
         protected void alertOther(Mob mob, LivingEntity target) {
-            if (mob instanceof Pooka pooka) {
+            if (mob instanceof Pooka pooka && this.mob.hasLineOfSight(target)) {
                 if (pooka.isHostile())
                     super.alertOther(mob, target);
                 else if (pooka.isPacified() && target instanceof Player) {
