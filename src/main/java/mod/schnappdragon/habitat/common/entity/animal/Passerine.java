@@ -3,12 +3,10 @@ package mod.schnappdragon.habitat.common.entity.animal;
 import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.particles.FeatherParticleOption;
-import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -41,7 +39,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
@@ -223,35 +220,19 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     public void handleEntityEvent(byte id) {
         switch (id) {
-            case 11 -> spawnFeathers(this.getParticle(), 1);
-            case 12 -> spawnFeathers(this.getParticle(), 2);
+            case 11 -> spawnFeathers(this.getFeather(), 1);
+            case 12 -> spawnFeathers(this.getFeather(), 2);
             default -> super.handleEntityEvent(id);
         }
     }
 
-    protected void spawnFeathers(ParticleOptions particle, int number) {
+    protected void spawnFeathers(FeatherParticleOption feather, int number) {
         for (int i = 0; i < number; i++)
-            this.level.addParticle(particle, this.getRandomX(0.5D), this.getY(this.random.nextDouble() * 0.8D), this.getRandomZ(0.5D), this.random.nextGaussian() * 0.01D, 0.0D, this.random.nextGaussian() * 0.01D);
+            this.level.addParticle(feather, this.getRandomX(0.5D), this.getY(this.random.nextDouble() * 0.8D), this.getRandomZ(0.5D), this.random.nextGaussian() * 0.01D, 0.0D, this.random.nextGaussian() * 0.01D);
     }
 
-    private ParticleOptions getParticle() {
-        if (this.isBerdly()) return new FeatherParticleOption(unpackColor(4699131), 0.33F);
-
-        ParticleOptions particle;
-        switch (this.getVariant()) {
-            case 0 -> particle = new FeatherParticleOption(unpackColor(16052497), 0.33F);
-            case 1 -> particle = new FeatherParticleOption(unpackColor(16777215), 0.33F);
-            case 2 -> particle = new FeatherParticleOption(unpackColor(7488818), 0.33F);
-            case 3 -> particle = new FeatherParticleOption(unpackColor(5012138), 0.33F);
-            case 4 -> particle = new FeatherParticleOption(unpackColor(796479), 0.33F);
-            case 5 -> particle = new FeatherParticleOption(unpackColor(13183262), 0.33F);
-            default -> particle = new FeatherParticleOption(unpackColor(0), 0.33F);
-        }
-        return particle;
-    }
-
-    private static Vector3f unpackColor(int packed) {
-        return new Vector3f(Vec3.fromRGB24(packed));
+    private FeatherParticleOption getFeather() {
+        return this.isBerdly() ? new FeatherParticleOption(new Vector3f(Vec3.fromRGB24((4699131))), 0.33F) : Variant.getFeatherByVariant(this.getVariant());
     }
 
     /*
@@ -308,5 +289,29 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     @Override
     protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pps) {
+    }
+
+    /*
+     * Variant
+     */
+
+    public enum Variant {
+        AMERICAN_GOLDFINCH(16052497),
+        BALI_MYNA(16777215),
+        COMMON_SPARROW(7488818),
+        EASTERN_BLUEBIRD(5012138),
+        EURASIAN_BULLFINCH(796479),
+        RED_CARDINAL(13183262);
+
+        private static final Variant[] VARIANTS = Variant.values();
+        private final FeatherParticleOption feather;
+
+        Variant(int color) {
+            feather = new FeatherParticleOption(new Vector3f(Vec3.fromRGB24((color))), 0.33F);
+        }
+
+        public static FeatherParticleOption getFeatherByVariant(int id) {
+            return VARIANTS[id].feather;
+        }
     }
 }
