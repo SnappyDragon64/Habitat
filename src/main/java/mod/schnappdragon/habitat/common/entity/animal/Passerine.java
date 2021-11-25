@@ -261,7 +261,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private FeatherParticleOption getFeather() {
-        return this.isBerdly() ? new FeatherParticleOption(new Vector3f(Vec3.fromRGB24((4699131))), 0.33F) : Variant.getFeatherByVariant(this.getVariant());
+        return this.isBerdly() ? Passerine.Variant.getBerdlyFeather() : Passerine.Variant.getFeatherByVariant(this.getVariant());
     }
 
     /*
@@ -330,7 +330,8 @@ public class Passerine extends Animal implements FlyingAnimal {
         COMMON_SPARROW(7488818),
         EASTERN_BLUEBIRD(5012138),
         EURASIAN_BULLFINCH(796479),
-        RED_CARDINAL(13183262);
+        RED_CARDINAL(13183262),
+        BERDLY(4699131);
 
         private static final Variant[] VARIANTS = Variant.values();
         private final FeatherParticleOption feather;
@@ -340,7 +341,11 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public static FeatherParticleOption getFeatherByVariant(int id) {
-            return VARIANTS[id].feather;
+            return VARIANTS[Mth.clamp(id, 0, 5)].feather;
+        }
+
+        public static FeatherParticleOption getBerdlyFeather() {
+            return BERDLY.feather;
         }
     }
 }
