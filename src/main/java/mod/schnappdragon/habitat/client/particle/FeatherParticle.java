@@ -66,7 +66,7 @@ public class FeatherParticle<T extends FeatherParticleOption> extends TextureShe
             this.yd -= 0.04 * this.gravity;
 
             if (!this.onGround) {
-                this.rollTicks = Math.max(this.rollTicks - 1, 0);
+                if (this.rollTicks > 0) this.rollTicks--;
                 this.roll += (float) this.rollTicks / this.rollLimit * this.rollFactor;
             }
             else
