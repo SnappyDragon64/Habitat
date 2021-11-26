@@ -27,7 +27,7 @@ public class NoteParticle<T extends NoteParticleOption> extends TextureSheetPart
         this.bCol = particle.getColor().z() * f1;
 
         this.quadSize *= particle.getScale();
-        this.lifetime = 6;
+        this.lifetime = 5;
     }
 
     public ParticleRenderType getRenderType() {

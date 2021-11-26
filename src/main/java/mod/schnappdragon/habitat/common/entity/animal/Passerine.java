@@ -50,7 +50,7 @@ import java.util.Random;
 public class Passerine extends Animal implements FlyingAnimal {
     private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     public static final FeatherParticleOption BERDLY_FEATHER = new FeatherParticleOption(new Vector3f(Vec3.fromRGB24((4699131))), 0.33F);;
-    public static final NoteParticleOption BERDLY_NOTE = new NoteParticleOption(new Vector3f(Vec3.fromRGB24((11730688))), 1.0F);
+    public static final NoteParticleOption BERDLY_NOTE = new NoteParticleOption(new Vector3f(Vec3.fromRGB24((11730688))), 0.8F);
     public float flap;
     public float flapSpeed;
     public float initialFlapSpeed;
@@ -368,15 +368,19 @@ public class Passerine extends Animal implements FlyingAnimal {
 
         Variant(int featherColor, int noteColor) {
             feather = new FeatherParticleOption(new Vector3f(Vec3.fromRGB24((featherColor))), 0.33F);
-            note = new NoteParticleOption(new Vector3f(Vec3.fromRGB24((noteColor))), 1.0F);
+            note = new NoteParticleOption(new Vector3f(Vec3.fromRGB24((noteColor))), 0.8F);
         }
 
         public static FeatherParticleOption getFeatherByVariant(int id) {
-            return VARIANTS[Mth.clamp(id, 0, 5)].feather;
+            return getVariantById(id).feather;
         }
 
         public static NoteParticleOption getNoteByVariant(int id) {
-            return VARIANTS[Mth.clamp(id, 0, 5)].note;
+            return getVariantById(id).note;
+        }
+
+        private static Variant getVariantById(int id) {
+            return VARIANTS[Mth.clamp(id, 0, 5)];
         }
     }
 }
