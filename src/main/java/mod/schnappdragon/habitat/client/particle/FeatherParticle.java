@@ -16,7 +16,7 @@ public class FeatherParticle<T extends FeatherParticleOption> extends TextureShe
     protected int rollTicks;
 
     private FeatherParticle(ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ, T particle, SpriteSet spriteSet) {
-        super(world, x, y, z);
+        super(world, x, y, z, 0.0D, 0.0D, 0.0D);
         this.pickSprite(spriteSet);
         this.hasPhysics = true;
 

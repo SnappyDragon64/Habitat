@@ -3,6 +3,7 @@ package mod.schnappdragon.habitat.common.entity.animal;
 import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.particles.FeatherParticleOption;
+import mod.schnappdragon.habitat.core.particles.NoteParticleOption;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import net.minecraft.ChatFormatting;
@@ -48,6 +49,8 @@ import java.util.Random;
 
 public class Passerine extends Animal implements FlyingAnimal {
     private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
+    public static final FeatherParticleOption BERDLY_FEATHER = new FeatherParticleOption(new Vector3f(Vec3.fromRGB24((4699131))), 0.33F);;
+    public static final NoteParticleOption BERDLY_NOTE = new NoteParticleOption(new Vector3f(Vec3.fromRGB24((11730688))), 1.0F);
     public float flap;
     public float flapSpeed;
     public float initialFlapSpeed;
@@ -190,11 +193,13 @@ public class Passerine extends Animal implements FlyingAnimal {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        this.setVariant(this.random.nextInt(6));
-        if (spawnDataIn == null) {
-            spawnDataIn = new AgeableMob.AgeableMobGroupData(false);
-        }
+        int i = this.random.nextInt(6);
+        if (spawnDataIn instanceof Passerine.PasserineGroupData data)
+            i = data.variant;
+        else
+            spawnDataIn = new Passerine.PasserineGroupData(i);
 
+        this.setVariant(i);
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
@@ -223,6 +228,13 @@ public class Passerine extends Animal implements FlyingAnimal {
      * Sound Methods
      */
 
+    public void playAmbientSound() {
+        super.playAmbientSound();
+
+        if (!this.level.isClientSide)
+            this.level.broadcastEntityEvent(this, (byte) 13);
+    }
+
     public SoundEvent getAmbientSound() {
         return HabitatSoundEvents.PASSERINE_AMBIENT.get();
     }
@@ -236,7 +248,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(HabitatSoundEvents.PASSERINE_STEP.get(), 0.15F, 1.0F);
+        this.playSound(HabitatSoundEvents.PASSERINE_STEP.get(), 0.2F, 1.0F);
     }
 
     public float getVoicePitch() {
@@ -251,6 +263,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         switch (id) {
             case 11 -> spawnFeathers(this.getFeather(), 1);
             case 12 -> spawnFeathers(this.getFeather(), 2);
+            case 13 -> this.level.addParticle(this.getNote(), this.getRandomX(0.5D), 0.6D + this.getY(), this.getRandomZ(0.5D), this.random.nextDouble(), 0.0D, 0.0D);
             default -> super.handleEntityEvent(id);
         }
     }
@@ -261,7 +274,11 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private FeatherParticleOption getFeather() {
-        return this.isBerdly() ? Passerine.Variant.getBerdlyFeather() : Passerine.Variant.getFeatherByVariant(this.getVariant());
+        return this.isBerdly() ? BERDLY_FEATHER : Passerine.Variant.getFeatherByVariant(this.getVariant());
+    }
+
+    private NoteParticleOption getNote() {
+        return this.isBerdly() ? BERDLY_NOTE : Passerine.Variant.getNoteByVariant(this.getVariant());
     }
 
     /*
@@ -321,31 +338,45 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     /*
+     * Data
+     */
+
+    public static class PasserineGroupData extends AgeableMob.AgeableMobGroupData {
+        public final int variant;
+
+        public PasserineGroupData(int variantId) {
+            super(false);
+            this.variant = variantId;
+        }
+    }
+
+    /*
      * Variant
      */
 
     public enum Variant {
-        AMERICAN_GOLDFINCH(16052497),
-        BALI_MYNA(16777215),
-        COMMON_SPARROW(7488818),
-        EASTERN_BLUEBIRD(5012138),
-        EURASIAN_BULLFINCH(796479),
-        RED_CARDINAL(13183262),
-        BERDLY(4699131);
+        AMERICAN_GOLDFINCH(16052497, 16775680),
+        BALI_MYNA(16777215, 8703),
+        COMMON_SPARROW(7488818, 16730112),
+        EASTERN_BLUEBIRD(5012138, 16744192),
+        EURASIAN_BULLFINCH(796479, 16711726),
+        RED_CARDINAL(13183262, 16714752);
 
         private static final Variant[] VARIANTS = Variant.values();
         private final FeatherParticleOption feather;
+        private final NoteParticleOption note;
 
-        Variant(int color) {
-            feather = new FeatherParticleOption(new Vector3f(Vec3.fromRGB24((color))), 0.33F);
+        Variant(int featherColor, int noteColor) {
+            feather = new FeatherParticleOption(new Vector3f(Vec3.fromRGB24((featherColor))), 0.33F);
+            note = new NoteParticleOption(new Vector3f(Vec3.fromRGB24((noteColor))), 1.0F);
         }
 
         public static FeatherParticleOption getFeatherByVariant(int id) {
             return VARIANTS[Mth.clamp(id, 0, 5)].feather;
         }
 
-        public static FeatherParticleOption getBerdlyFeather() {
-            return BERDLY.feather;
+        public static NoteParticleOption getNoteByVariant(int id) {
+            return VARIANTS[Mth.clamp(id, 0, 5)].note;
         }
     }
 }

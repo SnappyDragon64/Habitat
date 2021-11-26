@@ -20,6 +20,7 @@ public class HabitatParticleProviders {
         registerFactory(HabitatParticleTypes.LANDING_SLIME.get(), LandingSlimeParticle.LandingSlimeProvider::new);
         registerFactory(HabitatParticleTypes.FAIRY_RING_SPORE.get(), FairyRingSporeParticle.Provider::new);
         registerFactory(HabitatParticleTypes.FEATHER.get(), FeatherParticle.Provider::new);
+        registerFactory(HabitatParticleTypes.NOTE.get(), NoteParticle.Provider::new);
     }
 
     private static <T extends ParticleOptions> void registerFactory(ParticleType<T> particle, ParticleEngine.SpriteParticleRegistration<T> factory) {

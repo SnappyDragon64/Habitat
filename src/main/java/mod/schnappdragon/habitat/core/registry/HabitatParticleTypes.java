@@ -2,7 +2,7 @@ package mod.schnappdragon.habitat.core.registry;
 
 import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.core.Habitat;
-import mod.schnappdragon.habitat.core.particles.FeatherParticleOption;
+import mod.schnappdragon.habitat.core.particles.*;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -19,6 +19,7 @@ public class HabitatParticleTypes {
     public static final RegistryObject<SimpleParticleType> LANDING_SLIME = register("landing_slime", false);
     public static final RegistryObject<SimpleParticleType> FAIRY_RING_SPORE = register("fairy_ring_spore", false);
     public static final RegistryObject<ParticleType<FeatherParticleOption>> FEATHER = register("feather", FeatherParticleOption.DESERIALIZER, (codec) -> FeatherParticleOption.CODEC);
+    public static final RegistryObject<ParticleType<NoteParticleOption>> NOTE = register("note", NoteParticleOption.DESERIALIZER, (codec) -> NoteParticleOption.CODEC);
 
     private static RegistryObject<SimpleParticleType> register(String name, Boolean alwaysShow) {
         return PARTICLE_TYPES.register(name, () -> new SimpleParticleType(alwaysShow));
