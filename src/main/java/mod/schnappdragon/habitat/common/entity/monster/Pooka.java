@@ -472,7 +472,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         int aidD = aid.getRight();
         int ailI = ailment.getLeft();
         int ailD = ailment.getRight();
-        if (spawnDataIn instanceof PookaGroupData data) {
+        if (spawnDataIn instanceof Pooka.PookaGroupData data) {
             i = data.rabbitType;
             aidI = data.aidIdData;
             aidD = data.aidDurationData;
@@ -480,7 +480,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             ailD = data.ailmentDurationData;
             state = data.stateData;
         } else
-            spawnDataIn = new PookaGroupData(i, aidI, aidD, ailI, ailD, Pooka.State.HOSTILE);
+            spawnDataIn = new Pooka.PookaGroupData(i, aidI, aidD, ailI, ailD, Pooka.State.HOSTILE);
 
         this.setRabbitType(i);
         this.setAidAndAilment(aidI, aidD, ailI, ailD);
