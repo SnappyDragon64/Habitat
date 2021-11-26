@@ -333,7 +333,9 @@
       "habitat:mob/passerine/sing5",
       "habitat:mob/passerine/sing6",
       "habitat:mob/passerine/sing7",
-      "habitat:mob/passerine/sing8"
+      "habitat:mob/passerine/sing8",
+      "habitat:mob/passerine/sing9",
+      "habitat:mob/passerine/sing10"
     ]
   },
   "entity.passerine.death": {
