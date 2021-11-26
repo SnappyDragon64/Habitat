@@ -83,9 +83,12 @@ public class Passerine extends Animal implements FlyingAnimal {
                 .add(Attributes.MOVEMENT_SPEED, 0.3F);
     }
 
-    @Override
     public Vec3 getLeashOffset() {
         return new Vec3(0.0D, 0.5F * this.getEyeHeight(), this.getBbWidth() * 0.3F);
+    }
+
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+        return size.height * 0.6F;
     }
 
     /*
@@ -153,7 +156,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     protected void onFlap() {
-        this.playSound(HabitatSoundEvents.PASSERINE_FLAP.get(), 1.0F, 1.0F);
+        this.playSound(HabitatSoundEvents.PASSERINE_FLAP.get(), 0.1F, 1.0F);
         this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
 
         if (random.nextInt(30) == 0)

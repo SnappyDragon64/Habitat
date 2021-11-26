@@ -340,38 +340,50 @@
     "subtitle": "habitat.subtitles.entity.passerine.death",
     "sounds": [
       {
+        "name": "habitat:mob/passerine/death1"
+      },
+      {
         "name": "habitat:mob/passerine/death1",
-        "pitch": 0.9
+        "pitch": 1.1
+      },
+      {
+        "name": "habitat:mob/passerine/death2"
       },
       {
         "name": "habitat:mob/passerine/death2",
-        "pitch": 0.9
-      },
-      {
-        "name": "habitat:mob/passerine/death3",
-        "pitch": 0.9
+        "pitch": 1.1
       }
     ]
   },
   "entity.passerine.flap": {
     "subtitle": "habitat.subtitles.entity.passerine.flap",
     "sounds": [
+      "mob/parrot/fly1",
+      "mob/parrot/fly2",
+      "mob/parrot/fly3",
+      "mob/parrot/fly4",
+      "mob/parrot/fly5",
+      "mob/parrot/fly6",
+      "mob/parrot/fly7",
+      "mob/parrot/fly8"
     ]
   },
   "entity.passerine.hurt": {
     "subtitle": "habitat.subtitles.entity.passerine.hurt",
     "sounds": [
       {
+        "name": "habitat:mob/passerine/hurt1"
+      },
+      {
         "name": "habitat:mob/passerine/hurt1",
-        "pitch": 0.9
+        "pitch": 1.1
+      },
+      {
+        "name": "habitat:mob/passerine/hurt2"
       },
       {
         "name": "habitat:mob/passerine/hurt2",
-        "pitch": 0.8
-      },
-      {
-        "name": "habitat:mob/passerine/hurt2",
-        "pitch": 0.9
+        "pitch": 1.1
       }
     ]
   },
