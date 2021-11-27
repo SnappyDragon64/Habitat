@@ -4,6 +4,7 @@ import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.particles.FeatherParticleOption;
 import mod.schnappdragon.habitat.core.particles.NoteParticleOption;
+import mod.schnappdragon.habitat.core.registry.HabitatCriterionTriggers;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import net.minecraft.ChatFormatting;
@@ -15,6 +16,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
@@ -181,6 +183,7 @@ public class Passerine extends Animal implements FlyingAnimal {
                 this.heal(1.0F);
                 this.usePlayerItem(player, hand, stack);
                 this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
+                HabitatCriterionTriggers.FEED_PASSERINE.trigger((ServerPlayer) player);
             }
 
             return InteractionResult.sidedSuccess(this.level.isClientSide);

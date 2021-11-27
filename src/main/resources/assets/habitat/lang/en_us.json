@@ -131,8 +131,14 @@
   "habitat.advancements.husbandry.suspicious.title": "Suspicious...",
   "habitat.advancements.husbandry.bloom_defused.title": "The Bloom Has Been Defused",
   "habitat.advancements.husbandry.fae_whisperer.title": "Fae Whisperer",
+  "habitat.advancements.husbandry.feathered_friend.title": "Feathered Friend",
+  "habitat.advancements.husbandry.beginner_birdwatcher.title": "Beginner Birdwatcher",
+  "habitat.advancements.husbandry.ornithologist.title": "Ornithologist",
 
-  "habitat.advancements.husbandry.suspicious.description": "Feed suspicious stew to a Rafflesia",
-  "habitat.advancements.husbandry.bloom_defused.description": "Shear a Kabloom Bush to harvest the fruit",
-  "habitat.advancements.husbandry.fae_whisperer.description": "Lure a Pooka away from the rest and pacify it with golden carrots"
+  "habitat.advancements.husbandry.suspicious.description": "Feed suspicious stew to a rafflesia",
+  "habitat.advancements.husbandry.bloom_defused.description": "Shear a kabloom Bush to harvest the fruit",
+  "habitat.advancements.husbandry.fae_whisperer.description": "Lure a pooka away from the rest and pacify it with golden carrots",
+  "habitat.advancements.husbandry.feathered_friend.description": "Feed a passerine seeds",
+  "habitat.advancements.husbandry.beginner_birdwatcher.description": "Look at a passerine through a spyglass",
+  "habitat.advancements.husbandry.ornithologist.description": "Look at all passerine variants through a spyglass!"
 }

@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:husbandry/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:wheat_seeds"
+    },
+    "title": {
+      "translate": "habitat.advancements.husbandry.feathered_friend.title"
+    },
+    "description": {
+      "translate": "habitat.advancements.husbandry.feathered_friend.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "feathered_friend": {
+      "trigger": "habitat:feed_passerine"
+    }
+  },
+  "requirements": [
+    [
+      "feathered_friend"
+    ]
+  ]
+}
