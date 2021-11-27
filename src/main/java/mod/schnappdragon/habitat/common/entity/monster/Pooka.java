@@ -166,7 +166,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     private void setAidTimer() {
-        this.aidTicks = 20 * HabitatConfig.COMMON.pookaAidCooldown.get();
+        this.aidTicks = (int) ((20.0F + this.random.nextFloat() * 4.0F) * (float) HabitatConfig.COMMON.pookaAidCooldown.get());
     }
 
     private void resetAidTimer() {
@@ -667,7 +667,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             super.tick();
             MobEffect aid = MobEffect.byId(Pooka.this.aidId);
 
-            if (!Pooka.this.isBaby() && Pooka.this.aidTicks == 0 && Pooka.this.getRandom().nextInt(100) == 0 && aid != null) {
+            if (!Pooka.this.isBaby() && Pooka.this.aidTicks == 0 && aid != null) {
                 this.player.addEffect(new MobEffectInstance(aid, Pooka.this.aidDuration * 2));
                 Pooka.this.setAidTimer();
             }

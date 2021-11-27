@@ -37,7 +37,7 @@ public class HabitatConfig {
             builder.comment("\n== MISC ==\n\nFairy Ring Mushroom Stew Effects\nEnter them in the format effectid:duration (duration in seconds) and separate them with a single ,");
             suspiciousStewEffects = builder.define("suspicious_stew_effects", "1:12,5:8,8:16,10:10,11:8,2:8,15:12,17:16,18:8,19:10");
 
-            builder.comment("\n== MOBS ==\n\n= POOKA =\nCooldown duration after Pooka gives the player it is following an effect. (duration in seconds)");
+            builder.comment("\n== MOBS ==\n\n= POOKA =\nMinimum cooldown duration after Pooka gives the player it is following an effect. (duration in seconds)\nActual cooldown duration can be upto 20% more than the specified value.");
             pookaAidCooldown = builder.define("pooka_aid_cooldown", 20);
             builder.comment("Pooka Effects\nEnter them in the format effectid:duration (duration in seconds) and separate them with a single ,");
             pookaPositiveEffects = builder.define("pooka_positive_effects", "1:6,5:4,8:8,10:5,11:4");
