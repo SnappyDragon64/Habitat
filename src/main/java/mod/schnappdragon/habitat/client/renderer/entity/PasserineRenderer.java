@@ -2,9 +2,9 @@ package mod.schnappdragon.habitat.client.renderer.entity;
 
 import mod.schnappdragon.habitat.client.model.PasserineModel;
 import mod.schnappdragon.habitat.client.renderer.HabitatModelLayers;
+import mod.schnappdragon.habitat.client.renderer.entity.layers.PasserineEyesLayer;
 import mod.schnappdragon.habitat.common.entity.animal.Passerine;
 import mod.schnappdragon.habitat.core.Habitat;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +23,7 @@ public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Pas
 
     public PasserineRenderer(EntityRendererProvider.Context context) {
         super(context, new PasserineModel<>(context.bakeLayer(HabitatModelLayers.PASSERINE)), 0.25F);
+        this.addLayer(new PasserineEyesLayer<>(this));
     }
 
     @Override

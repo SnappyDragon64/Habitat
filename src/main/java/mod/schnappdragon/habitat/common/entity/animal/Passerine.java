@@ -28,9 +28,11 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -41,16 +43,19 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
+import java.util.EnumSet;
 import java.util.Random;
 
 public class Passerine extends Animal implements FlyingAnimal {
     private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_SLEEPING = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.BOOLEAN);
     public static final FeatherParticleOptions BERDLY_FEATHER = new FeatherParticleOptions(new Vector3f(Vec3.fromRGB24((4699131))), 0.33F);;
     public static final NoteParticleOptions BERDLY_NOTE = new NoteParticleOptions(new Vector3f(Vec3.fromRGB24((11730688))), 0.8F);
     public float flap;
@@ -62,7 +67,8 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     public Passerine(EntityType<? extends Passerine> passerine, Level worldIn) {
         super(passerine, worldIn);
-        this.moveControl = new FlyingMoveControl(this, 10, false);
+        this.moveControl = new PasserineMoveControl(10, false);
+        this.lookControl = new PasserineLookControl();
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.COCOA, -1.0F);
@@ -72,10 +78,12 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
-        this.goalSelector.addGoal(3, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
+        this.goalSelector.addGoal(3, new Passerine.FindCoverGoal(1.25D));
+        this.goalSelector.addGoal(4, new Passerine.SleepGoal());
+        this.goalSelector.addGoal(5, new Passerine.RandomFlyingGoal(1.0D));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(7, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
     }
 
     public static AttributeSupplier.Builder registerAttributes() {
@@ -100,16 +108,19 @@ public class Passerine extends Animal implements FlyingAnimal {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_VARIANT_ID, 0);
+        this.entityData.define(DATA_SLEEPING, false);
     }
 
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("Variant", this.getVariant());
+        compound.putBoolean("Sleeping", this.isSleeping());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setVariant(compound.getInt("Variant"));
+        this.setSleeping(compound.getBoolean("Sleeping"));
     }
 
     public void setVariant(int id) {
@@ -119,6 +130,34 @@ public class Passerine extends Animal implements FlyingAnimal {
     public int getVariant() {
         return Mth.clamp(this.entityData.get(DATA_VARIANT_ID), 0, 5);
     }
+
+    public void setSleeping(boolean isSleeping) {
+        this.entityData.set(DATA_SLEEPING, isSleeping);
+    }
+
+    public boolean isSleeping() {
+        return this.entityData.get(DATA_SLEEPING);
+    }
+
+    /*
+     * AI Methods
+     */
+
+    public void aiStep() {
+        super.aiStep();
+        this.calculateFlapping();
+
+        if (this.isSleeping() || this.isImmobile()) {
+            this.jumping = false;
+            this.xxa = 0.0F;
+            this.zza = 0.0F;
+        }
+    }
+
+    private boolean canMove() {
+        return !this.isSleeping();
+    }
+
 
     /*
      * Flying Methods
@@ -130,11 +169,6 @@ public class Passerine extends Animal implements FlyingAnimal {
         flyingpathnavigation.setCanFloat(true);
         flyingpathnavigation.setCanPassDoors(true);
         return flyingpathnavigation;
-    }
-
-    public void aiStep() {
-        super.aiStep();
-        this.calculateFlapping();
     }
 
     private void calculateFlapping() {
@@ -177,7 +211,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        if (stack.is(HabitatItemTags.PASSERINE_FOOD)) {
+        if (stack.is(HabitatItemTags.PASSERINE_FOOD) && !this.isSleeping()) {
             if (!this.level.isClientSide) {
                 this.playAmbientSound();
                 this.heal(1.0F);
@@ -235,10 +269,12 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     public void playAmbientSound() {
-        super.playAmbientSound();
+        if (!this.isSleeping()) {
+            super.playAmbientSound();
 
-        if (!this.level.isClientSide)
-            this.level.broadcastEntityEvent(this, (byte) 13);
+            if (!this.level.isClientSide)
+                this.level.broadcastEntityEvent(this, (byte) 13);
+        }
     }
 
     public SoundEvent getAmbientSound() {
@@ -387,6 +423,95 @@ public class Passerine extends Animal implements FlyingAnimal {
 
         private static Variant getVariantById(int id) {
             return VARIANTS[Mth.clamp(id, 0, 5)];
+        }
+    }
+
+    /*
+     * Controllers
+     */
+
+    public class PasserineMoveControl extends FlyingMoveControl {
+        public PasserineMoveControl(int maxTurns, boolean hoversInPlace) {
+            super(Passerine.this, maxTurns, hoversInPlace);
+        }
+
+        public void tick() {
+            if (Passerine.this.canMove())
+                super.tick();
+        }
+    }
+
+    public class PasserineLookControl extends LookControl {
+        public PasserineLookControl() {
+            super(Passerine.this);
+        }
+
+        public void tick() {
+            if (!Passerine.this.isSleeping())
+                super.tick();
+        }
+    }
+
+    /*
+     * AI Goals
+     */
+
+    class FindCoverGoal extends FleeSunGoal {
+        public FindCoverGoal(double speedModifier) {
+            super(Passerine.this, speedModifier);
+        }
+
+        public boolean canUse() {
+            return this.mob.getTarget() == null && (Passerine.this.level.isRainingAt(this.mob.blockPosition()) || Passerine.this.level.isThundering()) && this.setWantedPos();
+        }
+    }
+
+    class RandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
+        public RandomFlyingGoal(double speedModifier) {
+            super(Passerine.this, speedModifier);
+        }
+
+        @Nullable
+        protected Vec3 getPosition() {
+            return this.mob.isInWaterOrRain() ? LandRandomPos.getPos(this.mob, 15, 15) : super.getPosition();
+        }
+    }
+
+    class SleepGoal extends Goal {
+        private int countdown = Passerine.this.random.nextInt(160);
+
+        public SleepGoal() {
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
+        }
+
+        public boolean canUse() {
+            return Passerine.this.xxa == 0.0F && Passerine.this.yya == 0.0F && Passerine.this.zza == 0.0F && (this.canSleep() || Passerine.this.isSleeping());
+        }
+
+        public boolean canContinueToUse() {
+            return this.canSleep();
+        }
+
+        private boolean canSleep() {
+            if (this.countdown > 0) {
+                --this.countdown;
+                return false;
+            } else {
+                BlockState state = Passerine.this.level.getBlockState(Passerine.this.getOnPos());
+                boolean onTree = state.getBlock() instanceof LeavesBlock || state.is(BlockTags.LOGS);
+                return Passerine.this.level.isNight() && (onTree || Passerine.this.level.isRaining() && !Passerine.this.level.isRainingAt(Passerine.this.blockPosition()));
+            }
+        }
+
+        public void start() {
+            Passerine.this.setSleeping(true);
+            Passerine.this.getNavigation().stop();
+            Passerine.this.getMoveControl().setWantedPosition(Passerine.this.getX(), Passerine.this.getY(), Passerine.this.getZ(), 0.0D);
+        }
+
+        public void stop() {
+            this.countdown = Passerine.this.random.nextInt(140);
+            Passerine.this.setSleeping(false);
         }
     }
 }
