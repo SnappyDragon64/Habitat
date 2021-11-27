@@ -28,18 +28,8 @@
             "predicate": {
               "player": {
                 "looking_at": {
-                  "type": "habitat:passerine"
-                }
-              }
-            },
-            "entity": "this"
-          },
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "player": {
-                "looking_at": {
-                  "Variant": 0
+                  "type": "habitat:passerine",
+                  "nbt": "{Variant:0}"
                 }
               }
             },
@@ -62,18 +52,8 @@
             "predicate": {
               "player": {
                 "looking_at": {
-                  "type": "habitat:passerine"
-                }
-              }
-            },
-            "entity": "this"
-          },
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "player": {
-                "looking_at": {
-                  "Variant": 1
+                  "type": "habitat:passerine",
+                  "nbt": "{Variant:1}"
                 }
               }
             },
@@ -96,18 +76,8 @@
             "predicate": {
               "player": {
                 "looking_at": {
-                  "type": "habitat:passerine"
-                }
-              }
-            },
-            "entity": "this"
-          },
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "player": {
-                "looking_at": {
-                  "Variant": 2
+                  "type": "habitat:passerine",
+                  "nbt": "{Variant:2}"
                 }
               }
             },
@@ -130,18 +100,8 @@
             "predicate": {
               "player": {
                 "looking_at": {
-                  "type": "habitat:passerine"
-                }
-              }
-            },
-            "entity": "this"
-          },
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "player": {
-                "looking_at": {
-                  "Variant": 3
+                  "type": "habitat:passerine",
+                  "nbt": "{Variant:3}"
                 }
               }
             },
@@ -164,18 +124,8 @@
             "predicate": {
               "player": {
                 "looking_at": {
-                  "type": "habitat:passerine"
-                }
-              }
-            },
-            "entity": "this"
-          },
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "player": {
-                "looking_at": {
-                  "Variant": 4
+                  "type": "habitat:passerine",
+                  "nbt": "{Variant:4}"
                 }
               }
             },
@@ -198,18 +148,8 @@
             "predicate": {
               "player": {
                 "looking_at": {
-                  "type": "habitat:passerine"
-                }
-              }
-            },
-            "entity": "this"
-          },
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "player": {
-                "looking_at": {
-                  "Variant": 5
+                  "type": "habitat:passerine",
+                  "nbt": "{Variant:5}"
                 }
               }
             },
