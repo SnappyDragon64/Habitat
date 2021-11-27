@@ -31,7 +31,7 @@ public class FeatherParticle<T extends FeatherParticleOption> extends TextureShe
         this.gCol = particle.getColor().y() * f1;
         this.bCol = particle.getColor().z() * f1;
 
-        this.gravity = 0.02F + random.nextFloat() * 0.02F;
+        this.gravity = 0.01F + random.nextFloat() * 0.01F;
 
         this.xd = motionX;
         this.yd = motionY;
