@@ -77,9 +77,9 @@ public class Passerine extends Animal implements FlyingAnimal {
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(2, new TemptGoal(this, 1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
-        this.goalSelector.addGoal(3, new Passerine.FindCoverGoal(1.25D));
-        this.goalSelector.addGoal(4, new Passerine.SleepGoal());
+        this.goalSelector.addGoal(2, new Passerine.FindCoverGoal(1.25D));
+        this.goalSelector.addGoal(3, new Passerine.SleepGoal());
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
         this.goalSelector.addGoal(5, new Passerine.RandomFlyingGoal(1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
