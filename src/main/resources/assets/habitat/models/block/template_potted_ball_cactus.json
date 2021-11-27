@@ -36,6 +36,7 @@
     {
       "from": [7.5, 9.1, 7.5],
       "to": [8.5, 9.1, 8.5],
+      "shade": false,
       "faces": {
         "up": {"uv": [8, 16, 6, 14], "texture": "#petal"},
         "down": {"uv": [10, 14, 8, 16], "texture": "#petal", "cullface": "down"}
@@ -45,6 +46,7 @@
       "from": [6.5, 9, 5.6],
       "to": [9.5, 9, 7.6],
       "rotation": {"angle": 45, "axis": "x", "origin": [8, 9, 7.6], "rescale": true},
+      "shade": false,
       "faces": {
         "up": {"uv": [8, 14, 4, 11], "rotation": 180, "texture": "#petal"},
         "down": {"uv": [8, 11, 12, 14], "rotation": 180, "texture": "#petal"}
@@ -54,6 +56,7 @@
       "from": [8.4, 9, 6.5],
       "to": [10.4, 9, 9.5],
       "rotation": {"angle": 45, "axis": "z", "origin": [8.4, 9, 8], "rescale": true},
+      "shade": false,
       "faces": {
         "up": {"uv": [8, 14, 4, 11], "rotation": 270, "texture": "#petal"},
         "down": {"uv": [12, 11, 8, 14], "rotation": 90, "texture": "#petal"}
@@ -63,6 +66,7 @@
       "from": [5.6, 9, 6.5],
       "to": [7.6, 9, 9.5],
       "rotation": {"angle": -45, "axis": "z", "origin": [7.6, 9, 8], "rescale": true},
+      "shade": false,
       "faces": {
         "up": {"uv": [8, 14, 4, 11], "rotation": 90, "texture": "#petal"},
         "down": {"uv": [12, 11, 8, 14], "rotation": 270, "texture": "#petal"}
@@ -72,6 +76,7 @@
       "from": [6.5, 9, 8.4],
       "to": [9.5, 9, 10.4],
       "rotation": {"angle": -45, "axis": "x", "origin": [8, 9, 8.4], "rescale": true},
+      "shade": false,
       "faces": {
         "up": {"uv": [8, 14, 4, 11], "texture": "#petal"},
         "down": {"uv": [8, 14, 12, 11], "rotation": 180, "texture": "#petal"}
