@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.client.particle;
 
-import mod.schnappdragon.habitat.core.particles.FeatherParticleOption;
+import mod.schnappdragon.habitat.core.particles.FeatherParticleOptions;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
@@ -10,7 +10,7 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 
-public class FeatherParticle<T extends FeatherParticleOption> extends TextureSheetParticle {
+public class FeatherParticle<T extends FeatherParticleOptions> extends TextureSheetParticle {
     protected float rollFactor;
     protected int rollLimit;
     protected int rollTicks;
@@ -76,14 +76,14 @@ public class FeatherParticle<T extends FeatherParticleOption> extends TextureShe
         this.move(xd, yd, zd);
     }
 
-    public static class Provider implements ParticleProvider<FeatherParticleOption> {
+    public static class Provider implements ParticleProvider<FeatherParticleOptions> {
         private final SpriteSet spriteSet;
 
         public Provider(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
-        public Particle createParticle(FeatherParticleOption particle, ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ) {
+        public Particle createParticle(FeatherParticleOptions particle, ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ) {
             return new FeatherParticle<>(world, x, y, z, motionX, motionY, motionZ, particle, spriteSet);
         }
     }

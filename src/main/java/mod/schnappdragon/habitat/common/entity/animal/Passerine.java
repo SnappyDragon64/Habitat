@@ -2,8 +2,8 @@ package mod.schnappdragon.habitat.common.entity.animal;
 
 import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
-import mod.schnappdragon.habitat.core.particles.FeatherParticleOption;
-import mod.schnappdragon.habitat.core.particles.NoteParticleOption;
+import mod.schnappdragon.habitat.core.particles.FeatherParticleOptions;
+import mod.schnappdragon.habitat.core.particles.NoteParticleOptions;
 import mod.schnappdragon.habitat.core.registry.HabitatCriterionTriggers;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
@@ -51,8 +51,8 @@ import java.util.Random;
 
 public class Passerine extends Animal implements FlyingAnimal {
     private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
-    public static final FeatherParticleOption BERDLY_FEATHER = new FeatherParticleOption(new Vector3f(Vec3.fromRGB24((4699131))), 0.33F);;
-    public static final NoteParticleOption BERDLY_NOTE = new NoteParticleOption(new Vector3f(Vec3.fromRGB24((11730688))), 0.8F);
+    public static final FeatherParticleOptions BERDLY_FEATHER = new FeatherParticleOptions(new Vector3f(Vec3.fromRGB24((4699131))), 0.33F);;
+    public static final NoteParticleOptions BERDLY_NOTE = new NoteParticleOptions(new Vector3f(Vec3.fromRGB24((11730688))), 0.8F);
     public float flap;
     public float flapSpeed;
     public float initialFlapSpeed;
@@ -274,16 +274,16 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
     }
 
-    protected void spawnFeathers(FeatherParticleOption feather, int number) {
+    protected void spawnFeathers(FeatherParticleOptions feather, int number) {
         for (int i = 0; i < number; i++)
             this.level.addParticle(feather, this.getRandomX(0.5D), this.getY(this.random.nextDouble() * 0.8D), this.getRandomZ(0.5D), this.random.nextGaussian() * 0.01D, 0.0D, this.random.nextGaussian() * 0.01D);
     }
 
-    private FeatherParticleOption getFeather() {
+    private FeatherParticleOptions getFeather() {
         return this.isBerdly() ? BERDLY_FEATHER : Passerine.Variant.getFeatherByVariant(this.getVariant());
     }
 
-    private NoteParticleOption getNote() {
+    private NoteParticleOptions getNote() {
         return this.isBerdly() ? BERDLY_NOTE : Passerine.Variant.getNoteByVariant(this.getVariant());
     }
 
@@ -369,19 +369,19 @@ public class Passerine extends Animal implements FlyingAnimal {
         RED_CARDINAL(13183262, 16714752);
 
         private static final Variant[] VARIANTS = Variant.values();
-        private final FeatherParticleOption feather;
-        private final NoteParticleOption note;
+        private final FeatherParticleOptions feather;
+        private final NoteParticleOptions note;
 
         Variant(int featherColor, int noteColor) {
-            feather = new FeatherParticleOption(new Vector3f(Vec3.fromRGB24((featherColor))), 0.33F);
-            note = new NoteParticleOption(new Vector3f(Vec3.fromRGB24((noteColor))), 0.8F);
+            feather = new FeatherParticleOptions(new Vector3f(Vec3.fromRGB24((featherColor))), 0.33F);
+            note = new NoteParticleOptions(new Vector3f(Vec3.fromRGB24((noteColor))), 0.8F);
         }
 
-        public static FeatherParticleOption getFeatherByVariant(int id) {
+        public static FeatherParticleOptions getFeatherByVariant(int id) {
             return getVariantById(id).feather;
         }
 
-        public static NoteParticleOption getNoteByVariant(int id) {
+        public static NoteParticleOptions getNoteByVariant(int id) {
             return getVariantById(id).note;
         }
 

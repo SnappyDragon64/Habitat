@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.client.particle;
 
-import mod.schnappdragon.habitat.core.particles.NoteParticleOption;
+import mod.schnappdragon.habitat.core.particles.NoteParticleOptions;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
@@ -9,7 +9,7 @@ import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.util.Mth;
 
-public class NoteParticle<T extends NoteParticleOption> extends TextureSheetParticle {
+public class NoteParticle<T extends NoteParticleOptions> extends TextureSheetParticle {
     private NoteParticle(ClientLevel world, double x, double y, double z, T particle, SpriteSet spriteSet) {
         super(world, x, y, z, 0.0D, 0.0D, 0.0D);
         this.speedUpWhenYMotionIsBlocked = true;
@@ -38,14 +38,14 @@ public class NoteParticle<T extends NoteParticleOption> extends TextureSheetPart
         return this.quadSize * Mth.clamp(((float) this.age + scale) / (float) this.lifetime * 32.0F, 0.0F, 1.0F);
     }
 
-    public static class Provider implements ParticleProvider<NoteParticleOption> {
+    public static class Provider implements ParticleProvider<NoteParticleOptions> {
         private final SpriteSet sprite;
 
         public Provider(SpriteSet pSprites) {
             this.sprite = pSprites;
         }
 
-        public Particle createParticle(NoteParticleOption particle, ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ) {
+        public Particle createParticle(NoteParticleOptions particle, ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ) {
             return new NoteParticle<>(world, x, y, z, particle, sprite);
         }
     }

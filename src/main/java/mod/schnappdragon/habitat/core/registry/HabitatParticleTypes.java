@@ -18,8 +18,8 @@ public class HabitatParticleTypes {
     public static final RegistryObject<SimpleParticleType> FALLING_SLIME = register("falling_slime", false);
     public static final RegistryObject<SimpleParticleType> LANDING_SLIME = register("landing_slime", false);
     public static final RegistryObject<SimpleParticleType> FAIRY_RING_SPORE = register("fairy_ring_spore", false);
-    public static final RegistryObject<ParticleType<FeatherParticleOption>> FEATHER = register("feather", FeatherParticleOption.DESERIALIZER, (codec) -> FeatherParticleOption.CODEC);
-    public static final RegistryObject<ParticleType<NoteParticleOption>> NOTE = register("note", NoteParticleOption.DESERIALIZER, (codec) -> NoteParticleOption.CODEC);
+    public static final RegistryObject<ParticleType<FeatherParticleOptions>> FEATHER = register("feather", FeatherParticleOptions.DESERIALIZER, (codec) -> FeatherParticleOptions.CODEC);
+    public static final RegistryObject<ParticleType<NoteParticleOptions>> NOTE = register("note", NoteParticleOptions.DESERIALIZER, (codec) -> NoteParticleOptions.CODEC);
 
     private static RegistryObject<SimpleParticleType> register(String name, Boolean alwaysShow) {
         return PARTICLE_TYPES.register(name, () -> new SimpleParticleType(alwaysShow));
