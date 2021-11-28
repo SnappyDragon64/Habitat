@@ -78,7 +78,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(2, new Passerine.FindCoverGoal(1.25D));
         this.goalSelector.addGoal(3, new Passerine.SleepGoal());
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
-        this.goalSelector.addGoal(5, new Passerine.RandomFlyingGoal(1.0D));
+        this.goalSelector.addGoal(5, new Passerine.RainAvoidingRandomFlyingGoal(1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(7, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
@@ -267,7 +267,7 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     public void playAmbientSound() {
-        if (!this.isSleeping()) {
+        if (this.level.isDay()) {
             super.playAmbientSound();
 
             if (!this.level.isClientSide)
@@ -464,23 +464,12 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public boolean canUse() {
-            return Passerine.this.level.isRaining() && Passerine.this.level.canSeeSky(Passerine.this.blockPosition()) && this.setWantedPos();
-        }
-    }
-
-    class RandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
-        public RandomFlyingGoal(double speedModifier) {
-            super(Passerine.this, speedModifier);
-        }
-
-        @Nullable
-        protected Vec3 getPosition() {
-            return this.mob.isInWaterOrRain() ? LandRandomPos.getPos(this.mob, 15, 15) : super.getPosition();
+            return Passerine.this.level.isRainingAt(Passerine.this.blockPosition()) && this.setWantedPos();
         }
     }
 
     class SleepGoal extends Goal {
-        private int countdown = Passerine.this.random.nextInt(160);
+        private int countdown = Passerine.this.random.nextInt(140);
 
         public SleepGoal() {
             this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
@@ -499,14 +488,13 @@ public class Passerine extends Animal implements FlyingAnimal {
                 --this.countdown;
                 return false;
             } else {
-                if (Passerine.this.isFlying())
+                if (Passerine.this.isFlying() || Passerine.this.level.isDay() || Passerine.this.level.isThundering())
                     return false;
-                else if (Passerine.this.level.isRaining() && !Passerine.this.level.canSeeSky(Passerine.this.blockPosition()))
+                else if (Passerine.this.level.isRaining() && !Passerine.this.level.isRainingAt(Passerine.this.blockPosition()))
                     return true;
                 else {
                     BlockState state = Passerine.this.level.getBlockState(Passerine.this.getOnPos());
-                    boolean isOnTree = state.getBlock() instanceof LeavesBlock || state.is(BlockTags.LOGS);
-                    return Passerine.this.level.isNight() && isOnTree;
+                    return state.getBlock() instanceof LeavesBlock || state.is(BlockTags.LOGS);
                 }
             }
         }
@@ -520,6 +508,21 @@ public class Passerine extends Animal implements FlyingAnimal {
         public void stop() {
             this.countdown = Passerine.this.random.nextInt(140);
             Passerine.this.setSleeping(false);
+        }
+    }
+
+    class RainAvoidingRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
+        public RainAvoidingRandomFlyingGoal(double speedModifier) {
+            super(Passerine.this, speedModifier);
+        }
+
+        @Nullable
+        protected Vec3 getPosition() {
+            if (Passerine.this.isInWaterOrRain())
+                return LandRandomPos.getPos(Passerine.this, 15, 15);
+
+            Vec3 vec3 = super.getPosition();
+            return vec3 != null && !Passerine.this.level.isRainingAt(new BlockPos(vec3)) ? vec3 : null;
         }
     }
 }
