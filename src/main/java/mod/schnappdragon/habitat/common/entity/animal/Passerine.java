@@ -56,8 +56,6 @@ import java.util.Random;
 public class Passerine extends Animal implements FlyingAnimal {
     private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_SLEEPING = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.BOOLEAN);
-    public static final FeatherParticleOptions BERDLY_FEATHER = new FeatherParticleOptions(new Vector3f(Vec3.fromRGB24((4699131))), 0.33F);;
-    public static final NoteParticleOptions BERDLY_NOTE = new NoteParticleOptions(new Vector3f(Vec3.fromRGB24((11730688))), 0.8F);
     public float flap;
     public float flapSpeed;
     public float initialFlapSpeed;
@@ -195,7 +193,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.playSound(HabitatSoundEvents.PASSERINE_FLAP.get(), 0.1F, 1.0F);
         this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
 
-        if (random.nextInt(30) == 0)
+        if (!this.isEasterEgg() && random.nextInt(30) == 0)
             this.level.broadcastEntityEvent(this, (byte) 11);
     }
 
@@ -257,7 +255,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         if (this.isInvulnerableTo(source))
             return false;
         else {
-            if (!this.level.isClientSide && source.getDirectEntity() != null)
+            if (!this.level.isClientSide && source.getDirectEntity() != null && !this.isEasterEgg())
                 this.level.broadcastEntityEvent(this, (byte) 12);
 
             return super.hurt(source, amount);
@@ -316,16 +314,20 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private FeatherParticleOptions getFeather() {
-        return this.isBerdly() ? BERDLY_FEATHER : Passerine.Variant.getFeatherByVariant(this.getVariant());
+        return Passerine.Variant.getFeatherByVariant(this.getVariant());
     }
 
     private NoteParticleOptions getNote() {
-        return this.isBerdly() ? BERDLY_NOTE : Passerine.Variant.getNoteByVariant(this.getVariant());
+        return Passerine.Variant.getNoteByVariant(this.getVariant());
     }
 
     /*
-     * Berdly Methods
+     * Easter Egg Methods
      */
+
+    public boolean isEasterEgg() {
+        return isBerdly();
+    }
 
     public boolean isBerdly() {
         return "Berdly".equals(ChatFormatting.stripFormatting(this.getName().getString()));
