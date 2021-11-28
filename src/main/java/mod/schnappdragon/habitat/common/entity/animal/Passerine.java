@@ -89,8 +89,8 @@ public class Passerine extends Animal implements FlyingAnimal {
     public static AttributeSupplier.Builder registerAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5.0D)
-                .add(Attributes.FLYING_SPEED, 0.6F)
-                .add(Attributes.MOVEMENT_SPEED, 0.3F);
+                .add(Attributes.FLYING_SPEED, 0.5F)
+                .add(Attributes.MOVEMENT_SPEED, 0.2F);
     }
 
     public Vec3 getLeashOffset() {
@@ -462,7 +462,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public boolean canUse() {
-            return this.mob.getTarget() == null && (Passerine.this.level.isRainingAt(this.mob.blockPosition()) || Passerine.this.level.isThundering()) && this.setWantedPos();
+            return Passerine.this.level.isRaining() && Passerine.this.level.canSeeSky(Passerine.this.blockPosition()) && this.setWantedPos();
         }
     }
 
@@ -499,7 +499,7 @@ public class Passerine extends Animal implements FlyingAnimal {
             } else {
                 BlockState state = Passerine.this.level.getBlockState(Passerine.this.getOnPos());
                 boolean onTree = state.getBlock() instanceof LeavesBlock || state.is(BlockTags.LOGS);
-                return Passerine.this.level.isNight() && (onTree || Passerine.this.level.isRaining() && !Passerine.this.level.isRainingAt(Passerine.this.blockPosition()));
+                return Passerine.this.level.isNight() && onTree || Passerine.this.level.isRaining() && !Passerine.this.level.canSeeSky(Passerine.this.blockPosition());
             }
         }
 
