@@ -490,8 +490,6 @@ public class Passerine extends Animal implements FlyingAnimal {
             } else {
                 if (Passerine.this.isFlying() || Passerine.this.level.isDay() || Passerine.this.level.isThundering())
                     return false;
-                else if (Passerine.this.level.isRaining() && !Passerine.this.level.isRainingAt(Passerine.this.blockPosition()))
-                    return true;
                 else {
                     BlockState state = Passerine.this.level.getBlockState(Passerine.this.getOnPos());
                     return state.getBlock() instanceof LeavesBlock || state.is(BlockTags.LOGS);
