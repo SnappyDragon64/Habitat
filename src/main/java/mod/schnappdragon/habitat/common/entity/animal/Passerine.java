@@ -288,7 +288,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(HabitatSoundEvents.PASSERINE_STEP.get(), 0.2F, 1.0F);
+        this.playSound(HabitatSoundEvents.PASSERINE_STEP.get(), 0.1F, 1.0F);
     }
 
     public float getVoicePitch() {
