@@ -387,7 +387,7 @@
       }
     ]
   },
-  "entity.passerine_step": {
+  "entity.passerine.step": {
     "sounds": [
       "habitat:mob/passerine/step1",
       "habitat:mob/passerine/step2",
