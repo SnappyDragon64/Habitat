@@ -46,6 +46,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
@@ -78,7 +79,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(2, new Passerine.FindCoverGoal(1.25D));
         this.goalSelector.addGoal(3, new Passerine.SleepGoal());
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
-        this.goalSelector.addGoal(5, new Passerine.RainAvoidingRandomFlyingGoal(1.0D));
+        this.goalSelector.addGoal(5, new Passerine.RandomFlyingGoal(1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(7, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
@@ -211,11 +212,12 @@ public class Passerine extends Animal implements FlyingAnimal {
 
         if (stack.is(HabitatItemTags.PASSERINE_FOOD) && !this.isSleeping()) {
             if (!this.level.isClientSide) {
-                this.playAmbientSound();
                 this.heal(1.0F);
                 this.usePlayerItem(player, hand, stack);
+                this.level.broadcastEntityEvent(this, (byte) 13);
                 this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
                 HabitatCriterionTriggers.FEED_PASSERINE.trigger((ServerPlayer) player);
+                this.playSound(HabitatSoundEvents.PASSERINE_AMBIENT.get(), 1.0F, this.getVoicePitch());
             }
 
             return InteractionResult.sidedSuccess(this.level.isClientSide);
@@ -231,7 +233,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        int i = this.random.nextInt(6);
+        int i = this.getVariantByBiome(worldIn);
         if (spawnDataIn instanceof Passerine.PasserineGroupData data)
             i = data.variant;
         else
@@ -239,6 +241,25 @@ public class Passerine extends Animal implements FlyingAnimal {
 
         this.setVariant(i);
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+    }
+
+    public int getVariantByBiome(LevelAccessor worldIn) {
+        /*
+        Biome biome = worldIn.getBiome(this.blockPosition());
+        if (biome.getRegistryName().equals(Biomes.FLOWER_FOREST.getRegistryName())) {
+            return this.random.nextInt(6);
+        }
+        else if (biome.getBiomeCategory() == Biome.BiomeCategory.JUNGLE) {
+            return 1;
+        }
+        else if (biome.getBaseTemperature() >= 1.0F) {
+            return 2;
+        }
+        else if (biome.getBiomeCategory() == Biome.BiomeCategory.TAIGA || biome.getBiomeCategory() == Biome.BiomeCategory.) {
+
+        }
+         */
+        return this.random.nextInt(6);
     }
 
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, Random random) {
@@ -267,7 +288,7 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     public void playAmbientSound() {
-        if (this.level.isDay()) {
+        if (this.level.isDay() && !this.level.isRaining()) {
             super.playAmbientSound();
 
             if (!this.level.isClientSide)
@@ -464,7 +485,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public boolean canUse() {
-            return Passerine.this.level.isRainingAt(Passerine.this.blockPosition()) && this.setWantedPos();
+            return Passerine.this.level.isRaining() && Passerine.this.level.canSeeSky(Passerine.this.blockPosition()) && this.setWantedPos();
         }
     }
 
@@ -488,7 +509,7 @@ public class Passerine extends Animal implements FlyingAnimal {
                 --this.countdown;
                 return false;
             } else {
-                if (Passerine.this.isFlying() || Passerine.this.level.isDay() || Passerine.this.level.isThundering())
+                if (Passerine.this.isFlying() || Passerine.this.level.isDay())
                     return false;
                 else {
                     BlockState state = Passerine.this.level.getBlockState(Passerine.this.getOnPos());
@@ -509,18 +530,18 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
     }
 
-    class RainAvoidingRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
-        public RainAvoidingRandomFlyingGoal(double speedModifier) {
+    class RandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
+        public RandomFlyingGoal(double speedModifier) {
             super(Passerine.this, speedModifier);
         }
 
         @Nullable
         protected Vec3 getPosition() {
-            if (Passerine.this.isInWaterOrRain())
+            if (Passerine.this.isInWater() || Passerine.this.level.isRaining() && Passerine.this.level.canSeeSky(Passerine.this.blockPosition()))
                 return LandRandomPos.getPos(Passerine.this, 15, 15);
 
             Vec3 vec3 = super.getPosition();
-            return vec3 != null && !Passerine.this.level.isRainingAt(new BlockPos(vec3)) ? vec3 : null;
+            return vec3 != null && (!Passerine.this.level.isRaining() || Passerine.this.level.isRaining() && !Passerine.this.level.canSeeSky(new BlockPos(vec3))) ? vec3 : null;
         }
     }
 }
