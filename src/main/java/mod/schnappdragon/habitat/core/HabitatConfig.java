@@ -11,11 +11,6 @@ public class HabitatConfig {
         public final ForgeConfigSpec.ConfigValue<String> pookaPositiveEffects;
         public final ForgeConfigSpec.ConfigValue<String> pookaNegativeEffects;
 
-        public final ForgeConfigSpec.ConfigValue<Integer> rafflesiaChance;
-        public final ForgeConfigSpec.ConfigValue<Integer> kabloomBushChance;
-        public final ForgeConfigSpec.ConfigValue<Integer> slimeFernChance;
-        public final ForgeConfigSpec.ConfigValue<Integer> ballCactusChance;
-
         public final ForgeConfigSpec.ConfigValue<Integer> fairyRingAverage;
         public final ForgeConfigSpec.ConfigValue<Integer> fairyRingMinimum;
 
@@ -42,12 +37,6 @@ public class HabitatConfig {
             builder.comment("Pooka Effects\nEnter them in the format effectid:duration (duration in seconds) and separate them with a single ,");
             pookaPositiveEffects = builder.define("pooka_positive_effects", "1:6,5:4,8:8,10:5,11:4");
             pookaNegativeEffects = builder.define("pooka_negative_effects", "2:4,15:6,17:8,18:4,19:5");
-
-            builder.comment("\n== WORLD GEN ==\n\nFeatures have 1 in X Chance of Generating per Chunk where X is the Config Value");
-            rafflesiaChance = builder.define("rafflesia_chance", 3);
-            kabloomBushChance = builder.define("kabloom_bush_chance", 144);
-            slimeFernChance = builder.define("slime_fern_chance", 2);
-            ballCactusChance = builder.define("ball_cactus_chance", 14);
 
             builder.comment("Average and Minimum Chunk Spacing for Structures (Minimum must be lower than Average)");
             fairyRingAverage = builder.define("fairy_ring_average", 24);
