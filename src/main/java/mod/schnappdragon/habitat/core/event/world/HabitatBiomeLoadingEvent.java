@@ -52,11 +52,11 @@ public class HabitatBiomeLoadingEvent {
                 helper.addStructure(HabitatConfiguredStructures.FAIRY_RING);
 
             if (helper.checkKeys(Biomes.FLOWER_FOREST))
-                helper.addSpawn(HabitatEntityTypes.PASSERINE.get(), MobCategory.CREATURE, 20, 3, 4);
+                helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
             else if (helper.checkKeys(Biomes.JUNGLE, Biomes.JUNGLE_EDGE, Biomes.JUNGLE_HILLS, Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS, Biomes.MODIFIED_JUNGLE, Biomes.MODIFIED_JUNGLE_EDGE))
-                helper.addSpawn(HabitatEntityTypes.PASSERINE.get(), MobCategory.CREATURE, 30, 3, 4);
+                helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 30, 3, 4);
             else if (helper.checkCategories(Biome.BiomeCategory.FOREST, Biome.BiomeCategory.TAIGA, Biome.BiomeCategory.SAVANNA, Biome.BiomeCategory.JUNGLE))
-                helper.addSpawn(HabitatEntityTypes.PASSERINE.get(), MobCategory.CREATURE, 5, 3, 4);
+                helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 5, 3, 4);
         }
     }
 
@@ -113,8 +113,8 @@ public class HabitatBiomeLoadingEvent {
             generation.getStructures().add(() -> structure);
         }
 
-        private void addSpawn(EntityType<?> type, MobCategory category, int weight, int min, int max) {
-            spawns.addSpawn(category, new MobSpawnSettings.SpawnerData(type, weight, min, max));
+        private void addCreatureSpawn(EntityType<?> type, int weight, int min, int max) {
+            spawns.getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(type, weight, min, max));
         }
     }
 }
