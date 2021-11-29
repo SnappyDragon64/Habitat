@@ -140,7 +140,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 			this.beak.yRot = this.head.yRot;
 
 			if (getState(passerine) == PasserineModel.State.FLYING) {
-				float f = ageInTicks * 0.3F;
+				float f = ageInTicks * 0.2F;
 
 				this.head.y = 20.0F + f;
 				this.crest.y = 20.0F + f;

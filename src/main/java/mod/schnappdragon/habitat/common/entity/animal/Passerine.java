@@ -90,7 +90,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     public static AttributeSupplier.Builder registerAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5.0D)
-                .add(Attributes.FLYING_SPEED, 0.5F)
+                .add(Attributes.FLYING_SPEED, 0.8F)
                 .add(Attributes.MOVEMENT_SPEED, 0.2F);
     }
 
@@ -183,7 +183,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.flapping = (float) ((double) this.flapping * 0.9D);
         Vec3 vec3 = this.getDeltaMovement();
         if (!this.onGround && vec3.y < 0.0D)
-            this.setDeltaMovement(vec3.multiply(1.0D, 0.6D, 1.0D));
+            this.setDeltaMovement(vec3.multiply(1.0D, 0.7D, 1.0D));
 
         this.flap += this.flapping * 2.0F;
     }
