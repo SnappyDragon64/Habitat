@@ -10,6 +10,7 @@ import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -42,11 +43,12 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
@@ -244,27 +246,22 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public int getVariantByBiome(LevelAccessor worldIn) {
-        /*
         Biome biome = worldIn.getBiome(this.blockPosition());
-        if (biome.getRegistryName().equals(Biomes.FLOWER_FOREST.getRegistryName())) {
+        if (Biomes.FLOWER_FOREST.getRegistryName().equals(biome.getRegistryName()))
             return this.random.nextInt(6);
-        }
-        else if (biome.getBiomeCategory() == Biome.BiomeCategory.JUNGLE) {
+        else if (biome.getBiomeCategory() == Biome.BiomeCategory.JUNGLE)
             return 1;
-        }
-        else if (biome.getBaseTemperature() >= 1.0F) {
+        else if (biome.getBaseTemperature() >= 1.0F)
             return 2;
-        }
-        else if (biome.getBiomeCategory() == Biome.BiomeCategory.TAIGA || biome.getBiomeCategory() == Biome.BiomeCategory.) {
-
-        }
-         */
-        return this.random.nextInt(6);
+        else if (biome.getBiomeCategory() == Biome.BiomeCategory.TAIGA || Biomes.DARK_FOREST.getRegistryName().equals(biome.getRegistryName()) || Biomes.DARK_FOREST_HILLS.getRegistryName().equals(biome.getRegistryName()))
+            return new int[]{2, 4, 5}[this.random.nextInt(3)];
+        else
+            return new int[]{0, 2, 3, 4, 5}[this.random.nextInt(5)];
     }
 
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, Random random) {
         BlockState state = worldIn.getBlockState(pos.below());
-        return (state.is(BlockTags.LEAVES) || state.is(Blocks.GRASS_BLOCK) || state.is(BlockTags.LOGS) || state.is(Blocks.AIR)) && worldIn.getRawBrightness(pos, 0) > 8;
+        return (state.is(BlockTags.LEAVES) || state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.PODZOL) || state.is(BlockTags.LOGS) || state.is(Blocks.AIR)) && worldIn.getRawBrightness(pos, 0) > 8;
     }
 
     /*

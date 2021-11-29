@@ -4,14 +4,21 @@ import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
 import mod.schnappdragon.habitat.core.registry.HabitatConfiguredStructures;
+import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
+import net.minecraftforge.common.world.MobSpawnInfoBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,7 +36,7 @@ public class HabitatBiomeLoadingEvent {
         if (event.getName() != null && BiomeDictionary.hasType(ResourceKey.create(Registry.BIOME_REGISTRY, event.getName()), BiomeDictionary.Type.OVERWORLD)) {
             ModificationHelper helper = new ModificationHelper(event);
 
-            if (helper.check(helper.checkCategory(Biome.BiomeCategory.JUNGLE) && !helper.checkName("bamboo"), HabitatConfig.COMMON.rafflesiaWhitelist, HabitatConfig.COMMON.rafflesiaBlacklist))
+            if (helper.check(helper.checkCategory(Biome.BiomeCategory.JUNGLE) && !helper.checkKeys(Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS), HabitatConfig.COMMON.rafflesiaWhitelist, HabitatConfig.COMMON.rafflesiaBlacklist))
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
 
             if (helper.check(helper.checkCategory(Biome.BiomeCategory.PLAINS), HabitatConfig.COMMON.kabloomBushWhitelist, HabitatConfig.COMMON.kabloomBushBlacklist))
@@ -41,16 +48,27 @@ public class HabitatBiomeLoadingEvent {
             if (helper.check(helper.checkCategory(Biome.BiomeCategory.DESERT) || helper.checkCategory(Biome.BiomeCategory.MESA), HabitatConfig.COMMON.ballCactusWhitelist, HabitatConfig.COMMON.ballCactusBlacklist))
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
 
-            if (helper.check(helper.checkName("dark_forest"), HabitatConfig.COMMON.fairyRingWhitelist, HabitatConfig.COMMON.fairyRingBlacklist))
+            if (helper.check(helper.checkKeys(Biomes.DARK_FOREST, Biomes.DARK_FOREST_HILLS), HabitatConfig.COMMON.fairyRingWhitelist, HabitatConfig.COMMON.fairyRingBlacklist))
                 helper.addStructure(HabitatConfiguredStructures.FAIRY_RING);
+
+            if (helper.checkKeys(Biomes.FLOWER_FOREST))
+                helper.addSpawn(HabitatEntityTypes.PASSERINE.get(), MobCategory.CREATURE, 20, 3, 4);
+            else if (helper.checkKeys(Biomes.JUNGLE, Biomes.JUNGLE_EDGE, Biomes.JUNGLE_HILLS, Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS, Biomes.MODIFIED_JUNGLE, Biomes.MODIFIED_JUNGLE_EDGE))
+                helper.addSpawn(HabitatEntityTypes.PASSERINE.get(), MobCategory.CREATURE, 30, 3, 4);
+            else if (helper.checkCategories(Biome.BiomeCategory.FOREST, Biome.BiomeCategory.TAIGA, Biome.BiomeCategory.SAVANNA, Biome.BiomeCategory.JUNGLE))
+                helper.addSpawn(HabitatEntityTypes.PASSERINE.get(), MobCategory.CREATURE, 5, 3, 4);
         }
     }
 
     private static class ModificationHelper {
         private static BiomeLoadingEvent event;
+        private static BiomeGenerationSettingsBuilder generation;
+        private static MobSpawnInfoBuilder spawns;
 
         private ModificationHelper(BiomeLoadingEvent event) {
             ModificationHelper.event = event;
+            generation = event.getGeneration();
+            spawns = event.getSpawns();
         }
 
         private boolean check(boolean condition, ForgeConfigSpec.ConfigValue<String> whitelistConfig, ForgeConfigSpec.ConfigValue<String> blacklistConfig) {
@@ -68,16 +86,35 @@ public class HabitatBiomeLoadingEvent {
             return event.getCategory() == category;
         }
 
-        private boolean checkName(String name) {
-            return event.getName().toString().contains(name);
+        private boolean checkCategories(Biome.BiomeCategory... categories) {
+            for (Biome.BiomeCategory category : categories) {
+                if (this.checkCategory(category)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private boolean checkKeys(ResourceKey<?>... biomes) {
+            for (ResourceKey<?> biome : biomes) {
+                if (biome.getRegistryName().equals(event.getName()))
+                    return true;
+            }
+
+            return false;
         }
 
         private void addFeature(ConfiguredFeature<?, ?> feature, GenerationStep.Decoration stage) {
-            event.getGeneration().addFeature(stage, feature);
+            generation.addFeature(stage, feature);
         }
 
         private void addStructure(ConfiguredStructureFeature<?, ?> structure) {
-            event.getGeneration().getStructures().add(() -> structure);
+            generation.getStructures().add(() -> structure);
+        }
+
+        private void addSpawn(EntityType<?> type, MobCategory category, int weight, int min, int max) {
+            spawns.addSpawn(category, new MobSpawnSettings.SpawnerData(type, weight, min, max));
         }
     }
 }
