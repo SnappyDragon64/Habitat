@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(Bee.BeeGrowCropGoal.class)
 public class BeeGrowCropGoalMixin {
-    @Final @Shadow(aliases = "f_28021_") Bee this$0;
+    @Final @Shadow(aliases = {"c", "f_28021_"}) private Bee this$0;
 
     @Inject(
             method = "tick()V",
