@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_16",
   "refmap": "habitat.refmap.json",
   "mixins": [
-    "BeeGrowCropGoalMixin",
     "NoBigMushroomsInStructuresMixin",
     "NoLakesInStructuresMixin",
     "NoTreesInStructuresMixin"
