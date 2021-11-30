@@ -90,7 +90,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     public static AttributeSupplier.Builder registerAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5.0D)
-                .add(Attributes.FLYING_SPEED, 0.8F)
+                .add(Attributes.FLYING_SPEED, 0.7F)
                 .add(Attributes.MOVEMENT_SPEED, 0.2F);
     }
 
@@ -129,7 +129,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public int getVariant() {
-        return Mth.clamp(this.entityData.get(DATA_VARIANT_ID), 0, 5);
+        return Mth.clamp(this.entityData.get(DATA_VARIANT_ID), 0, 9);
     }
 
     public void setSleeping(boolean isSleeping) {
@@ -183,7 +183,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.flapping = (float) ((double) this.flapping * 0.9D);
         Vec3 vec3 = this.getDeltaMovement();
         if (!this.onGround && vec3.y < 0.0D)
-            this.setDeltaMovement(vec3.multiply(1.0D, 0.7D, 1.0D));
+            this.setDeltaMovement(vec3.multiply(1.0D, 0.6D, 1.0D));
 
         this.flap += this.flapping * 2.0F;
     }
@@ -248,15 +248,15 @@ public class Passerine extends Animal implements FlyingAnimal {
     public int getVariantByBiome(LevelAccessor worldIn) {
         Biome biome = worldIn.getBiome(this.blockPosition());
         if (Biomes.FLOWER_FOREST.getRegistryName().equals(biome.getRegistryName()))
-            return this.random.nextInt(6);
+            return this.random.nextInt(10);
         else if (biome.getBiomeCategory() == Biome.BiomeCategory.JUNGLE)
-            return 1;
+            return this.random.nextBoolean() ? 1 : 8;
         else if (biome.getBaseTemperature() >= 1.0F)
-            return 2;
+            return new int[]{2, 6, 9}[this.random.nextInt(3)];
         else if (biome.getBiomeCategory() == Biome.BiomeCategory.TAIGA || Biomes.DARK_FOREST.getRegistryName().equals(biome.getRegistryName()) || Biomes.DARK_FOREST_HILLS.getRegistryName().equals(biome.getRegistryName()))
-            return new int[]{2, 4, 5}[this.random.nextInt(3)];
+            return new int[]{2, 3, 5, 7}[this.random.nextInt(4)];
         else
-            return new int[]{0, 2, 3, 4, 5}[this.random.nextInt(5)];
+            return new int[]{0, 2, 3, 4, 5, 6, 7, 9}[this.random.nextInt(8)];
     }
 
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, Random random) {
@@ -419,10 +419,14 @@ public class Passerine extends Animal implements FlyingAnimal {
     public enum Variant {
         AMERICAN_GOLDFINCH(16052497, 16775680),
         BALI_MYNA(16777215, 8703),
+        BLUE_JAY(4815308, 24063),
         COMMON_SPARROW(7488818, 16730112),
         EASTERN_BLUEBIRD(5012138, 16744192),
         EURASIAN_BULLFINCH(796479, 16711726),
-        RED_CARDINAL(13183262, 16714752);
+        FLAME_ROBIN(6248013, 16739840),
+        NORTHERN_CARDINAL(13183262, 16714752),
+        RED_THROATED_PARROTFINCH(5409866, 16713728),
+        VIOLET_BACKED_STARLING(6435209, 9175295);
 
         private static final Variant[] VARIANTS = Variant.values();
         private final FeatherParticleOptions feather;
@@ -442,7 +446,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         private static Variant getVariantById(int id) {
-            return VARIANTS[Mth.clamp(id, 0, 5)];
+            return VARIANTS[Mth.clamp(id, 0, 9)];
         }
     }
 
