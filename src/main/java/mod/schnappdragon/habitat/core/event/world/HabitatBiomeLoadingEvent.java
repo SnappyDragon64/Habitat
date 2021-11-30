@@ -51,10 +51,8 @@ public class HabitatBiomeLoadingEvent {
             if (helper.check(helper.checkKeys(Biomes.DARK_FOREST, Biomes.DARK_FOREST_HILLS), HabitatConfig.COMMON.fairyRingWhitelist, HabitatConfig.COMMON.fairyRingBlacklist))
                 helper.addStructure(HabitatConfiguredStructures.FAIRY_RING);
 
-            if (helper.checkKeys(Biomes.FLOWER_FOREST))
+            if (helper.checkKeys(Biomes.FLOWER_FOREST, Biomes.JUNGLE, Biomes.JUNGLE_EDGE, Biomes.JUNGLE_HILLS, Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS, Biomes.MODIFIED_JUNGLE, Biomes.MODIFIED_JUNGLE_EDGE))
                 helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
-            else if (helper.checkKeys(Biomes.JUNGLE, Biomes.JUNGLE_EDGE, Biomes.JUNGLE_HILLS, Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS, Biomes.MODIFIED_JUNGLE, Biomes.MODIFIED_JUNGLE_EDGE))
-                helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 30, 3, 4);
             else if (helper.checkCategories(Biome.BiomeCategory.FOREST, Biome.BiomeCategory.TAIGA, Biome.BiomeCategory.SAVANNA, Biome.BiomeCategory.JUNGLE))
                 helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 5, 3, 4);
         }
@@ -98,7 +96,7 @@ public class HabitatBiomeLoadingEvent {
 
         private boolean checkKeys(ResourceKey<?>... biomes) {
             for (ResourceKey<?> biome : biomes) {
-                if (biome.getRegistryName().equals(event.getName()))
+                if (biome.location().equals(event.getName()))
                     return true;
             }
 

@@ -16,6 +16,8 @@ import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -54,6 +56,8 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
 
 public class Passerine extends Animal implements FlyingAnimal {
@@ -247,13 +251,15 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     public int getVariantByBiome(LevelAccessor worldIn) {
         Biome biome = worldIn.getBiome(this.blockPosition());
-        if (Biomes.FLOWER_FOREST.getRegistryName().equals(biome.getRegistryName()))
+        Optional<ResourceKey<Biome>> optional = worldIn.getBiomeName(this.blockPosition());
+
+        if (Objects.equals(optional, Optional.of(Biomes.FLOWER_FOREST)))
             return this.random.nextInt(10);
         else if (biome.getBiomeCategory() == Biome.BiomeCategory.JUNGLE)
             return this.random.nextBoolean() ? 1 : 8;
         else if (biome.getBaseTemperature() >= 1.0F)
             return 3 * (1 + this.random.nextInt(3));
-        else if (biome.getBiomeCategory() == Biome.BiomeCategory.TAIGA || Biomes.DARK_FOREST.getRegistryName().equals(biome.getRegistryName()) || Biomes.DARK_FOREST_HILLS.getRegistryName().equals(biome.getRegistryName()))
+        else if (biome.getBiomeCategory() == Biome.BiomeCategory.TAIGA || Objects.equals(optional, Optional.of(Biomes.DARK_FOREST)) || Objects.equals(optional, Optional.of(Biomes.DARK_FOREST_HILLS)))
             return new int[]{2, 3, 5, 7}[this.random.nextInt(4)];
         else
             return new int[]{0, 2, 3, 4, 5, 6, 7, 9}[this.random.nextInt(8)];
