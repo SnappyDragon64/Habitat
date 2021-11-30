@@ -90,7 +90,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     public static AttributeSupplier.Builder registerAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5.0D)
-                .add(Attributes.FLYING_SPEED, 0.7F)
+                .add(Attributes.FLYING_SPEED, 0.8F)
                 .add(Attributes.MOVEMENT_SPEED, 0.2F);
     }
 
@@ -541,8 +541,39 @@ public class Passerine extends Animal implements FlyingAnimal {
             if (Passerine.this.isInWater() || Passerine.this.level.isRaining() && Passerine.this.level.canSeeSky(Passerine.this.blockPosition()))
                 return LandRandomPos.getPos(Passerine.this, 15, 15);
 
-            Vec3 vec3 = super.getPosition();
+            Vec3 vec3 = this.findPosition();
             return vec3 != null && (!Passerine.this.level.isRaining() || Passerine.this.level.isRaining() && !Passerine.this.level.canSeeSky(new BlockPos(vec3))) ? vec3 : null;
+        }
+
+        @Nullable
+        protected Vec3 findPosition() {
+            Vec3 vec3 = null;
+
+            float probability = Passerine.this.level.isDay() ? 0.2F : 0.001F;
+
+            if (Passerine.this.getRandom().nextFloat() >= probability)
+                vec3 = this.getTreePos();
+
+            return vec3 == null ? super.getPosition() : vec3;
+        }
+
+        @Nullable
+        private Vec3 getTreePos() {
+            BlockPos blockpos = Passerine.this.blockPosition();
+            BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+            BlockPos.MutableBlockPos blockpos$mutableblockpos1 = new BlockPos.MutableBlockPos();
+
+            for (BlockPos blockpos1 : BlockPos.betweenClosed(Mth.floor(Passerine.this.getX() - 3.0D), Mth.floor(Passerine.this.getY() - 6.0D), Mth.floor(Passerine.this.getZ() - 3.0D), Mth.floor(Passerine.this.getX() + 3.0D), Mth.floor(Passerine.this.getY() + 6.0D), Mth.floor(Passerine.this.getZ() + 3.0D))) {
+                if (!blockpos.equals(blockpos1)) {
+                    BlockState blockstate = Passerine.this.level.getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
+                    boolean flag = blockstate.getBlock() instanceof LeavesBlock || blockstate.is(BlockTags.LOGS);
+
+                    if (flag && Passerine.this.level.isEmptyBlock(blockpos1) && Passerine.this.level.isEmptyBlock(blockpos$mutableblockpos.setWithOffset(blockpos1, Direction.UP)))
+                        return Vec3.atBottomCenterOf(blockpos1);
+                }
+            }
+
+            return null;
         }
     }
 }
