@@ -425,7 +425,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         EURASIAN_BULLFINCH(796479, 16711726),
         FLAME_ROBIN(6248013, 16739840),
         NORTHERN_CARDINAL(13183262, 16714752),
-        RED_THROATED_PARROTFINCH(5409866, 16713728),
+        RED_THROATED_PARROTFINCH(4487992, 16713728),
         VIOLET_BACKED_STARLING(6435209, 9175295);
 
         private static final Variant[] VARIANTS = Variant.values();

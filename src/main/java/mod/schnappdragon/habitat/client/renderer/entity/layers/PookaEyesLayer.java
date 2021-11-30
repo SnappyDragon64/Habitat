@@ -13,9 +13,9 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 
 public class PookaEyesLayer<T extends Pooka, M extends PookaModel<T>> extends RenderLayer<T, M> {
-    private static final ResourceLocation HOSTILE_EYES = new ResourceLocation(Habitat.MODID, "textures/entity/pooka/eyes/hostile.png");
-    private static final ResourceLocation PACIFIED_EYES = new ResourceLocation(Habitat.MODID, "textures/entity/pooka/eyes/pacified.png");
-    private static final ResourceLocation PASSIVE_EYES = new ResourceLocation(Habitat.MODID, "textures/entity/pooka/eyes/passive.png");
+    private static final ResourceLocation HOSTILE_EYES = new ResourceLocation(Habitat.MODID, "textures/entity/pooka/hostile_eyes.png");
+    private static final ResourceLocation PACIFIED_EYES = new ResourceLocation(Habitat.MODID, "textures/entity/pooka/pacified_eyes.png");
+    private static final ResourceLocation PASSIVE_EYES = new ResourceLocation(Habitat.MODID, "textures/entity/pooka/passive_eyes.png");
 
     public PookaEyesLayer(RenderLayerParent<T, M> parent) {
         super(parent);

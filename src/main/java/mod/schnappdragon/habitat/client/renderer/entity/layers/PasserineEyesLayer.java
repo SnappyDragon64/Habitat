@@ -13,8 +13,8 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 
 public class PasserineEyesLayer<T extends Passerine, M extends PasserineModel<T>> extends RenderLayer<T, M> {
-    private static final ResourceLocation EYES = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/eyes/eyes.png");
-    private static final ResourceLocation BERDLY_EYES = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/eyes/berdly_eyes.png");
+    private static final ResourceLocation EYES = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/eyes.png");
+    private static final ResourceLocation BERDLY_EYES = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/berdly_eyes.png");
 
     public PasserineEyesLayer(RenderLayerParent<T, M> parent) {
         super(parent);
