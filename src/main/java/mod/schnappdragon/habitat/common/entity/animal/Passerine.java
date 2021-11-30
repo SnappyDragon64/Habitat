@@ -252,7 +252,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         else if (biome.getBiomeCategory() == Biome.BiomeCategory.JUNGLE)
             return this.random.nextBoolean() ? 1 : 8;
         else if (biome.getBaseTemperature() >= 1.0F)
-            return new int[]{2, 6, 9}[this.random.nextInt(3)];
+            return 3 * (1 + this.random.nextInt(3));
         else if (biome.getBiomeCategory() == Biome.BiomeCategory.TAIGA || Biomes.DARK_FOREST.getRegistryName().equals(biome.getRegistryName()) || Biomes.DARK_FOREST_HILLS.getRegistryName().equals(biome.getRegistryName()))
             return new int[]{2, 3, 5, 7}[this.random.nextInt(4)];
         else
