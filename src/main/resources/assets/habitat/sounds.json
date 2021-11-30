@@ -340,18 +340,22 @@
     "subtitle": "habitat.subtitles.entity.passerine.death",
     "sounds": [
       {
-        "name": "habitat:mob/passerine/death1"
+        "name": "habitat:mob/passerine/death1",
+        "volume": 0.8
       },
       {
         "name": "habitat:mob/passerine/death1",
-        "pitch": 1.1
-      },
-      {
-        "name": "habitat:mob/passerine/death2"
+        "volume": 0.8,
+        "pitch": 0.9
       },
       {
         "name": "habitat:mob/passerine/death2",
-        "pitch": 1.1
+        "volume": 0.8
+      },
+      {
+        "name": "habitat:mob/passerine/death2",
+        "volume": 0.8,
+        "pitch": 0.9
       }
     ]
   },
@@ -372,18 +376,22 @@
     "subtitle": "habitat.subtitles.entity.passerine.hurt",
     "sounds": [
       {
-        "name": "habitat:mob/passerine/hurt1"
+        "name": "habitat:mob/passerine/hurt1",
+        "volume": 0.8
       },
       {
         "name": "habitat:mob/passerine/hurt1",
-        "pitch": 1.1
-      },
-      {
-        "name": "habitat:mob/passerine/hurt2"
+        "volume": 0.8,
+        "pitch": 0.9
       },
       {
         "name": "habitat:mob/passerine/hurt2",
-        "pitch": 1.1
+        "volume": 0.8
+      },
+      {
+        "name": "habitat:mob/passerine/hurt2",
+        "volume": 0.8,
+        "pitch": 0.9
       }
     ]
   },
