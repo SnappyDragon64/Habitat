@@ -67,7 +67,7 @@
         }
       }
     },
-    "common_sparrow": {
+    "blue_jay": {
       "trigger": "minecraft:using_item",
       "conditions": {
         "player": [
@@ -91,7 +91,7 @@
         }
       }
     },
-    "eastern_bluebird": {
+    "common_sparrow": {
       "trigger": "minecraft:using_item",
       "conditions": {
         "player": [
@@ -115,7 +115,7 @@
         }
       }
     },
-    "eurasian_bullfinch": {
+    "eastern_bluebird": {
       "trigger": "minecraft:using_item",
       "conditions": {
         "player": [
@@ -139,7 +139,7 @@
         }
       }
     },
-    "red_cardinal": {
+    "eurasian_bullfinch": {
       "trigger": "minecraft:using_item",
       "conditions": {
         "player": [
@@ -162,6 +162,102 @@
           ]
         }
       }
+    },
+    "flame_robin": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "looking_at": {
+                  "type": "habitat:passerine",
+                  "nbt": "{Variant:6}"
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ],
+        "item": {
+          "items": [
+            "minecraft:spyglass"
+          ]
+        }
+      }
+    },
+    "northern_cardinal": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "looking_at": {
+                  "type": "habitat:passerine",
+                  "nbt": "{Variant:7}"
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ],
+        "item": {
+          "items": [
+            "minecraft:spyglass"
+          ]
+        }
+      }
+    },
+    "red_throated_parrotfinch": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "looking_at": {
+                  "type": "habitat:passerine",
+                  "nbt": "{Variant:8}"
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ],
+        "item": {
+          "items": [
+            "minecraft:spyglass"
+          ]
+        }
+      }
+    },
+    "violet_backed_starling": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "looking_at": {
+                  "type": "habitat:passerine",
+                  "nbt": "{Variant:9}"
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ],
+        "item": {
+          "items": [
+            "minecraft:spyglass"
+          ]
+        }
+      }
     }
   },
   "requirements": [
@@ -170,6 +266,9 @@
     ],
     [
       "bali_myna"
+    ],
+    [
+      "blue_jay"
     ],
     [
       "common_sparrow"
@@ -181,7 +280,16 @@
       "eurasian_bullfinch"
     ],
     [
-      "red_cardinal"
+      "flame_robin"
+    ],
+    [
+      "northern_cardinal"
+    ],
+    [
+      "red_throated_parrotfinch"
+    ],
+    [
+      "violet_backed_starling"
     ]
   ]
 }
