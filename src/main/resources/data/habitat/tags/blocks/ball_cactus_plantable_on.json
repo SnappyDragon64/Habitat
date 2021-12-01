@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:sand",
+    "#forge:sand",
     "minecraft:gravel",
     "minecraft:coarse_dirt"
   ]
