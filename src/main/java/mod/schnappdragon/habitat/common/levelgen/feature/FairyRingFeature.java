@@ -52,6 +52,7 @@ public class FairyRingFeature extends Feature<NoneFeatureConfiguration> {
                 }
             }
         }
+
         return true;
     }
 
