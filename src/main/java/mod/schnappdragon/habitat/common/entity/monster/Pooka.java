@@ -56,7 +56,7 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 public class Pooka extends Rabbit implements Enemy, IForgeShearable {
-    private static final EntityDataAccessor<String> DATA_STATE = SynchedEntityData.defineId(Pooka.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<Integer> DATA_STATE_ID = SynchedEntityData.defineId(Pooka.class, EntityDataSerializers.INT);
     private int aidId;
     private int aidDuration;
     private int ailmentId;
@@ -102,7 +102,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_STATE, Pooka.State.HOSTILE.id);
+        this.entityData.define(DATA_STATE_ID, 0);
     }
 
     public void addAdditionalSaveData(CompoundTag compound) {
@@ -113,7 +113,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         compound.putInt("AilmentDuration", this.ailmentDuration);
         compound.putInt("ForgiveTicks", this.forgiveTicks);
         compound.putInt("AidTicks", this.aidTicks);
-        compound.putString("State", this.getStateId());
+        compound.putInt("State", this.getStateId());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
@@ -126,7 +126,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         );
         this.forgiveTicks = compound.getInt("ForgiveTicks");
         this.aidTicks = compound.getInt("AidTicks");
-        this.setState(compound.getString("State"));
+        this.setStateId(compound.getInt("State"));
     }
 
     private void setAidAndAilment(int aidI, int aidD, int ailI, int ailD) {
@@ -137,19 +137,19 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     private void setState(Pooka.State state) {
-        this.setState(state.id);
+        this.setStateId(state.ordinal());
     }
 
-    private void setState(String state) {
-        this.entityData.set(DATA_STATE, state);
+    private void setStateId(int state) {
+        this.entityData.set(DATA_STATE_ID, state);
     }
 
     public Pooka.State getState() {
         return Pooka.State.getById(this.getStateId());
     }
 
-    public String getStateId() {
-        return this.entityData.get(DATA_STATE);
+    public int getStateId() {
+        return Mth.clamp(this.entityData.get(DATA_STATE_ID), 0, 2);
     }
 
     public boolean isHostile() {
@@ -586,20 +586,14 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      */
 
     public enum State {
-        HOSTILE("hostile"),
-        PACIFIED("pacified"),
-        PASSIVE("passive");
+        HOSTILE,
+        PACIFIED,
+        PASSIVE;
 
-        private final String id;
-
-        State(String id) {
-            this.id = id;
-        }
-
-        public static Pooka.State getById(String id) {
+        public static Pooka.State getById(int id) {
             return switch(id) {
-                case "pacified" -> Pooka.State.PACIFIED;
-                case "passive" -> Pooka.State.PASSIVE;
+                case 1 -> Pooka.State.PACIFIED;
+                case 2 -> Pooka.State.PASSIVE;
                 default -> Pooka.State.HOSTILE;
             };
         }
