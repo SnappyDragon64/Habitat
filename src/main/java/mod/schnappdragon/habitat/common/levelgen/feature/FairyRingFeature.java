@@ -22,8 +22,8 @@ public class FairyRingFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        WorldGenLevel world = context.level();
         ChunkGenerator generator = context.chunkGenerator();
+        WorldGenLevel world = context.level();
         BlockPos pos = context.origin();
         Random rand = context.random();
 
