@@ -24,12 +24,12 @@ public class SlimeFernFeature extends Feature<RandomPatchConfiguration> {
 
     public boolean place(FeaturePlaceContext<RandomPatchConfiguration> context) {
         RandomPatchConfiguration config = context.config();
-        WorldGenLevel reader = context.level();
+        WorldGenLevel world = context.level();
         BlockPos pos = context.origin();
         Random rand = context.random();
-
         ChunkPos chunkPos = new ChunkPos(pos);
-        if (WorldgenRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, reader.getSeed(), 987234911L).nextInt(10) == 0) {
+
+        if (WorldgenRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, world.getSeed(), 987234911L).nextInt(10) == 0) {
             int i = 0;
             BlockPos pos1 = pos.offset(7, 0, 7);
             BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
@@ -38,9 +38,9 @@ public class SlimeFernFeature extends Feature<RandomPatchConfiguration> {
             for (int j = 0; j < config.tries; ++j) {
                 blockpos$mutable.setWithOffset(pos1, rand.nextInt(config.xspread + 1) - rand.nextInt(config.xspread + 1), rand.nextInt(config.yspread + 1) - rand.nextInt(config.yspread + 1), rand.nextInt(config.zspread + 1) - rand.nextInt(config.zspread + 1));
 
-                if (reader.isEmptyBlock(blockpos$mutable) || config.canReplace && reader.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) {
+                if (world.isEmptyBlock(blockpos$mutable) || config.canReplace && world.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) {
                     for (Direction dir : directions) {
-                        if (reader.getBlockState(blockpos$mutable.relative(dir)).is(Tags.Blocks.STONE)) {
+                        if (world.getBlockState(blockpos$mutable.relative(dir)).is(Tags.Blocks.STONE)) {
                             BlockState state = config.stateProvider.getState(rand, blockpos$mutable);
 
                             if (state.getBlock() == HabitatBlocks.SLIME_FERN.get()) {
@@ -50,15 +50,17 @@ public class SlimeFernFeature extends Feature<RandomPatchConfiguration> {
                                     state = HabitatBlocks.WALL_SLIME_FERN.get().defaultBlockState().setValue(WallSlimeFernBlock.HORIZONTAL_FACING, dir.getOpposite());
                             }
 
-                            config.blockPlacer.place(reader, blockpos$mutable, state, rand);
+                            config.blockPlacer.place(world, blockpos$mutable, state, rand);
                             ++i;
                             break;
                         }
                     }
                 }
             }
+
             return i > 0;
         }
+
         return false;
     }
 }

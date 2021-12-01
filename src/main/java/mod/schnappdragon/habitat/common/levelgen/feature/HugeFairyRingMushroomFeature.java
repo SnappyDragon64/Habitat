@@ -27,17 +27,18 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
 
     @Override
     public boolean place(FeaturePlaceContext<HugeMushroomFeatureConfiguration> context) {
-        WorldGenLevel worldGenLevel = context.level();
-        BlockPos blockPos = context.origin();
-        Random random = context.random();
         HugeMushroomFeatureConfiguration config = context.config();
+        WorldGenLevel world = context.level();
+        Random random = context.random();
+        BlockPos pos = context.origin();
         int i = this.getTreeHeight(random);
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-        if (!this.isValidPosition(worldGenLevel, blockPos, i, blockpos$mutableblockpos, config)) {
+
+        if (!this.isValidPosition(world, pos, i, blockpos$mutableblockpos, config)) {
             return false;
         } else {
-            this.makeCap(worldGenLevel, random, blockPos, i, blockpos$mutableblockpos, config);
-            this.placeTrunk(worldGenLevel, random, blockPos, config, i, blockpos$mutableblockpos);
+            this.makeCap(world, random, pos, i, blockpos$mutableblockpos, config);
+            this.placeTrunk(world, random, pos, config, i, blockpos$mutableblockpos);
             return true;
         }
     }
