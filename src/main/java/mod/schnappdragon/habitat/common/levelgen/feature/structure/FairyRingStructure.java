@@ -47,7 +47,7 @@ public class FairyRingStructure extends StructureFeature<NoneFeatureConfiguratio
     }
 
     private static final List<MobSpawnSettings.SpawnerData> STRUCTURE_MONSTERS = ImmutableList.of(
-            new MobSpawnSettings.SpawnerData(HabitatEntityTypes.POOKA.get(), 100, 2, 3)
+            new MobSpawnSettings.SpawnerData(HabitatEntityTypes.POOKA.get(), 100, 3, 4)
     );
 
     @Override

@@ -2,7 +2,6 @@ package mod.schnappdragon.habitat.common.entity.monster;
 
 import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.*;
-import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import mod.schnappdragon.habitat.core.tags.HabitatEntityTypeTags;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import net.minecraft.core.BlockPos;
@@ -42,9 +41,9 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.IForgeShearable;
+import net.minecraftforge.common.Tags;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -72,14 +71,14 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PookaPanicGoal(2.2D));
-        this.targetSelector.addGoal(1, (new PookaHurtByTargetGoal()).setAlertOthers());
-        this.targetSelector.addGoal(2, new PookaNearestAttackableTargetGoal<>(Player.class));
-        this.targetSelector.addGoal(2, new PookaNearestAttackableTargetGoal<>(Mob.class, mob -> mob.getType().is(HabitatEntityTypeTags.POOKA_ATTACK_TARGETS)));
+        this.goalSelector.addGoal(1, new Pooka.PookaPanicGoal(2.2D));
+        this.targetSelector.addGoal(1, (new Pooka.PookaHurtByTargetGoal()).setAlertOthers());
+        this.targetSelector.addGoal(2, new Pooka.PookaNearestAttackableTargetGoal<>(Player.class));
+        this.targetSelector.addGoal(2, new Pooka.PookaNearestAttackableTargetGoal<>(Mob.class, mob -> mob.getType().is(HabitatEntityTypeTags.POOKA_ATTACK_TARGETS)));
         this.goalSelector.addGoal(2, new BreedGoal(this, 0.8D));
-        this.goalSelector.addGoal(3, new PookaTemptGoal(1.25D, Ingredient.of(HabitatItemTags.POOKA_FOOD), false));
-        this.goalSelector.addGoal(4, new PookaMeleeAttackGoal());
-        this.goalSelector.addGoal(4, new PookaAvoidEntityGoal<>(Mob.class, 10.0F, 2.2D, 2.2D, mob -> mob.getType().is(HabitatEntityTypeTags.PACIFIED_POOKA_SCARED_BY)));
+        this.goalSelector.addGoal(3, new Pooka.PookaTemptGoal(1.25D, Ingredient.of(HabitatItemTags.POOKA_FOOD), false));
+        this.goalSelector.addGoal(4, new Pooka.PookaMeleeAttackGoal());
+        this.goalSelector.addGoal(4, new Pooka.PookaAvoidEntityGoal<>(Mob.class, 10.0F, 2.2D, 2.2D, mob -> mob.getType().is(HabitatEntityTypeTags.PACIFIED_POOKA_SCARED_BY)));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.6D));
         this.goalSelector.addGoal(11, new LookAtPlayerGoal(this, Player.class, 10.0F));
     }
@@ -457,7 +456,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      */
 
     public static boolean checkPookaSpawnRules(EntityType<Pooka> pooka, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random rand) {
-        return world.getBlockStates(new AABB(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))).anyMatch(state -> state.is(HabitatBlockTags.ALLOW_POOKA_SPAWNING));
+        return world.getBlockState(pos.below()).is(Tags.Blocks.DIRT);
     }
 
     @Nullable
@@ -465,25 +464,16 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         Pair<Integer, Integer> aid = this.getRandomAid();
         Pair<Integer, Integer> ailment = this.getRandomAilment();
-        Pooka.State state = Pooka.State.HOSTILE;
         int i = this.getRandomRabbitType(worldIn);
-        int aidI = aid.getLeft();
-        int aidD = aid.getRight();
-        int ailI = ailment.getLeft();
-        int ailD = ailment.getRight();
-        if (spawnDataIn instanceof Pooka.PookaGroupData data) {
+
+        if (spawnDataIn instanceof Rabbit.RabbitGroupData data)
             i = data.rabbitType;
-            aidI = data.aidIdData;
-            aidD = data.aidDurationData;
-            ailI = data.ailmentIdData;
-            ailD = data.ailmentDurationData;
-            state = data.stateData;
-        } else
-            spawnDataIn = new Pooka.PookaGroupData(i, aidI, aidD, ailI, ailD, Pooka.State.HOSTILE);
+        else
+            spawnDataIn = new Rabbit.RabbitGroupData(i);
 
         this.setRabbitType(i);
-        this.setAidAndAilment(aidI, aidD, ailI, ailD);
-        this.setState(state);
+        this.setState(Pooka.State.HOSTILE);
+        this.setAidAndAilment(aid.getLeft(), aid.getRight(), ailment.getLeft(), ailment.getRight());
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
@@ -553,7 +543,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         if (this.isInvulnerableTo(source))
             return false;
         else {
-            if (!this.level.isClientSide) {
+            if (!this.level.isClientSide && this.isAlive()) {
                 MobEffect effect = MobEffect.byId(aidId);
                 if (!this.isBaby() && effect != null)
                     this.addEffect(new MobEffectInstance(effect, aidDuration));
@@ -612,27 +602,6 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
                 case "passive" -> Pooka.State.PASSIVE;
                 default -> Pooka.State.HOSTILE;
             };
-        }
-    }
-
-    /*
-     * Data
-     */
-
-    public static class PookaGroupData extends Rabbit.RabbitGroupData {
-        int aidIdData;
-        int aidDurationData;
-        int ailmentIdData;
-        int ailmentDurationData;
-        Pooka.State stateData;
-
-        public PookaGroupData(int type, int aidId, int aidDuration, int ailmentId, int ailmentDuration, Pooka.State state) {
-            super(type);
-            aidIdData = aidId;
-            aidDurationData = aidDuration;
-            ailmentIdData = ailmentId;
-            ailmentDurationData = ailmentDuration;
-            stateData = state;
         }
     }
 
