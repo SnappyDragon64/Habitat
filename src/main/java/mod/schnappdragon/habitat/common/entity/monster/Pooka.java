@@ -337,7 +337,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
                             this.navigation.stop();
                             this.setTarget(null);
                             this.setLastHurtByMob(null);
-                            this.level.broadcastEntityEvent(this, (byte) 11);
+                            this.level.broadcastEntityEvent(this, (byte) 18);
                         } else
                             this.level.broadcastEntityEvent(this, (byte) 12);
                     } else {
@@ -562,7 +562,6 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
     public void handleEntityEvent(byte id) {
         switch (id) {
-            case 11 -> spawnParticles(ParticleTypes.HAPPY_VILLAGER, 7, true);
             case 12 -> spawnParticles(ParticleTypes.SMOKE, 7, true);
             case 13 -> spawnParticles(ParticleTypes.ANGRY_VILLAGER, 7, true);
             case 14 -> spawnParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), 1, false);
@@ -592,9 +591,9 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
 
         public static Pooka.State getById(int id) {
             return switch(id) {
+                case 0 -> Pooka.State.HOSTILE;
                 case 1 -> Pooka.State.PACIFIED;
-                case 2 -> Pooka.State.PASSIVE;
-                default -> Pooka.State.HOSTILE;
+                default -> Pooka.State.PASSIVE; //2
             };
         }
     }
