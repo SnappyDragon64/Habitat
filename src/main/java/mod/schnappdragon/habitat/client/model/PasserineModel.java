@@ -51,7 +51,6 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	public void prepareMobModel(Passerine passerine, float limbSwing, float limbSwingAmount, float partialTick) {
 		this.head.y = 20.0F;
 		this.head.z = -2.0F;
-
 		this.body.y = 21.5F;
 		this.rightWing.y = 21.0F;
 		this.leftWing.y = 21.0F;
@@ -59,6 +58,9 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 		this.leftFoot.y = 23.0F;
 		this.tail.y = 22.0F;
 
+		this.body.xRot = 0.0F;
+		this.rightWing.xRot = 0.0F;
+		this.leftWing.xRot = 0.0F;
 		this.rightWing.zRot = 0.0F;
 		this.leftWing.zRot = 0.0F;
 		this.rightFoot.xRot = 0.0F;
@@ -68,18 +70,12 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 			case SLEEPING -> {
 				this.head.y = 21.0F;
 				this.head.z = -1.0F;
-
 				this.body.y = 22.5F;
 				this.rightWing.y = 22.0F;
 				this.leftWing.y = 22.0F;
 				this.tail.y = 23.0F;
-
 				this.head.xRot = 0.3491F;
 				this.head.yRot = 2.094F;
-
-				this.body.xRot = 0.0F;
-				this.rightWing.xRot = 0.0F;
-				this.leftWing.xRot = 0.0F;
 				this.tail.xRot = 0.1745F;
 			}
 			case FLYING -> {
@@ -104,14 +100,36 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	}
 
 	public void setupAnim(Passerine passerine, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (!(getState(passerine) == PasserineModel.State.SLEEPING)) {
-			this.head.xRot = headPitch * ((float) Math.PI / 180F);
+		if (getState(passerine) == PasserineModel.State.PREENING) {
+			int tick = passerine.getAnimationTick();
 
+			if (tick < 4) {
+				float d = (float) tick / 4.0F;
+				this.head.z = Mth.lerp(d, -2.0F, this.head.z);
+				this.head.xRot = Mth.lerp(d, 0.0F, this.head.xRot);
+				this.head.yRot = Mth.lerp(d, 0.0F, this.head.xRot);
+				this.rightWing.zRot = Mth.lerp(d, 0.0F, this.head.xRot);
+			}
+			else if (tick <= 36) {
+				float f = ((float) (tick - 4) - ageInTicks) / 32.0F;
+				this.head.xRot = 0.2618F + 0.15F * Mth.sin(f * 38.1972F);
+				this.head.yRot = 2.094F + 0.2F * Mth.cos(f * 38.1972F);
+				this.rightWing.zRot = 0.2618F;
+			}
+			else {
+				float d = (float) (40 - tick) / 4.0F;
+				this.head.z = Mth.lerp(d, this.head.z, -1.0F);
+				this.head.xRot = Mth.lerp(d, this.head.xRot, 0.2618F);
+				this.head.yRot = Mth.lerp(d, this.head.yRot, 2.094F);
+				this.rightWing.zRot = Mth.lerp(d, this.rightWing.zRot, 0.2618F);
+			}
+		}
+		else if (!(getState(passerine) == PasserineModel.State.SLEEPING)) {
+			this.head.xRot = headPitch * ((float) Math.PI / 180F);
 			this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
 
 			if (getState(passerine) == PasserineModel.State.FLYING) {
 				float f = ageInTicks * 0.2F;
-
 				this.head.y = 20.0F + f;
 				this.body.y = 21.5F + f;
 				this.rightWing.y = 21.0F + f;
@@ -132,7 +150,9 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	}
 
 	private static PasserineModel.State getState(Passerine passerine) {
-		if (passerine.isSleeping())
+		if (passerine.isPreening())
+			return PasserineModel.State.PREENING;
+		else if (passerine.isSleeping())
 			return PasserineModel.State.SLEEPING;
 		else
 			return passerine.isFlying() ? PasserineModel.State.FLYING : PasserineModel.State.STANDING;
@@ -141,6 +161,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	public enum State {
 		FLYING,
 		STANDING,
-		SLEEPING
+		SLEEPING,
+		PREENING
 	}
 }

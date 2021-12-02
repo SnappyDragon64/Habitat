@@ -17,7 +17,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -69,6 +68,8 @@ public class Passerine extends Animal implements FlyingAnimal {
     public float initialFlap;
     private float flapping = 1.0F;
     private float nextFlap = 1.0F;
+    private int animationTick;
+    private Passerine.PreenGoal preenGoal;
 
     public Passerine(EntityType<? extends Passerine> passerine, Level worldIn) {
         super(passerine, worldIn);
@@ -80,15 +81,17 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     protected void registerGoals() {
+        this.preenGoal = new Passerine.PreenGoal();
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(2, new Passerine.FindCoverGoal(1.25D));
         this.goalSelector.addGoal(3, new Passerine.SleepGoal());
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
-        this.goalSelector.addGoal(5, new Passerine.RandomFlyingGoal(1.0D));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(7, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
+        this.goalSelector.addGoal(5, this.preenGoal);
+        this.goalSelector.addGoal(6, new Passerine.RandomFlyingGoal(1.0D));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(8, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
     }
 
     public static AttributeSupplier.Builder registerAttributes() {
@@ -148,6 +151,11 @@ public class Passerine extends Animal implements FlyingAnimal {
      * AI Methods
      */
 
+    protected void customServerAiStep() {
+        this.animationTick = this.preenGoal.getAnimationTick();
+        super.customServerAiStep();
+    }
+
     public void aiStep() {
         super.aiStep();
         this.calculateFlapping();
@@ -157,10 +165,21 @@ public class Passerine extends Animal implements FlyingAnimal {
             this.xxa = 0.0F;
             this.zza = 0.0F;
         }
+
+        if (this.level.isClientSide && this.animationTick > 0)
+            this.animationTick--;
     }
 
-    private boolean canMove() {
-        return !this.isSleeping();
+    public boolean isPreening() {
+        return this.animationTick > 0;
+    }
+
+    public int getAnimationTick() {
+        return this.animationTick;
+    }
+
+    private boolean canMoveOrLook() {
+        return !this.isSleeping() && !this.isPreening();
     }
 
 
@@ -216,7 +235,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        if (stack.is(HabitatItemTags.PASSERINE_FOOD) && !this.isSleeping()) {
+        if (stack.is(HabitatItemTags.PASSERINE_FOOD) && this.canMoveOrLook()) {
             if (!this.level.isClientSide) {
                 this.heal(1.0F);
                 this.usePlayerItem(player, hand, stack);
@@ -291,7 +310,7 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     public void playAmbientSound() {
-        if (this.level.isDay() && !this.level.isRaining()) {
+        if (!this.isPreening() && this.level.isDay() && !this.level.isRaining()) {
             super.playAmbientSound();
 
             if (!this.level.isClientSide)
@@ -328,6 +347,7 @@ public class Passerine extends Animal implements FlyingAnimal {
             case 11 -> spawnFeathers(this.getFeather(), 1);
             case 12 -> spawnFeathers(this.getFeather(), 2);
             case 13 -> this.level.addParticle(this.getNote(), this.getRandomX(0.5D), 0.6D + this.getY(), this.getRandomZ(0.5D), this.random.nextDouble(), 0.0D, 0.0D);
+            case 14 -> this.animationTick = 40;
             default -> super.handleEntityEvent(id);
         }
     }
@@ -466,7 +486,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public void tick() {
-            if (Passerine.this.canMove())
+            if (Passerine.this.canMoveOrLook())
                 super.tick();
         }
     }
@@ -477,7 +497,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public void tick() {
-            if (!Passerine.this.isSleeping())
+            if (Passerine.this.canMoveOrLook())
                 super.tick();
         }
     }
@@ -513,10 +533,10 @@ public class Passerine extends Animal implements FlyingAnimal {
 
         private boolean canSleep() {
             if (this.countdown > 0) {
-                --this.countdown;
+                this.countdown--;
                 return false;
             } else {
-                if (Passerine.this.isFlying() || Passerine.this.level.isDay())
+                if (Passerine.this.isFlying() || Passerine.this.isPreening() || Passerine.this.level.isDay())
                     return false;
                 else {
                     BlockState state = Passerine.this.level.getBlockState(Passerine.this.getOnPos());
@@ -528,12 +548,56 @@ public class Passerine extends Animal implements FlyingAnimal {
         public void start() {
             Passerine.this.setSleeping(true);
             Passerine.this.getNavigation().stop();
-            Passerine.this.getMoveControl().setWantedPosition(Passerine.this.getX(), Passerine.this.getY(), Passerine.this.getZ(), 0.0D);
         }
 
         public void stop() {
             this.countdown = Passerine.this.random.nextInt(140);
             Passerine.this.setSleeping(false);
+        }
+    }
+
+    class PreenGoal extends Goal {
+        private int countdown = Passerine.this.random.nextInt(100);
+        private int animationTick;
+
+        public PreenGoal() {
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
+        }
+
+        public boolean canUse() {
+            if (this.countdown > 0) {
+                this.countdown--;
+                return false;
+            } else
+                return this.canPreen() || Passerine.this.isPreening();
+        }
+
+        public boolean canContinueToUse() {
+            return this.animationTick > 0 && this.canPreen();
+        }
+
+        private boolean canPreen() {
+            return !Passerine.this.isFlying() && !Passerine.this.isSleeping();
+        }
+
+        public void start() {
+            this.animationTick = 40;
+            Passerine.this.getNavigation().stop();
+            Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 14);
+        }
+
+        public void stop() {
+            this.countdown = Passerine.this.random.nextInt(100);
+            this.animationTick = 0;
+        }
+
+        public void tick() {
+            if (this.animationTick > 0)
+                this.animationTick--;
+        }
+
+        public int getAnimationTick() {
+            return this.animationTick;
         }
     }
 
