@@ -520,7 +520,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public boolean canUse() {
-            return Passerine.this.level.isRaining() && Passerine.this.level.canSeeSky(Passerine.this.blockPosition()) && this.setWantedPos();
+            return Passerine.this.isUnsafeAt(Passerine.this.blockPosition()) && this.setWantedPos();
         }
     }
 
@@ -617,11 +617,11 @@ public class Passerine extends Animal implements FlyingAnimal {
 
         @Nullable
         protected Vec3 getPosition() {
-            if (Passerine.this.isInWater() || Passerine.this.level.isRaining() && Passerine.this.level.canSeeSky(Passerine.this.blockPosition()))
+            if (Passerine.this.isInWater() || Passerine.this.isUnsafeAt(Passerine.this.blockPosition()))
                 return LandRandomPos.getPos(Passerine.this, 15, 15);
 
             Vec3 vec3 = this.findPosition();
-            return vec3 != null && (!Passerine.this.level.isRaining() || Passerine.this.level.isRaining() && !Passerine.this.level.canSeeSky(new BlockPos(vec3))) ? vec3 : null;
+            return vec3 != null && !Passerine.this.isUnsafeAt(new BlockPos(vec3)) ? vec3 : null;
         }
 
         @Nullable
