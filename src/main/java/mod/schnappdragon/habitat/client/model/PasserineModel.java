@@ -69,7 +69,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 		switch (getState(passerine)) {
 			case SLEEPING -> {
 				this.head.y = 21.0F;
-				this.head.z = -1.0F;
+				this.head.z = -1.5F;
 				this.body.y = 22.5F;
 				this.rightWing.y = 22.0F;
 				this.leftWing.y = 22.0F;
@@ -103,25 +103,18 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 		if (getState(passerine) == PasserineModel.State.PREENING) {
 			int tick = passerine.getAnimationTick();
 
-			if (tick < 4) {
-				float d = (float) tick / 4.0F;
-				this.head.z = Mth.lerp(d, -2.0F, this.head.z);
-				this.head.xRot = Mth.lerp(d, 0.0F, this.head.xRot);
-				this.head.yRot = Mth.lerp(d, 0.0F, this.head.xRot);
-				this.rightWing.zRot = Mth.lerp(d, 0.0F, this.head.xRot);
-			}
-			else if (tick <= 36) {
+			if (tick >= 4 && tick <= 36) {
 				float f = ((float) (tick - 4) - ageInTicks) / 32.0F;
-				this.head.xRot = 0.2618F + 0.15F * Mth.sin(f * 38.1972F);
-				this.head.yRot = 2.094F + 0.2F * Mth.cos(f * 38.1972F);
-				this.rightWing.zRot = 0.2618F;
-			}
-			else {
-				float d = (float) (40 - tick) / 4.0F;
-				this.head.z = Mth.lerp(d, this.head.z, -1.0F);
-				this.head.xRot = Mth.lerp(d, this.head.xRot, 0.2618F);
-				this.head.yRot = Mth.lerp(d, this.head.yRot, 2.094F);
-				this.rightWing.zRot = Mth.lerp(d, this.rightWing.zRot, 0.2618F);
+				this.head.z = -1.0F;
+				this.head.xRot = 0.2618F + 0.16F * Mth.sin(f * 38.1972F);
+				this.head.yRot = 2.094F + 0.24F * Mth.cos(f * 38.1972F);
+				this.rightWing.zRot = 0.3491F;
+			} else {
+				float f = (float) (tick < 4 ? tick : (40 - tick)) / 4.0F;
+				this.head.z = Mth.lerp(f, -2.0F, -1.0F);
+				this.head.xRot = Mth.lerp(f, 0.0F, 0.2618F);
+				this.head.yRot = Mth.lerp(f, 0.0F, 2.094F);
+				this.rightWing.zRot = Mth.lerp(f, 0.0F, 0.3491F);
 			}
 		}
 		else if (!(getState(passerine) == PasserineModel.State.SLEEPING)) {

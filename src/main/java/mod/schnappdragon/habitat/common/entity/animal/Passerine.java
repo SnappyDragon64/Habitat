@@ -6,6 +6,7 @@ import mod.schnappdragon.habitat.core.particles.FeatherParticleOptions;
 import mod.schnappdragon.habitat.core.particles.NoteParticleOptions;
 import mod.schnappdragon.habitat.core.registry.HabitatCriterionTriggers;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
+import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -47,9 +48,9 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
@@ -178,10 +179,16 @@ public class Passerine extends Animal implements FlyingAnimal {
         return this.animationTick;
     }
 
-    private boolean canMoveOrLook() {
+    private boolean isNotBusy() {
         return !this.isSleeping() && !this.isPreening();
     }
 
+    private boolean isUnsafeAt(BlockPos pos) {
+        if (!this.level.isRaining() || !this.level.canSeeSky(pos))
+            return false;
+        else
+            return this.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).getY() <= pos.getY();
+    }
 
     /*
      * Flying Methods
@@ -235,7 +242,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        if (stack.is(HabitatItemTags.PASSERINE_FOOD) && this.canMoveOrLook()) {
+        if (stack.is(HabitatItemTags.PASSERINE_FOOD) && this.isNotBusy()) {
             if (!this.level.isClientSide) {
                 this.heal(1.0F);
                 this.usePlayerItem(player, hand, stack);
@@ -348,6 +355,7 @@ public class Passerine extends Animal implements FlyingAnimal {
             case 12 -> spawnFeathers(this.getFeather(), 2);
             case 13 -> this.level.addParticle(this.getNote(), this.getRandomX(0.5D), 0.6D + this.getY(), this.getRandomZ(0.5D), this.random.nextDouble(), 0.0D, 0.0D);
             case 14 -> this.animationTick = 40;
+            case 15 -> this.animationTick = 0;
             default -> super.handleEntityEvent(id);
         }
     }
@@ -486,7 +494,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public void tick() {
-            if (Passerine.this.canMoveOrLook())
+            if (Passerine.this.isNotBusy())
                 super.tick();
         }
     }
@@ -497,7 +505,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public void tick() {
-            if (Passerine.this.canMoveOrLook())
+            if (Passerine.this.isNotBusy())
                 super.tick();
         }
     }
@@ -540,7 +548,7 @@ public class Passerine extends Animal implements FlyingAnimal {
                     return false;
                 else {
                     BlockState state = Passerine.this.level.getBlockState(Passerine.this.getOnPos());
-                    return state.getBlock() instanceof LeavesBlock || state.is(BlockTags.LOGS);
+                    return state.is(HabitatBlockTags.PASSERINE_PERCHABLE);
                 }
             }
         }
@@ -587,8 +595,9 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public void stop() {
-            this.countdown = Passerine.this.random.nextInt(100);
             this.animationTick = 0;
+            this.countdown = Passerine.this.random.nextInt(100);
+            Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 15);
         }
 
         public void tick() {
@@ -635,8 +644,8 @@ public class Passerine extends Animal implements FlyingAnimal {
 
             for (BlockPos blockpos1 : BlockPos.betweenClosed(Mth.floor(Passerine.this.getX() - 3.0D), Mth.floor(Passerine.this.getY() - 6.0D), Mth.floor(Passerine.this.getZ() - 3.0D), Mth.floor(Passerine.this.getX() + 3.0D), Mth.floor(Passerine.this.getY() + 6.0D), Mth.floor(Passerine.this.getZ() + 3.0D))) {
                 if (!blockpos.equals(blockpos1)) {
-                    BlockState blockstate = Passerine.this.level.getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
-                    boolean flag = blockstate.getBlock() instanceof LeavesBlock || blockstate.is(BlockTags.LOGS);
+                    BlockState state = Passerine.this.level.getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
+                    boolean flag = state.is(HabitatBlockTags.PASSERINE_PERCHABLE);
 
                     if (flag && Passerine.this.level.isEmptyBlock(blockpos1) && Passerine.this.level.isEmptyBlock(blockpos$mutableblockpos.setWithOffset(blockpos1, Direction.UP)))
                         return Vec3.atBottomCenterOf(blockpos1);
