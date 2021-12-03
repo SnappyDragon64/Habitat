@@ -82,12 +82,12 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     protected void registerGoals() {
-        this.preenGoal = new Passerine.PreenGoal();
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(2, new Passerine.FindCoverGoal(1.25D));
         this.goalSelector.addGoal(3, new Passerine.SleepGoal());
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
+        this.preenGoal = new Passerine.PreenGoal();
         this.goalSelector.addGoal(5, this.preenGoal);
         this.goalSelector.addGoal(6, new Passerine.RandomFlyingGoal(1.0D));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -184,7 +184,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private boolean isUnsafeAt(BlockPos pos) {
-        if (!this.level.isRaining() || !this.level.canSeeSky(pos))
+        if (this.isGoldfish() || !this.level.isRaining() || !this.level.canSeeSky(pos))
             return false;
         else
             return this.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).getY() <= pos.getY();
@@ -378,11 +378,19 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     public boolean isEasterEgg() {
-        return isBerdly();
+        return this.isBerdly() || this.isGoldfish() || this.isTurkey();
     }
 
     public boolean isBerdly() {
         return "Berdly".equals(ChatFormatting.stripFormatting(this.getName().getString()));
+    }
+
+    public boolean isGoldfish() {
+        return this.getVariant() == 0 && "Goldfish".equals(ChatFormatting.stripFormatting(this.getName().getString()));
+    }
+
+    public boolean isTurkey() {
+        return "Turkey".equals(ChatFormatting.stripFormatting(this.getName().getString()));
     }
 
     @Override

@@ -24,6 +24,8 @@ public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Pas
             new ResourceLocation(Habitat.MODID, "textures/entity/passerine/violet_backed_starling.png")
     };
     public static final ResourceLocation PASSERINE_BERDLY_LOCATION = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/berdly.png");
+    public static final ResourceLocation PASSERINE_GOLDFISH_LOCATION = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/goldfish.png");
+    public static final ResourceLocation PASSERINE_TURKEY_LOCATION = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/turkey.png");
 
     public PasserineRenderer(EntityRendererProvider.Context context) {
         super(context, new PasserineModel<>(context.bakeLayer(HabitatModelLayers.PASSERINE)), 0.25F);
@@ -32,7 +34,14 @@ public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Pas
 
     @Override
     public ResourceLocation getTextureLocation(Passerine passerine) {
-        return passerine.isBerdly() ? PASSERINE_BERDLY_LOCATION : PASSERINE_LOCATIONS[passerine.getVariant()];
+        if (passerine.isBerdly())
+            return PASSERINE_BERDLY_LOCATION;
+        else if (passerine.isGoldfish())
+            return PASSERINE_GOLDFISH_LOCATION;
+        else if (passerine.isTurkey())
+            return PASSERINE_TURKEY_LOCATION;
+
+        return PASSERINE_LOCATIONS[passerine.getVariant()];
     }
 
     @Override
