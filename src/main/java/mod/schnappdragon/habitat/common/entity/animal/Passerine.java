@@ -279,16 +279,18 @@ public class Passerine extends Animal implements FlyingAnimal {
         Biome biome = worldIn.getBiome(this.blockPosition());
         Optional<ResourceKey<Biome>> optional = worldIn.getBiomeName(this.blockPosition());
 
-        if (Objects.equals(optional, Optional.of(Biomes.FLOWER_FOREST)))
+        if (Objects.equals(optional, Optional.of(Biomes.FLOWER_FOREST))) // All variants
             return this.random.nextInt(10);
-        else if (biome.getBiomeCategory() == Biome.BiomeCategory.JUNGLE)
+        else if (biome.getBiomeCategory() == Biome.BiomeCategory.JUNGLE) // Jungle variants
             return this.random.nextBoolean() ? 1 : 8;
-        else if (biome.getBaseTemperature() >= 1.0F)
-            return 3 * (1 + this.random.nextInt(3));
-        else if (biome.getBiomeCategory() == Biome.BiomeCategory.TAIGA || Objects.equals(optional, Optional.of(Biomes.DARK_FOREST)) || Objects.equals(optional, Optional.of(Biomes.DARK_FOREST_HILLS)))
+        else if (biome.getBaseTemperature() >= 1.0F) // Hot biomes
+            return this.random.nextBoolean() ? 3 : 6;
+        else if (biome.getBaseTemperature() < 0.5F) // Cold biomes
             return new int[]{2, 3, 5, 7}[this.random.nextInt(4)];
+        else if (biome.getBaseTemperature() <= 0.6F) // Birch Forests, etc.
+            return new int[]{0, 2, 3, 4, 5, 7}[this.random.nextInt(6)];
         else
-            return new int[]{0, 2, 3, 4, 5, 6, 7, 9}[this.random.nextInt(8)];
+            return new int[]{0, 3, 5, 6, 7, 9}[this.random.nextInt(6)];
     }
 
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, Random random) {
