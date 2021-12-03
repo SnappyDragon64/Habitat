@@ -362,7 +362,7 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     protected void spawnFeathers(FeatherParticleOptions feather, int number) {
         for (int i = 0; i < number; i++)
-            this.level.addParticle(feather, this.getRandomX(0.5D), this.getY(this.random.nextDouble() * 0.8D), this.getRandomZ(0.5D), this.random.nextGaussian() * 0.01D, 0.0D, this.random.nextGaussian() * 0.01D);
+            this.level.addParticle(feather, this.getRandomX(0.5D), this.getY(this.random.nextDouble() * 0.75D), this.getRandomZ(0.5D), this.random.nextGaussian() * 0.01D, 0.0D, this.random.nextGaussian() * 0.01D);
     }
 
     private FeatherParticleOptions getFeather() {
@@ -609,8 +609,12 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public void tick() {
-            if (this.animationTick > 0)
+            if (this.animationTick > 0) {
                 this.animationTick--;
+
+                if (this.animationTick == 30)
+                    Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 11);
+            }
         }
 
         public int getAnimationTick() {
