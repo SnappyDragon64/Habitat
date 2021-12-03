@@ -593,7 +593,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         private boolean canPreen() {
-            return !Passerine.this.isFlying() && !Passerine.this.isSleeping();
+            return !Passerine.this.isTurkey() && !Passerine.this.isFlying() && !Passerine.this.isSleeping();
         }
 
         public void start() {
