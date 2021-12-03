@@ -16,6 +16,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	private final ModelPart rightFoot;
 	private final ModelPart leftFoot;
 	private final ModelPart tail;
+	private float partialAnimationTick;
 
 	public PasserineModel(ModelPart part) {
 		this.root = part;
@@ -67,7 +68,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 		this.leftFoot.xRot = 0.0F;
 
 		switch (getState(passerine)) {
-			case SLEEPING -> {
+			case SLEEPING:
 				this.head.y = 21.0F;
 				this.head.z = -1.5F;
 				this.body.y = 22.5F;
@@ -77,8 +78,8 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 				this.head.xRot = 0.3491F;
 				this.head.yRot = 2.094F;
 				this.tail.xRot = 0.1745F;
-			}
-			case FLYING -> {
+				break;
+			case FLYING:
 				this.body.xRot = -0.3927F;
 				this.rightWing.xRot = -0.5236F;
 				this.leftWing.xRot = -0.5236F;
@@ -87,15 +88,17 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 				this.rightFoot.yRot = 0.1571F;
 				this.leftFoot.yRot = -0.1571F;
 				this.tail.xRot = -0.2618F;
-			}
-			default -> {
+				break;
+			case PREENING:
+				this.partialAnimationTick = (float) passerine.getAnimationTick() - partialTick;
+			case STANDING:
+			default:
 				this.body.xRot = -0.0873F;
 				this.rightWing.xRot = -0.1963F;
 				this.leftWing.xRot = -0.1963F;
 				this.rightFoot.yRot = 0.1745F;
 				this.leftFoot.yRot = -0.1745F;
 				this.tail.xRot = 0.3927F;
-			}
 		}
 	}
 
@@ -104,17 +107,19 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 			int tick = passerine.getAnimationTick();
 
 			if (tick >= 4 && tick <= 36) {
-				float f = ((float) (tick - 4) + ageInTicks) / 32.0F;
+				float f = (this.partialAnimationTick - 4) / 32.0F;
 				this.head.z = -1.0F;
-				this.head.xRot = 0.2618F + 0.16F * Mth.sin(f * 38.2F);
-				this.head.yRot = 2.094F + 0.24F * Mth.cos(f * 38.2F);
-				this.rightWing.zRot = 0.3491F;
+				this.head.xRot = 0.1745F + 0.1745F * Mth.sin(f * 38.2F);
+				this.head.yRot = 1.833F + 0.2793F * Mth.cos(f * 38.2F);
+				this.rightWing.xRot = -0.5236F;
+				this.rightWing.zRot = 1.396F;
 			} else {
-				float f = ((float) (tick < 4 ? tick : 40 - tick) + ageInTicks) / 4.0F;
+				float f = (tick < 4 ? this.partialAnimationTick : 40.0F - this.partialAnimationTick) / 4.0F;
 				this.head.z = Mth.lerp(f, -2.0F, -1.0F);
-				this.head.xRot = Mth.lerp(f, 0.0F, 0.2618F);
-				this.head.yRot = Mth.lerp(f, 0.0F, 2.094F);
-				this.rightWing.zRot = Mth.lerp(f, 0.0F, 0.3491F);
+				this.head.xRot = Mth.lerp(f, 0.0F, 0.1745F);
+				this.head.yRot = Mth.lerp(f, 0.0F, 1.833F);
+				this.rightWing.xRot = Mth.lerp(f, -0.1963F, -0.5236F);
+				this.rightWing.zRot = Mth.lerp(f, 0.0F, 1.396F);
 			}
 		}
 		else if (!(getState(passerine) == PasserineModel.State.SLEEPING)) {
