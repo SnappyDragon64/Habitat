@@ -530,7 +530,11 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public boolean canUse() {
-            return Passerine.this.isUnsafeAt(Passerine.this.blockPosition()) && this.setWantedPos();
+            return Passerine.this.isUnsafeAt(Passerine.this.blockPosition()) && !this.isTargetPosDry() && this.setWantedPos();
+        }
+
+        private boolean isTargetPosDry() {
+            return Passerine.this.getNavigation().isInProgress() && !Passerine.this.isUnsafeAt(getNavigation().getTargetPos());
         }
     }
 
