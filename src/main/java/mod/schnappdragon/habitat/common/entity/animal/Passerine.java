@@ -99,7 +99,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5.0D)
                 .add(Attributes.FLYING_SPEED, 0.8F)
-                .add(Attributes.MOVEMENT_SPEED, 0.1F);
+                .add(Attributes.MOVEMENT_SPEED, 0.2F);
     }
 
     public Vec3 getLeashOffset() {
@@ -171,6 +171,13 @@ public class Passerine extends Animal implements FlyingAnimal {
             this.animationTick--;
     }
 
+    public void tick() {
+        super.tick();
+
+        if (!this.level.isClientSide && this.isSleeping() && (this.isFlying() || this.level.isDay() || this.isUnsafeAt(this.blockPosition()) || !this.canPerch()))
+            this.setSleeping(false);
+    }
+
     public boolean isPreening() {
         return this.animationTick > 0;
     }
@@ -192,6 +199,10 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     private boolean isActive() {
         return this.level.isDay() && !this.level.isRaining();
+    }
+
+    private boolean canPerch() {
+        return this.level.getBlockState(this.getOnPos()).is(HabitatBlockTags.PASSERINE_PERCHABLE);
     }
 
     /*
@@ -574,10 +585,8 @@ public class Passerine extends Animal implements FlyingAnimal {
             } else {
                 if (Passerine.this.isFlying() || Passerine.this.isPreening() || Passerine.this.level.isDay())
                     return false;
-                else {
-                    BlockState state = Passerine.this.level.getBlockState(Passerine.this.getOnPos());
-                    return state.is(HabitatBlockTags.PASSERINE_PERCHABLE);
-                }
+                else
+                    return Passerine.this.canPerch();
             }
         }
 
