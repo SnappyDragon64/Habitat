@@ -84,9 +84,9 @@ public class Passerine extends Animal implements FlyingAnimal {
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(2, new Passerine.FindCoverGoal(1.25D));
-        this.goalSelector.addGoal(3, new Passerine.SleepGoal());
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
+        this.goalSelector.addGoal(2, new Passerine.PasserineTemptGoal(1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
+        this.goalSelector.addGoal(3, new Passerine.FindCoverGoal(1.25D));
+        this.goalSelector.addGoal(4, new Passerine.SleepGoal());
         this.preenGoal = new Passerine.PreenGoal();
         this.goalSelector.addGoal(5, this.preenGoal);
         this.goalSelector.addGoal(6, new Passerine.RandomFlyingGoal(1.0D));
@@ -523,6 +523,16 @@ public class Passerine extends Animal implements FlyingAnimal {
     /*
      * AI Goals
      */
+
+    class PasserineTemptGoal extends TemptGoal {
+        public PasserineTemptGoal(double speedModifier, Ingredient items, boolean canScare) {
+            super(Passerine.this, speedModifier, items, canScare);
+        }
+
+        public boolean canUse() {
+            return !Passerine.this.isSleeping() && super.canUse();
+        }
+    }
 
     class FindCoverGoal extends FleeSunGoal {
         public FindCoverGoal(double speedModifier) {
