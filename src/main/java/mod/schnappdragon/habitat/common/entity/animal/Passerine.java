@@ -624,7 +624,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
     }
 
-    class RandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
+    class RandomFlyingGoal extends WaterAvoidingRandomStrollGoal {
         public RandomFlyingGoal(double speedModifier) {
             super(Passerine.this, speedModifier);
         }
@@ -634,24 +634,13 @@ public class Passerine extends Animal implements FlyingAnimal {
             if (Passerine.this.isInWater() || Passerine.this.isUnsafeAt(Passerine.this.blockPosition()))
                 return LandRandomPos.getPos(Passerine.this, 15, 15);
 
-            Vec3 vec3 = this.findPosition();
+            Vec3 vec3 = this.mob.getRandom().nextFloat() >= this.probability ? this.getPerchablePos() : null;
+            vec3 = vec3 == null ? super.getPosition() : vec3;
             return vec3 != null && !Passerine.this.isUnsafeAt(new BlockPos(vec3)) ? vec3 : null;
         }
 
         @Nullable
-        protected Vec3 findPosition() {
-            Vec3 vec3 = null;
-
-            float probability = Passerine.this.level.isDay() ? 0.2F : 0.001F;
-
-            if (Passerine.this.getRandom().nextFloat() >= probability)
-                vec3 = this.getTreePos();
-
-            return vec3 == null ? super.getPosition() : vec3;
-        }
-
-        @Nullable
-        private Vec3 getTreePos() {
+        private Vec3 getPerchablePos() {
             BlockPos blockpos = Passerine.this.blockPosition();
             BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
             BlockPos.MutableBlockPos blockpos$mutableblockpos1 = new BlockPos.MutableBlockPos();
