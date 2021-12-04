@@ -348,7 +348,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     /*
-     * Particle Methods
+     * Entity Event Methods
      */
 
     public void handleEntityEvent(byte id) {
