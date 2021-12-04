@@ -99,7 +99,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5.0D)
                 .add(Attributes.FLYING_SPEED, 0.8F)
-                .add(Attributes.MOVEMENT_SPEED, 0.2F);
+                .add(Attributes.MOVEMENT_SPEED, 0.1F);
     }
 
     public Vec3 getLeashOffset() {
