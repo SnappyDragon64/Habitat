@@ -89,10 +89,10 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(4, new Passerine.SleepGoal());
         this.preenGoal = new Passerine.PreenGoal();
         this.goalSelector.addGoal(5, this.preenGoal);
-        this.goalSelector.addGoal(6, new Passerine.RandomFlyingGoal(1.0D));
+        this.goalSelector.addGoal(6, new Passerine.PasserineRandomFlyingGoal(1.0D));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(8, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
+        this.goalSelector.addGoal(8, new Passerine.PasserineFollowMobGoal(1.0D, 3.0F, 7.0F));
     }
 
     public static AttributeSupplier.Builder registerAttributes() {
@@ -188,6 +188,10 @@ public class Passerine extends Animal implements FlyingAnimal {
             return false;
         else
             return this.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).getY() <= pos.getY();
+    }
+
+    private boolean isActive() {
+        return this.level.isDay() && !this.level.isRaining();
     }
 
     /*
@@ -319,7 +323,7 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     public void playAmbientSound() {
-        if (!this.isPreening() && this.level.isDay() && !this.level.isRaining()) {
+        if (!this.isPreening() && this.isActive()) {
             super.playAmbientSound();
 
             if (!this.level.isClientSide)
@@ -638,8 +642,8 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
     }
 
-    class RandomFlyingGoal extends WaterAvoidingRandomStrollGoal {
-        public RandomFlyingGoal(double speedModifier) {
+    class PasserineRandomFlyingGoal extends WaterAvoidingRandomStrollGoal {
+        public PasserineRandomFlyingGoal(double speedModifier) {
             super(Passerine.this, speedModifier);
         }
 
@@ -670,6 +674,16 @@ public class Passerine extends Animal implements FlyingAnimal {
             }
 
             return null;
+        }
+    }
+
+    class PasserineFollowMobGoal extends FollowMobGoal {
+        public PasserineFollowMobGoal(double speedModifier, float stopDistance, float areaSize) {
+            super(Passerine.this, speedModifier, stopDistance, areaSize);
+        }
+
+        public boolean canUse() {
+            return Passerine.this.isActive() && super.canUse();
         }
     }
 }
