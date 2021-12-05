@@ -192,8 +192,10 @@ public class Passerine extends Animal implements FlyingAnimal {
     private boolean isUnsafeAt(BlockPos pos) {
         if (this.isGoldfish() || !this.level.isRaining() || !this.level.canSeeSky(pos))
             return false;
+        else if (this.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).getY() > pos.getY())
+            return false;
         else
-            return this.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).getY() <= pos.getY();
+            return this.level.getBiome(pos).getPrecipitation() != Biome.Precipitation.NONE;
     }
 
     private boolean isActive() {
