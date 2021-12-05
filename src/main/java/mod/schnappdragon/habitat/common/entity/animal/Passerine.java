@@ -106,7 +106,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-        return size.height * 0.6F;
+        return size.height * 0.5F;
     }
 
     /*
@@ -311,7 +311,7 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, Random random) {
         BlockState state = worldIn.getBlockState(pos.below());
-        return (state.is(HabitatBlockTags.PASSERINE_PERCHABLE) || state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.PODZOL)) && worldIn.getRawBrightness(pos, 0) > 8;
+        return (state.is(HabitatBlockTags.PASSERINE_PERCHABLE) || state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.PODZOL) || state.is(Blocks.AIR)) && worldIn.getRawBrightness(pos, 0) > 8;
     }
 
     /*
