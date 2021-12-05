@@ -16,7 +16,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	private final ModelPart rightFoot;
 	private final ModelPart leftFoot;
 	private final ModelPart tail;
-	private float partialAnimationTick;
+	private float animationCounter;
 
 	public PasserineModel(ModelPart part) {
 		this.root = part;
@@ -90,7 +90,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 				this.tail.xRot = -0.2618F;
 				break;
 			case PREENING:
-				this.partialAnimationTick = (float) passerine.getAnimationTick() - partialTick;
+				this.animationCounter = (float) passerine.getAnimationTick() - partialTick;
 			case STANDING:
 			default:
 				this.body.xRot = -0.0873F;
@@ -107,14 +107,14 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 			int tick = passerine.getAnimationTick();
 
 			if (tick >= 4 && tick <= 36) {
-				float f = (this.partialAnimationTick - 4) / 32.0F;
+				float f = (this.animationCounter - 4) / 32.0F;
 				this.head.z = -1.0F;
 				this.head.xRot = 0.1745F + 0.1745F * Mth.sin(f * 38.2F);
 				this.head.yRot = 1.833F + 0.2793F * Mth.cos(f * 38.2F);
 				this.rightWing.xRot = -0.5236F;
 				this.rightWing.zRot = 1.396F;
 			} else {
-				float f = (tick < 4 ? this.partialAnimationTick : 40.0F - this.partialAnimationTick) / 4.0F;
+				float f = (tick < 4 ? this.animationCounter : 40.0F - this.animationCounter) / 4.0F;
 				this.head.z = Mth.lerp(f, -2.0F, -1.0F);
 				this.head.xRot = Mth.lerp(f, 0.0F, 0.1745F);
 				this.head.yRot = Mth.lerp(f, 0.0F, 1.833F);
