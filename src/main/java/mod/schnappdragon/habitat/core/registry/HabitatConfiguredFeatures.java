@@ -23,7 +23,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProv
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
 public class HabitatConfiguredFeatures {
-    public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(HabitatBlocks.RAFFLESIA.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE).xspread(6).yspread(1).zspread(6).tries(2).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).build()).decorated(Features.Decorators.HEIGHTMAP_SQUARE).rarity(3);
+    public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(HabitatBlocks.RAFFLESIA.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE).xspread(6).yspread(1).zspread(6).tries(2).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).build()).decorated(Features.Decorators.HEIGHTMAP_SQUARE).rarity(4);
 
     public static final ConfiguredFeature<?, ?> PATCH_KABLOOM_BUSH = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(HabitatBlocks.KABLOOM_BUSH.get().defaultBlockState().setValue(KabloomBushBlock.AGE, 7)), SimpleBlockPlacer.INSTANCE).xspread(4).yspread(1).zspread(4).tries(20).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).build()).decorated(Features.Decorators.HEIGHTMAP_SQUARE).rarity(160);
 
