@@ -660,7 +660,8 @@ public class Passerine extends Animal implements FlyingAnimal {
             if (Passerine.this.isInWater() || Passerine.this.isUnsafeAt(Passerine.this.blockPosition()))
                 return LandRandomPos.getPos(Passerine.this, 15, 15);
 
-            Vec3 vec3 = this.mob.getRandom().nextFloat() >= this.probability ? this.getPerchablePos() : null;
+            float probability = Passerine.this.level.isDay() ? this.probability : 0.0F;
+            Vec3 vec3 = Passerine.this.getRandom().nextFloat() >= probability ? this.getPerchablePos() : null;
             vec3 = vec3 == null ? super.getPosition() : vec3;
             return vec3 != null && !Passerine.this.isUnsafeAt(new BlockPos(vec3)) ? vec3 : null;
         }
