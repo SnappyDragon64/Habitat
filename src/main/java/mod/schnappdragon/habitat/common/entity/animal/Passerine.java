@@ -603,7 +603,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     class PreenGoal extends Goal {
-        private int countdown = Passerine.this.random.nextInt(5600);
+        private int countdown = 2800 + Passerine.this.random.nextInt(2800);
         private int animationTick;
 
         public PreenGoal() {
@@ -634,7 +634,7 @@ public class Passerine extends Animal implements FlyingAnimal {
 
         public void stop() {
             this.animationTick = 0;
-            this.countdown = Passerine.this.random.nextInt(5600);
+            this.countdown = 2800 + Passerine.this.random.nextInt(2800);
             Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 15);
         }
 
