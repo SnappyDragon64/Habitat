@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 public class PasserineEyesLayer<T extends Passerine, M extends PasserineModel<T>> extends RenderLayer<T, M> {
     private static final ResourceLocation EYES = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/eyes.png");
     private static final ResourceLocation BERDLY_EYES = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/berdly_eyes.png");
+    private static final ResourceLocation GOLDFISH_EYES = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/goldfish_eyes.png");
 
     public PasserineEyesLayer(RenderLayerParent<T, M> parent) {
         super(parent);
@@ -28,6 +29,11 @@ public class PasserineEyesLayer<T extends Passerine, M extends PasserineModel<T>
     }
 
     public ResourceLocation getTextureLocation(Passerine passerine) {
-        return passerine.isBerdly() ? BERDLY_EYES : EYES;
+        if (passerine.isBerdly())
+            return BERDLY_EYES;
+        else if (passerine.isGoldfish())
+            return GOLDFISH_EYES;
+
+        return EYES;
     }
 }
