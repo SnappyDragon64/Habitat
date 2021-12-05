@@ -34,31 +34,33 @@ public class HabitatBiomeLoadingEvent {
             if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.OVERWORLD)) {
                 ModificationHelper helper = new ModificationHelper(event);
 
+                // All biomes
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_SLIME_FERN, GenerationStep.Decoration.UNDERGROUND_DECORATION);
 
-                if (helper.isVanilla()) {
-
+                // Jungles
+                if (helper.checkKeys(Biomes.JUNGLE, Biomes.JUNGLE_EDGE, Biomes.JUNGLE_HILLS, Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS, Biomes.MODIFIED_JUNGLE, Biomes.MODIFIED_JUNGLE_EDGE)) {
+                    // Excluding Bamboo Jungles
+                    if (!helper.checkKeys(Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS))
+                        helper.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
                 }
 
-
-
-                //OLD
-                if (helper.checkCategory(Biome.BiomeCategory.JUNGLE) && !helper.checkKeys(Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS))
-                    helper.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
-
+                // Plains
                 if (helper.checkCategory(Biome.BiomeCategory.PLAINS))
                     helper.addFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH, GenerationStep.Decoration.VEGETAL_DECORATION);
 
-                if (helper.checkCategory(Biome.BiomeCategory.DESERT) || helper.checkCategory(Biome.BiomeCategory.MESA))
+                // Deserts and Badlands
+                if (helper.checkKeys(Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.BADLANDS, Biomes.BADLANDS_PLATEAU, Biomes.ERODED_BADLANDS, Biomes.MODIFIED_BADLANDS_PLATEAU, Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU, Biomes.WOODED_BADLANDS_PLATEAU))
                     helper.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
 
+                // Dark Forests
                 if (helper.checkKeys(Biomes.DARK_FOREST, Biomes.DARK_FOREST_HILLS))
                     helper.addStructure(HabitatConfiguredStructures.FAIRY_RING);
 
+                // WIP!
                 if (helper.checkKeys(Biomes.FLOWER_FOREST, Biomes.JUNGLE, Biomes.JUNGLE_EDGE, Biomes.JUNGLE_HILLS, Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS, Biomes.MODIFIED_JUNGLE, Biomes.MODIFIED_JUNGLE_EDGE))
                     helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
                 else if (helper.checkCategories(Biome.BiomeCategory.FOREST, Biome.BiomeCategory.TAIGA, Biome.BiomeCategory.SAVANNA, Biome.BiomeCategory.JUNGLE))
-                    helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 5, 3, 4);
+                    helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 4, 3, 4);
             }
         }
     }
