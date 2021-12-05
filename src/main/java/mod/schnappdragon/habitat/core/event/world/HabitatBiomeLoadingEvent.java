@@ -28,72 +28,72 @@ public class HabitatBiomeLoadingEvent {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void modifyBiomes(BiomeLoadingEvent event) {
         if (event.getName() != null) {
-            ModificationHelper helper = new ModificationHelper(event);
+            BiomeHelper biome = new BiomeHelper(event);
 
-            if (helper.checkType(BiomeDictionary.Type.OVERWORLD)) {
+            if (biome.checkType(BiomeDictionary.Type.OVERWORLD)) {
                 // All Biomes
-                helper.addFeature(HabitatConfiguredFeatures.PATCH_SLIME_FERN, GenerationStep.Decoration.UNDERGROUND_DECORATION);
+                biome.addFeature(HabitatConfiguredFeatures.PATCH_SLIME_FERN, GenerationStep.Decoration.UNDERGROUND_DECORATION);
 
                 // Deserts and Badlands
-                if (helper.checkKey(Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.BADLANDS, Biomes.BADLANDS_PLATEAU, Biomes.ERODED_BADLANDS, Biomes.MODIFIED_BADLANDS_PLATEAU, Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU, Biomes.WOODED_BADLANDS_PLATEAU))
-                    helper.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
+                if (biome.checkKey(Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.BADLANDS, Biomes.BADLANDS_PLATEAU, Biomes.ERODED_BADLANDS, Biomes.MODIFIED_BADLANDS_PLATEAU, Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU, Biomes.WOODED_BADLANDS_PLATEAU))
+                    biome.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
 
                 // Forest Biomes
-                if (helper.checkCategory(Biome.BiomeCategory.FOREST)) {
+                if (biome.checkCategory(Biome.BiomeCategory.FOREST)) {
                     // Dark Forests
-                    if (helper.checkKey(Biomes.DARK_FOREST, Biomes.DARK_FOREST_HILLS))
-                        helper.addStructure(HabitatConfiguredStructures.FAIRY_RING);
+                    if (biome.checkKey(Biomes.DARK_FOREST, Biomes.DARK_FOREST_HILLS))
+                        biome.addStructure(HabitatConfiguredStructures.FAIRY_RING);
                     // Flower Forests
-                    else if (helper.checkKey(Biomes.FLOWER_FOREST))
-                        helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
+                    else if (biome.checkKey(Biomes.FLOWER_FOREST))
+                        biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
                     // Other Non-Spooky and Non-Dead Forests
-                    else if (!helper.checkType(BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.DEAD))
-                        helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
+                    else if (!biome.checkType(BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.DEAD))
+                        biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
                 }
 
                 // Vanilla Jungle Biomes
-                if (helper.checkKey(Biomes.JUNGLE, Biomes.JUNGLE_EDGE, Biomes.JUNGLE_HILLS, Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS, Biomes.MODIFIED_JUNGLE, Biomes.MODIFIED_JUNGLE_EDGE)) {
+                if (biome.checkKey(Biomes.JUNGLE, Biomes.JUNGLE_EDGE, Biomes.JUNGLE_HILLS, Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS, Biomes.MODIFIED_JUNGLE, Biomes.MODIFIED_JUNGLE_EDGE)) {
                     // Excluding Bamboo Jungles
-                    if (!helper.checkKey(Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS))
-                        helper.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
+                    if (!biome.checkKey(Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS))
+                        biome.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
 
-                    helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
+                    biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
                 }
                 // Modded Jungle Biomes
-                else if (helper.checkCategory(Biome.BiomeCategory.JUNGLE))
-                    helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 3, 3, 4);
+                else if (biome.checkCategory(Biome.BiomeCategory.JUNGLE))
+                    biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 3, 3, 4);
 
                 // Plains
-                if (helper.checkCategory(Biome.BiomeCategory.PLAINS))
-                    helper.addFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH, GenerationStep.Decoration.VEGETAL_DECORATION);
+                if (biome.checkCategory(Biome.BiomeCategory.PLAINS))
+                    biome.addFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH, GenerationStep.Decoration.VEGETAL_DECORATION);
 
                 // Savannas
-                if (helper.checkCategory(Biome.BiomeCategory.SAVANNA))
-                    helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 3, 3, 4);
+                if (biome.checkCategory(Biome.BiomeCategory.SAVANNA))
+                    biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 3, 3, 4);
 
                 // Taigas
-                if (helper.checkCategory(Biome.BiomeCategory.TAIGA))
-                    helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
+                if (biome.checkCategory(Biome.BiomeCategory.TAIGA))
+                    biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
             }
         }
     }
 
-    private static class ModificationHelper {
-        private static BiomeLoadingEvent event;
-        private static BiomeGenerationSettingsBuilder generation;
-        private static MobSpawnInfoBuilder spawns;
-        ResourceKey<Biome> biome;
+    private static class BiomeHelper {
+        private final BiomeLoadingEvent event;
+        private final BiomeGenerationSettingsBuilder generation;
+        private final MobSpawnInfoBuilder spawns;
+        private final ResourceKey<Biome> biome;
 
-        private ModificationHelper(BiomeLoadingEvent event) {
-            ModificationHelper.event = event;
-            generation = event.getGeneration();
-            spawns = event.getSpawns();
-            biome = ResourceKey.create(Registry.BIOME_REGISTRY, event.getName());
+        private BiomeHelper(BiomeLoadingEvent event) {
+            this.event = event;
+            this.generation = event.getGeneration();
+            this.spawns = event.getSpawns();
+            this.biome = ResourceKey.create(Registry.BIOME_REGISTRY, event.getName());
         }
 
         private boolean checkCategory(Biome.BiomeCategory... categories) {
             for (Biome.BiomeCategory category : categories) {
-                if (event.getCategory() == category)
+                if (this.event.getCategory() == category)
                     return true;
             }
 
@@ -102,7 +102,7 @@ public class HabitatBiomeLoadingEvent {
 
         private boolean checkKey(ResourceKey<?>... biomes) {
             for (ResourceKey<?> biome : biomes) {
-                if (biome.location().equals(event.getName()))
+                if (biome.location().equals(this.event.getName()))
                     return true;
             }
 
@@ -111,7 +111,7 @@ public class HabitatBiomeLoadingEvent {
 
         private boolean checkType(BiomeDictionary.Type... types) {
             for (BiomeDictionary.Type type : types) {
-                if (BiomeDictionary.hasType(biome, type))
+                if (BiomeDictionary.hasType(this.biome, type))
                     return true;
             }
 
@@ -119,15 +119,15 @@ public class HabitatBiomeLoadingEvent {
         }
 
         private void addFeature(ConfiguredFeature<?, ?> feature, GenerationStep.Decoration stage) {
-            generation.addFeature(stage, feature);
+            this.generation.addFeature(stage, feature);
         }
 
         private void addStructure(ConfiguredStructureFeature<?, ?> structure) {
-            generation.getStructures().add(() -> structure);
+            this.generation.getStructures().add(() -> structure);
         }
 
         private void addCreatureSpawn(EntityType<?> type, int weight, int min, int max) {
-            spawns.getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(type, weight, min, max));
+            this.spawns.getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(type, weight, min, max));
         }
     }
 }
