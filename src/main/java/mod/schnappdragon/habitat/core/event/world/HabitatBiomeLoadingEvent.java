@@ -35,13 +35,8 @@ public class HabitatBiomeLoadingEvent {
                 helper.addFeature(HabitatConfiguredFeatures.PATCH_SLIME_FERN, GenerationStep.Decoration.UNDERGROUND_DECORATION);
 
                 // Deserts and Badlands
-                if (helper.checkKey(Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.BADLANDS, Biomes.BADLANDS_PLATEAU, Biomes.ERODED_BADLANDS, Biomes.MODIFIED_BADLANDS_PLATEAU, Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU, Biomes.WOODED_BADLANDS_PLATEAU)) {
-                    // Wooded Badlands
-                    if (helper.checkKey(Biomes.WOODED_BADLANDS_PLATEAU, Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU))
-                        helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
-
+                if (helper.checkKey(Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.BADLANDS, Biomes.BADLANDS_PLATEAU, Biomes.ERODED_BADLANDS, Biomes.MODIFIED_BADLANDS_PLATEAU, Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU, Biomes.WOODED_BADLANDS_PLATEAU))
                     helper.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
-                }
 
                 // Forest Biomes
                 if (helper.checkCategory(Biome.BiomeCategory.FOREST)) {
@@ -53,7 +48,7 @@ public class HabitatBiomeLoadingEvent {
                         helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
                     // Other Non-Spooky and Non-Dead Forests
                     else if (!helper.checkType(BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.DEAD))
-                        helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 3, 3, 4);
+                        helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
                 }
 
                 // Vanilla Jungle Biomes
@@ -78,7 +73,7 @@ public class HabitatBiomeLoadingEvent {
 
                 // Taigas
                 if (helper.checkCategory(Biome.BiomeCategory.TAIGA))
-                    helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 3, 3, 4);
+                    helper.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
             }
         }
     }
