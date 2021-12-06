@@ -2,9 +2,9 @@ package mod.schnappdragon.habitat.common.entity.animal;
 
 import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
-import mod.schnappdragon.habitat.core.particles.FeatherParticleOptions;
-import mod.schnappdragon.habitat.core.particles.NoteParticleOptions;
+import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
 import mod.schnappdragon.habitat.core.registry.HabitatCriterionTriggers;
+import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
@@ -378,17 +378,19 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
     }
 
-    protected void spawnFeathers(FeatherParticleOptions feather, int number) {
+    protected void spawnFeathers(ColorableParticleOption feather, int number) {
         for (int i = 0; i < number; i++)
             this.level.addParticle(feather, this.getRandomX(0.5D), this.getY(this.random.nextDouble() * 0.75D), this.getRandomZ(0.5D), this.random.nextGaussian() * 0.01D, 0.0D, this.random.nextGaussian() * 0.01D);
     }
 
-    private FeatherParticleOptions getFeather() {
-        return Passerine.Variant.getFeatherByVariant(this.getVariant());
+    private ColorableParticleOption getFeather() {
+        int color = Passerine.Variant.getFeatherColorByVariant(this.getVariant());
+        return new ColorableParticleOption(HabitatParticleTypes.FEATHER.get(), new Vector3f(Vec3.fromRGB24(color)));
     }
 
-    private NoteParticleOptions getNote() {
-        return Passerine.Variant.getNoteByVariant(this.getVariant());
+    private ColorableParticleOption getNote() {
+        int color = Passerine.Variant.getNoteColorByVariant(this.getVariant());
+        return new ColorableParticleOption(HabitatParticleTypes.NOTE.get(), new Vector3f(Vec3.fromRGB24(color)));
     }
 
     /*
@@ -489,20 +491,20 @@ public class Passerine extends Animal implements FlyingAnimal {
         VIOLET_BACKED_STARLING(6435209, 9175295);
 
         private static final Variant[] VARIANTS = Variant.values();
-        private final FeatherParticleOptions feather;
-        private final NoteParticleOptions note;
+        private final int featherColor;
+        private final int noteColor;
 
         Variant(int featherColor, int noteColor) {
-            feather = new FeatherParticleOptions(new Vector3f(Vec3.fromRGB24((featherColor))), 0.33F);
-            note = new NoteParticleOptions(new Vector3f(Vec3.fromRGB24((noteColor))), 0.8F);
+            this.featherColor = featherColor;
+            this.noteColor = noteColor;
         }
 
-        public static FeatherParticleOptions getFeatherByVariant(int id) {
-            return getVariantById(id).feather;
+        public static int getFeatherColorByVariant(int id) {
+            return getVariantById(id).featherColor;
         }
 
-        public static NoteParticleOptions getNoteByVariant(int id) {
-            return getVariantById(id).note;
+        public static int getNoteColorByVariant(int id) {
+            return getVariantById(id).noteColor;
         }
 
         private static Variant getVariantById(int id) {

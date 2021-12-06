@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.client.particle;
 
-import mod.schnappdragon.habitat.core.particles.FeatherParticleOptions;
+import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
@@ -10,7 +10,7 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 
-public class FeatherParticle<T extends FeatherParticleOptions> extends TextureSheetParticle {
+public class FeatherParticle<T extends ColorableParticleOption> extends TextureSheetParticle {
     protected float rollFactor;
     protected int rollLimit;
     protected int rollTicks;
@@ -22,7 +22,7 @@ public class FeatherParticle<T extends FeatherParticleOptions> extends TextureSh
 
         this.lifetime = 360 + this.random.nextInt(40);
 
-        float f = particle.getScale() * (0.28F + this.random.nextFloat() * 0.04F);
+        float f = 0.09F + this.random.nextFloat() * 0.01F;
         this.scale(f / 0.3F);
         this.quadSize = f;
 
@@ -76,14 +76,14 @@ public class FeatherParticle<T extends FeatherParticleOptions> extends TextureSh
         this.move(xd, yd, zd);
     }
 
-    public static class Provider implements ParticleProvider<FeatherParticleOptions> {
+    public static class Provider implements ParticleProvider<ColorableParticleOption> {
         private final SpriteSet spriteSet;
 
         public Provider(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
-        public Particle createParticle(FeatherParticleOptions particle, ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ) {
+        public Particle createParticle(ColorableParticleOption particle, ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ) {
             return new FeatherParticle<>(world, x, y, z, motionX, motionY, motionZ, particle, spriteSet);
         }
     }
