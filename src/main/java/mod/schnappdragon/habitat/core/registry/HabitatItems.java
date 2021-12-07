@@ -8,9 +8,9 @@ import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -66,7 +66,6 @@ public class HabitatItems {
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_SIGN = ITEMS.register("fairy_ring_mushroom_sign",
             () -> new SignItem(getProperties(CompatHelper.compatItemGroup(CreativeModeTab.TAB_DECORATIONS, "enhanced_mushrooms")).stacksTo(16), HabitatBlocks.FAIRY_RING_MUSHROOM_SIGN.get(), HabitatBlocks.FAIRY_RING_MUSHROOM_WALL_SIGN.get()));
 
-    public static final RegistryObject<Item> VERTICAL_FAIRY_RING_MUSHROOM_PLANKS = registerBlockItem("vertical_fairy_ring_mushroom_planks", HabitatBlocks.VERTICAL_FAIRY_RING_MUSHROOM_PLANKS, CompatHelper.compatItemGroup(CreativeModeTab.TAB_BUILDING_BLOCKS, "enhanced_mushrooms", "quark"));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_VERTICAL_SLAB = ITEMS.register("fairy_ring_mushroom_vertical_slab",
             () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_VERTICAL_SLAB.get(), 150, getProperties(CompatHelper.compatItemGroup(CreativeModeTab.TAB_BUILDING_BLOCKS, "enhanced_mushrooms", "quark"))));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BOOKSHELF = ITEMS.register("fairy_ring_mushroom_bookshelf",

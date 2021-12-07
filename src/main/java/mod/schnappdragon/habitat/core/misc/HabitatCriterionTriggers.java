@@ -1,4 +1,4 @@
-package mod.schnappdragon.habitat.core.registry;
+package mod.schnappdragon.habitat.core.misc;
 
 import mod.schnappdragon.habitat.common.advancement.HabitatCriterionTrigger;
 import mod.schnappdragon.habitat.core.Habitat;

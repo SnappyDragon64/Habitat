@@ -1,6 +1,0 @@
-{
-  "parent": "habitat:block/vertical_planks",
-  "textures": {
-    "all": "habitat:block/fairy_ring_mushroom_planks"
-  }
-}

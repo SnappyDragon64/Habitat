@@ -88,7 +88,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    public void catchFire(BlockState state, Level worldIn, BlockPos pos, @Nullable Direction face, @Nullable LivingEntity igniter) {
+    public void onCaughtFire(BlockState state, Level worldIn, BlockPos pos, @Nullable Direction face, @Nullable LivingEntity igniter) {
         if (state.getValue(AGE) == 7)
             dropFruit(state, worldIn, pos, true, true);
     }

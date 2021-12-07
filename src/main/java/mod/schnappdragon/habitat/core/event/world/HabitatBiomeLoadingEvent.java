@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
-import net.minecraftforge.common.world.MobSpawnInfoBuilder;
+import net.minecraftforge.common.world.MobSpawnSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -35,13 +35,13 @@ public class HabitatBiomeLoadingEvent {
                 biome.addFeature(HabitatConfiguredFeatures.PATCH_SLIME_FERN, GenerationStep.Decoration.UNDERGROUND_DECORATION);
 
                 // Deserts and Badlands
-                if (biome.checkKey(Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.BADLANDS, Biomes.BADLANDS_PLATEAU, Biomes.ERODED_BADLANDS, Biomes.MODIFIED_BADLANDS_PLATEAU, Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU, Biomes.WOODED_BADLANDS_PLATEAU))
+                if (biome.checkKey(Biomes.DESERT, Biomes.BADLANDS, Biomes.ERODED_BADLANDS))
                     biome.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
 
                 // Forest Biomes
                 if (biome.checkCategory(Biome.BiomeCategory.FOREST)) {
                     // Dark Forests
-                    if (biome.checkKey(Biomes.DARK_FOREST, Biomes.DARK_FOREST_HILLS))
+                    if (biome.checkKey(Biomes.DARK_FOREST))
                         biome.addStructure(HabitatConfiguredStructures.FAIRY_RING);
                     // Flower Forests
                     else if (biome.checkKey(Biomes.FLOWER_FOREST))
@@ -52,9 +52,9 @@ public class HabitatBiomeLoadingEvent {
                 }
 
                 // Vanilla Jungle Biomes
-                if (biome.checkKey(Biomes.JUNGLE, Biomes.JUNGLE_EDGE, Biomes.JUNGLE_HILLS, Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS, Biomes.MODIFIED_JUNGLE, Biomes.MODIFIED_JUNGLE_EDGE)) {
+                if (biome.checkKey(Biomes.JUNGLE, Biomes.BAMBOO_JUNGLE, Biomes.SPARSE_JUNGLE)) {
                     // Excluding Bamboo Jungles
-                    if (!biome.checkKey(Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS))
+                    if (!biome.checkKey(Biomes.BAMBOO_JUNGLE))
                         biome.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
 
                     biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
@@ -81,7 +81,7 @@ public class HabitatBiomeLoadingEvent {
     private static class BiomeHelper {
         private final BiomeLoadingEvent event;
         private final BiomeGenerationSettingsBuilder generation;
-        private final MobSpawnInfoBuilder spawns;
+        private final MobSpawnSettingsBuilder spawns;
         private final ResourceKey<Biome> biome;
 
         private BiomeHelper(BiomeLoadingEvent event) {

@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "habitat:fairy_ring_mushroom_planks",
-    "habitat:vertical_fairy_ring_mushroom_planks"
+    "habitat:fairy_ring_mushroom_planks"
   ]
 }

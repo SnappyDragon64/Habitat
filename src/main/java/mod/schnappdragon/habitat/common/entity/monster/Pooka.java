@@ -1,6 +1,7 @@
 package mod.schnappdragon.habitat.common.entity.monster;
 
 import mod.schnappdragon.habitat.core.HabitatConfig;
+import mod.schnappdragon.habitat.core.misc.HabitatCriterionTriggers;
 import mod.schnappdragon.habitat.core.registry.*;
 import mod.schnappdragon.habitat.core.tags.HabitatEntityTypeTags;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;

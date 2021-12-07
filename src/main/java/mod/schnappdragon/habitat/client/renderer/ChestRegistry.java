@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ChestRegistry {
     @SubscribeEvent
     public static void onStitch(TextureStitchEvent.Pre event) {
-        if (event.getMap().location().equals(Sheets.CHEST_SHEET)) {
+        if (event.getAtlas().location().equals(Sheets.CHEST_SHEET)) {
             for (ChestVariant variant : ChestVariant.values()) {
                 event.addSprite(variant.getSingle());
                 event.addSprite(variant.getRight());

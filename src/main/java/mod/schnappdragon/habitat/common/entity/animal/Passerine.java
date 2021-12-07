@@ -3,7 +3,7 @@ package mod.schnappdragon.habitat.common.entity.animal;
 import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
-import mod.schnappdragon.habitat.core.registry.HabitatCriterionTriggers;
+import mod.schnappdragon.habitat.core.misc.HabitatCriterionTriggers;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;

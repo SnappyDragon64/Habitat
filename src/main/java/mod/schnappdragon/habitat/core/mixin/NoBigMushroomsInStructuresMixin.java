@@ -18,8 +18,7 @@ public class NoBigMushroomsInStructuresMixin {
             cancellable = true
     )
     private void habitat_noBigMushroomsInStructures(FeaturePlaceContext<HugeMushroomFeatureConfiguration> context, CallbackInfoReturnable<Boolean> cir) {
-        if (context.level().startsForFeature(SectionPos.of(context.origin()), HabitatStructures.FAIRY_RING_STRUCTURE.get()).findAny().isPresent()) {
+        if (!context.level().startsForFeature(SectionPos.of(context.origin()), HabitatStructures.FAIRY_RING_STRUCTURE.get()).isEmpty())
             cir.setReturnValue(false);
-        }
     }
 }

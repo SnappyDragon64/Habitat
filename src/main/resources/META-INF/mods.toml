@@ -1,11 +1,11 @@
 modLoader="javafml"
-loaderVersion="[37,)"
+loaderVersion="[38,)"
 license="All rights reserved"
 issueTrackerURL="https://github.com/SnappyDragon18/Habitat/issues"
 
 [[mods]]
   modId="habitat"
-  version="1.1.0"
+  version="1.1.1"
   displayName="Habitat"
   displayURL="https://www.curseforge.com/minecraft/mc-mods/habitat"
   logoFile="logo.png"
@@ -15,6 +15,6 @@ issueTrackerURL="https://github.com/SnappyDragon18/Habitat/issues"
   [[dependencies.habitat]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.17.1, 1.18)"
+    versionRange="[1.18, 1.19)"
     ordering="NONE"
     side="BOTH"

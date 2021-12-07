@@ -18,8 +18,7 @@ public class NoLakesInStructuresMixin {
             cancellable = true
     )
     private void habitat_noLakesInStructures(FeaturePlaceContext<BlockStateConfiguration> context, CallbackInfoReturnable<Boolean> cir) {
-        if (context.level().startsForFeature(SectionPos.of(context.origin()), HabitatStructures.FAIRY_RING_STRUCTURE.get()).findAny().isPresent()) {
+        if (!context.level().startsForFeature(SectionPos.of(context.origin()), HabitatStructures.FAIRY_RING_STRUCTURE.get()).isEmpty())
             cir.setReturnValue(false);
-        }
     }
 }

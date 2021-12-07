@@ -22,24 +22,21 @@ public class RafflesiaBlockEntity extends BlockEntity {
         this.Effects = RafflesiaBlock.getDefault();
     }
 
-    @Nonnull
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.put("Effects", this.Effects);
-
-        return super.save(compound);
     }
 
     @Override
     public void load(CompoundTag compound) {
-        this.Effects = compound.getList("Effects", 10);
-
         super.load(compound);
+        this.Effects = compound.getList("Effects", 10);
     }
 
     @Nullable
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(this.worldPosition, -1, this.getUpdateTag());
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Nonnull

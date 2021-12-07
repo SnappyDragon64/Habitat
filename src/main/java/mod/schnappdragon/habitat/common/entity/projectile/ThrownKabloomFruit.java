@@ -28,7 +28,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
 public class ThrownKabloomFruit extends ThrowableItemProjectile {
     public ThrownKabloomFruit(EntityType<? extends ThrownKabloomFruit> entity, Level world) {

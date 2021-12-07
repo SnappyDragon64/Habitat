@@ -18,8 +18,7 @@ public class NoTreesInStructuresMixin {
             cancellable = true
     )
     private void habitat_noTreesInStructures(FeaturePlaceContext<TreeConfiguration> context, CallbackInfoReturnable<Boolean> cir) {
-        if (context.level().startsForFeature(SectionPos.of(context.origin()), HabitatStructures.FAIRY_RING_STRUCTURE.get()).findAny().isPresent()) {
+        if (!context.level().startsForFeature(SectionPos.of(context.origin()), HabitatStructures.FAIRY_RING_STRUCTURE.get()).isEmpty())
             cir.setReturnValue(false);
-        }
     }
 }

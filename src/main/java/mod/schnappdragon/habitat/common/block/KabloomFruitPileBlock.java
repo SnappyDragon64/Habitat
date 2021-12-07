@@ -64,7 +64,7 @@ public class KabloomFruitPileBlock extends Block {
     }
 
     @Override
-    public void catchFire(BlockState state, Level worldIn, BlockPos pos, @Nullable Direction face, @Nullable LivingEntity igniter) {
+    public void onCaughtFire(BlockState state, Level worldIn, BlockPos pos, @Nullable Direction face, @Nullable LivingEntity igniter) {
         explode(worldIn, pos, true, true);
     }
 

@@ -21,7 +21,7 @@ public class FloweringBallCactusBlock extends AbstractBallCactusBlock {
     }
 
     @Override
-    public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
         return new ItemStack(getColor().getBallCactus());
     }
 
