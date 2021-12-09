@@ -2,6 +2,7 @@ package mod.schnappdragon.habitat.core.event.world;
 
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
+import mod.schnappdragon.habitat.core.registry.HabitatPlacedFeatures;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
@@ -33,7 +34,7 @@ public class HabitatBiomeLoadingEvent {
 
                 // Deserts and Badlands
                 if (biome.checkKey(Biomes.DESERT, Biomes.BADLANDS, Biomes.ERODED_BADLANDS))
-                    //biome.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
+                    biome.addFeature(HabitatPlacedFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
 
                 // Forest Biomes
                 if (biome.checkCategory(Biome.BiomeCategory.FOREST)) {
@@ -47,9 +48,12 @@ public class HabitatBiomeLoadingEvent {
 
                 // Vanilla Jungle Biomes
                 if (biome.checkKey(Biomes.JUNGLE, Biomes.BAMBOO_JUNGLE, Biomes.SPARSE_JUNGLE)) {
-                    // Excluding Bamboo Jungles
-                    if (!biome.checkKey(Biomes.BAMBOO_JUNGLE))
-                        //biome.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
+                    // Jungle
+                    if (biome.checkKey(Biomes.JUNGLE))
+                        biome.addFeature(HabitatPlacedFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
+                    // Sparse Jungle
+                    else if (biome.checkKey(Biomes.SPARSE_JUNGLE))
+                        biome.addFeature(HabitatPlacedFeatures.PATCH_RAFFLESIA_SPARSE, GenerationStep.Decoration.VEGETAL_DECORATION);
 
                     biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
                 }
@@ -59,7 +63,7 @@ public class HabitatBiomeLoadingEvent {
 
                 // Plains
                 if (biome.checkCategory(Biome.BiomeCategory.PLAINS))
-                    //biome.addFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH, GenerationStep.Decoration.VEGETAL_DECORATION);
+                    biome.addFeature(HabitatPlacedFeatures.PATCH_KABLOOM_BUSH, GenerationStep.Decoration.VEGETAL_DECORATION);
 
                 // Savannas
                 if (biome.checkCategory(Biome.BiomeCategory.SAVANNA))

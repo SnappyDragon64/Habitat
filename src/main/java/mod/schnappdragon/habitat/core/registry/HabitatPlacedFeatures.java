@@ -3,18 +3,30 @@ package mod.schnappdragon.habitat.core.registry;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.placement.BiomeFilter;
+import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.RarityFilter;
 
 public class HabitatPlacedFeatures {
-    public static final PlacedFeature PLACED_FAIRY_RING = HabitatConfiguredFeatures.FAIRY_RING.placed();
+    public static final PlacedFeature PATCH_RAFFLESIA = HabitatConfiguredFeatures.PATCH_RAFFLESIA.placed(RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+    public static final PlacedFeature PATCH_RAFFLESIA_SPARSE = HabitatConfiguredFeatures.PATCH_RAFFLESIA.placed(RarityFilter.onAverageOnceEvery(40), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+    public static final PlacedFeature PATCH_KABLOOM_BUSH = HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH.placed(RarityFilter.onAverageOnceEvery(200), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+    public static final PlacedFeature PATCH_BALL_CACTUS = HabitatConfiguredFeatures.PATCH_BALL_CACTUS.placed(RarityFilter.onAverageOnceEvery(25), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+    public static final PlacedFeature FAIRY_RING = HabitatConfiguredFeatures.FAIRY_RING.placed();
 
     public static void registerPlacedFeatures() {
-        //register("rafflesia_patch", PLACED_PATCH_RAFFLESIA);
-        //register("kabloom_bush_patch", PLACED_PATCH_KABLOOM_BUSH);
+        register("rafflesia_patch", PATCH_RAFFLESIA);
+        register("sparse_rafflesia_patch", PATCH_RAFFLESIA_SPARSE);
+        register("kabloom_bush_patch", PATCH_KABLOOM_BUSH);
         //register("slime_fern_patch", PLACED_PATCH_SLIME_FERN);
-        //register("ball_cactus_patch", PLACED_PATCH_BALL_CACTUS);
-        register("fairy_ring", PLACED_FAIRY_RING);
+        register("ball_cactus_patch", PATCH_BALL_CACTUS);
+        register("fairy_ring", FAIRY_RING);
     }
 
     private static void register(String id, PlacedFeature placedFeature) {
