@@ -49,7 +49,7 @@ public class HabitatDispenseItemBehavior {
     private static DispenseItemBehavior ShearsBehavior;
     private static DispenseItemBehavior RedstoneBehavior;
 
-    public static void registerDispenserBehaviour() {
+    public static void registerDispenserBehaviors() {
         SuspiciousStewBehavior = DispenserBlock.DISPENSER_REGISTRY.get(Items.SUSPICIOUS_STEW);
         BowlItemBehavior = DispenserBlock.DISPENSER_REGISTRY.get(Items.BOWL);
         ShearsBehavior = DispenserBlock.DISPENSER_REGISTRY.get(Items.SHEARS);

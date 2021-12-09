@@ -19,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 @Mod(Habitat.MODID)
 public class Habitat {
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "habitat";
     public static final boolean DEV = !FMLLoader.isProduction();
 
@@ -49,26 +49,27 @@ public class Habitat {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            HabitatParrotImitationSounds.registerParrotImitationSounds();
-            HabitatStructures.setupStructures();
-            HabitatBrewingMixes.registerBrewingMixes();
-            HabitatConfiguredFeatures.registerConfiguredFeatures();
-            HabitatConfiguredStructures.registerConfiguredStructures();
-            HabitatComposterChances.registerComposterChances();
-            HabitatDispenseItemBehavior.registerDispenserBehaviour();
             HabitatCriterionTriggers.registerCriteriaTriggers();
             HabitatLootConditionTypes.registerLootConditionTypes();
-            HabitatFireInfo.registerFireInfo();
-            HabitatPOI.addBeehivePOI();
             HabitatSpawns.registerSpawns();
+
+            HabitatConfiguredFeatures.registerConfiguredFeatures();
+            HabitatPlacedFeatures.registerPlacedFeatures();
+
+            HabitatStructures.setupStructures();
+            HabitatConfiguredStructures.registerConfiguredStructures();
+
+            HabitatComposterChances.registerComposterChances();
+            HabitatDispenseItemBehavior.registerDispenserBehaviors();
+            HabitatFireInfo.registerFireInfo();
+
+            HabitatBrewingMixes.registerBrewingMixes();
+            HabitatParrotImitationSounds.registerParrotImitationSounds();
+            HabitatPOI.addBeehivePOI();
         });
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
         HabitatRenderLayers.registerRenderLayers();
-    }
-
-    public static Logger getLOGGER() {
-        return LOGGER;
     }
 }

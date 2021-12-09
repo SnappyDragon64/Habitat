@@ -22,6 +22,11 @@ public class SlimeFernFeature extends Feature<RandomPatchConfiguration> {
         super(codec);
     }
 
+    @Override
+    public boolean place(FeaturePlaceContext<RandomPatchConfiguration> p_159749_) {
+        return false;
+    }
+/*
     public boolean place(FeaturePlaceContext<RandomPatchConfiguration> context) {
         RandomPatchConfiguration config = context.config();
         WorldGenLevel world = context.level();
@@ -35,13 +40,15 @@ public class SlimeFernFeature extends Feature<RandomPatchConfiguration> {
             BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
             Direction[] directions = new Direction[]{Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP};
 
-            for (int j = 0; j < config.tries; ++j) {
-                blockpos$mutable.setWithOffset(pos1, rand.nextInt(config.xspread + 1) - rand.nextInt(config.xspread + 1), rand.nextInt(config.yspread + 1) - rand.nextInt(config.yspread + 1), rand.nextInt(config.zspread + 1) - rand.nextInt(config.zspread + 1));
+            for (int j = 0; j < config.tries(); ++j) {
+                int xz = config.xzSpread() + 1;
+                int y = config.ySpread() + 1;
+                blockpos$mutable.setWithOffset(pos1, rand.nextInt(xz) - rand.nextInt(xz), rand.nextInt(y) - rand.nextInt(y), rand.nextInt(xz) - rand.nextInt(xz));
 
-                if (world.isEmptyBlock(blockpos$mutable) || config.canReplace && world.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) {
+                if (world.isEmptyBlock(blockpos$mutable)) {
                     for (Direction dir : directions) {
                         if (world.getBlockState(blockpos$mutable.relative(dir)).is(Tags.Blocks.STONE)) {
-                            BlockState state = config.stateProvider.getState(rand, blockpos$mutable);
+                            BlockState state = config.feature().get()..getState(rand, blockpos$mutable);
 
                             if (state.getBlock() == HabitatBlocks.SLIME_FERN.get()) {
                                 if (dir == Direction.UP)
@@ -63,4 +70,5 @@ public class SlimeFernFeature extends Feature<RandomPatchConfiguration> {
 
         return false;
     }
+ */
 }

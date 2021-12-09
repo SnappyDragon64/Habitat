@@ -1,8 +1,6 @@
 package mod.schnappdragon.habitat.core.event.world;
 
 import mod.schnappdragon.habitat.core.Habitat;
-import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
-import mod.schnappdragon.habitat.core.registry.HabitatConfiguredStructures;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -12,8 +10,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.common.world.MobSpawnSettingsBuilder;
@@ -32,19 +29,16 @@ public class HabitatBiomeLoadingEvent {
 
             if (biome.checkType(BiomeDictionary.Type.OVERWORLD)) {
                 // All Biomes
-                biome.addFeature(HabitatConfiguredFeatures.PATCH_SLIME_FERN, GenerationStep.Decoration.UNDERGROUND_DECORATION);
+                //biome.addFeature(HabitatConfiguredFeatures.PATCH_SLIME_FERN, GenerationStep.Decoration.UNDERGROUND_DECORATION);
 
                 // Deserts and Badlands
                 if (biome.checkKey(Biomes.DESERT, Biomes.BADLANDS, Biomes.ERODED_BADLANDS))
-                    biome.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
+                    //biome.addFeature(HabitatConfiguredFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
 
                 // Forest Biomes
                 if (biome.checkCategory(Biome.BiomeCategory.FOREST)) {
-                    // Dark Forests
-                    if (biome.checkKey(Biomes.DARK_FOREST))
-                        biome.addStructure(HabitatConfiguredStructures.FAIRY_RING);
                     // Flower Forests
-                    else if (biome.checkKey(Biomes.FLOWER_FOREST))
+                    if (biome.checkKey(Biomes.FLOWER_FOREST))
                         biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
                     // Other Non-Spooky and Non-Dead Forests
                     else if (!biome.checkType(BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.DEAD))
@@ -55,7 +49,7 @@ public class HabitatBiomeLoadingEvent {
                 if (biome.checkKey(Biomes.JUNGLE, Biomes.BAMBOO_JUNGLE, Biomes.SPARSE_JUNGLE)) {
                     // Excluding Bamboo Jungles
                     if (!biome.checkKey(Biomes.BAMBOO_JUNGLE))
-                        biome.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
+                        //biome.addFeature(HabitatConfiguredFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
 
                     biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
                 }
@@ -65,7 +59,7 @@ public class HabitatBiomeLoadingEvent {
 
                 // Plains
                 if (biome.checkCategory(Biome.BiomeCategory.PLAINS))
-                    biome.addFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH, GenerationStep.Decoration.VEGETAL_DECORATION);
+                    //biome.addFeature(HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH, GenerationStep.Decoration.VEGETAL_DECORATION);
 
                 // Savannas
                 if (biome.checkCategory(Biome.BiomeCategory.SAVANNA))
@@ -118,12 +112,8 @@ public class HabitatBiomeLoadingEvent {
             return false;
         }
 
-        private void addFeature(ConfiguredFeature<?, ?> feature, GenerationStep.Decoration stage) {
+        private void addFeature(PlacedFeature feature, GenerationStep.Decoration stage) {
             this.generation.addFeature(stage, feature);
-        }
-
-        private void addStructure(ConfiguredStructureFeature<?, ?> structure) {
-            this.generation.getStructures().add(() -> structure);
         }
 
         private void addCreatureSpawn(EntityType<?> type, int weight, int min, int max) {
