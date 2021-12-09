@@ -53,6 +53,7 @@ public class Habitat {
             HabitatLootConditionTypes.registerLootConditionTypes();
             HabitatSpawns.registerSpawns();
 
+            HabitatPlacementModifierTypes.registerPlacementModifierTypes();
             HabitatConfiguredFeatures.registerConfiguredFeatures();
             HabitatPlacedFeatures.registerPlacedFeatures();
 

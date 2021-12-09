@@ -30,7 +30,7 @@ public class HabitatBiomeLoadingEvent {
 
             if (biome.checkType(BiomeDictionary.Type.OVERWORLD)) {
                 // All Biomes
-                //biome.addFeature(HabitatConfiguredFeatures.PATCH_SLIME_FERN, GenerationStep.Decoration.UNDERGROUND_DECORATION);
+                biome.addFeature(HabitatPlacedFeatures.PATCH_SLIME_FERN, GenerationStep.Decoration.UNDERGROUND_DECORATION);
 
                 // Deserts and Badlands
                 if (biome.checkKey(Biomes.DESERT, Biomes.BADLANDS, Biomes.ERODED_BADLANDS))
