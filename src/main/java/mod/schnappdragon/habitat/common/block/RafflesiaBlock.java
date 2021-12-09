@@ -23,6 +23,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
@@ -126,9 +127,8 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
             }
 
             MobEffect effect = MobEffect.byId(tag.getByte("EffectId"));
-            if (effect != null) {
+            if (effect != null)
                 cloud.addEffect(new MobEffectInstance(effect, j));
-            }
         }
 
         worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_SPEW.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
@@ -138,13 +138,11 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
     public static ParticleOptions getParticle(ListTag effects) {
         Collection<MobEffectInstance> effectInstances = Lists.newArrayList();
         for (int i = 0; i < effects.size(); ++i) {
-            int j = 160;
             CompoundTag tag = effects.getCompound(i);
 
             MobEffect effect = MobEffect.byId(tag.getByte("EffectId"));
-            if (effect != null) {
-                effectInstances.add(new MobEffectInstance(effect, j));
-            }
+            if (effect != null)
+                effectInstances.add(new MobEffectInstance(effect, 160));
         }
 
         return new DustParticleOptions(new Vector3f(Vec3.fromRGB24(PotionUtils.getColor(effectInstances))), 1.0F);
@@ -160,14 +158,10 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RafflesiaBlockEntity rafflesia && !state.getValue(ON_COOLDOWN) && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
                 worldIn.gameEvent(entityIn, GameEvent.BLOCK_PRESS, pos);
-                createCloud(worldIn, pos, rafflesia.Effects, entityIn instanceof LivingEntity living ? living : null);
+                Entity owner = entityIn instanceof Projectile projectile ? projectile.getOwner() : entityIn;
+                createCloud(worldIn, pos, rafflesia.Effects, owner instanceof LivingEntity living ? living : null);
                 worldIn.setBlockAndUpdate(pos, state.setValue(ON_COOLDOWN, true).setValue(HAS_STEW, false));
-                ListTag Effects = new ListTag();
-                CompoundTag tag = new CompoundTag();
-                tag.putByte("EffectId", (byte) 19);
-                tag.putInt("EffectDuration", 240);
-                Effects.add(tag);
-                rafflesia.Effects = Effects;
+                rafflesia.Effects = getDefault();
                 rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
             }
         }
