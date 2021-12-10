@@ -30,13 +30,11 @@ public class FairyRingStructure extends StructureFeature<JigsawConfiguration> {
     ));
 
     public FairyRingStructure(Codec<JigsawConfiguration> codec) {
-        super(codec, (context) -> {
-                    if (!FairyRingStructure.isFeatureChunk(context))
-                        return Optional.empty();
-                    else
-                        return FairyRingStructure.createPiecesGenerator(context);
-                },
-                PostPlacementProcessor.NONE);
+        super(
+                codec,
+                context -> FairyRingStructure.isFeatureChunk(context) ? FairyRingStructure.createPiecesGenerator(context) : Optional.empty(),
+                PostPlacementProcessor.NONE
+        );
     }
 
     @Override

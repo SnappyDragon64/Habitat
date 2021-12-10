@@ -35,7 +35,7 @@ public class HabitatStructureDimensionalSpacing {
     private static Method GETCODEC_METHOD;
 
     @SubscribeEvent
-    public void addDimensionalSpacing(final WorldEvent.Load event) {
+    public static void addDimensionalSpacing(final WorldEvent.Load event) {
         if (event.getWorld() instanceof ServerLevel serverLevel) {
             ChunkGenerator chunkGenerator = serverLevel.getChunkSource().getGenerator();
             if (chunkGenerator instanceof FlatLevelSource && serverLevel.dimension().equals(Level.OVERWORLD))
