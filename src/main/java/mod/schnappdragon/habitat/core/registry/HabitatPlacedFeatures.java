@@ -13,7 +13,7 @@ public class HabitatPlacedFeatures {
     public static final PlacedFeature PATCH_RAFFLESIA = HabitatConfiguredFeatures.PATCH_RAFFLESIA.placed(RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
     public static final PlacedFeature PATCH_RAFFLESIA_SPARSE = HabitatConfiguredFeatures.PATCH_RAFFLESIA.placed(RarityFilter.onAverageOnceEvery(40), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
-    public static final PlacedFeature PATCH_KABLOOM_BUSH = HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH.placed(RarityFilter.onAverageOnceEvery(300), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+    public static final PlacedFeature PATCH_KABLOOM_BUSH = HabitatConfiguredFeatures.PATCH_KABLOOM_BUSH.placed(RarityFilter.onAverageOnceEvery(225), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
     public static final PlacedFeature PATCH_SLIME_FERN = HabitatConfiguredFeatures.PATCH_SLIME_FERN.placed(SlimeChunkFilter.filter(), HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(40)), BiomeFilter.biome());
 
