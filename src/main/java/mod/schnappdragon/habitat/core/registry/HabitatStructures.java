@@ -23,7 +23,7 @@ public class HabitatStructures {
     public static final RegistryObject<StructureFeature<JigsawConfiguration>> FAIRY_RING = STRUCTURE_FEATURES.register("fairy_ring", () -> (new FairyRingStructure(JigsawConfiguration.CODEC)));
 
     public static void setupStructures() {
-        setupMapSpacingAndLand(FAIRY_RING.get(), new StructureFeatureConfiguration(HabitatConfig.COMMON.fairyRingAverage.get(), HabitatConfig.COMMON.fairyRingMinimum.get(), 1002806115), true);
+        setupMapSpacingAndLand(FAIRY_RING.get(), new StructureFeatureConfiguration(HabitatConfig.COMMON.fairyRingAverage.get(), HabitatConfig.COMMON.fairyRingMinimum.get(), 1002806115), false);
     }
 
     private static <F extends StructureFeature<?>> void setupMapSpacingAndLand(F structure, StructureFeatureConfiguration structureFeatureConfiguration, boolean transformSurroundingLand) {
