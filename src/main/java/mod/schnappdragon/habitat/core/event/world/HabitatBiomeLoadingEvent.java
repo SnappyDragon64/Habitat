@@ -46,20 +46,25 @@ public class HabitatBiomeLoadingEvent {
                         biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
                 }
 
-                // Vanilla Jungle Biomes
-                if (biome.checkKey(Biomes.JUNGLE, Biomes.BAMBOO_JUNGLE, Biomes.SPARSE_JUNGLE)) {
+                // Jungles
+                if (biome.checkCategory(Biome.BiomeCategory.JUNGLE)) {
                     // Jungle
-                    if (biome.checkKey(Biomes.JUNGLE))
+                    if (biome.checkKey(Biomes.JUNGLE)) {
                         biome.addFeature(HabitatPlacedFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
-                    // Sparse Jungle
-                    else if (biome.checkKey(Biomes.SPARSE_JUNGLE))
+                        biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
+                    }
+                    // Bamboo Jungle
+                    else if (biome.checkKey(Biomes.BAMBOO_JUNGLE))
+                        biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
+                        // Sparse Jungle
+                    else if (biome.checkKey(Biomes.SPARSE_JUNGLE)) {
                         biome.addFeature(HabitatPlacedFeatures.PATCH_RAFFLESIA_SPARSE, GenerationStep.Decoration.VEGETAL_DECORATION);
-
-                    biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
+                        biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
+                    }
+                    // Non-Vanilla Jungles
+                    else
+                        biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
                 }
-                // Modded Jungle Biomes
-                else if (biome.checkCategory(Biome.BiomeCategory.JUNGLE))
-                    biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 3, 3, 4);
 
                 // Plains
                 if (biome.checkCategory(Biome.BiomeCategory.PLAINS))
@@ -82,6 +87,7 @@ public class HabitatBiomeLoadingEvent {
         private final MobSpawnSettingsBuilder spawns;
         private final ResourceKey<Biome> biome;
 
+        @SuppressWarnings("ConstantConditions")
         private BiomeHelper(BiomeLoadingEvent event) {
             this.event = event;
             this.generation = event.getGeneration();
@@ -121,7 +127,7 @@ public class HabitatBiomeLoadingEvent {
         }
 
         private void addCreatureSpawn(EntityType<?> type, int weight, int min, int max) {
-            this.spawns.getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(type, weight, min, max));
+            this.spawns.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(type, weight, min, max));
         }
     }
 }
