@@ -28,36 +28,40 @@ public class HabitatBiomeLoadingEvent {
         if (event.getName() != null) {
             BiomeHelper biome = new BiomeHelper(event);
 
-            if (biome.checkType(BiomeDictionary.Type.OVERWORLD)) {
+            if (biome.check(BiomeDictionary.Type.OVERWORLD)) {
                 // All Biomes
                 biome.addFeature(HabitatPlacedFeatures.PATCH_SLIME_FERN, GenerationStep.Decoration.UNDERGROUND_DECORATION);
 
                 // Deserts and Badlands
-                if (biome.checkKey(Biomes.DESERT, Biomes.BADLANDS, Biomes.ERODED_BADLANDS))
+                if (biome.check(Biomes.DESERT, Biomes.BADLANDS, Biomes.ERODED_BADLANDS))
                     biome.addFeature(HabitatPlacedFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
 
-                // Forest Biomes
-                if (biome.checkCategory(Biome.BiomeCategory.FOREST)) {
+                // Forests
+                if (biome.check(Biome.BiomeCategory.FOREST)) {
                     // Flower Forests
-                    if (biome.checkKey(Biomes.FLOWER_FOREST))
+                    if (biome.check(Biomes.FLOWER_FOREST))
                         biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
                     // Other Non-Spooky and Non-Dead Forests
-                    else if (!biome.checkType(BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.DEAD))
+                    else if (!biome.check(BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.DEAD))
                         biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
                 }
 
+                // Grove
+                if (biome.check(Biomes.GROVE))
+                    biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
+
                 // Jungles
-                if (biome.checkCategory(Biome.BiomeCategory.JUNGLE)) {
+                if (biome.check(Biome.BiomeCategory.JUNGLE)) {
                     // Jungle
-                    if (biome.checkKey(Biomes.JUNGLE)) {
+                    if (biome.check(Biomes.JUNGLE)) {
                         biome.addFeature(HabitatPlacedFeatures.PATCH_RAFFLESIA, GenerationStep.Decoration.VEGETAL_DECORATION);
                         biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
                     }
                     // Bamboo Jungle
-                    else if (biome.checkKey(Biomes.BAMBOO_JUNGLE))
+                    else if (biome.check(Biomes.BAMBOO_JUNGLE))
                         biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 20, 3, 4);
                         // Sparse Jungle
-                    else if (biome.checkKey(Biomes.SPARSE_JUNGLE)) {
+                    else if (biome.check(Biomes.SPARSE_JUNGLE)) {
                         biome.addFeature(HabitatPlacedFeatures.PATCH_RAFFLESIA_SPARSE, GenerationStep.Decoration.VEGETAL_DECORATION);
                         biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
                     }
@@ -67,15 +71,15 @@ public class HabitatBiomeLoadingEvent {
                 }
 
                 // Plains
-                if (biome.checkCategory(Biome.BiomeCategory.PLAINS))
+                if (biome.check(Biome.BiomeCategory.PLAINS))
                     biome.addFeature(HabitatPlacedFeatures.PATCH_KABLOOM_BUSH, GenerationStep.Decoration.VEGETAL_DECORATION);
 
                 // Savannas
-                if (biome.checkCategory(Biome.BiomeCategory.SAVANNA))
+                if (biome.check(Biome.BiomeCategory.SAVANNA))
                     biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 3, 3, 4);
 
                 // Taigas
-                if (biome.checkCategory(Biome.BiomeCategory.TAIGA))
+                if (biome.check(Biome.BiomeCategory.TAIGA))
                     biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 3, 4);
             }
         }
@@ -95,7 +99,7 @@ public class HabitatBiomeLoadingEvent {
             this.biome = ResourceKey.create(Registry.BIOME_REGISTRY, event.getName());
         }
 
-        private boolean checkCategory(Biome.BiomeCategory... categories) {
+        private boolean check(Biome.BiomeCategory... categories) {
             for (Biome.BiomeCategory category : categories) {
                 if (this.event.getCategory() == category)
                     return true;
@@ -104,7 +108,7 @@ public class HabitatBiomeLoadingEvent {
             return false;
         }
 
-        private boolean checkKey(ResourceKey<?>... biomes) {
+        private boolean check(ResourceKey<?>... biomes) {
             for (ResourceKey<?> biome : biomes) {
                 if (biome.location().equals(this.event.getName()))
                     return true;
@@ -113,7 +117,7 @@ public class HabitatBiomeLoadingEvent {
             return false;
         }
 
-        private boolean checkType(BiomeDictionary.Type... types) {
+        private boolean check(BiomeDictionary.Type... types) {
             for (BiomeDictionary.Type type : types) {
                 if (BiomeDictionary.hasType(this.biome, type))
                     return true;
