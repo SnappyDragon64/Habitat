@@ -34,10 +34,11 @@ public class FairyRingFeature extends Feature<NoneFeatureConfiguration> {
                 {0, -5}, {1, -5}, {2, -5}, {3, -4}, {4, -4}, {4, -3}, {5, -2}, {5, -1}
         };
         int[] bigXZ = XZ_PAIRS[rand.nextInt(32)];
+        BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
 
         for (int[] XZ : XZ_PAIRS) {
-            for (int d = 5; d >= -6; --d) {
-                BlockPos.MutableBlockPos blockpos$mutable = pos.offset(XZ[0], d, XZ[1]).mutable();
+            for (int y = 5; y >= -6; --y) {
+                blockpos$mutable.setWithOffset(pos, XZ[0], y, XZ[1]);
                 BlockState base = world.getBlockState(blockpos$mutable.below());
                 if (world.isEmptyBlock(blockpos$mutable) && base.canOcclude()) {
                     if (Arrays.equals(XZ, bigXZ)) {
