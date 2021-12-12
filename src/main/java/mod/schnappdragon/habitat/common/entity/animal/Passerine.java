@@ -642,7 +642,7 @@ public class Passerine extends Animal implements FlyingAnimal {
             if (this.animationTick > 0) {
                 this.animationTick--;
 
-                if (this.animationTick == 30)
+                if (this.animationTick == 10)
                     Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 11);
             }
         }
