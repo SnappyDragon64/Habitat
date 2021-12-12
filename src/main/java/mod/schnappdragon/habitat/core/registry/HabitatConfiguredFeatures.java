@@ -24,7 +24,7 @@ import java.util.List;
 public class HabitatConfiguredFeatures {
     public static final ConfiguredFeature<?, ?> PATCH_RAFFLESIA = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration(2, 6, 1,
             () -> Feature.SIMPLE_BLOCK.configured(new SimpleBlockConfiguration(BlockStateProvider.simple(HabitatBlocks.RAFFLESIA.get().defaultBlockState())))
-                    .filtered(BlockPredicate.allOf(BlockPredicate.replaceable(), BlockPredicate.matchesTag(HabitatBlockTags.RAFFLESIA_PLANTABLE_ON, new BlockPos(0, -1, 0))))));
+                    .filtered(BlockPredicate.allOf(BlockPredicate.replaceable(), BlockPredicate.matchesBlock(Blocks.GRASS_BLOCK, new BlockPos(0, -1, 0))))));
 
     public static final ConfiguredFeature<?, ?> PATCH_KABLOOM_BUSH = Feature.RANDOM_PATCH.configured(FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK.configured(new SimpleBlockConfiguration(BlockStateProvider.simple(HabitatBlocks.KABLOOM_BUSH.get().defaultBlockState().setValue(KabloomBushBlock.AGE, 7)))), List.of(Blocks.GRASS_BLOCK)));
 
@@ -32,7 +32,7 @@ public class HabitatConfiguredFeatures {
 
     public static final ConfiguredFeature<?, ?> PATCH_BALL_CACTUS = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration(4, 5, 1,
             () -> Feature.SIMPLE_BLOCK.configured(new SimpleBlockConfiguration(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(HabitatBlocks.FLOWERING_ORANGE_BALL_CACTUS.get().defaultBlockState(), 3).add(HabitatBlocks.FLOWERING_PINK_BALL_CACTUS.get().defaultBlockState(), 3).add(HabitatBlocks.FLOWERING_RED_BALL_CACTUS.get().defaultBlockState(), 2).add(HabitatBlocks.FLOWERING_YELLOW_BALL_CACTUS.get().defaultBlockState(), 1))))
-                    .filtered(BlockPredicate.allOf(BlockPredicate.replaceable(), BlockPredicate.matchesTag(HabitatBlockTags.BALL_CACTUS_PLANTABLE_ON, new BlockPos(0, -1, 0))))));
+                    .filtered(BlockPredicate.allOf(BlockPredicate.replaceable(), BlockPredicate.matchesBlocks(List.of(Blocks.SAND, Blocks.RED_SAND), new BlockPos(0, -1, 0))))));
 
     public static final ConfiguredFeature<?, ?> FAIRY_RING = HabitatFeatures.FAIRY_RING_FEATURE.get().configured(FeatureConfiguration.NONE);
     public static final ConfiguredFeature<?, ?> HUGE_FAIRY_RING_MUSHROOM = HabitatFeatures.HUGE_FAIRY_RING_MUSHROOM_FEATURE.get().configured(new HugeMushroomFeatureConfiguration(BlockStateProvider.simple(HabitatBlocks.FAIRY_RING_MUSHROOM_BLOCK.get().defaultBlockState().setValue(HugeMushroomBlock.DOWN, false)), BlockStateProvider.simple(HabitatBlocks.FAIRY_RING_MUSHROOM_STEM.get().defaultBlockState().setValue(HugeMushroomBlock.UP, false).setValue(HugeMushroomBlock.DOWN, false)), 2));
