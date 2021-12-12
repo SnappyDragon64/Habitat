@@ -1,7 +1,6 @@
 package mod.schnappdragon.habitat.common.entity.animal;
 
 import com.mojang.math.Vector3f;
-import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.misc.HabitatCriterionTriggers;
 import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
@@ -71,7 +70,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     private float nextFlap = 1.0F;
 
     private Passerine.PreenGoal preenGoal;
-    private int animationTick;
+    private int preenAnim;
 
     public Passerine(EntityType<? extends Passerine> passerine, Level worldIn) {
         super(passerine, worldIn);
@@ -162,7 +161,7 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     protected void customServerAiStep() {
-        this.animationTick = this.preenGoal.getAnimationTick();
+        this.preenAnim = this.preenGoal.getRemainingPreeningTicks();
         super.customServerAiStep();
     }
 
@@ -176,8 +175,8 @@ public class Passerine extends Animal implements FlyingAnimal {
             this.zza = 0.0F;
         }
 
-        if (this.level.isClientSide && this.animationTick > 0)
-            this.animationTick--;
+        if (this.level.isClientSide && this.preenAnim > 0)
+            this.preenAnim--;
     }
 
     public void tick() {
@@ -192,11 +191,11 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public boolean isPreening() {
-        return this.animationTick > 0;
+        return this.preenAnim > 0;
     }
 
-    public int getAnimationTick() {
-        return this.animationTick;
+    public int getRemainingPreeningTicks() {
+        return this.preenAnim;
     }
 
     private boolean isNotBusy() {
@@ -392,8 +391,8 @@ public class Passerine extends Animal implements FlyingAnimal {
             case 11 -> spawnFeathers(this.getFeather(), 1);
             case 12 -> spawnFeathers(this.getFeather(), 2);
             case 13 -> this.level.addParticle(this.getNote(), this.getRandomX(0.5D), 0.6D + this.getY(), this.getRandomZ(0.5D), this.random.nextDouble(), 0.0D, 0.0D);
-            case 14 -> this.animationTick = 40;
-            case 15 -> this.animationTick = 0;
+            case 14 -> this.preenAnim = 40;
+            case 15 -> this.preenAnim = 0;
             default -> super.handleEntityEvent(id);
         }
     }
@@ -626,7 +625,7 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     class PreenGoal extends Goal {
         private int countdown = 2800 + Passerine.this.random.nextInt(2800);
-        private int animationTick;
+        private int preenAnim;
 
         public PreenGoal() {
             this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
@@ -641,7 +640,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public boolean canContinueToUse() {
-            return this.animationTick > 0 && this.canPreen();
+            return this.preenAnim > 0 && this.canPreen();
         }
 
         private boolean canPreen() {
@@ -649,32 +648,32 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public void start() {
-            this.animationTick = 40;
+            this.preenAnim = 40;
             Passerine.this.getNavigation().stop();
             Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 14);
         }
 
         public void stop() {
-            this.animationTick = 0;
+            this.preenAnim = 0;
             this.countdown = 2800 + Passerine.this.random.nextInt(2800);
             Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 15);
         }
 
         public void tick() {
-            if (this.animationTick > 0) {
-                this.animationTick--;
+            if (this.preenAnim > 0) {
+                this.preenAnim--;
 
-                if (this.animationTick == 20)
+                if (this.preenAnim == 20)
                     Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 11);
             }
         }
 
-        public int getAnimationTick() {
-            return this.animationTick;
+        public int getRemainingPreeningTicks() {
+            return this.preenAnim;
         }
 
         public void stopPreening() {
-            this.animationTick = 0;
+            this.preenAnim = 0;
         }
     }
 
