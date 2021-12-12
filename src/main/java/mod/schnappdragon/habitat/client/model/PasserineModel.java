@@ -109,8 +109,8 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 			if (tick >= 4 && tick <= 36) {
 				float f = (this.animationCounter - 4) / 32.0F;
 				this.head.z = -1.0F;
-				this.head.xRot = 0.1745F + 0.1745F * Mth.sin(f * 38.2F);
-				this.head.yRot = 1.833F + 0.2793F * Mth.cos(f * 38.2F);
+				this.head.xRot = 0.1745F + 0.1745F * Mth.sin(f * 57.3F);
+				this.head.yRot = 1.833F + 0.2793F * Mth.sin(f * 38.2F);
 				this.rightWing.xRot = -0.5236F;
 				this.rightWing.zRot = 1.396F;
 			} else {
