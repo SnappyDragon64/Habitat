@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -44,7 +45,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.IForgeShearable;
-import net.minecraftforge.common.Tags;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -457,7 +457,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      */
 
     public static boolean checkPookaSpawnRules(EntityType<Pooka> pooka, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random rand) {
-        return world.getBlockState(pos.below()).is(Tags.Blocks.DIRT);
+        return world.getBlockState(pos.below()).is(BlockTags.RABBITS_SPAWNABLE_ON);
     }
 
     @Nullable
