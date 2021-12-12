@@ -1,6 +1,7 @@
 package mod.schnappdragon.habitat.common.entity.animal;
 
 import com.mojang.math.Vector3f;
+import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.misc.HabitatCriterionTriggers;
 import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
@@ -61,14 +62,16 @@ import java.util.Random;
 public class Passerine extends Animal implements FlyingAnimal {
     private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_SLEEPING = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.BOOLEAN);
+
     public float flap;
     public float flapSpeed;
     public float initialFlapSpeed;
     public float initialFlap;
     private float flapping = 1.0F;
     private float nextFlap = 1.0F;
-    private int animationTick;
+
     private Passerine.PreenGoal preenGoal;
+    private int animationTick;
 
     public Passerine(EntityType<? extends Passerine> passerine, Level worldIn) {
         super(passerine, worldIn);
@@ -121,7 +124,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("Variant", this.getVariant());
-        compound.putBoolean("Sleeping", this.isSleeping());
+        compound.putBoolean("Sleeping", this.isAsleep());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
@@ -142,7 +145,15 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.entityData.set(DATA_SLEEPING, isSleeping);
     }
 
-    public boolean isSleeping() {
+    public void sleep() {
+        this.setSleeping(true);
+    }
+
+    public void wakeUp() {
+        this.setSleeping(false);
+    }
+
+    public boolean isAsleep() {
         return this.entityData.get(DATA_SLEEPING);
     }
 
@@ -159,7 +170,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         super.aiStep();
         this.calculateFlapping();
 
-        if (this.isSleeping() || this.isImmobile()) {
+        if (this.isAsleep() || this.isImmobile()) {
             this.jumping = false;
             this.xxa = 0.0F;
             this.zza = 0.0F;
@@ -172,8 +183,12 @@ public class Passerine extends Animal implements FlyingAnimal {
     public void tick() {
         super.tick();
 
-        if (!this.level.isClientSide && this.isSleeping() && (this.isFlying() || this.level.isDay() || this.isUnsafeAt(this.blockPosition()) || !this.canPerch()))
-            this.setSleeping(false);
+        if (!this.level.isClientSide) {
+            if (this.isAsleep() && (this.isFlying() || this.level.isDay() || this.isInPowderSnow || this.isUnsafeAt(this.blockPosition()) || !this.canPerch()))
+                this.wakeUp();
+            else if (this.isPreening() && this.isInPowderSnow)
+                this.preenGoal.stopPreening();
+        }
     }
 
     public boolean isPreening() {
@@ -185,7 +200,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private boolean isNotBusy() {
-        return !this.isSleeping() && !this.isPreening();
+        return !this.isAsleep() && !this.isPreening();
     }
 
     private boolean isUnsafeAt(BlockPos pos) {
@@ -321,8 +336,15 @@ public class Passerine extends Animal implements FlyingAnimal {
         if (this.isInvulnerableTo(source))
             return false;
         else {
-            if (!this.level.isClientSide && source.getDirectEntity() != null && !this.isEasterEgg())
-                this.level.broadcastEntityEvent(this, (byte) 12);
+            if (!this.level.isClientSide) {
+                if (source.getDirectEntity() != null && !this.isEasterEgg())
+                    this.level.broadcastEntityEvent(this, (byte) 12);
+
+                if (this.isAsleep())
+                    this.wakeUp();
+                else if (this.isPreening())
+                    this.preenGoal.stopPreening();
+            }
 
             return super.hurt(source, amount);
         }
@@ -546,7 +568,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public boolean canUse() {
-            return !Passerine.this.isSleeping() && super.canUse();
+            return !Passerine.this.isAsleep() && super.canUse();
         }
     }
 
@@ -572,11 +594,11 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public boolean canUse() {
-            return Passerine.this.xxa == 0.0F && Passerine.this.yya == 0.0F && Passerine.this.zza == 0.0F && (this.canSleep() || Passerine.this.isSleeping());
+            return Passerine.this.xxa == 0.0F && Passerine.this.yya == 0.0F && Passerine.this.zza == 0.0F && (this.canSleep() || Passerine.this.isAsleep());
         }
 
         public boolean canContinueToUse() {
-            return this.canSleep();
+            return Passerine.this.isAsleep() && this.canSleep();
         }
 
         private boolean canSleep() {
@@ -584,7 +606,7 @@ public class Passerine extends Animal implements FlyingAnimal {
                 this.countdown--;
                 return false;
             } else {
-                if (Passerine.this.isFlying() || Passerine.this.isPreening() || Passerine.this.level.isDay())
+                if (Passerine.this.isFlying() || Passerine.this.isPreening() || Passerine.this.level.isDay() || Passerine.this.isInPowderSnow)
                     return false;
                 else
                     return Passerine.this.canPerch();
@@ -592,13 +614,13 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public void start() {
-            Passerine.this.setSleeping(true);
+            Passerine.this.sleep();
             Passerine.this.getNavigation().stop();
         }
 
         public void stop() {
+            Passerine.this.wakeUp();
             this.countdown = Passerine.this.random.nextInt(140);
-            Passerine.this.setSleeping(false);
         }
     }
 
@@ -615,7 +637,7 @@ public class Passerine extends Animal implements FlyingAnimal {
                 this.countdown--;
                 return false;
             } else
-                return this.canPreen() || Passerine.this.isPreening();
+                return Passerine.this.xxa == 0.0F && Passerine.this.yya == 0.0F && Passerine.this.zza == 0.0F && (this.canPreen() || Passerine.this.isPreening());
         }
 
         public boolean canContinueToUse() {
@@ -623,7 +645,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         private boolean canPreen() {
-            return !Passerine.this.isTurkey() && !Passerine.this.isFlying() && !Passerine.this.isSleeping();
+            return !Passerine.this.isTurkey() && !Passerine.this.isFlying() && !Passerine.this.isAsleep() && !Passerine.this.isInPowderSnow;
         }
 
         public void start() {
@@ -642,13 +664,17 @@ public class Passerine extends Animal implements FlyingAnimal {
             if (this.animationTick > 0) {
                 this.animationTick--;
 
-                if (this.animationTick == 10)
+                if (this.animationTick == 20)
                     Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 11);
             }
         }
 
         public int getAnimationTick() {
             return this.animationTick;
+        }
+
+        public void stopPreening() {
+            this.animationTick = 0;
         }
     }
 

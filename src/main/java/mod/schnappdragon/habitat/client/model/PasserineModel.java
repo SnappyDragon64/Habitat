@@ -150,7 +150,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	private static PasserineModel.State getState(Passerine passerine) {
 		if (passerine.isPreening())
 			return PasserineModel.State.PREENING;
-		else if (passerine.isSleeping())
+		else if (passerine.isAsleep())
 			return PasserineModel.State.SLEEPING;
 		else
 			return passerine.isFlying() ? PasserineModel.State.FLYING : PasserineModel.State.STANDING;
