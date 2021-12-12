@@ -15,7 +15,8 @@ public class HabitatBlockTags {
     public static final Named<Block> BALL_CACTUS_FLOWER_PLACEABLE_ON = makeTag("ball_cactus_flower_placeable_on");
     public static final Named<Block> BEEHIVES = makeTag("beehives");
     public static final Named<Block> FAIRY_RING_MUSHROOM_STEMS = makeTag("fairy_ring_mushroom_stems");
-    public static final Named<Block> PASSERINE_PERCHABLE = makeTag("passerine_perchable");
+    public static final Named<Block> PASSERINE_PERCHABLE_ON = makeTag("passerine_perchable_on");
+    public static final Named<Block> PASSERINE_SPAWNABLE_ON = makeTag("passerine_spawnable_on");
 
     private static Named<Block> makeTag(String id) {
         return BlockTags.bind(Habitat.MODID + ":" + id);

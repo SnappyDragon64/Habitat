@@ -1,9 +1,9 @@
 package mod.schnappdragon.habitat.common.entity.animal;
 
 import com.mojang.math.Vector3f;
+import mod.schnappdragon.habitat.core.misc.HabitatCriterionTriggers;
 import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
-import mod.schnappdragon.habitat.core.misc.HabitatCriterionTriggers;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
@@ -46,7 +46,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -203,7 +202,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private boolean canPerch() {
-        return this.level.getBlockState(this.getOnPos()).is(HabitatBlockTags.PASSERINE_PERCHABLE);
+        return this.level.getBlockState(this.getOnPos()).is(HabitatBlockTags.PASSERINE_PERCHABLE_ON);
     }
 
     /*
@@ -310,8 +309,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, Random random) {
-        BlockState state = worldIn.getBlockState(pos.below());
-        return (state.is(HabitatBlockTags.PASSERINE_PERCHABLE) || state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.PODZOL) || state.is(Blocks.AIR)) && worldIn.getRawBrightness(pos, 0) > 8;
+        return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.PASSERINE_SPAWNABLE_ON) && isBrightEnoughToSpawn(worldIn, pos);
     }
 
     /*
@@ -679,7 +677,7 @@ public class Passerine extends Animal implements FlyingAnimal {
             for (BlockPos blockpos1 : BlockPos.betweenClosed(Mth.floor(Passerine.this.getX() - 3.0D), Mth.floor(Passerine.this.getY() - 6.0D), Mth.floor(Passerine.this.getZ() - 3.0D), Mth.floor(Passerine.this.getX() + 3.0D), Mth.floor(Passerine.this.getY() + 6.0D), Mth.floor(Passerine.this.getZ() + 3.0D))) {
                 if (!blockpos.equals(blockpos1)) {
                     BlockState state = Passerine.this.level.getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
-                    boolean flag = state.is(HabitatBlockTags.PASSERINE_PERCHABLE);
+                    boolean flag = state.is(HabitatBlockTags.PASSERINE_PERCHABLE_ON);
 
                     if (flag && Passerine.this.level.isEmptyBlock(blockpos1) && Passerine.this.level.isEmptyBlock(blockpos$mutableblockpos.setWithOffset(blockpos1, Direction.UP)))
                         return Vec3.atBottomCenterOf(blockpos1);

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#habitat:passerine_perchable_on",
+    "minecraft:air",
+    "minecraft:grass_block",
+    "minecraft:podzol",
+    "minecraft:snow",
+    "minecraft:snow_block"
+  ]
+}
