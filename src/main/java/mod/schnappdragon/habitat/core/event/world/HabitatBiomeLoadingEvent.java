@@ -60,7 +60,7 @@ public class HabitatBiomeLoadingEvent {
                     // Bamboo Jungle
                     else if (biome.check(Biomes.BAMBOO_JUNGLE))
                         biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 24, 4, 4);
-                        // Sparse Jungle
+                    // Sparse Jungle
                     else if (biome.check(Biomes.SPARSE_JUNGLE)) {
                         biome.addFeature(HabitatPlacedFeatures.PATCH_RAFFLESIA_SPARSE, GenerationStep.Decoration.VEGETAL_DECORATION);
                         biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 12, 4, 4);
