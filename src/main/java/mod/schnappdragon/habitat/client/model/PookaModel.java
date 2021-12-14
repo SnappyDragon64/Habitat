@@ -85,8 +85,8 @@ public class PookaModel<T extends Pooka> extends EntityModel<T> {
             poseStack.pushPose();
             poseStack.scale(0.6F, 0.6F, 0.6F);
             poseStack.translate(0.0D, 1.0D, 0.0D);
-            ImmutableList.of(this.leftRearFoot, this.rightRearFoot, this.leftHaunch, this.rightHaunch, this.body, this.leftFrontLeg, this.rightFrontLeg, this.head, this.rightEar, this.leftEar, this.tail).forEach((p_103572_) -> {
-                p_103572_.render(poseStack, consumer, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+            ImmutableList.of(this.leftRearFoot, this.rightRearFoot, this.leftHaunch, this.rightHaunch, this.body, this.leftFrontLeg, this.rightFrontLeg, this.head, this.rightEar, this.leftEar, this.tail).forEach((part) -> {
+                part.render(poseStack, consumer, packedLightIn, packedOverlayIn, red, green, blue, alpha);
             });
             poseStack.popPose();
         }
