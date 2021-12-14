@@ -21,7 +21,6 @@ import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -39,6 +38,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.ToolActions;
 
 import java.util.Random;
 
@@ -102,7 +102,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
 
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (player.getItemInHand(handIn).getItem() instanceof ShearsItem && state.getValue(MUSHROOMS) > 1) {
+        if (player.getItemInHand(handIn).canPerformAction(ToolActions.SHEARS_HARVEST) && state.getValue(MUSHROOMS) > 1) {
             popResource(worldIn, pos, new ItemStack(defaultBlockState().getBlock()));
             player.getItemInHand(handIn).hurtAndBreak(1, player, (playerIn) -> {
                 playerIn.broadcastBreakEvent(handIn);

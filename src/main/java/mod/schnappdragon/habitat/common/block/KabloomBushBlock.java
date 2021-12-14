@@ -16,7 +16,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
@@ -37,6 +36,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.PlantType;
+import net.minecraftforge.common.ToolActions;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -72,7 +72,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (state.getValue(AGE) == 7) {
-            if (player.getItemInHand(handIn).getItem() instanceof ShearsItem) {
+            if (player.getItemInHand(handIn).canPerformAction(ToolActions.SHEARS_HARVEST)) {
                 popResource(worldIn, pos, new ItemStack(HabitatItems.KABLOOM_FRUIT.get(), 1));
                 player.getItemInHand(handIn).hurtAndBreak(1, player, (playerIn) -> {
                     playerIn.broadcastBreakEvent(handIn);
@@ -97,7 +97,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
     public void spawnAfterBreak(BlockState state, ServerLevel worldIn, BlockPos pos, ItemStack stack) {
         super.spawnAfterBreak(state, worldIn, pos, stack);
 
-        if (state.getValue(AGE) == 7 && !(stack.getItem() instanceof ShearsItem) && worldIn.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) && (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) == 0))
+        if (state.getValue(AGE) == 7 && !stack.canPerformAction(ToolActions.SHEARS_DISARM) && worldIn.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) && (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) == 0))
             dropFruit(state, worldIn, pos, false, false);
     }
 
