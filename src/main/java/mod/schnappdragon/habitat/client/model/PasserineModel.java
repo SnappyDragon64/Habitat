@@ -16,17 +16,18 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	private final ModelPart rightFoot;
 	private final ModelPart leftFoot;
 	private final ModelPart tail;
+
 	private float preenAnim;
 
 	public PasserineModel(ModelPart part) {
 		this.root = part;
 		this.head = part.getChild("head");
 		this.body = part.getChild("body");
+		this.tail = this.body.getChild("tail");
 		this.rightWing = part.getChild("right_wing");
 		this.leftWing = part.getChild("left_wing");
 		this.rightFoot = part.getChild("right_foot");
 		this.leftFoot = part.getChild("left_foot");
-		this.tail = part.getChild("tail");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -35,12 +36,12 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -3.0F, -2.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.001F)), PartPose.offset(0.0F, 20.0F, -2.0F));
 		head.addOrReplaceChild("crest", CubeListBuilder.create().texOffs(22, 2).addBox(0.0F, -6.0F, -2.0F, 0.0F, 5.0F, 5.0F), PartPose.ZERO);
 		head.addOrReplaceChild("beak", CubeListBuilder.create().texOffs(0, 0).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 1.0F, 1.0F), PartPose.ZERO);
-		partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(16, 0).addBox(-2.0F, -1.5F, -2.0F, 4.0F, 3.0F, 4.0F), PartPose.offset(0.0F, 21.5F, 0.0F));
+		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(16, 0).addBox(-2.0F, -1.5F, -2.0F, 4.0F, 3.0F, 4.0F), PartPose.offset(0.0F, 21.5F, 0.0F));
+		body.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(5, 8).addBox(-2.0F, 0.0F, 0.0F, 4.0F, 0.0F, 5.0F), PartPose.offset(0.0F, 0.5F, 2.0F));
 		partdefinition.addOrReplaceChild("right_wing", CubeListBuilder.create().texOffs(0, 8).addBox(-1.0F, -1.0F, -1.0F, 1.0F, 3.0F, 4.0F), PartPose.offset(-2.0F, 21.0F, -1.0F));
 		partdefinition.addOrReplaceChild("left_wing", CubeListBuilder.create().texOffs(0, 8).addBox(0.0F, -1.0F, -1.0F, 1.0F, 3.0F, 4.0F), PartPose.offset(2.0F, 21.0F, -1.0F));
 		partdefinition.addOrReplaceChild("right_foot", CubeListBuilder.create().texOffs(12, 0).addBox(-2.0F, 0.0F, -2.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.001F)), PartPose.offset(0.0F, 23.0F, 1.0F));
 		partdefinition.addOrReplaceChild("left_foot", CubeListBuilder.create().texOffs(12, 0).mirror().addBox(0.0F, 0.0F, -2.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.001F)), PartPose.offset(0.0F, 23.0F, 1.0F));
-		partdefinition.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(4, 8).addBox(-2.0F, 0.0F, -1.0F, 4.0F, 0.0F, 6.0F), PartPose.offset(0.0F, 22.0F, 2.0F));
 		return LayerDefinition.create(meshdefinition, 32, 16);
 	}
 
@@ -57,7 +58,6 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 		this.leftWing.y = 21.0F;
 		this.rightFoot.y = 23.0F;
 		this.leftFoot.y = 23.0F;
-		this.tail.y = 22.0F;
 
 		this.body.xRot = 0.0F;
 		this.rightWing.xRot = 0.0F;
@@ -74,7 +74,6 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 				this.body.y = 22.5F;
 				this.rightWing.y = 22.0F;
 				this.leftWing.y = 22.0F;
-				this.tail.y = 23.0F;
 				this.head.xRot = 0.3491F;
 				this.head.yRot = 2.094F;
 				this.tail.xRot = 0.1745F;
@@ -87,7 +86,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 				this.leftFoot.xRot = -0.5236F;
 				this.rightFoot.yRot = 0.1571F;
 				this.leftFoot.yRot = -0.1571F;
-				this.tail.xRot = -0.2618F;
+				this.tail.xRot = 0.1309F;
 				break;
 			case PREENING:
 				this.preenAnim = (float) passerine.getRemainingPreeningTicks() - partialTick;
@@ -134,7 +133,6 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 				this.leftWing.y = 21.0F + f;
 				this.rightFoot.y = 23.0F + f;
 				this.leftFoot.y = 23.0F + f;
-				this.tail.y = 22.0F + f;
 
 				this.tail.xRot += Mth.cos(limbSwing * 0.6662F) * 0.35F * limbSwingAmount;
 
