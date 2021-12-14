@@ -62,7 +62,7 @@ public class Habitat {
 
             HabitatComposterChances.registerComposterChances();
             HabitatDispenseItemBehavior.registerDispenserBehaviors();
-            HabitatFireInfo.registerFireInfo();
+            HabitatFlammables.registerFlammables();
 
             HabitatBrewingMixes.registerBrewingMixes();
             HabitatParrotImitationSounds.registerParrotImitationSounds();
