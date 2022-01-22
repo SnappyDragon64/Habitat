@@ -42,9 +42,9 @@ public class RafflesiaBlockEntity extends BlockEntity {
     @Nonnull
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag nbtTagCompound = new CompoundTag();
-        save(nbtTagCompound);
-        return nbtTagCompound;
+        CompoundTag compound = new CompoundTag();
+        this.saveAdditional(compound);
+        return compound;
     }
 
     @Override
