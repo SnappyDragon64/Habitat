@@ -26,7 +26,7 @@ import java.util.Optional;
 
 public class FairyRingStructure extends StructureFeature<JigsawConfiguration> {
     public static final Lazy<List<MobSpawnSettings.SpawnerData>> STRUCTURE_MONSTERS = Lazy.of(() -> ImmutableList.of(
-            new MobSpawnSettings.SpawnerData(HabitatEntityTypes.POOKA.get(), 100, 2, 4)
+            new MobSpawnSettings.SpawnerData(HabitatEntityTypes.POOKA.get(), 100, 4, 4)
     ));
 
     public FairyRingStructure(Codec<JigsawConfiguration> codec) {

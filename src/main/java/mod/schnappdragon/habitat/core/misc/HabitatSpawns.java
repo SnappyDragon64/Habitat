@@ -12,6 +12,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.world.StructureSpawnListGatherEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -22,7 +23,7 @@ public class HabitatSpawns {
         registerSpawn(HabitatEntityTypes.PASSERINE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, Passerine::checkPasserineSpawnRules);
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public static void setupStructureSpawns(StructureSpawnListGatherEvent event) {
         if (event.getStructure() == HabitatStructures.FAIRY_RING.get())
             event.addEntitySpawns(MobCategory.MONSTER, FairyRingStructure.STRUCTURE_MONSTERS.get());

@@ -457,7 +457,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
      */
 
     public static boolean checkPookaSpawnRules(EntityType<Pooka> pooka, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random rand) {
-        return world.getBlockState(pos.below()).is(BlockTags.RABBITS_SPAWNABLE_ON);
+        return world.getDifficulty() != Difficulty.PEACEFUL && world.getBlockState(pos.below()).is(BlockTags.RABBITS_SPAWNABLE_ON) && world.getSkyDarken() >= 5 && world.dimensionType().hasSkyLight();
     }
 
     @Nullable
