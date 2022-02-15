@@ -17,7 +17,7 @@ public class HabitatPlacedFeatures {
 
     public static final PlacedFeature PATCH_SLIME_FERN = HabitatConfiguredFeatures.PATCH_SLIME_FERN.placed(SlimeChunkFilter.filter(), HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(40)), BiomeFilter.biome());
 
-    public static final PlacedFeature PATCH_BALL_CACTUS = HabitatConfiguredFeatures.PATCH_BALL_CACTUS.placed(RarityFilter.onAverageOnceEvery(25), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+    public static final PlacedFeature PATCH_BALL_CACTUS = HabitatConfiguredFeatures.PATCH_BALL_CACTUS.placed(RarityFilter.onAverageOnceEvery(20), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
     public static final PlacedFeature FAIRY_RING = HabitatConfiguredFeatures.FAIRY_RING.placed();
 
