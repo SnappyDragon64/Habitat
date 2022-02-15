@@ -41,7 +41,7 @@ public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Pas
         else if (passerine.isTurkey())
             return PASSERINE_TURKEY_LOCATION;
 
-        return PASSERINE_LOCATIONS[passerine.getVariant()];
+        return PASSERINE_LOCATIONS[passerine.getVariantId()];
     }
 
     @Override

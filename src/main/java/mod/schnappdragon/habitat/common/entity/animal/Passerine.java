@@ -122,22 +122,26 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putInt("Variant", this.getVariant());
+        compound.putInt("Variant", this.getVariantId());
         compound.putBoolean("Sleeping", this.isAsleep());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setVariant(compound.getInt("Variant"));
+        this.setVariantId(compound.getInt("Variant"));
         this.setSleeping(compound.getBoolean("Sleeping"));
     }
 
-    public void setVariant(int id) {
+    public void setVariantId(int id) {
         this.entityData.set(DATA_VARIANT_ID, id);
     }
 
-    public int getVariant() {
+    public int getVariantId() {
         return Mth.clamp(this.entityData.get(DATA_VARIANT_ID), 0, 9);
+    }
+
+    public Variant getVariant() {
+        return Variant.getVariantById(this.getVariantId());
     }
 
     public void setSleeping(boolean isSleeping) {
@@ -294,32 +298,35 @@ public class Passerine extends Animal implements FlyingAnimal {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        int i = this.getVariantByBiome(worldIn);
+        int i = this.getVariantByBiome(worldIn).ordinal();
         if (spawnDataIn instanceof Passerine.PasserineGroupData data)
             i = data.variant;
         else
             spawnDataIn = new Passerine.PasserineGroupData(i);
 
-        this.setVariant(i);
+        this.setVariantId(i);
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
-    public int getVariantByBiome(LevelAccessor worldIn) {
+    public Variant getVariantByBiome(LevelAccessor worldIn) {
         Biome biome = worldIn.getBiome(this.blockPosition());
         Optional<ResourceKey<Biome>> optional = worldIn.getBiomeName(this.blockPosition());
+        VariantCategory category;
 
-        if (Objects.equals(optional, Optional.of(Biomes.FLOWER_FOREST))) // All variants
-            return this.random.nextInt(10);
-        else if (biome.getBiomeCategory() == Biome.BiomeCategory.JUNGLE) // Jungle variants
-            return this.random.nextBoolean() ? 1 : 8;
-        else if (biome.getBaseTemperature() >= 1.0F) // Hot biomes
-            return this.random.nextBoolean() ? 3 : 6;
-        else if (biome.getBaseTemperature() < 0.5F) // Cold biomes
-            return new int[]{2, 3, 5, 7}[this.random.nextInt(4)];
-        else if (biome.getBaseTemperature() <= 0.6F) // Birch Forests, etc.
-            return new int[]{0, 2, 3, 4, 5, 7}[this.random.nextInt(6)];
+        if (Objects.equals(optional, Optional.of(Biomes.FLOWER_FOREST)))
+            category = VariantCategory.ALL;
+        else if (biome.getBiomeCategory() == Biome.BiomeCategory.JUNGLE)
+            category = VariantCategory.JUNGLE;
+        else if (biome.getBaseTemperature() >= 1.0F)
+            category = VariantCategory.HOT;
+        else if (biome.getBaseTemperature() < 0.5F)
+            category = VariantCategory.COLD;
+        else if (biome.getBaseTemperature() <= 0.6F)
+            category = VariantCategory.TEMPERATE;
         else
-            return new int[]{0, 3, 5, 6, 7, 9}[this.random.nextInt(6)];
+            category = VariantCategory.COMMON;
+
+        return category.getRandomVariant(this.random);
     }
 
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, Random random) {
@@ -403,13 +410,11 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private ColorableParticleOption getFeather() {
-        int color = Passerine.Variant.getFeatherColorByVariant(this.getVariant());
-        return new ColorableParticleOption(HabitatParticleTypes.FEATHER.get(), new Vector3f(Vec3.fromRGB24(color)));
+        return new ColorableParticleOption(HabitatParticleTypes.FEATHER.get(), new Vector3f(Vec3.fromRGB24(this.getVariant().featherColor)));
     }
 
     private ColorableParticleOption getNote() {
-        int color = Passerine.Variant.getNoteColorByVariant(this.getVariant());
-        return new ColorableParticleOption(HabitatParticleTypes.NOTE.get(), new Vector3f(Vec3.fromRGB24(color)));
+        return new ColorableParticleOption(HabitatParticleTypes.NOTE.get(), new Vector3f(Vec3.fromRGB24(this.getVariant().noteColor)));
     }
 
     /*
@@ -425,7 +430,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public boolean isGoldfish() {
-        return this.getVariant() == 0 && "Goldfish".equals(ChatFormatting.stripFormatting(this.getName().getString()));
+        return this.getVariant() == Variant.AMERICAN_GOLDFINCH && "Goldfish".equals(ChatFormatting.stripFormatting(this.getName().getString()));
     }
 
     public boolean isTurkey() {
@@ -518,16 +523,27 @@ public class Passerine extends Animal implements FlyingAnimal {
             this.noteColor = noteColor;
         }
 
-        public static int getFeatherColorByVariant(int id) {
-            return getVariantById(id).featherColor;
-        }
-
-        public static int getNoteColorByVariant(int id) {
-            return getVariantById(id).noteColor;
-        }
-
         private static Variant getVariantById(int id) {
             return VARIANTS[Mth.clamp(id, 0, 9)];
+        }
+    }
+
+    public enum VariantCategory {
+        ALL(Variant.VARIANTS),
+        JUNGLE(Variant.BALI_MYNA, Variant.RED_THROATED_PARROTFINCH),
+        HOT(Variant.COMMON_SPARROW, Variant.FLAME_ROBIN),
+        COLD(Variant.BLUE_JAY, Variant.COMMON_SPARROW, Variant.EURASIAN_BULLFINCH, Variant.NORTHERN_CARDINAL),
+        TEMPERATE(Variant.AMERICAN_GOLDFINCH, Variant.BLUE_JAY, Variant.COMMON_SPARROW, Variant.EASTERN_BLUEBIRD, Variant.EURASIAN_BULLFINCH, Variant.NORTHERN_CARDINAL),
+        COMMON(Variant.AMERICAN_GOLDFINCH, Variant.COMMON_SPARROW, Variant.EURASIAN_BULLFINCH, Variant.FLAME_ROBIN, Variant.NORTHERN_CARDINAL, Variant.VIOLET_BACKED_STARLING);
+
+        private final Variant[] variants;
+
+        VariantCategory(Variant... variants) {
+            this.variants = variants;
+        }
+
+        private Variant getRandomVariant(Random random) {
+            return this.variants[random.nextInt(this.variants.length)];
         }
     }
 
