@@ -137,7 +137,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         this.ailmentDuration = ailD;
     }
 
-    private void setState(Pooka.State state) {
+    private void setState(State state) {
         this.setStateId(state.ordinal());
     }
 
@@ -145,8 +145,8 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         this.entityData.set(DATA_STATE_ID, state);
     }
 
-    public Pooka.State getState() {
-        return Pooka.State.getById(this.getStateId());
+    public State getState() {
+        return State.getStateById(this.getStateId());
     }
 
     public int getStateId() {
@@ -154,11 +154,11 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     public boolean isHostile() {
-        return this.getState().equals(Pooka.State.HOSTILE);
+        return this.getState().equals(State.HOSTILE);
     }
 
     public boolean isPacified() {
-        return this.getState().equals(Pooka.State.PACIFIED);
+        return this.getState().equals(State.PACIFIED);
     }
 
     private void setForgiveTimer() {
@@ -384,7 +384,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         this.resetLove();
         this.resetAidTimer();
         this.setForgiveTimer();
-        this.setState(Pooka.State.HOSTILE);
+        this.setState(State.HOSTILE);
         this.level.broadcastEntityEvent(this, (byte) 13);
     }
 
@@ -395,7 +395,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     @Override
     public Pooka getBreedOffspring(ServerLevel serverWorld, AgeableMob entity) {
         Pooka pooka = HabitatEntityTypes.POOKA.get().create(serverWorld);
-        Pooka.State state = Pooka.State.HOSTILE;
+        State state = State.HOSTILE;
         int i = this.getRandomRabbitType(serverWorld);
 
         Pair<Integer, Integer> aid = this.getRandomAid();
@@ -407,7 +407,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         int ailD = ailment.getRight();
 
         if (entity instanceof Pooka parent) {
-            if (!this.isHostile() && !parent.isHostile()) state = Pooka.State.PASSIVE;
+            if (!this.isHostile() && !parent.isHostile()) state = State.PASSIVE;
 
             if (this.random.nextInt(20) != 0) {
                 if (this.random.nextBoolean())
@@ -473,7 +473,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             spawnDataIn = new Rabbit.RabbitGroupData(i);
 
         this.setRabbitType(i);
-        this.setState(Pooka.State.HOSTILE);
+        this.setState(State.HOSTILE);
         this.setAidAndAilment(aid.getLeft(), aid.getRight(), ailment.getLeft(), ailment.getRight());
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
@@ -590,11 +590,11 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         PACIFIED,
         PASSIVE;
 
-        public static Pooka.State getById(int id) {
+        public static State getStateById(int id) {
             return switch(id) {
-                case 0 -> Pooka.State.HOSTILE;
-                case 1 -> Pooka.State.PACIFIED;
-                default -> Pooka.State.PASSIVE; //2
+                case 0 -> State.HOSTILE;
+                case 1 -> State.PACIFIED;
+                default -> State.PASSIVE; //2
             };
         }
     }
