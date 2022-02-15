@@ -85,7 +85,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
             }
         }
 
-        for (Direction dir : new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}) {
+        for (Direction dir : Direction.Plane.HORIZONTAL) {
             int len = rand.nextInt(3) > 0 ? rand.nextBoolean() ? 1 + Mth.ceil((float) rand.nextInt(i0 - 7) / 2) : Mth.ceil((float) rand.nextInt(i0 - 7) / 2) : 0;
             blockpos$mutable.setWithOffset(pos, dir.getStepX(), -1, dir.getStepZ());
 
