@@ -22,8 +22,10 @@ public class PookaEyesLayer<T extends Pooka, M extends PookaModel<T>> extends Re
     }
 
     public void render(PoseStack matrixStack, MultiBufferSource buffer, int packedLight, T pooka, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(pooka)));
-        this.getParentModel().renderToBuffer(matrixStack, vertexconsumer, packedLight, LivingEntityRenderer.getOverlayCoords(pooka, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+        if (!pooka.isInvisible()) {
+            VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(this.getTextureLocation(pooka)));
+            this.getParentModel().renderToBuffer(matrixStack, vertexconsumer, packedLight, LivingEntityRenderer.getOverlayCoords(pooka, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+        }
     }
 
     public ResourceLocation getTextureLocation(Pooka pooka) {

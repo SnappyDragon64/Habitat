@@ -22,8 +22,8 @@ public class PasserineEyesLayer<T extends Passerine, M extends PasserineModel<T>
     }
 
     public void render(PoseStack matrixStack, MultiBufferSource buffer, int packedLight, T passerine, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (!(passerine.isAsleep() || passerine.isTurkey())) {
-            VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(passerine)));
+        if (!(passerine.isInvisible() || passerine.isAsleep() || passerine.isTurkey())) {
+            VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(this.getTextureLocation(passerine)));
             this.getParentModel().renderToBuffer(matrixStack, vertexconsumer, packedLight, LivingEntityRenderer.getOverlayCoords(passerine, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
