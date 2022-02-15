@@ -216,7 +216,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private boolean canPerch() {
-        return this.level.getBlockState(this.getOnPos()).is(HabitatBlockTags.PASSERINE_PERCHABLE_ON);
+        return this.level.getBlockState(this.getOnPos()).is(HabitatBlockTags.PASSERINES_PERCHABLE_ON);
     }
 
     /*
@@ -323,7 +323,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, Random random) {
-        return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.PASSERINE_SPAWNABLE_ON) && isBrightEnoughToSpawn(worldIn, pos);
+        return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.PASSERINES_SPAWNABLE_ON) && isBrightEnoughToSpawn(worldIn, pos);
     }
 
     /*
@@ -702,7 +702,7 @@ public class Passerine extends Animal implements FlyingAnimal {
             for (BlockPos blockpos1 : BlockPos.betweenClosed(Mth.floor(Passerine.this.getX() - 3.0D), Mth.floor(Passerine.this.getY() - 6.0D), Mth.floor(Passerine.this.getZ() - 3.0D), Mth.floor(Passerine.this.getX() + 3.0D), Mth.floor(Passerine.this.getY() + 6.0D), Mth.floor(Passerine.this.getZ() + 3.0D))) {
                 if (!blockpos.equals(blockpos1)) {
                     BlockState state = Passerine.this.level.getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
-                    boolean flag = state.is(HabitatBlockTags.PASSERINE_PERCHABLE_ON);
+                    boolean flag = state.is(HabitatBlockTags.PASSERINES_PERCHABLE_ON);
 
                     if (flag && Passerine.this.level.isEmptyBlock(blockpos1) && Passerine.this.level.isEmptyBlock(blockpos$mutableblockpos.setWithOffset(blockpos1, Direction.UP)))
                         return Vec3.atBottomCenterOf(blockpos1);

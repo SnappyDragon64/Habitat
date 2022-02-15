@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#habitat:passerine_perchable_on",
+    "#habitat:passerines_perchable_on",
     "minecraft:air",
     "minecraft:grass_block",
     "minecraft:podzol",

@@ -43,7 +43,7 @@ public abstract class AbstractBallCactusBlock extends BushBlock {
      */
 
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.BALL_CACTUS_PLANTABLE_ON);
+        return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.BALL_CACTUS_GROWS_ON);
     }
 
     /*
