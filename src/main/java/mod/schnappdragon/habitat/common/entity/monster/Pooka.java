@@ -137,20 +137,20 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         this.ailmentDuration = ailD;
     }
 
-    private void setState(State state) {
-        this.setStateId(state.ordinal());
-    }
-
     private void setStateId(int state) {
         this.entityData.set(DATA_STATE_ID, state);
     }
 
-    public State getState() {
-        return State.getStateById(this.getStateId());
-    }
-
     public int getStateId() {
         return Mth.clamp(this.entityData.get(DATA_STATE_ID), 0, 2);
+    }
+
+    private void setState(State state) {
+        this.setStateId(state.ordinal());
+    }
+
+    public State getState() {
+        return State.getStateById(this.getStateId());
     }
 
     public boolean isHostile() {
@@ -246,7 +246,7 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
             this.discard();
             world.addFreshEntity(convertPookaToRabbit(this));
         }
-        return Collections.singletonList(new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get()));
+        return Collections.emptyList();
     }
 
     public static Rabbit convertPookaToRabbit(Pooka pooka) {
@@ -590,12 +590,10 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
         PACIFIED,
         PASSIVE;
 
+        private static final State[] STATES = State.values();
+
         public static State getStateById(int id) {
-            return switch(id) {
-                case 0 -> State.HOSTILE;
-                case 1 -> State.PACIFIED;
-                default -> State.PASSIVE; //2
-            };
+            return STATES[Mth.clamp(id, 0, 2)];
         }
     }
 

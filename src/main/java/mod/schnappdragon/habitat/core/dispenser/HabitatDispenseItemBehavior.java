@@ -8,10 +8,7 @@ import mod.schnappdragon.habitat.common.block.entity.RafflesiaBlockEntity;
 import mod.schnappdragon.habitat.common.entity.monster.Pooka;
 import mod.schnappdragon.habitat.common.entity.projectile.ThrownKabloomFruit;
 import mod.schnappdragon.habitat.common.entity.vehicle.HabitatBoat;
-import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
-import mod.schnappdragon.habitat.core.registry.HabitatItems;
-import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
-import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
+import mod.schnappdragon.habitat.core.registry.*;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
@@ -21,11 +18,11 @@ import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -42,6 +39,7 @@ import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.IForgeShearable;
 
 public class HabitatDispenseItemBehavior {
     private static DispenseItemBehavior SuspiciousStewBehavior;
@@ -120,23 +118,13 @@ public class HabitatDispenseItemBehavior {
             protected ItemStack execute(BlockSource source, ItemStack stack) {
                 ServerLevel worldIn = source.getLevel();
                 BlockPos pos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
-                BlockState state = worldIn.getBlockState(pos);
 
-                for (Pooka pooka : worldIn.getEntitiesOfClass(Pooka.class, new AABB(pos), EntitySelector.NO_SPECTATORS)) {
-                    if (pooka.isShearable(ItemStack.EMPTY, worldIn, pos)) {
-                        worldIn.playSound(null, pooka, HabitatSoundEvents.POOKA_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
-                        worldIn.sendParticles(ParticleTypes.EXPLOSION, pooka.getX(), pooka.getY(0.5D), pooka.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
-                        pooka.discard();
-                        worldIn.addFreshEntity(Pooka.convertPookaToRabbit(pooka));
-                        worldIn.addFreshEntity(new ItemEntity(worldIn, pooka.getX(), pooka.getY(1.0D), pooka.getZ(), new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get())));
-                        worldIn.gameEvent(GameEvent.SHEAR, pos);
-
-                        if (stack.hurt(1, worldIn.getRandom(), null))
-                            stack.setCount(0);
-                        this.setSuccess(true);
-                        return stack;
-                    }
+                if (shearEntity(Pooka.class, worldIn, stack, pos)) {
+                    this.setSuccess(true);
+                    return stack;
                 }
+
+                BlockState state = worldIn.getBlockState(pos);
 
                 if (state.is(HabitatBlocks.KABLOOM_BUSH.get()) && state.getValue(KabloomBushBlock.AGE) == 7) {
                     Block.popResource(worldIn, pos, new ItemStack(HabitatItems.KABLOOM_FRUIT.get()));
@@ -225,5 +213,21 @@ public class HabitatDispenseItemBehavior {
                 return stack;
             }
         });
+    }
+
+    private static <T extends Entity & IForgeShearable> boolean shearEntity(Class<T> entityClass, ServerLevel worldIn, ItemStack stack, BlockPos pos) {
+        boolean flag = false;
+
+        for (T entity : worldIn.getEntitiesOfClass(entityClass, new AABB(pos), EntitySelector.NO_SPECTATORS)) {
+            if (entity.isShearable(ItemStack.EMPTY, worldIn, pos)) {
+                entity.onSheared(null, stack, worldIn, pos, 0).forEach(drop -> worldIn.addFreshEntity(new ItemEntity(worldIn, entity.getX(), entity.getY(1.0D), entity.getZ(), drop)));
+
+                if (stack.hurt(1, worldIn.getRandom(), null))
+                    stack.setCount(0);
+                flag = true;
+            }
+        }
+
+        return flag;
     }
 }
