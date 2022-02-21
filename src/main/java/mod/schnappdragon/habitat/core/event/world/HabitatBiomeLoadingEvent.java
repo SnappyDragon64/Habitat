@@ -27,11 +27,6 @@ public class HabitatBiomeLoadingEvent {
         if (event.getName() != null) {
             BiomeHelper biome = new BiomeHelper(event);
 
-            // Grove
-            // 1.18 Biomes have not been tagged in the Biome Dictionary
-            if (biome.check(Biomes.GROVE))
-                biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 12, 4, 4);
-
             if (biome.check(BiomeDictionary.Type.OVERWORLD)) {
                 // All Biomes
                 biome.addFeature(HabitatPlacedFeatures.PATCH_SLIME_FERN, GenerationStep.Decoration.UNDERGROUND_DECORATION);
@@ -40,14 +35,14 @@ public class HabitatBiomeLoadingEvent {
                 if (biome.check(Biomes.DESERT, Biomes.BADLANDS, Biomes.ERODED_BADLANDS))
                     biome.addFeature(HabitatPlacedFeatures.PATCH_BALL_CACTUS, GenerationStep.Decoration.VEGETAL_DECORATION);
 
-                // Forests
-                if (biome.check(Biome.BiomeCategory.FOREST)) {
+                // Forests (Includes Groves, Sparse Jungles & Taiga Biomes)
+                if (biome.check(BiomeDictionary.Type.FOREST)) {
                     // Flower Forests
                     if (biome.check(Biomes.FLOWER_FOREST))
                         biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 24, 4, 4);
                     // Other Non-Spooky and Non-Dead Forests
                     else if (!biome.check(BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.DEAD))
-                        biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 12, 4, 4);
+                        biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 14, 4, 4);
                 }
 
                 // Jungles
@@ -61,13 +56,14 @@ public class HabitatBiomeLoadingEvent {
                     else if (biome.check(Biomes.BAMBOO_JUNGLE))
                         biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 24, 4, 4);
                     // Sparse Jungle
-                    else if (biome.check(Biomes.SPARSE_JUNGLE)) {
+                    else if (biome.check(Biomes.SPARSE_JUNGLE))
                         biome.addFeature(HabitatPlacedFeatures.PATCH_RAFFLESIA_SPARSE, GenerationStep.Decoration.VEGETAL_DECORATION);
-                        biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 12, 4, 4);
-                    }
                     // Non-Vanilla Jungles
-                    else
-                        biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 12, 4, 4);
+                    else {
+                        // Non-Vanilla Jungles that are not tagged as Forests in the Biome Dictionary
+                        if (!biome.check(BiomeDictionary.Type.FOREST))
+                            biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 14, 4, 4);
+                    }
                 }
 
                 // Plains
@@ -76,11 +72,7 @@ public class HabitatBiomeLoadingEvent {
 
                 // Savannas
                 if (biome.check(Biome.BiomeCategory.SAVANNA))
-                    biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 4, 4, 4);
-
-                // Taigas
-                if (biome.check(Biome.BiomeCategory.TAIGA))
-                    biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 12, 4, 4);
+                    biome.addCreatureSpawn(HabitatEntityTypes.PASSERINE.get(), 6, 4, 4);
             }
         }
     }
