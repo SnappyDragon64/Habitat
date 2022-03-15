@@ -20,23 +20,6 @@ public class HugeFairyRingMushroomBlock extends HugeMushroomBlock {
     }
 
     /*
-     * Conversion Method
-     */
-
-    @Override
-    public void stepOn(Level worldIn, BlockPos pos, BlockState state, Entity entityIn) {
-        if (entityIn.getType() == EntityType.RABBIT && entityIn.isAlive()) {
-            Rabbit rabbit = (Rabbit) entityIn;
-            rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
-            rabbit.discard();
-            worldIn.addFreshEntity(Pooka.convertRabbitToPooka(rabbit));
-
-            for (int i = 0; i < 8; i++)
-                ((ServerLevel) worldIn).sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getRandomX(0.5D), rabbit.getY(0.5D), rabbit.getRandomZ(0.5D), 0, rabbit.getRandom().nextGaussian(), 0.0D, rabbit.getRandom().nextGaussian(), 0.01D);
-        }
-    }
-
-    /*
      * Particle Animation Method
      */
 
