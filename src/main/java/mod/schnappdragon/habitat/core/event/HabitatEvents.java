@@ -45,8 +45,8 @@ public class HabitatEvents {
             LivingEntity livingEntity = event.getEntityLiving();
             DamageSource source = event.getSource();
 
-            int lvl = Math.min(livingEntity.getEffect(HabitatEffects.BLAST_ENDURANCE.get()).getAmplifier(), 11);
-            float dmg = Mth.floor(event.getAmount() * (0.88F - 0.08F * lvl));
+            int lvl = Math.min(livingEntity.getEffect(HabitatEffects.BLAST_ENDURANCE.get()).getAmplifier(), 5);
+            float dmg = Mth.floor(event.getAmount() * (0.85F - 0.17F * lvl));
             int res = (int) (event.getAmount() - dmg);
 
             event.setAmount(dmg);
@@ -70,9 +70,9 @@ public class HabitatEvents {
             DamageSource source = event.getSource();
             int lvl = livingEntity.getEffect(HabitatEffects.PRICKLING.get()).getAmplifier();
 
-            if (livingEntity.getRandom().nextInt(4) < 2 + lvl && !source.isMagic() && !source.isExplosion() && (source.getDirectEntity() instanceof LivingEntity)) {
+            if (livingEntity.getRandom().nextInt(5) < 3 + lvl && !source.isMagic() && !source.isExplosion() && (source.getDirectEntity() instanceof LivingEntity)) {
                 LivingEntity attacker = (LivingEntity) source.getDirectEntity();
-                attacker.hurt(DamageSource.thorns(livingEntity), 1.0F + (lvl > 0 ? livingEntity.getRandom().nextInt(lvl) : 0));
+                attacker.hurt(DamageSource.thorns(livingEntity), 1.0F + lvl + livingEntity.getRandom().nextInt(2 + lvl));
             }
         }
     }
