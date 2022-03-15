@@ -602,7 +602,8 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     class SleepGoal extends Goal {
-        private int countdown = Passerine.this.random.nextInt(140);
+        private static final int WAIT_TIME_BEFORE_SLEEP = reducedTickDelay(140);
+        private int countdown = Passerine.this.random.nextInt(WAIT_TIME_BEFORE_SLEEP);
 
         public SleepGoal() {
             this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
@@ -635,12 +636,13 @@ public class Passerine extends Animal implements FlyingAnimal {
 
         public void stop() {
             Passerine.this.wakeUp();
-            this.countdown = Passerine.this.random.nextInt(140);
+            this.countdown = Passerine.this.random.nextInt(WAIT_TIME_BEFORE_SLEEP);
         }
     }
 
     class PreenGoal extends Goal {
-        private int countdown = 2800 + Passerine.this.random.nextInt(2800);
+        private static final int MINIMUM_WAIT_TIME = reducedTickDelay(2800);
+        private int countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
         private int preenAnim;
 
         public PreenGoal() {
@@ -652,7 +654,7 @@ public class Passerine extends Animal implements FlyingAnimal {
                 this.countdown--;
                 return false;
             } else
-                return Passerine.this.xxa == 0.0F && Passerine.this.yya == 0.0F && Passerine.this.zza == 0.0F && (this.canPreen() || Passerine.this.isPreening());
+                return Passerine.this.xxa == 0.0F && Passerine.this.yya == 0.0F && Passerine.this.zza == 0.0F && this.canPreen();
         }
 
         public boolean canContinueToUse() {
@@ -664,14 +666,14 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public void start() {
-            this.preenAnim = 40;
+            this.preenAnim = this.adjustedTickDelay(40);
             Passerine.this.getNavigation().stop();
             Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 14);
         }
 
         public void stop() {
             this.preenAnim = 0;
-            this.countdown = 2800 + Passerine.this.random.nextInt(2800);
+            this.countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
             Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 15);
         }
 
@@ -679,7 +681,7 @@ public class Passerine extends Animal implements FlyingAnimal {
             if (this.preenAnim > 0) {
                 this.preenAnim--;
 
-                if (this.preenAnim == 20)
+                if (this.preenAnim == this.adjustedTickDelay(20))
                     Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 11);
             }
         }
