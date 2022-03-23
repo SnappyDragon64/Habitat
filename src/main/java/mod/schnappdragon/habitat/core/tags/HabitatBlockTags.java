@@ -13,7 +13,6 @@ public class HabitatBlockTags {
     public static final Named<Block> FLOWERING_BALL_CACTI = makeTag("flowering_ball_cacti");
     public static final Named<Block> BALL_CACTUS_GROWS_ON = makeTag("ball_cactus_grows_on");
     public static final Named<Block> BALL_CACTUS_FLOWER_PLACEABLE = makeTag("ball_cactus_flower_placeable");
-    public static final Named<Block> BEEHIVES = makeTag("beehives");
     public static final Named<Block> FAIRY_RING_MUSHROOM_STEMS = makeTag("fairy_ring_mushroom_stems");
     public static final Named<Block> PASSERINES_PERCHABLE_ON = makeTag("passerines_perchable_on");
     public static final Named<Block> PASSERINES_SPAWNABLE_ON = makeTag("passerines_spawnable_on");
