@@ -17,8 +17,6 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	private final ModelPart leftFoot;
 	private final ModelPart tail;
 
-	private float preenAnim;
-
 	public PasserineModel(ModelPart part) {
 		this.root = part;
 		this.head = part.getChild("head");
@@ -89,11 +87,16 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 				this.tail.xRot = 0.1309F;
 				break;
 			case PREENING:
-				this.preenAnim = (float) passerine.getRemainingPreeningTicks() - partialTick;
+				this.head.z = -1.0F;
+				this.head.xRot = 0.1745F;
+				this.head.yRot = 1.833F;
+				this.rightWing.xRot = -0.5236F;
+				this.rightWing.zRot = 1.396F;
 			case STANDING:
+				if (getState(passerine) != State.PREENING)
+					this.rightWing.xRot = -0.1963F;
 			default:
 				this.body.xRot = -0.0873F;
-				this.rightWing.xRot = -0.1963F;
 				this.leftWing.xRot = -0.1963F;
 				this.rightFoot.yRot = 0.1745F;
 				this.leftFoot.yRot = -0.1745F;
@@ -103,23 +106,8 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 
 	public void setupAnim(Passerine passerine, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (getState(passerine) == PasserineModel.State.PREENING) {
-			int remainingPreeningTicks = passerine.getRemainingPreeningTicks();
-
-			if (remainingPreeningTicks >= 4 && remainingPreeningTicks <= 36) {
-				float f = (this.preenAnim - 4) / 32.0F;
-				this.head.z = -1.0F;
-				this.head.xRot = 0.1745F + 0.1745F * Mth.sin(f * 57.3F);
-				this.head.yRot = 1.833F + 0.2793F * Mth.sin(f * 38.2F);
-				this.rightWing.xRot = -0.5236F;
-				this.rightWing.zRot = 1.396F;
-			} else {
-				float f = (remainingPreeningTicks < 4 ? this.preenAnim : 40.0F - this.preenAnim) / 4.0F;
-				this.head.z = Mth.lerp(f, -2.0F, -1.0F);
-				this.head.xRot = Mth.lerp(f, 0.0F, 0.1745F);
-				this.head.yRot = Mth.lerp(f, 0.0F, 1.833F);
-				this.rightWing.xRot = Mth.lerp(f, -0.1963F, -0.5236F);
-				this.rightWing.zRot = Mth.lerp(f, 0.0F, 1.396F);
-			}
+			this.head.xRot += 0.1745F * (1.0F - Mth.cos(ageInTicks * 1.5F)) / 2.0F;
+			this.head.yRot += 0.2793F * (1.0F - Mth.cos(ageInTicks)) / 2.0F;
 		}
 		else if (!(getState(passerine) == PasserineModel.State.SLEEPING)) {
 			this.head.xRot = headPitch * ((float) Math.PI / 180F);

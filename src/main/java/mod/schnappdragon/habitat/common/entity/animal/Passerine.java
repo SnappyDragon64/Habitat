@@ -59,6 +59,7 @@ import java.util.Optional;
 import java.util.Random;
 
 public class Passerine extends Animal implements FlyingAnimal {
+    private static final EntityDataAccessor<Integer> PREEN_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_SLEEPING = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.BOOLEAN);
 
@@ -68,9 +69,6 @@ public class Passerine extends Animal implements FlyingAnimal {
     public float initialFlap;
     private float flapping = 1.0F;
     private float nextFlap = 1.0F;
-
-    private Passerine.PreenGoal preenGoal;
-    private int preenAnim;
 
     public Passerine(EntityType<? extends Passerine> passerine, Level worldIn) {
         super(passerine, worldIn);
@@ -87,8 +85,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(2, new Passerine.PasserineTemptGoal(1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
         this.goalSelector.addGoal(3, new Passerine.FindCoverGoal(1.25D));
         this.goalSelector.addGoal(4, new Passerine.SleepGoal());
-        this.preenGoal = new Passerine.PreenGoal();
-        this.goalSelector.addGoal(5, this.preenGoal);
+        //this.goalSelector.addGoal(5, new Passerine.PreenGoal());
         this.goalSelector.addGoal(6, new Passerine.PasserineRandomFlyingGoal(1.0D));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
@@ -116,6 +113,7 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(PREEN_COUNTER, 0);
         this.entityData.define(DATA_VARIANT_ID, 0);
         this.entityData.define(DATA_SLEEPING, false);
     }
@@ -130,6 +128,18 @@ public class Passerine extends Animal implements FlyingAnimal {
         super.readAdditionalSaveData(compound);
         this.setVariantId(compound.getInt("Variant"));
         this.setSleeping(compound.getBoolean("Sleeping"));
+    }
+
+    public void setPreenCounter(int counter) {
+        this.entityData.set(PREEN_COUNTER, counter);
+    }
+
+    public int getPreenCounter() {
+        return this.entityData.get(PREEN_COUNTER);
+    }
+
+    public boolean isPreening() {
+        return this.getPreenCounter() > 0;
     }
 
     public void setVariantId(int id) {
@@ -164,11 +174,6 @@ public class Passerine extends Animal implements FlyingAnimal {
      * AI Methods
      */
 
-    protected void customServerAiStep() {
-        this.preenAnim = this.preenGoal.getRemainingPreeningTicks();
-        super.customServerAiStep();
-    }
-
     public void aiStep() {
         super.aiStep();
         this.calculateFlapping();
@@ -178,9 +183,6 @@ public class Passerine extends Animal implements FlyingAnimal {
             this.xxa = 0.0F;
             this.zza = 0.0F;
         }
-
-        if (this.level.isClientSide && this.preenAnim > 0)
-            this.preenAnim--;
     }
 
     public void tick() {
@@ -189,21 +191,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         if (!this.level.isClientSide) {
             if (this.isAsleep() && (this.isFlying() || this.level.isDay() || this.isInPowderSnow || this.isUnsafeAt(this.blockPosition()) || !this.canPerch()))
                 this.wakeUp();
-            else if (this.isPreening() && this.isInPowderSnow)
-                this.preenGoal.stopPreening();
         }
-    }
-
-    public boolean isPreening() {
-        return this.preenAnim > 0;
-    }
-
-    public int getRemainingPreeningTicks() {
-        return this.preenAnim;
-    }
-
-    private boolean isNotBusy() {
-        return !this.isAsleep() && !this.isPreening();
     }
 
     private boolean isUnsafeAt(BlockPos pos) {
@@ -217,6 +205,10 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     private boolean isActive() {
         return this.level.isDay() && !this.level.isRaining();
+    }
+
+    private boolean isNotBusy() {
+        return !this.isAsleep() && !this.isPreening();
     }
 
     private boolean canPerch() {
@@ -349,7 +341,7 @@ public class Passerine extends Animal implements FlyingAnimal {
                 if (this.isAsleep())
                     this.wakeUp();
                 else if (this.isPreening())
-                    this.preenGoal.stopPreening();
+                    this.setPreenCounter(0);
             }
 
             return super.hurt(source, amount);
@@ -398,8 +390,6 @@ public class Passerine extends Animal implements FlyingAnimal {
             case 11 -> spawnFeathers(this.getFeather(), 1);
             case 12 -> spawnFeathers(this.getFeather(), 2);
             case 13 -> this.level.addParticle(this.getNote(), this.getRandomX(0.5D), 0.6D + this.getY(), this.getRandomZ(0.5D), this.random.nextDouble(), 0.0D, 0.0D);
-            case 14 -> this.preenAnim = 40;
-            case 15 -> this.preenAnim = 0;
             default -> super.handleEntityEvent(id);
         }
     }
@@ -439,12 +429,17 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     @Override
     public void die(DamageSource source) {
-        super.die(source);
+        if (this.isAsleep())
+            this.wakeUp();
+        else if (this.isPreening())
+            this.setPreenCounter(0);
 
         if (!this.level.isClientSide && this.dead && this.isBerdly() && source == DamageSource.FREEZE && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES)) {
             this.getCombatTracker().recordDamage(HabitatDamageSources.SNOWGRAVE, this.getHealth(), this.getMaxHealth());
             ((ServerLevel) this.level).getServer().getPlayerList().broadcastMessage(this.getCombatTracker().getDeathMessage(), ChatType.SYSTEM, Util.NIL_UUID);
         }
+
+        super.die(source);
     }
 
     /*
@@ -641,10 +636,8 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     class PreenGoal extends Goal {
-        private static final int MINIMUM_WAIT_TIME = reducedTickDelay(2800);
+        private static final int MINIMUM_WAIT_TIME = reducedTickDelay(200);
         private int countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
-        private int preenAnim;
-
         public PreenGoal() {
             this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
         }
@@ -658,7 +651,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public boolean canContinueToUse() {
-            return this.preenAnim > 0 && this.canPreen();
+            return Passerine.this.getPreenCounter() > 0 && this.canPreen();
         }
 
         private boolean canPreen() {
@@ -666,32 +659,22 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public void start() {
-            this.preenAnim = this.adjustedTickDelay(40);
+            Passerine.this.setPreenCounter(this.adjustedTickDelay(40));
             Passerine.this.getNavigation().stop();
             Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 14);
         }
 
         public void stop() {
-            this.preenAnim = 0;
+            Passerine.this.setPreenCounter(0);
             this.countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
             Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 15);
         }
 
         public void tick() {
-            if (this.preenAnim > 0) {
-                this.preenAnim--;
+            Passerine.this.setPreenCounter(Math.max(0, Passerine.this.getPreenCounter() - 1));
 
-                if (this.preenAnim == this.adjustedTickDelay(20))
-                    Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 11);
-            }
-        }
-
-        public int getRemainingPreeningTicks() {
-            return this.preenAnim;
-        }
-
-        public void stopPreening() {
-            this.preenAnim = 0;
+            if (Passerine.this.getPreenCounter() == this.adjustedTickDelay(20))
+                Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 11);
         }
     }
 
