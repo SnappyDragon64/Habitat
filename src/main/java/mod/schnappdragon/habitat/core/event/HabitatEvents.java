@@ -18,6 +18,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid = Habitat.MODID)
 public class HabitatEvents {
@@ -29,7 +30,7 @@ public class HabitatEvents {
     @SubscribeEvent
     public static void addGoals(EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
-        if (entity.getType() == EntityType.RABBIT && HabitatEntityTypeTags.POOKA_ATTACK_TARGETS.contains(EntityType.RABBIT)) {
+        if (entity.getType() == EntityType.RABBIT && EntityType.RABBIT.getTags().toList().contains(HabitatEntityTypeTags.POOKA_ATTACK_TARGETS)) {
             Rabbit rabbit = (Rabbit) entity;
             rabbit.goalSelector.addGoal(4, new RabbitAvoidEntityGoal<>(rabbit, Pooka.class, 2.25F, 2.2D, 2.2D));
         }
