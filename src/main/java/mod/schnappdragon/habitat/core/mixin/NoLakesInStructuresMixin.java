@@ -1,7 +1,11 @@
 package mod.schnappdragon.habitat.core.mixin;
 
-import mod.schnappdragon.habitat.core.registry.HabitatStructures;
-import net.minecraft.core.SectionPos;
+import mod.schnappdragon.habitat.core.Habitat;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.LakeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
@@ -10,15 +14,24 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
+
 @Mixin(LakeFeature.class)
 public class NoLakesInStructuresMixin {
     @Inject(
             method = "place(Lnet/minecraft/world/level/levelgen/feature/FeaturePlaceContext;)Z",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/core/BlockPos;below(I)Lnet/minecraft/core/BlockPos;"),
+            at = @At(value = "HEAD"),
             cancellable = true
     )
     private void habitat_noLakesInStructures(FeaturePlaceContext<BlockStateConfiguration> context, CallbackInfoReturnable<Boolean> cir) {
-        if (!context.level().startsForFeature(SectionPos.of(context.origin()), HabitatStructures.FAIRY_RING.get()).isEmpty())
+        if (!(context.level() instanceof WorldGenRegion))
+            return;
+
+        Registry<ConfiguredStructureFeature<?, ?>> configuredStructureFeatureRegistry = context.level().registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
+        StructureFeatureManager structureFeatureManager = ((StructureFeatureManager) context.level());
+
+        Optional<ConfiguredStructureFeature<?, ?>> optionalFairyRing = configuredStructureFeatureRegistry.getOptional(new ResourceLocation(Habitat.MODID, "fairy_ring"));
+        if (optionalFairyRing.isPresent() && structureFeatureManager.getStructureAt(context.origin(), optionalFairyRing.get()).isValid())
             cir.setReturnValue(false);
     }
 }
