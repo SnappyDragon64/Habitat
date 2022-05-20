@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:village",
+  "config": {
+    "start_pool": "habitat:fairy_ring/start_pool",
+    "size": 1
+  },
+  "biomes": "#habitat:has_structure/fairy_ring_biomes",
+  "adapt_noise": true,
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "habitat:pooka",
+          "weight": 1,
+          "minCount": 4,
+          "maxCount": 4
+        }
+      ]
+    }
+  }
+}

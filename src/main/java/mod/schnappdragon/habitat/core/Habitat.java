@@ -39,7 +39,6 @@ public class Habitat {
         HabitatPotions.POTIONS.register(modEventBus);
         HabitatRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         HabitatFeatures.FEATURES.register(modEventBus);
-        HabitatStructures.STRUCTURE_FEATURES.register(modEventBus);
         HabitatParticleTypes.PARTICLE_TYPES.register(modEventBus);
 
         RecipeConditions.registerSerializers();
@@ -56,9 +55,6 @@ public class Habitat {
             HabitatPlacementModifierTypes.registerPlacementModifierTypes();
             HabitatConfiguredFeatures.registerConfiguredFeatures();
             HabitatPlacedFeatures.registerPlacedFeatures();
-
-            HabitatStructures.setupStructures();
-            HabitatConfiguredStructures.registerConfiguredStructures();
 
             HabitatComposterChances.registerComposterChances();
             HabitatDispenseItemBehavior.registerDispenserBehaviors();

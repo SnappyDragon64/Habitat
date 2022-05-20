@@ -11,9 +11,6 @@ public class HabitatConfig {
         public final ForgeConfigSpec.ConfigValue<String> pookaPositiveEffects;
         public final ForgeConfigSpec.ConfigValue<String> pookaNegativeEffects;
 
-        public final ForgeConfigSpec.ConfigValue<Integer> fairyRingAverage;
-        public final ForgeConfigSpec.ConfigValue<Integer> fairyRingMinimum;
-
         Common(ForgeConfigSpec.Builder builder) {
             builder.comment("Common Configurations for Habitat").push("common");
 
@@ -25,10 +22,6 @@ public class HabitatConfig {
             builder.comment("Pooka Effects\nEnter them in the format effectid:duration (duration in seconds) and separate them with a single ,");
             pookaPositiveEffects = builder.define("pooka_positive_effects", "1:6,5:4,8:8,10:5,11:4");
             pookaNegativeEffects = builder.define("pooka_negative_effects", "2:4,15:6,17:8,18:4,19:5");
-
-            builder.comment("\n== WORLD GEN ==\n\nAverage and Minimum Chunk Spacing for Structures (Minimum must be lower than Average, 1001 to disable)");
-            fairyRingAverage = builder.define("fairy_ring_average", 24);
-            fairyRingMinimum = builder.define("fairy_ring_minimum", 4);
 
             builder.pop();
         }
