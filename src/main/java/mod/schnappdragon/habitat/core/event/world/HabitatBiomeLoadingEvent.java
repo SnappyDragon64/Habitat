@@ -3,6 +3,7 @@ package mod.schnappdragon.habitat.core.event.world;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatPlacedFeatures;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
@@ -19,6 +20,9 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Optional;
 
 @Mod.EventBusSubscriber(modid = Habitat.MODID)
 public class HabitatBiomeLoadingEvent {
@@ -118,8 +122,8 @@ public class HabitatBiomeLoadingEvent {
             return false;
         }
 
-        private void addFeature(PlacedFeature feature, GenerationStep.Decoration stage) {
-            this.generation.addFeature(stage, feature);
+        private void addFeature(RegistryObject<PlacedFeature> feature, GenerationStep.Decoration stage) {
+            this.generation.addFeature(stage, feature.getHolder().get());
         }
 
         private void addCreatureSpawn(EntityType<?> type, int weight, int min, int max) {

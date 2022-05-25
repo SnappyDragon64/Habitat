@@ -6,6 +6,7 @@ import mod.schnappdragon.habitat.core.registry.*;
 import mod.schnappdragon.habitat.core.tags.HabitatEntityTypeTags;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -479,11 +480,12 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     }
 
     private int getRandomRabbitType(LevelAccessor world) {
-        Biome biome = world.getBiome(this.blockPosition());
+        Holder<Biome> biomeHolder = world.getBiome(this.blockPosition());
+        Biome biome = biomeHolder.value();
         int i = this.random.nextInt(100);
         if (biome.getPrecipitation() == Biome.Precipitation.SNOW)
             return i < 80 ? 1 : 3;
-        else if (biome.getBiomeCategory() == Biome.BiomeCategory.DESERT)
+        else if (Biome.getBiomeCategory(biomeHolder) == Biome.BiomeCategory.DESERT)
             return 4;
         else
             return i < 50 ? 0 : (i < 90 ? 5 : 2);

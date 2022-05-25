@@ -12,6 +12,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -200,7 +201,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         else if (this.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).getY() > pos.getY())
             return false;
         else
-            return this.level.getBiome(pos).getPrecipitation() != Biome.Precipitation.NONE;
+            return this.level.getBiome(pos).value().getPrecipitation() != Biome.Precipitation.NONE;
     }
 
     private boolean isActive() {
@@ -301,13 +302,13 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public Variant getVariantByBiome(LevelAccessor worldIn) {
-        Biome biome = worldIn.getBiome(this.blockPosition());
-        Optional<ResourceKey<Biome>> optional = worldIn.getBiomeName(this.blockPosition());
+        Holder<Biome> biomeHolder = worldIn.getBiome(this.blockPosition());
+        Biome biome = biomeHolder.value();
         VariantCategory category;
 
-        if (Objects.equals(optional, Optional.of(Biomes.FLOWER_FOREST)))
+        if (biomeHolder.is(Biomes.FLOWER_FOREST))
             category = VariantCategory.ALL;
-        else if (biome.getBiomeCategory() == Biome.BiomeCategory.JUNGLE)
+        else if (Biome.getBiomeCategory(biomeHolder) == Biome.BiomeCategory.JUNGLE)
             category = VariantCategory.JUNGLE;
         else if (biome.getBaseTemperature() >= 1.0F)
             category = VariantCategory.HOT;
