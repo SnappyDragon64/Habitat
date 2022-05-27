@@ -42,7 +42,7 @@ public class FairyRingFeature extends Feature<NoneFeatureConfiguration> {
                 BlockState base = world.getBlockState(blockpos$mutable.below());
                 if (world.isEmptyBlock(blockpos$mutable) && base.canOcclude()) {
                     if (Arrays.equals(XZ, bigXZ)) {
-                        ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM;
+                        ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM.get();
 
                         if (configuredfeature.place(world, generator, rand, blockpos$mutable))
                             break;
