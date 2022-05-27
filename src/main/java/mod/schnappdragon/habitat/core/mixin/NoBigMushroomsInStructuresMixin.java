@@ -28,7 +28,7 @@ public class NoBigMushroomsInStructuresMixin {
             return;
 
         Registry<ConfiguredStructureFeature<?, ?>> configuredStructureFeatureRegistry = context.level().registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
-        StructureFeatureManager structureFeatureManager = ((StructureFeatureManager) context.level());
+        StructureFeatureManager structureFeatureManager = ((WorldGenRegionAccessor) context.level()).getStructureFeatureManager();
 
         Optional<ConfiguredStructureFeature<?, ?>> optionalFairyRing = configuredStructureFeatureRegistry.getOptional(new ResourceLocation(Habitat.MODID, "fairy_ring"));
         if (optionalFairyRing.isPresent() && structureFeatureManager.getStructureAt(context.origin(), optionalFairyRing.get()).isValid())

@@ -156,7 +156,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
 
     private void growHugeMushroom(ServerLevel world, Random rand, BlockPos pos, BlockState state) {
         world.removeBlock(pos, false);
-        ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM;
+        ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM.get();
 
         if (!configuredfeature.place(world, world.getChunkSource().getGenerator(), rand, pos))
             world.setBlock(pos, state, 3);

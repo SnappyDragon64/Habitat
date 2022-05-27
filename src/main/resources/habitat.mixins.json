@@ -6,7 +6,8 @@
   "mixins": [
     "NoBigMushroomsInStructuresMixin",
     "NoLakesInStructuresMixin",
-    "NoTreesInStructuresMixin"
+    "NoTreesInStructuresMixin",
+    "WorldGenRegionAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
