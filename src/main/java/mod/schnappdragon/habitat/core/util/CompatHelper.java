@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.fml.ModList;
 
 public class CompatHelper {
@@ -23,7 +24,7 @@ public class CompatHelper {
             JsonObject dummyObject = new JsonObject();
             dummyObject.addProperty("type", "quark:flag");
             dummyObject.addProperty("flag", flag);
-            return CraftingHelper.getCondition(dummyObject).test();
+            return CraftingHelper.getCondition(dummyObject).test(ICondition.IContext.EMPTY);
         }
         return Habitat.DEV;
     }

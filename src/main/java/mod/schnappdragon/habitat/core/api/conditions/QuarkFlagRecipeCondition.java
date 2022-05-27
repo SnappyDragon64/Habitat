@@ -22,8 +22,14 @@ public final class QuarkFlagRecipeCondition implements ICondition {
     }
 
     @Override
-    public boolean test() {
+    public boolean test(IContext context) {
         return CompatHelper.checkQuarkFlag(this.flag);
+    }
+
+    @Override
+    @SuppressWarnings("removal")
+    public boolean test() {
+        return test(IContext.EMPTY);
     }
 
     public static class Serializer implements IConditionSerializer<QuarkFlagRecipeCondition> {
