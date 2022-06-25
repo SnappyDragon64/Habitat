@@ -20,4 +20,6 @@ public class HabitatBlockEntityTypes {
             () -> BlockEntityType.Builder.of(HabitatChestBlockEntity::new, HabitatBlocks.FAIRY_RING_MUSHROOM_CHEST.get()).build(null));
     public static final RegistryObject<BlockEntityType<HabitatTrappedChestBlockEntity>> TRAPPED_CHEST = TILE_ENTITY_TYPES.register("trapped_chest",
             () -> BlockEntityType.Builder.of(HabitatTrappedChestBlockEntity::new, HabitatBlocks.FAIRY_RING_MUSHROOM_TRAPPED_CHEST.get()).build(null));
+    public static final RegistryObject<BlockEntityType<HabitatCabinetBlockEntity>> CABINET = TILE_ENTITY_TYPES.register("cabinet",
+            () -> BlockEntityType.Builder.of(HabitatCabinetBlockEntity::new, HabitatBlocks.FAIRY_RING_MUSHROOM_CABINET.get()).build(null));
 }

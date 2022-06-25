@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "___",
+    "D D",
+    "___"
+  ],
+  "key": {
+    "_": {
+      "item": "habitat:fairy_ring_mushroom_slab"
+    },
+    "D": {
+      "item": "habitat:fairy_ring_mushroom_trapdoor"
+    }
+  },
+  "result": {
+    "item": "habitat:fairy_ring_mushroom_cabinet"
+  }
+}

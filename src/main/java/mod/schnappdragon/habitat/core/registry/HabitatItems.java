@@ -80,8 +80,9 @@ public class HabitatItems {
             () -> new HabitatChestItem(HabitatBlocks.FAIRY_RING_MUSHROOM_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(CreativeModeTab.TAB_DECORATIONS, "enhanced_mushrooms", "quark"))));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_TRAPPED_CHEST = ITEMS.register("fairy_ring_mushroom_trapped_chest",
             () -> new HabitatChestItem(HabitatBlocks.FAIRY_RING_MUSHROOM_TRAPPED_CHEST.get(), 300, getProperties(CompatHelper.compatItemGroup(CreativeModeTab.TAB_REDSTONE, "enhanced_mushrooms", "quark"))));
-
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BEEHIVE = registerBlockItem("fairy_ring_mushroom_beehive", HabitatBlocks.FAIRY_RING_MUSHROOM_BEEHIVE, CompatHelper.compatItemGroup(CreativeModeTab.TAB_DECORATIONS, "enhanced_mushrooms", "buzzier_bees"));
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_CABINET = ITEMS.register("fairy_ring_mushroom_cabinet",
+            () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_CABINET.get(), 300, getProperties(CompatHelper.compatItemGroup(CreativeModeTab.TAB_DECORATIONS, "enhanced_mushrooms", "farmersdelight"))));
 
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BOAT = ITEMS.register("fairy_ring_mushroom_boat",
             () -> new HabitatBoatItem(HabitatBoat.Type.FAIRY_RING_MUSHROOM, getProperties(CompatHelper.compatItemGroup(CreativeModeTab.TAB_TRANSPORTATION, "enhanced_mushrooms"))));
