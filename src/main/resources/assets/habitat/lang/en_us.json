@@ -89,6 +89,8 @@
   "entity.habitat.pooka": "Pooka",
   "entity.habitat.passerine": "Passerine",
 
+  "habitat.container.cabinet": "Cabinet",
+
   "habitat.subtitles.block.rafflesia.spew": "Rafflesia spews",
   "habitat.subtitles.block.rafflesia.pop": "Rafflesia pops",
   "habitat.subtitles.block.rafflesia.slurp": "Rafflesia slurps",
