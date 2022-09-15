@@ -5,6 +5,7 @@ import mod.schnappdragon.habitat.common.block.FloweringBallCactusBlock;
 import mod.schnappdragon.habitat.common.block.KabloomBushBlock;
 import mod.schnappdragon.habitat.common.block.RafflesiaBlock;
 import mod.schnappdragon.habitat.common.block.entity.RafflesiaBlockEntity;
+import mod.schnappdragon.habitat.common.entity.IHabitatShearable;
 import mod.schnappdragon.habitat.common.entity.monster.Pooka;
 import mod.schnappdragon.habitat.common.entity.projectile.ThrownKabloomFruit;
 import mod.schnappdragon.habitat.common.entity.vehicle.HabitatBoat;
@@ -39,7 +40,6 @@ import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.IForgeShearable;
 
 public class HabitatDispenseItemBehavior {
     private static DispenseItemBehavior SuspiciousStewBehavior;
@@ -215,12 +215,12 @@ public class HabitatDispenseItemBehavior {
         });
     }
 
-    private static <T extends Entity & IForgeShearable> boolean shearEntity(Class<T> entityClass, ServerLevel worldIn, ItemStack stack, BlockPos pos) {
+    private static <T extends Entity & IHabitatShearable> boolean shearEntity(Class<T> entityClass, ServerLevel worldIn, ItemStack stack, BlockPos pos) {
         boolean flag = false;
 
         for (T entity : worldIn.getEntitiesOfClass(entityClass, new AABB(pos), EntitySelector.NO_SPECTATORS)) {
             if (entity.isShearable(ItemStack.EMPTY, worldIn, pos)) {
-                entity.onSheared(null, stack, worldIn, pos, 0).forEach(drop -> worldIn.addFreshEntity(new ItemEntity(worldIn, entity.getX(), entity.getY(1.0D), entity.getZ(), drop)));
+                entity.onSheared(null, stack, worldIn, pos, 0, SoundSource.BLOCKS).forEach(drop -> worldIn.addFreshEntity(new ItemEntity(worldIn, entity.getX(), entity.getY(1.0D), entity.getZ(), drop)));
 
                 if (stack.hurt(1, worldIn.getRandom(), null))
                     stack.setCount(0);

@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.common.entity.monster;
 
+import mod.schnappdragon.habitat.common.entity.IHabitatShearable;
 import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.misc.HabitatCriterionTriggers;
 import mod.schnappdragon.habitat.core.registry.*;
@@ -45,7 +46,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.IForgeShearable;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -57,7 +57,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Predicate;
 
-public class Pooka extends Rabbit implements Enemy, IForgeShearable {
+public class Pooka extends Rabbit implements Enemy, IHabitatShearable {
     private static final EntityDataAccessor<Integer> DATA_STATE_ID = SynchedEntityData.defineId(Pooka.class, EntityDataSerializers.INT);
     private int aidId;
     private int aidDuration;
@@ -240,8 +240,14 @@ public class Pooka extends Rabbit implements Enemy, IForgeShearable {
     @Nonnull
     @Override
     public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
+        return onSheared(player, item, world, pos, fortune, SoundSource.PLAYERS);
+    }
+
+    @Nonnull
+    @Override
+    public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune, SoundSource source) {
         this.level.gameEvent(player, GameEvent.SHEAR, pos);
-        world.playSound(null, this, HabitatSoundEvents.POOKA_SHEAR.get(), SoundSource.HOSTILE, 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
+        world.playSound(null, this, HabitatSoundEvents.POOKA_SHEAR.get(), source, 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
         if (!this.level.isClientSide()) {
             ((ServerLevel) this.level).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
             this.discard();
