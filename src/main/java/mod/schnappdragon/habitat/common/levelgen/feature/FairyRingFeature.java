@@ -13,7 +13,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class FairyRingFeature extends Feature<NoneFeatureConfiguration> {
@@ -26,35 +25,61 @@ public class FairyRingFeature extends Feature<NoneFeatureConfiguration> {
         WorldGenLevel world = context.level();
         BlockPos pos = context.origin();
         Random rand = context.random();
+        boolean[] flag = {false};
 
-        int[][] XZ_PAIRS = {
-                {1, 5}, {2, 5}, {3, 4}, {4, 4}, {4, 3}, {5, 2}, {5, 1}, {5, 0},
-                {0, 5}, {-1, 5}, {-2, 5}, {-3, 4}, {-4, 4}, {-4, 3}, {-5, 2}, {-5, 1},
-                {-1, -5}, {-2, -5}, {-3, -4}, {-4, -4}, {-4, -3}, {-5, -2}, {-5, -1}, {-5, 0},
-                {0, -5}, {1, -5}, {2, -5}, {3, -4}, {4, -4}, {4, -3}, {5, -2}, {5, -1}
-        };
-        int[] bigXZ = XZ_PAIRS[rand.nextInt(32)];
-        BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
+        int rad = 5, x = 0, z = rad, p = 1 - rad;
 
-        for (int[] XZ : XZ_PAIRS) {
-            for (int y = 5; y >= -6; --y) {
-                blockpos$mutable.setWithOffset(pos, XZ[0], y, XZ[1]);
-                BlockState base = world.getBlockState(blockpos$mutable.below());
-                if (world.isEmptyBlock(blockpos$mutable) && base.canOcclude()) {
-                    if (Arrays.equals(XZ, bigXZ)) {
-                        ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM.get();
+        this.setMushroom(world, pos.offset(rad, 0, 0), rand, generator, flag);
+        this.setMushroom(world, pos.offset(-rad, 0, 0), rand, generator, flag);
+        this.setMushroom(world, pos.offset(0, 0, rad), rand, generator, flag);
+        this.setMushroom(world, pos.offset(0, 0, -rad), rand, generator, flag);
 
-                        if (configuredfeature.place(world, generator, rand, blockpos$mutable))
-                            break;
-                    }
+        while (x < z - 1) {
+            x++;
 
-                    this.setBlock(world, blockpos$mutable, this.getMushroom(rand));
-                    break;
-                }
-            }
+            if (p >= 0) {
+                z--;
+                p = p + 2 * x - 2 * z + 1;
+            } else
+                p = p + 2 * x + 1;
+
+            this.setMushrooms(world, pos, x, z, rand, generator, flag);
         }
 
         return true;
+    }
+
+    public void setMushrooms(WorldGenLevel world, BlockPos pos, int x, int z, Random rand, ChunkGenerator generator, boolean[] flag) {
+        this.setMushroom(world, pos.offset(-x, 0 , z), rand, generator, flag);
+        this.setMushroom(world, pos.offset(-z, 0 , x), rand, generator, flag);
+        this.setMushroom(world, pos.offset(-z, 0, -x), rand, generator, flag);
+        this.setMushroom(world, pos.offset(-x, 0 , -z), rand, generator, flag);
+        this.setMushroom(world, pos.offset(x, 0 , -z), rand, generator, flag);
+        this.setMushroom(world, pos.offset(z, 0 , -x), rand, generator, flag);
+        this.setMushroom(world, pos.offset(z, 0 , x), rand, generator, flag);
+        this.setMushroom(world, pos.offset(x, 0 , z), rand, generator, flag);
+    }
+
+    public void setMushroom(WorldGenLevel world, BlockPos pos, Random rand, ChunkGenerator generator, boolean[] flag) {
+        pos.offset(0, 8, 0);
+        for (int y = 0; y < 12; y++) {
+            pos = pos.below();
+            BlockState base = world.getBlockState(pos.below());
+
+            if (world.isEmptyBlock(pos) && base.canOcclude()) {
+                if (!flag[0] && rand.nextInt(8) == 0) {
+                    ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM.get();
+
+                    if (configuredfeature.place(world, generator, rand, pos)) {
+                        flag[0] = true;
+                        break;
+                    }
+                }
+
+                this.setBlock(world, pos, this.getMushroom(rand));
+                break;
+            }
+        }
     }
 
     private BlockState getMushroom(Random random) {
