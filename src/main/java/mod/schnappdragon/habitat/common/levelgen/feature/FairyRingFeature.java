@@ -5,6 +5,7 @@ import mod.schnappdragon.habitat.common.block.FairyRingMushroomBlock;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -61,24 +62,19 @@ public class FairyRingFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     public void setMushroom(WorldGenLevel world, BlockPos pos, Random rand, ChunkGenerator generator, boolean[] flag) {
-        pos.offset(0, 8, 0);
-        for (int y = 0; y < 12; y++) {
-            pos = pos.below();
-            BlockState base = world.getBlockState(pos.below());
+        pos = pos.below();
+        BlockState base = world.getBlockState(pos.below());
 
-            if (world.isEmptyBlock(pos) && base.canOcclude()) {
-                if (!flag[0] && rand.nextInt(8) == 0) {
-                    ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM.get();
+        if (world.isEmptyBlock(pos) && base.is(BlockTags.DIRT)) {
+            if (!flag[0] && rand.nextInt(8) == 0) {
+                ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM.get();
 
-                    if (configuredfeature.place(world, generator, rand, pos)) {
-                        flag[0] = true;
-                        break;
-                    }
+                if (configuredfeature.place(world, generator, rand, pos)) {
+                    flag[0] = true;
                 }
-
-                this.setBlock(world, pos, this.getMushroom(rand));
-                break;
             }
+
+            this.setBlock(world, pos, this.getMushroom(rand));
         }
     }
 
