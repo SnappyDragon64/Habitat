@@ -15,5 +15,11 @@
   },
   "result": {
     "item": "habitat:fairy_ring_mushroom_cabinet"
-  }
+  },
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ]
 }
