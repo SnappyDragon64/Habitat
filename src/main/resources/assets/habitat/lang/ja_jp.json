@@ -49,6 +49,7 @@
   "block.habitat.fairy_ring_mushroom_chest": "菌輪のキノコのチェスト",
   "block.habitat.fairy_ring_mushroom_trapped_chest": "菌輪のキノコのトラップチェスト",
   "block.habitat.fairy_ring_mushroom_beehive": "菌輪のキノコの養蜂箱",
+  "block.habitat.fairy_ring_mushroom_cabinet": "菌輪のキノコの戸棚",
 
   "item.habitat.rafflesia": "ラフレシア",
   "item.habitat.kabloom_pulp": "カブルームの果肉",
@@ -88,6 +89,7 @@
   "entity.habitat.pooka": "プーカ",
   "entity.habitat.passerine": "スズメ",
 
+  "habitat.container.cabinet": "戸棚",
   "habitat.subtitles.block.rafflesia.spew": "ラフレシアが吹き出す",
   "habitat.subtitles.block.rafflesia.pop": "ラフレシアが弾ける",
   "habitat.subtitles.block.rafflesia.slurp": "ラフレシアが啜る",
@@ -109,7 +111,7 @@
   "habitat.subtitles.entity.pooka.hurt": "プーカがダメージを受ける",
   "habitat.subtitles.entity.pooka.jump": "プーカが跳ねる",
   "habitat.subtitles.entity.pooka.pacify": "プーカが落ち着く",
-  "habitat.subtitles.entity.pooka.shear": "ハサミで刻まれる",
+  "habitat.subtitles.entity.pooka.shear": "ハサミを使う",
   "habitat.subtitles.entity.rabbit.converted_to_pooka": "ウサギが変化する",
   "habitat.subtitles.entity.parrot.imitate.pooka": "オウムがプーカの鳴き声を真似る",
 
@@ -140,4 +142,5 @@
   "habitat.advancements.husbandry.feathered_friend.description": "種でスズメを餌付けする",
   "habitat.advancements.husbandry.beginner_birdwatcher.description": "望遠鏡を通してスズメを観察する",
   "habitat.advancements.husbandry.ornithologist.description": "望遠鏡を通して全ての種類のスズメを観察する"
+
 }
