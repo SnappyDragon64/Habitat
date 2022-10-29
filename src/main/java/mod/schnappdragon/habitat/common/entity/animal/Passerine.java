@@ -57,7 +57,6 @@ import java.util.EnumSet;
 import java.util.Random;
 
 public class Passerine extends Animal implements FlyingAnimal {
-    private static final EntityDataAccessor<Integer> PREEN_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_SLEEPING = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.BOOLEAN);
 
@@ -83,7 +82,6 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(2, new Passerine.PasserineTemptGoal(1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
         this.goalSelector.addGoal(3, new Passerine.FindCoverGoal(1.25D));
         this.goalSelector.addGoal(4, new Passerine.SleepGoal());
-        //this.goalSelector.addGoal(5, new Passerine.PreenGoal());
         this.goalSelector.addGoal(6, new Passerine.PasserineRandomFlyingGoal(1.0D));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
@@ -111,7 +109,6 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(PREEN_COUNTER, 0);
         this.entityData.define(DATA_VARIANT_ID, 0);
         this.entityData.define(DATA_SLEEPING, false);
     }
@@ -126,18 +123,6 @@ public class Passerine extends Animal implements FlyingAnimal {
         super.readAdditionalSaveData(compound);
         this.setVariantId(compound.getInt("Variant"));
         this.setSleeping(compound.getBoolean("Sleeping"));
-    }
-
-    public void setPreenCounter(int counter) {
-        this.entityData.set(PREEN_COUNTER, counter);
-    }
-
-    public int getPreenCounter() {
-        return this.entityData.get(PREEN_COUNTER);
-    }
-
-    public boolean isPreening() {
-        return this.getPreenCounter() > 0;
     }
 
     public void setVariantId(int id) {
@@ -205,10 +190,6 @@ public class Passerine extends Animal implements FlyingAnimal {
         return this.level.isDay() && !this.level.isRaining();
     }
 
-    private boolean isNotBusy() {
-        return !this.isAsleep() && !this.isPreening();
-    }
-
     private boolean canPerch() {
         return this.level.getBlockState(this.getOnPos()).is(HabitatBlockTags.PASSERINES_PERCHABLE_ON);
     }
@@ -265,7 +246,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        if (stack.is(HabitatItemTags.PASSERINE_FOOD) && this.isNotBusy()) {
+        if (stack.is(HabitatItemTags.PASSERINE_FOOD) && !this.isAsleep()) {
             if (!this.level.isClientSide) {
                 this.heal(1.0F);
                 this.usePlayerItem(player, hand, stack);
@@ -338,8 +319,6 @@ public class Passerine extends Animal implements FlyingAnimal {
 
                 if (this.isAsleep())
                     this.wakeUp();
-                else if (this.isPreening())
-                    this.setPreenCounter(0);
             }
 
             return super.hurt(source, amount);
@@ -351,7 +330,7 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     public void playAmbientSound() {
-        if (!this.isPreening() && this.isActive()) {
+        if (this.isActive()) {
             super.playAmbientSound();
 
             if (!this.level.isClientSide)
@@ -429,8 +408,6 @@ public class Passerine extends Animal implements FlyingAnimal {
     public void die(DamageSource source) {
         if (this.isAsleep())
             this.wakeUp();
-        else if (this.isPreening())
-            this.setPreenCounter(0);
 
         if (!this.level.isClientSide && this.dead && this.isBerdly() && source == DamageSource.FREEZE && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES)) {
             this.getCombatTracker().recordDamage(HabitatDamageSources.SNOWGRAVE, this.getHealth(), this.getMaxHealth());
@@ -550,7 +527,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public void tick() {
-            if (Passerine.this.isNotBusy())
+            if (!Passerine.this.isAsleep())
                 super.tick();
         }
     }
@@ -561,7 +538,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         public void tick() {
-            if (Passerine.this.isNotBusy())
+            if (!Passerine.this.isAsleep())
                 super.tick();
         }
     }
@@ -615,7 +592,7 @@ public class Passerine extends Animal implements FlyingAnimal {
                 this.countdown--;
                 return false;
             } else {
-                if (Passerine.this.isFlying() || Passerine.this.isPreening() || Passerine.this.level.isDay() || Passerine.this.isInPowderSnow)
+                if (Passerine.this.isFlying() || Passerine.this.level.isDay() || Passerine.this.isInPowderSnow)
                     return false;
                 else
                     return Passerine.this.canPerch();
@@ -630,49 +607,6 @@ public class Passerine extends Animal implements FlyingAnimal {
         public void stop() {
             Passerine.this.wakeUp();
             this.countdown = Passerine.this.random.nextInt(WAIT_TIME_BEFORE_SLEEP);
-        }
-    }
-
-    class PreenGoal extends Goal {
-        private static final int MINIMUM_WAIT_TIME = reducedTickDelay(200);
-        private int countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
-        public PreenGoal() {
-            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
-        }
-
-        public boolean canUse() {
-            if (this.countdown > 0) {
-                this.countdown--;
-                return false;
-            } else
-                return Passerine.this.xxa == 0.0F && Passerine.this.yya == 0.0F && Passerine.this.zza == 0.0F && this.canPreen();
-        }
-
-        public boolean canContinueToUse() {
-            return Passerine.this.getPreenCounter() > 0 && this.canPreen();
-        }
-
-        private boolean canPreen() {
-            return !Passerine.this.isTurkey() && !Passerine.this.isFlying() && !Passerine.this.isAsleep() && !Passerine.this.isInPowderSnow;
-        }
-
-        public void start() {
-            Passerine.this.setPreenCounter(this.adjustedTickDelay(40));
-            Passerine.this.getNavigation().stop();
-            Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 14);
-        }
-
-        public void stop() {
-            Passerine.this.setPreenCounter(0);
-            this.countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
-            Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 15);
-        }
-
-        public void tick() {
-            Passerine.this.setPreenCounter(Math.max(0, Passerine.this.getPreenCounter() - 1));
-
-            if (Passerine.this.getPreenCounter() == this.adjustedTickDelay(20))
-                Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 11);
         }
     }
 
