@@ -69,7 +69,7 @@ public class HabitatDispenseItemBehavior {
                     rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
                     worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_SLURP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                     worldIn.sendParticles(RafflesiaBlock.getParticle(rafflesia.Effects), pos.getX() + 0.5D + (2 * worldIn.random.nextDouble() - 1.0F) / 3.0D, pos.getY() + 0.25F + worldIn.random.nextDouble() / 2, pos.getZ() + 0.5D + (2 * worldIn.random.nextDouble() - 1.0F) / 3.0D, 0, 0.0D, 0.1D, 0.0D, 1.0D);
-                    worldIn.gameEvent(GameEvent.FLUID_PLACE, pos);
+                    worldIn.gameEvent(GameEvent.FLUID_PLACE, pos, GameEvent.Context.of(state));
                     stack = new ItemStack(Items.BOWL, 1);
                     this.setSuccess(true);
                     return stack;
@@ -95,7 +95,7 @@ public class HabitatDispenseItemBehavior {
                     rafflesia.Effects = RafflesiaBlock.getDefault();
                     rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
                     worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_FILL_BOWL.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
-                    worldIn.gameEvent(GameEvent.FLUID_PICKUP, pos);
+                    worldIn.gameEvent(GameEvent.FLUID_PICKUP, pos, GameEvent.Context.of(state));
                     this.setSuccess(true);
                     stack.shrink(1);
 
@@ -132,7 +132,7 @@ public class HabitatDispenseItemBehavior {
                     worldIn.playSound(null, pos, HabitatSoundEvents.KABLOOM_BUSH_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                     if (stack.hurt(1, worldIn.getRandom(), null))
                         stack.setCount(0);
-                    worldIn.gameEvent(GameEvent.SHEAR, pos);
+                    worldIn.gameEvent(GameEvent.SHEAR, pos, GameEvent.Context.of(state));
                     this.setSuccess(true);
                 } else if (state.getBlock() instanceof FloweringBallCactusBlock cactus) {
                     Block.popResource(worldIn, pos, new ItemStack(cactus.getColor().getFlower()));
@@ -140,7 +140,7 @@ public class HabitatDispenseItemBehavior {
                     worldIn.playSound(null, pos, HabitatSoundEvents.FLOWERING_BALL_CACTUS_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                     if (stack.hurt(1, worldIn.getRandom(), null))
                         stack.setCount(0);
-                    worldIn.gameEvent(GameEvent.SHEAR, pos);
+                    worldIn.gameEvent(GameEvent.SHEAR, pos, GameEvent.Context.of(state));
                     this.setSuccess(true);
                 } else if (state.is(HabitatBlocks.FAIRY_RING_MUSHROOM.get()) && state.getValue(FairyRingMushroomBlock.MUSHROOMS) > 1) {
                     Block.popResource(worldIn, pos, new ItemStack(state.getBlock()));
@@ -148,7 +148,7 @@ public class HabitatDispenseItemBehavior {
                     worldIn.playSound(null, pos, HabitatSoundEvents.FAIRY_RING_MUSHROOM_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
                     if (stack.hurt(1, worldIn.getRandom(), null))
                         stack.setCount(0);
-                    worldIn.gameEvent(GameEvent.SHEAR, pos);
+                    worldIn.gameEvent(GameEvent.SHEAR, pos, GameEvent.Context.of(state));
                     this.setSuccess(true);
                 } else
                     return ShearsBehavior.dispense(source, stack);
@@ -181,7 +181,7 @@ public class HabitatDispenseItemBehavior {
                     worldIn.setBlockAndUpdate(pos, state.setValue(FairyRingMushroomBlock.DUSTED, true));
                     worldIn.addParticle(DustParticleOptions.REDSTONE, pos.getX() + 0.5D, pos.getY() + 0.125D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
                     worldIn.playSound(null, pos, HabitatSoundEvents.FAIRY_RING_MUSHROOM_DUST.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
-                    worldIn.gameEvent(GameEvent.BLOCK_CHANGE, pos);
+                    worldIn.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(state));
                     stack.shrink(1);
                     this.setSuccess(true);
                     return stack;
@@ -199,7 +199,7 @@ public class HabitatDispenseItemBehavior {
                 for (LivingEntity livingentity : worldIn.getEntitiesOfClass(LivingEntity.class, new AABB(pos), EntitySelector.NO_SPECTATORS)) {
                     if (livingentity.getType() == EntityType.RABBIT) {
                         Rabbit rabbit = (Rabbit) livingentity;
-                        worldIn.gameEvent(GameEvent.MOB_INTERACT, rabbit.eyeBlockPosition());
+                        worldIn.gameEvent(rabbit, GameEvent.ENTITY_INTERACT, rabbit.position());
                         rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
                         rabbit.discard();
                         worldIn.addFreshEntity(Pooka.convertRabbitToPooka(rabbit));

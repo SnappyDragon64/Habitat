@@ -3,6 +3,7 @@ package mod.schnappdragon.habitat.common.levelgen.placement;
 import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.core.registry.HabitatPlacementModifierTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.placement.*;
 
@@ -16,7 +17,8 @@ public class SlimeChunkFilter extends PlacementFilter {
         return FILTER;
     }
 
-    protected boolean shouldPlace(PlacementContext context, Random random, BlockPos pos) {
+    @Override
+    protected boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {
         return WorldgenRandom.seedSlimeChunk(pos.getX() >> 4, pos.getZ() >> 4, context.getLevel().getSeed(), 987234911L).nextInt(10) == 0;
     }
 

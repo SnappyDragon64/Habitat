@@ -1,0 +1,15 @@
+{
+  "type": "forge:add_features",
+  "biomes": {
+    "type": "forge:and",
+    "values": [
+      "#minecraft:is_plains",
+      {
+        "type": "forge:not",
+        "value": "#forge:is_cold"
+      }
+    ]
+  },
+  "features": "habitat:kabloom_bush_patch",
+  "step": "vegetal_decoration"
+}

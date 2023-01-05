@@ -1,0 +1,15 @@
+{
+  "type": "forge:add_features",
+  "biomes": {
+    "type": "forge:and",
+    "values": [
+      "#forge:is_overworld",
+      {
+        "type": "forge:not",
+        "value": "#forge:is_cave"
+      }
+    ]
+  },
+  "features": "habitat:slime_fern_patch",
+  "step": "underground_decoration"
+}

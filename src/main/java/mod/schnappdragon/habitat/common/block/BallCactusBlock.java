@@ -3,6 +3,7 @@ package mod.schnappdragon.habitat.common.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -14,8 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.ForgeHooks;
-
-import java.util.Random;
 
 public class BallCactusBlock extends AbstractBallCactusBlock implements BonemealableBlock {
     public BallCactusBlock(BallCactusColor colorIn, Properties properties) {
@@ -47,7 +46,7 @@ public class BallCactusBlock extends AbstractBallCactusBlock implements Bonemeal
         return true;
     }
 
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(10) == 0)) {
             worldIn.setBlockAndUpdate(pos, getColor().getFloweringBallCactus().defaultBlockState());
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
@@ -58,11 +57,11 @@ public class BallCactusBlock extends AbstractBallCactusBlock implements Bonemeal
         return true;
     }
 
-    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         return true;
     }
 
-    public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         worldIn.setBlockAndUpdate(pos, getColor().getFloweringBallCactus().defaultBlockState());
     }
 }

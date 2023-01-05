@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "minecraft:jungle",
+  "features": "habitat:rafflesia_patch",
+  "step": "vegetal_decoration"
+}

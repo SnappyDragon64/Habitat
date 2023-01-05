@@ -7,6 +7,7 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -102,7 +103,7 @@ public class WoodPostBlock extends Block implements SimpleWaterloggedBlock {
 
     @Nullable
     @Override
-    public BlockState getToolModifiedState(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, ToolAction toolAction) {
+    public BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
         if (ToolActions.AXE_STRIP.equals(toolAction) && strippedBlock != null && strippedBlock.get() instanceof WoodPostBlock) {
             BlockState newState = strippedBlock.get().defaultBlockState().setValue(WATERLOGGED, state.getValue(WATERLOGGED)).setValue(AXIS, state.getValue(AXIS));
             for (BooleanProperty property : CHAINED) {
@@ -110,7 +111,7 @@ public class WoodPostBlock extends Block implements SimpleWaterloggedBlock {
             }
             return newState;
         }
-        return super.getToolModifiedState(state, world, pos, player, stack, toolAction);
+        return super.getToolModifiedState(state, context, toolAction, simulate);
     }
 
     private BlockState getRelevantState(Level world, BlockPos pos, Axis axis) {

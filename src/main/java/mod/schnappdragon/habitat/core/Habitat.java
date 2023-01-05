@@ -1,6 +1,5 @@
 package mod.schnappdragon.habitat.core;
 
-import mod.schnappdragon.habitat.client.renderer.HabitatRenderLayers;
 import mod.schnappdragon.habitat.common.block.HabitatWoodType;
 import mod.schnappdragon.habitat.core.api.conditions.RecipeConditions;
 import mod.schnappdragon.habitat.core.dispenser.HabitatDispenseItemBehavior;
@@ -33,7 +32,7 @@ public class Habitat {
 
         HabitatBlocks.BLOCKS.register(modEventBus);
         HabitatItems.ITEMS.register(modEventBus);
-        HabitatBlockEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
+        HabitatBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
         HabitatSoundEvents.SOUND_EVENTS.register(modEventBus);
         HabitatEntityTypes.ENTITY_TYPES.register(modEventBus);
         HabitatEffects.EFFECTS.register(modEventBus);
@@ -43,6 +42,7 @@ public class Habitat {
         HabitatConfiguredFeatures.CONFIGURED_FEATURES.register(modEventBus);
         HabitatPlacedFeatures.PLACED_FEATURES.register(modEventBus);
         HabitatParticleTypes.PARTICLE_TYPES.register(modEventBus);
+        HabitatPoiTypes.POI_TYPES.register(modEventBus);
 
         RecipeConditions.registerSerializers();
 
@@ -63,12 +63,10 @@ public class Habitat {
 
             HabitatBrewingMixes.registerBrewingMixes();
             HabitatParrotImitationSounds.registerParrotImitationSounds();
-            HabitatPOI.addBeehivePOI();
         });
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
-        HabitatRenderLayers.registerRenderLayers();
         HabitatWoodType.setupWoodTypes();
     }
 }

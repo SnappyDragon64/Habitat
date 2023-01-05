@@ -3,6 +3,7 @@ package mod.schnappdragon.habitat.common.block;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -14,7 +15,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class BallCactusFlowerBlock extends HabitatFlowerBlock implements BonemealableBlock {
@@ -36,8 +36,8 @@ public class BallCactusFlowerBlock extends HabitatFlowerBlock implements Bonemea
     }
 
     @Override
-    public OffsetType getOffsetType() {
-        return OffsetType.NONE;
+    public float getMaxHorizontalOffset() {
+        return 0.0F;
     }
 
     /*
@@ -56,7 +56,7 @@ public class BallCactusFlowerBlock extends HabitatFlowerBlock implements Bonemea
         return true;
     }
 
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         if (canGrow(worldIn, pos) && ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(10) == 0)) {
             worldIn.setBlockAndUpdate(pos, color.getGrowingBallCactus().defaultBlockState());
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
@@ -67,11 +67,11 @@ public class BallCactusFlowerBlock extends HabitatFlowerBlock implements Bonemea
         return canGrow((Level) worldIn, pos);
     }
 
-    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         return canGrow(worldIn, pos);
     }
 
-    public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         worldIn.setBlockAndUpdate(pos, (rand.nextBoolean() ? color.getGrowingBallCactus() : color.getBallCactus()).defaultBlockState());
     }
 

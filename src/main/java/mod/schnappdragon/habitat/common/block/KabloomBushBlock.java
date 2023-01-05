@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -39,7 +40,6 @@ import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.ToolActions;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
     protected static final VoxelShape[] SHAPES = {Block.box(4.0D, 0.0D, 4.0D, 12.0D, 4.0D, 12.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 12.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D)};
@@ -94,8 +94,8 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    public void spawnAfterBreak(BlockState state, ServerLevel worldIn, BlockPos pos, ItemStack stack) {
-        super.spawnAfterBreak(state, worldIn, pos, stack);
+    public void spawnAfterBreak(BlockState state, ServerLevel worldIn, BlockPos pos, ItemStack stack, boolean flag) {
+        super.spawnAfterBreak(state, worldIn, pos, stack, flag);
 
         if (state.getValue(AGE) == 7 && !stack.canPerformAction(ToolActions.SHEARS_DISARM) && worldIn.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) && (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) == 0))
             dropFruit(state, worldIn, pos, false, false);
@@ -109,7 +109,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
     private void dropFruit(BlockState state, Level worldIn, BlockPos pos, boolean replaceBush, boolean setFire) {
         if (!worldIn.isClientSide) {
             if (replaceBush) {
-                worldIn.gameEvent(GameEvent.BLOCK_CHANGE, pos);
+                worldIn.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(state));
                 worldIn.setBlock(pos, state.setValue(AGE, 3), 2);
                 worldIn.playSound(null, pos, HabitatSoundEvents.KABLOOM_BUSH_RUSTLE.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             }
@@ -129,7 +129,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
         return state.getValue(AGE) < 7;
     }
 
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         if (state.getValue(AGE) < 7 && ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(5) == 0)) {
             worldIn.setBlock(pos, state.setValue(AGE, state.getValue(AGE) + 1), 2);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
@@ -140,11 +140,11 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
         return state.getValue(AGE) < 7;
     }
 
-    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         return true;
     }
 
-    public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         worldIn.setBlock(pos, state.setValue(AGE, Math.min(7, state.getValue(AGE) + Mth.nextInt(rand, 2, 4))), 2);
     }
 
@@ -163,7 +163,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
 
     @Nullable
     @Override
-    public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
+    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
         return state.getValue(AGE) > 1 ? BlockPathTypes.DANGER_OTHER : null;
     }
 }

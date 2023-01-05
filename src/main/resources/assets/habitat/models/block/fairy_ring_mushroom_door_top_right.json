@@ -1,5 +1,6 @@
 {
-  "parent": "block/door_bottom_rh",
+  "parent": "minecraft:block/door_top_right",
+  "render_type": "cutout",
   "textures": {
     "bottom": "habitat:block/fairy_ring_mushroom_door_bottom",
     "top": "habitat:block/fairy_ring_mushroom_door_top"

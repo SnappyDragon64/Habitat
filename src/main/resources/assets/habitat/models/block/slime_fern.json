@@ -1,6 +1,7 @@
 {
   "credit": "Made with Blockbench",
   "ambientocclusion": false,
+  "render_type": "cutout",
   "textures": {
     "particle": "habitat:block/slime_fern",
     "fern": "habitat:block/slime_fern"

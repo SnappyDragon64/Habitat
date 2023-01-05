@@ -7,6 +7,7 @@ import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
@@ -18,8 +19,6 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
-import java.util.Random;
-
 public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
     public HugeFairyRingMushroomFeature(Codec<HugeMushroomFeatureConfiguration> codec) {
         super(codec);
@@ -29,7 +28,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
     public boolean place(FeaturePlaceContext<HugeMushroomFeatureConfiguration> context) {
         HugeMushroomFeatureConfiguration config = context.config();
         WorldGenLevel world = context.level();
-        Random random = context.random();
+        RandomSource random = context.random();
         BlockPos pos = context.origin();
         int i = this.getTreeHeight(random);
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
@@ -44,7 +43,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
     }
 
     @Override
-    protected int getTreeHeight(Random rand) {
+    protected int getTreeHeight(RandomSource rand) {
         int i = rand.nextInt(2) + 10;
         if (rand.nextInt(12) == 0)
             i *= 2;
@@ -53,7 +52,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
     }
 
     @Override
-    protected void placeTrunk(LevelAccessor world, Random rand, BlockPos pos, HugeMushroomFeatureConfiguration config, int i0, BlockPos.MutableBlockPos blockpos$mutable) {
+    protected void placeTrunk(LevelAccessor world, RandomSource rand, BlockPos pos, HugeMushroomFeatureConfiguration config, int i0, BlockPos.MutableBlockPos blockpos$mutable) {
         WeightedStateProvider mushroomProvider = new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState(), 1).add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState().setValue(FairyRingMushroomBlock.MUSHROOMS, 2), 2).add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState().setValue(FairyRingMushroomBlock.MUSHROOMS, 3), 3).add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState().setValue(FairyRingMushroomBlock.MUSHROOMS, 4), 3));
 
         BlockState stem = config.stemProvider.getState(rand, pos);
@@ -133,7 +132,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
         };
     }
 
-    protected void makeCap(LevelAccessor world, Random rand, BlockPos pos, int i0, BlockPos.MutableBlockPos blockpos$mutable, HugeMushroomFeatureConfiguration config) {
+    protected void makeCap(LevelAccessor world, RandomSource rand, BlockPos pos, int i0, BlockPos.MutableBlockPos blockpos$mutable, HugeMushroomFeatureConfiguration config) {
         for (int i = i0 - 6; i <= i0; ++i) {
             int j = i < i0 ? config.foliageRadius : config.foliageRadius - 1;
             int k = config.foliageRadius - 2;

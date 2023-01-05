@@ -23,7 +23,7 @@ public class HabitatBoatRenderer extends EntityRenderer<HabitatBoat> {
 
     public HabitatBoatRenderer(EntityRendererProvider.Context context) {
         super(context);
-        modelBoat = new BoatModel(BoatModel.createBodyModel().bakeRoot());
+        modelBoat = new BoatModel(BoatModel.createBodyModel(false).bakeRoot(), false);
         this.shadowRadius = 0.8F;
     }
 

@@ -92,7 +92,7 @@ public class ThrownKabloomFruit extends ThrowableItemProjectile {
 
     private void explode(Vec3 vector3d) {
         if (!this.level.isClientSide) {
-            this.gameEvent(GameEvent.EXPLODE, this.getOwner(), this.blockPosition());
+            this.gameEvent(GameEvent.EXPLODE, this.getOwner());
 
             for (Entity entity : this.level.getEntities(null, this.getBoundingBox().inflate(0.8D))) {
                 boolean flag = false;

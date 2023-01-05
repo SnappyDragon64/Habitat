@@ -1,0 +1,32 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:or",
+        "values": [
+          "#minecraft:is_forest",
+          "#minecraft:is_taiga",
+          "minecraft:sparse_jungle"
+        ]
+      },
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:or",
+          "values": [
+            "#forge:is_spooky",
+            "minecraft:flower_forest"
+          ]
+        }
+      }
+    ]
+  },
+  "spawners": {
+    "type": "habitat:passerines",
+    "weight": 14,
+    "minCount": 4,
+    "maxCount": 4
+  }
+}

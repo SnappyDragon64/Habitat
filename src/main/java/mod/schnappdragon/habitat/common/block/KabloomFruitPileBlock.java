@@ -74,8 +74,8 @@ public class KabloomFruitPileBlock extends Block {
     }
 
     @Override
-    public void spawnAfterBreak(BlockState state, ServerLevel worldIn, BlockPos pos, ItemStack stack) {
-        super.spawnAfterBreak(state, worldIn, pos, stack);
+    public void spawnAfterBreak(BlockState state, ServerLevel worldIn, BlockPos pos, ItemStack stack, boolean flag) {
+        super.spawnAfterBreak(state, worldIn, pos, stack, flag);
 
         if (worldIn.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) && (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) == 0))
             explode(worldIn, pos, false, false);
@@ -109,7 +109,7 @@ public class KabloomFruitPileBlock extends Block {
 
     @Nullable
     @Override
-    public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
+    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
         return BlockPathTypes.DANGER_OTHER;
     }
 }

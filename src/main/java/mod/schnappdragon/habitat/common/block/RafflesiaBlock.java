@@ -14,6 +14,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
@@ -52,7 +53,6 @@ import net.minecraftforge.common.extensions.IForgeBlock;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
-import java.util.Random;
 
 public class RafflesiaBlock extends BushBlock implements IForgeBlock, BonemealableBlock, EntityBlock {
     protected static final VoxelShape DEFAULT_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
@@ -101,7 +101,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
      * Particle Animation Method
      */
 
-    public void animateTick(BlockState state, Level worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level worldIn, BlockPos pos, RandomSource rand) {
         BlockEntity tile = worldIn.getBlockEntity(pos);
         if (tile instanceof RafflesiaBlockEntity rafflesia && rand.nextInt(128) == 0 && !state.getValue(ON_COOLDOWN))
             worldIn.addParticle(getParticle(rafflesia.Effects), pos.getX() + 0.5D + (2 * rand.nextDouble() - 1.0F) / 3.0D, pos.getY() + 0.25F + rand.nextDouble() / 2, pos.getZ() + 0.5D + (2 * rand.nextDouble() - 1.0F) / 3.0D, 0.0D, 0.01D, 0.0D);
@@ -157,7 +157,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
         if (!worldIn.isClientSide) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RafflesiaBlockEntity rafflesia && !state.getValue(ON_COOLDOWN) && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
-                worldIn.gameEvent(entityIn, GameEvent.BLOCK_PRESS, pos);
+                worldIn.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
                 Entity owner = entityIn instanceof Projectile projectile ? projectile.getOwner() : entityIn;
                 createCloud(worldIn, pos, rafflesia.Effects, owner instanceof LivingEntity living ? living : null);
                 worldIn.setBlockAndUpdate(pos, state.setValue(ON_COOLDOWN, true).setValue(HAS_STEW, false));
@@ -221,7 +221,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
         return state.getValue(ON_COOLDOWN);
     }
 
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         if (state.getValue(ON_COOLDOWN) && ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(2) == 0)) {
             cooldownReset(worldIn, pos, state);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
@@ -232,11 +232,11 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
         return !state.getValue(HAS_STEW) || state.getValue(ON_COOLDOWN);
     }
 
-    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         return true;
     }
 
-    public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         if (state.getValue(ON_COOLDOWN))
             cooldownReset(worldIn, pos, state);
         else if (!state.getValue(HAS_STEW)) {
@@ -254,7 +254,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
     }
 
     private void cooldownReset(ServerLevel worldIn, BlockPos pos, BlockState state) {
-        worldIn.gameEvent(GameEvent.BLOCK_UNPRESS, pos);
+        worldIn.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));
         worldIn.setBlockAndUpdate(pos, state.setValue(ON_COOLDOWN, false));
         worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_POP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
     }
@@ -279,7 +279,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
 
     @Nullable
     @Override
-    public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
+    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
         return BlockPathTypes.DANGER_OTHER;
     }
 }

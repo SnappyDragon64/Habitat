@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/template_lantern",
+  "render_type": "cutout",
   "textures": {
     "lantern": "habitat:block/fairy_spore_lantern"
   }

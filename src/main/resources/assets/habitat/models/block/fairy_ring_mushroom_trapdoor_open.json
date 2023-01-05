@@ -1,5 +1,6 @@
 {
   "parent": "block/template_orientable_trapdoor_open",
+  "render_type": "cutout",
   "textures": {
     "texture": "habitat:block/fairy_ring_mushroom_trapdoor"
   }

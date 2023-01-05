@@ -1,6 +1,7 @@
 {
   "credit": "Made with Blockbench",
   "ambientocclusion": false,
+  "render_type": "cutout",
   "textures": {
     "cactus": "habitat:block/ball_cactus",
     "petal": "#flower",

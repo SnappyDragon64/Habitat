@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "habitat:block/cross",
   "textures": {
     "cross": "habitat:block/kabloom_bush_stage7"
   }

@@ -7,6 +7,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class HabitatPlacementModifierTypes {
     public static PlacementModifierType<SlimeChunkFilter> SLIME_CHUNK_FILTER;

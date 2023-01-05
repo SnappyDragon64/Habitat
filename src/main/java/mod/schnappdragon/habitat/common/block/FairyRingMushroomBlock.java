@@ -1,7 +1,6 @@
 package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
-import mod.schnappdragon.habitat.common.entity.monster.Pooka;
 import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
@@ -13,11 +12,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -39,8 +36,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ToolActions;
-
-import java.util.Random;
 
 public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlock {
     protected static final VoxelShape[] SHAPE = {Block.box(6.0D, 0.0D, 6.0D, 10.0D, 13.0D, 10.0D), Block.box(3.0D, 0.0D, 3.0D, 13.0D, 14.0D, 13.0D), Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)};
@@ -71,7 +66,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
      * Particle Animation Method
      */
 
-    public void animateTick(BlockState state, Level worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level worldIn, BlockPos pos, RandomSource rand) {
         if (state.getValue(DUSTED) && rand.nextInt(18 - 2 * state.getValue(MUSHROOMS)) == 0)
             worldIn.addParticle(DustParticleOptions.REDSTONE, pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), 0.0D, 0.0D, 0.0D);
 
@@ -132,7 +127,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
         return state.getValue(MUSHROOMS) < 4 && !state.getValue(DUSTED);
     }
 
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         if (state.getValue(MUSHROOMS) < 4 && ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(25) == 0)) {
             worldIn.setBlock(pos, state.setValue(MUSHROOMS, state.getValue(MUSHROOMS) + 1), 2);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
@@ -143,18 +138,18 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
         return !state.getValue(DUSTED);
     }
 
-    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         return !state.getValue(DUSTED) && (state.getValue(MUSHROOMS) != 4 || rand.nextFloat() < (worldIn.getBlockState(pos.below()).is(BlockTags.MUSHROOM_GROW_BLOCK) ? 0.8F : 0.4F));
     }
 
-    public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         if (state.getValue(MUSHROOMS) < 4)
             worldIn.setBlock(pos, state.setValue(MUSHROOMS, Math.min(4, state.getValue(MUSHROOMS) + Mth.nextInt(rand, 1, 2))), 2);
         else
             growHugeMushroom(worldIn, rand, pos, state);
     }
 
-    private void growHugeMushroom(ServerLevel world, Random rand, BlockPos pos, BlockState state) {
+    private void growHugeMushroom(ServerLevel world, RandomSource rand, BlockPos pos, BlockState state) {
         world.removeBlock(pos, false);
         ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM.get();
 

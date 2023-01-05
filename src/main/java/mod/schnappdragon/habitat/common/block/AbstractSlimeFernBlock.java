@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
@@ -21,8 +22,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.Random;
-
 public abstract class AbstractSlimeFernBlock extends Block implements BonemealableBlock {
     public AbstractSlimeFernBlock(Properties properties) {
         super(properties);
@@ -32,7 +31,7 @@ public abstract class AbstractSlimeFernBlock extends Block implements Bonemealab
      * Particle Animation Method
      */
 
-    public void animateTick(BlockState state, Level worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level worldIn, BlockPos pos, RandomSource rand) {
         if (rand.nextInt(10) == 0) {
             VoxelShape voxelshape = this.getShape(state, worldIn, pos, CollisionContext.empty());
             Vec3 vector3d = voxelshape.bounds().getCenter();
@@ -70,11 +69,11 @@ public abstract class AbstractSlimeFernBlock extends Block implements Bonemealab
         return false;
     }
 
-    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         return true;
     }
 
-    public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
         Direction[] directions = new Direction[]{Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP};
 

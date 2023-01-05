@@ -7,13 +7,12 @@ import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-
-import java.util.Random;
 
 public class SlimeFernFeature extends Feature<NoneFeatureConfiguration> {
     public SlimeFernFeature(Codec<NoneFeatureConfiguration> codec) {
@@ -23,7 +22,7 @@ public class SlimeFernFeature extends Feature<NoneFeatureConfiguration> {
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         WorldGenLevel world = context.level();
         BlockPos pos = context.origin();
-        Random rand = context.random();
+        RandomSource rand = context.random();
 
         int i = 0;
         BlockPos centrePos = pos.offset(7, 0, 7);

@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/flower_pot_cross",
+  "parent": "habitat:block/flower_pot_cross",
   "textures": {
     "plant": "habitat:block/potted_yellow_ball_cactus_flower"
   }

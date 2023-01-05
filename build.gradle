@@ -20,7 +20,7 @@ mixin {
     config 'habitat.mixins.json'
 }
 
-version = '1.1.5'
+version = '1.1.6a1'
 group = 'mod.schnappdragon.habitat'
 archivesBaseName = 'habitat'
 
@@ -28,7 +28,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: 'official', version: '1.18.2'
+    mappings channel: 'official', version: '1.19.2'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -82,7 +82,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.68'
+    minecraft 'net.minecraftforge:forge:1.19.2-43.1.58'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 

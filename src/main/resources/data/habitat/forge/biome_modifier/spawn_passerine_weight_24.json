@@ -1,0 +1,14 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "minecraft:flower_forest",
+    "minecraft:jungle",
+    "minecraft:bamboo_jungle"
+  ],
+  "spawners": {
+    "type": "habitat:passerines",
+    "weight": 24,
+    "minCount": 4,
+    "maxCount": 4
+  }
+}

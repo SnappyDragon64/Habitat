@@ -26,12 +26,6 @@ public final class QuarkFlagRecipeCondition implements ICondition {
         return CompatHelper.checkQuarkFlag(this.flag);
     }
 
-    @Override
-    @SuppressWarnings("removal")
-    public boolean test() {
-        return test(IContext.EMPTY);
-    }
-
     public static class Serializer implements IConditionSerializer<QuarkFlagRecipeCondition> {
         private final ResourceLocation location;
 

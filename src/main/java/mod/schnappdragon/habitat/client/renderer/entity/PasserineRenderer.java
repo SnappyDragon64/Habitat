@@ -46,8 +46,12 @@ public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Pas
 
     @Override
     public float getBob(Passerine passerine, float partialTicks) {
-        float f = Mth.lerp(partialTicks, passerine.initialFlap, passerine.flap);
-        float f1 = Mth.lerp(partialTicks, passerine.initialFlapSpeed, passerine.flapSpeed);
-        return (Mth.sin(f) + 1.0F) * f1;
+        if (passerine.isFlying()) {
+            float f = Mth.lerp(partialTicks, passerine.initialFlap, passerine.flap);
+            float f1 = Mth.lerp(partialTicks, passerine.initialFlapSpeed, passerine.flapSpeed);
+            return (Mth.sin(f) + 1.0F) * f1;
+        } else {
+            return super.getBob(passerine, partialTicks);
+        }
     }
 }

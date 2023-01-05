@@ -66,7 +66,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 		this.leftFoot.xRot = 0.0F;
 
 		switch (getState(passerine)) {
-			case SLEEPING -> {
+			case SLEEPING:
 				this.head.y = 21.0F;
 				this.head.z = -1.5F;
 				this.body.y = 22.5F;
@@ -75,8 +75,8 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 				this.head.xRot = 0.3491F;
 				this.head.yRot = 2.094F;
 				this.tail.xRot = 0.1745F;
-			}
-			case FLYING -> {
+				break;
+			case FLYING:
 				this.body.xRot = -0.3927F;
 				this.rightWing.xRot = -0.5236F;
 				this.leftWing.xRot = -0.5236F;
@@ -85,23 +85,35 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 				this.rightFoot.yRot = 0.1571F;
 				this.leftFoot.yRot = -0.1571F;
 				this.tail.xRot = 0.1309F;
-			}
-			case STANDING -> {
+				break;
+			case PREENING:
+				this.head.z = -1.0F;
+				this.head.xRot = 0.1745F;
+				this.head.yRot = 1.833F;
+				this.rightWing.xRot = -0.5236F;
+				this.rightWing.zRot = 1.396F;
+			case STANDING:
+				if (getState(passerine) != State.PREENING)
+					this.rightWing.xRot = -0.1963F;
+			default:
 				this.body.xRot = -0.0873F;
 				this.leftWing.xRot = -0.1963F;
 				this.rightFoot.yRot = 0.1745F;
 				this.leftFoot.yRot = -0.1745F;
 				this.tail.xRot = 0.3927F;
-			}
 		}
 	}
 
 	public void setupAnim(Passerine passerine, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (!(getState(passerine) == PasserineModel.State.SLEEPING)) {
+		if (getState(passerine) == State.SLEEPING) {
+			this.head.zRot = Mth.cos(ageInTicks * 0.027F) / 22.0F;
+		} else if (getState(passerine) == PasserineModel.State.PREENING) {
+			this.head.xRot += 0.1745F * (1.0F - Mth.cos(ageInTicks * 1.5F)) / 2.0F;
+			this.head.yRot += 0.2793F * (1.0F - Mth.cos(ageInTicks)) / 2.0F;
+		} else {
 			this.head.xRot = headPitch * ((float) Math.PI / 180F);
 			this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
-
-			if (getState(passerine) == PasserineModel.State.FLYING) {
+			if (getState(passerine) == State.FLYING) {
 				float f = ageInTicks * 0.2F;
 				this.head.y = 20.0F + f;
 				this.body.y = 21.5F + f;
@@ -122,6 +134,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	}
 
 	private static State getState(Passerine passerine) {
+		if (passerine.isPreening()) return State.PREENING;
 		if (passerine.isAsleep()) return State.SLEEPING;
 		if (passerine.isFlying()) return State.FLYING;
 		return State.STANDING;
@@ -130,6 +143,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	public enum State {
 		FLYING,
 		STANDING,
-		SLEEPING
+		SLEEPING,
+		PREENING
 	}
 }

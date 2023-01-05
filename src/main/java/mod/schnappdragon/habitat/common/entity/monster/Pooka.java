@@ -18,8 +18,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -94,7 +96,7 @@ public class Pooka extends Rabbit implements Enemy, IHabitatShearable {
     }
 
     @Override
-    protected int getExperienceReward(Player player) {
+    public int getExperienceReward() {
         return this.xpReward;
     }
 
@@ -353,7 +355,7 @@ public class Pooka extends Rabbit implements Enemy, IHabitatShearable {
                         this.level.broadcastEntityEvent(this, (byte) 12);
                     }
 
-                    this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
+                    this.gameEvent(GameEvent.ENTITY_INTERACT, this);
                 }
 
                 return InteractionResult.sidedSuccess(this.level.isClientSide);
@@ -362,7 +364,7 @@ public class Pooka extends Rabbit implements Enemy, IHabitatShearable {
                 if (!this.level.isClientSide) {
                     this.usePlayerItem(player, hand, stack);
                     this.heal(stack.getItem().getFoodProperties().getNutrition());
-                    this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
+                    this.gameEvent(GameEvent.ENTITY_INTERACT, this);
                 }
 
                 return InteractionResult.sidedSuccess(this.level.isClientSide);
@@ -463,7 +465,7 @@ public class Pooka extends Rabbit implements Enemy, IHabitatShearable {
      * Spawn Methods
      */
 
-    public static boolean checkPookaSpawnRules(EntityType<Pooka> pooka, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random rand) {
+    public static boolean checkPookaSpawnRules(EntityType<Pooka> pooka, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource rand) {
         return world.getDifficulty() != Difficulty.PEACEFUL && world.getBlockState(pos.below()).is(BlockTags.RABBITS_SPAWNABLE_ON) && world.getSkyDarken() >= 5 && world.dimensionType().hasSkyLight();
     }
 
@@ -485,16 +487,16 @@ public class Pooka extends Rabbit implements Enemy, IHabitatShearable {
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
-    private int getRandomRabbitType(LevelAccessor world) {
-        Holder<Biome> biomeHolder = world.getBiome(this.blockPosition());
-        Biome biome = biomeHolder.value();
-        int i = this.random.nextInt(100);
-        if (biome.getPrecipitation() == Biome.Precipitation.SNOW)
+    private int getRandomRabbitType(LevelAccessor p_29676_) {
+        Holder<Biome> holder = p_29676_.getBiome(this.blockPosition());
+        int i = p_29676_.getRandom().nextInt(100);
+        if (holder.value().getPrecipitation() == Biome.Precipitation.SNOW) {
             return i < 80 ? 1 : 3;
-        else if (Biome.getBiomeCategory(biomeHolder) == Biome.BiomeCategory.DESERT)
+        } else if (holder.is(BiomeTags.ONLY_ALLOWS_SNOW_AND_GOLD_RABBITS)) {
             return 4;
-        else
+        } else {
             return i < 50 ? 0 : (i < 90 ? 5 : 2);
+        }
     }
 
     private Pair<Integer, Integer> getRandomAid() {
@@ -519,7 +521,7 @@ public class Pooka extends Rabbit implements Enemy, IHabitatShearable {
     public boolean doHurtTarget(Entity entityIn) {
         if (entityIn.getType() == EntityType.RABBIT && entityIn.isAlive() && !entityIn.isInvulnerableTo(DamageSource.mobAttack(this))) {
             this.playSound(HabitatSoundEvents.POOKA_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.gameEvent(GameEvent.ENTITY_DAMAGED, this);
+            this.gameEvent(GameEvent.ENTITY_DAMAGE, this);
 
             Rabbit rabbit = (Rabbit) entityIn;
             rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
