@@ -20,244 +20,254 @@
   },
   "criteria": {
     "american_goldfinch": {
-      "trigger": "minecraft:using_item",
       "conditions": {
+        "item": {
+          "items": [
+            "minecraft:spyglass"
+          ]
+        },
         "player": [
           {
             "condition": "minecraft:entity_properties",
+            "entity": "this",
             "predicate": {
-              "player": {
+              "type_specific": {
+                "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
                   "nbt": "{Variant:0}"
                 }
               }
-            },
-            "entity": "this"
+            }
           }
-        ],
+        ]
+      },
+      "trigger": "minecraft:using_item"
+    },
+    "bali_myna": {
+      "conditions": {
         "item": {
           "items": [
             "minecraft:spyglass"
           ]
-        }
-      }
-    },
-    "bali_myna": {
-      "trigger": "minecraft:using_item",
-      "conditions": {
+        },
         "player": [
           {
             "condition": "minecraft:entity_properties",
+            "entity": "this",
             "predicate": {
-              "player": {
+              "type_specific": {
+                "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
                   "nbt": "{Variant:1}"
                 }
               }
-            },
-            "entity": "this"
+            }
           }
-        ],
+        ]
+      },
+      "trigger": "minecraft:using_item"
+    },
+    "blue_jay": {
+      "conditions": {
         "item": {
           "items": [
             "minecraft:spyglass"
           ]
-        }
-      }
-    },
-    "blue_jay": {
-      "trigger": "minecraft:using_item",
-      "conditions": {
+        },
         "player": [
           {
             "condition": "minecraft:entity_properties",
+            "entity": "this",
             "predicate": {
-              "player": {
+              "type_specific": {
+                "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
                   "nbt": "{Variant:2}"
                 }
               }
-            },
-            "entity": "this"
+            }
           }
-        ],
+        ]
+      },
+      "trigger": "minecraft:using_item"
+    },
+    "common_sparrow": {
+      "conditions": {
         "item": {
           "items": [
             "minecraft:spyglass"
           ]
-        }
-      }
-    },
-    "common_sparrow": {
-      "trigger": "minecraft:using_item",
-      "conditions": {
+        },
         "player": [
           {
             "condition": "minecraft:entity_properties",
+            "entity": "this",
             "predicate": {
-              "player": {
+              "type_specific": {
+                "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
                   "nbt": "{Variant:3}"
                 }
               }
-            },
-            "entity": "this"
+            }
           }
-        ],
+        ]
+      },
+      "trigger": "minecraft:using_item"
+    },
+    "eastern_bluebird": {
+      "conditions": {
         "item": {
           "items": [
             "minecraft:spyglass"
           ]
-        }
-      }
-    },
-    "eastern_bluebird": {
-      "trigger": "minecraft:using_item",
-      "conditions": {
+        },
         "player": [
           {
             "condition": "minecraft:entity_properties",
+            "entity": "this",
             "predicate": {
-              "player": {
+              "type_specific": {
+                "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
                   "nbt": "{Variant:4}"
                 }
               }
-            },
-            "entity": "this"
+            }
           }
-        ],
+        ]
+      },
+      "trigger": "minecraft:using_item"
+    },
+    "eurasian_bullfinch": {
+      "conditions": {
         "item": {
           "items": [
             "minecraft:spyglass"
           ]
-        }
-      }
-    },
-    "eurasian_bullfinch": {
-      "trigger": "minecraft:using_item",
-      "conditions": {
+        },
         "player": [
           {
             "condition": "minecraft:entity_properties",
+            "entity": "this",
             "predicate": {
-              "player": {
+              "type_specific": {
+                "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
                   "nbt": "{Variant:5}"
                 }
               }
-            },
-            "entity": "this"
+            }
           }
-        ],
+        ]
+      },
+      "trigger": "minecraft:using_item"
+    },
+    "flame_robin": {
+      "conditions": {
         "item": {
           "items": [
             "minecraft:spyglass"
           ]
-        }
-      }
-    },
-    "flame_robin": {
-      "trigger": "minecraft:using_item",
-      "conditions": {
+        },
         "player": [
           {
             "condition": "minecraft:entity_properties",
+            "entity": "this",
             "predicate": {
-              "player": {
+              "type_specific": {
+                "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
                   "nbt": "{Variant:6}"
                 }
               }
-            },
-            "entity": "this"
+            }
           }
-        ],
+        ]
+      },
+      "trigger": "minecraft:using_item"
+    },
+    "northern_cardinal": {
+      "conditions": {
         "item": {
           "items": [
             "minecraft:spyglass"
           ]
-        }
-      }
-    },
-    "northern_cardinal": {
-      "trigger": "minecraft:using_item",
-      "conditions": {
+        },
         "player": [
           {
             "condition": "minecraft:entity_properties",
+            "entity": "this",
             "predicate": {
-              "player": {
+              "type_specific": {
+                "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
                   "nbt": "{Variant:7}"
                 }
               }
-            },
-            "entity": "this"
+            }
           }
-        ],
+        ]
+      },
+      "trigger": "minecraft:using_item"
+    },
+    "red_throated_parrotfinch": {
+      "conditions": {
         "item": {
           "items": [
             "minecraft:spyglass"
           ]
-        }
-      }
-    },
-    "red_throated_parrotfinch": {
-      "trigger": "minecraft:using_item",
-      "conditions": {
+        },
         "player": [
           {
             "condition": "minecraft:entity_properties",
+            "entity": "this",
             "predicate": {
-              "player": {
+              "type_specific": {
+                "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
                   "nbt": "{Variant:8}"
                 }
               }
-            },
-            "entity": "this"
+            }
           }
-        ],
+        ]
+      },
+      "trigger": "minecraft:using_item"
+    },
+    "violet_backed_starling": {
+      "conditions": {
         "item": {
           "items": [
             "minecraft:spyglass"
           ]
-        }
-      }
-    },
-    "violet_backed_starling": {
-      "trigger": "minecraft:using_item",
-      "conditions": {
+        },
         "player": [
           {
             "condition": "minecraft:entity_properties",
+            "entity": "this",
             "predicate": {
-              "player": {
+              "type_specific": {
+                "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
                   "nbt": "{Variant:9}"
                 }
               }
-            },
-            "entity": "this"
+            }
           }
-        ],
-        "item": {
-          "items": [
-            "minecraft:spyglass"
-          ]
-        }
-      }
+        ]
+      },
+      "trigger": "minecraft:using_item"
     }
   },
   "requirements": [

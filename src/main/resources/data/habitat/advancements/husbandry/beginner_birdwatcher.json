@@ -17,27 +17,28 @@
   },
   "criteria": {
     "spyglass_at_passerine": {
-      "trigger": "minecraft:using_item",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "player": {
-                "looking_at": {
-                  "type": "habitat:passerine"
-                }
-              }
-            },
-            "entity": "this"
-          }
-        ],
         "item": {
           "items": [
             "minecraft:spyglass"
           ]
-        }
-      }
+        },
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "player",
+                "looking_at": {
+                  "type": "habitat:passerine"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:using_item"
     }
   },
   "requirements": [
