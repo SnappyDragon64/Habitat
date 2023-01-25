@@ -24,7 +24,7 @@
     ]
   },
   "spawners": {
-    "type": "habitat:passerines",
+    "type": "habitat:passerine",
     "weight": 14,
     "minCount": 4,
     "maxCount": 4

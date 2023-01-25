@@ -6,7 +6,7 @@
     "minecraft:bamboo_jungle"
   ],
   "spawners": {
-    "type": "habitat:passerines",
+    "type": "habitat:passerine",
     "weight": 24,
     "minCount": 4,
     "maxCount": 4
