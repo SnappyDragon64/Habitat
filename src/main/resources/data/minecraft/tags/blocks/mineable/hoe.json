@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "habitat:fairylight"
+    "habitat:fairylight",
+    "habitat:kabloom_fruit_pile"
   ]
 }
