@@ -1,6 +1,7 @@
 package mod.schnappdragon.habitat.common.levelgen.feature;
 
 import com.mojang.serialization.Codec;
+import mod.schnappdragon.habitat.common.block.AbstractSlimeFernBlock;
 import mod.schnappdragon.habitat.common.block.SlimeFernBlock;
 import mod.schnappdragon.habitat.common.block.WallSlimeFernBlock;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
@@ -43,7 +44,7 @@ public class SlimeFernFeature extends Feature<NoneFeatureConfiguration> {
                         else
                             state = HabitatBlocks.WALL_SLIME_FERN.get().defaultBlockState().setValue(WallSlimeFernBlock.HORIZONTAL_FACING, dir.getOpposite());
 
-                        this.setBlock(world, blockpos$mutable, state);
+                        this.setBlock(world, blockpos$mutable, state.setValue(AbstractSlimeFernBlock.SLIMY, true));
 
                         ++i;
                         break;

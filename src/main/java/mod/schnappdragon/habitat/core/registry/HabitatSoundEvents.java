@@ -19,6 +19,7 @@ public class HabitatSoundEvents {
     public static final RegistryObject<SoundEvent> KABLOOM_BUSH_SHEAR = register("block.kabloom_bush.shear");
 
     public static final RegistryObject<SoundEvent> SLIME_FERN_DROP = register("block.slime_fern.drip");
+    public static final RegistryObject<SoundEvent> SLIME_FERN_COAT = register("block.slime_fern.coat");
 
     public static final RegistryObject<SoundEvent> FLOWERING_BALL_CACTUS_SHEAR = register("block.flowering_ball_cactus.shear");
 

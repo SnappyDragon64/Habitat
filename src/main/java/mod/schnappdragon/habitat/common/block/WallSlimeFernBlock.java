@@ -25,11 +25,11 @@ public class WallSlimeFernBlock extends AbstractSlimeFernBlock {
 
     public WallSlimeFernBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(SLIMY, false).setValue(HORIZONTAL_FACING, Direction.NORTH));
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(HORIZONTAL_FACING);
+        builder.add(HORIZONTAL_FACING, SLIMY);
     }
 
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
@@ -57,16 +57,19 @@ public class WallSlimeFernBlock extends AbstractSlimeFernBlock {
 
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockState state = this.defaultBlockState();
+        BlockState state = super.getStateForPlacement(context);
 
-        for (Direction dir : context.getNearestLookingDirections()) {
-            if (dir.getAxis().isHorizontal()) {
-                state = state.setValue(HORIZONTAL_FACING, dir.getOpposite());
-                if (state.canSurvive(context.getLevel(), context.getClickedPos())) {
-                    return state;
+        if (state != null) {
+            for (Direction dir : context.getNearestLookingDirections()) {
+                if (dir.getAxis().isHorizontal()) {
+                    state = state.setValue(HORIZONTAL_FACING, dir.getOpposite());
+                    if (state.canSurvive(context.getLevel(), context.getClickedPos())) {
+                        return state;
+                    }
                 }
             }
         }
+
         return null;
     }
 

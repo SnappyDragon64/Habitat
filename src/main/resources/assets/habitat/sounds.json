@@ -122,6 +122,16 @@
       }
     ]
   },
+  "block.slime_fern.coat": {
+    "subtitle": "habitat.subtitles.block.slime_fern.coat",
+    "sounds": [
+      "mob/slime/small1",
+      "mob/slime/small2",
+      "mob/slime/small3",
+      "mob/slime/small4",
+      "mob/slime/small5"
+    ]
+  },
   "block.flowering_ball_cactus.shear": {
     "subtitle": "habitat.subtitles.block.flowering_ball_cactus.shear",
     "sounds": [

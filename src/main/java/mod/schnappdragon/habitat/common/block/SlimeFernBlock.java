@@ -25,11 +25,11 @@ public class SlimeFernBlock extends AbstractSlimeFernBlock {
 
     public SlimeFernBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(ON_CEILING, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(SLIMY, false).setValue(ON_CEILING, false));
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(ON_CEILING);
+        builder.add(ON_CEILING, SLIMY);
     }
 
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
@@ -42,11 +42,16 @@ public class SlimeFernBlock extends AbstractSlimeFernBlock {
 
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        for (Direction dir : context.getNearestLookingDirections()) {
-            if (dir.getAxis() == Direction.Axis.Y) {
-                return this.defaultBlockState().setValue(ON_CEILING, (dir == Direction.UP));
+        BlockState state = super.getStateForPlacement(context);
+
+        if (state != null) {
+            for (Direction dir : context.getNearestLookingDirections()) {
+                if (dir.getAxis() == Direction.Axis.Y) {
+                    return super.getStateForPlacement(context).setValue(ON_CEILING, (dir == Direction.UP));
+                }
             }
         }
+
         return null;
     }
 
