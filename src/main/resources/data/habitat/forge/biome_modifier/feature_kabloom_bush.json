@@ -3,7 +3,7 @@
   "biomes": {
     "type": "forge:and",
     "values": [
-      "#minecraft:is_plains",
+      "#forge:is_plains",
       {
         "type": "forge:not",
         "value": "#forge:is_cold"
