@@ -634,9 +634,11 @@ public class Passerine extends Animal implements FlyingAnimal {
     class PreenGoal extends Goal {
         private static final int MINIMUM_WAIT_TIME = reducedTickDelay(3000);
         private int countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
+
         public PreenGoal() {
             this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
         }
+
         public boolean canUse() {
             if (this.countdown > 0) {
                 this.countdown--;
@@ -644,22 +646,27 @@ public class Passerine extends Animal implements FlyingAnimal {
             } else
                 return Passerine.this.xxa == 0.0F && Passerine.this.yya == 0.0F && Passerine.this.zza == 0.0F && this.canPreen();
         }
+
         public boolean canContinueToUse() {
             return Passerine.this.getPreenCounter() > 0 && this.canPreen();
         }
+
         private boolean canPreen() {
             return !Passerine.this.isTurkey() && !Passerine.this.isFlying() && !Passerine.this.isAsleep() && !Passerine.this.isInPowderSnow;
         }
+
         public void start() {
             Passerine.this.setPreenCounter(this.adjustedTickDelay(40));
             Passerine.this.getNavigation().stop();
             Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 14);
         }
+
         public void stop() {
             Passerine.this.setPreenCounter(0);
             this.countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
             Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 15);
         }
+
         public void tick() {
             Passerine.this.setPreenCounter(Math.max(0, Passerine.this.getPreenCounter() - 1));
             if (Passerine.this.getPreenCounter() == this.adjustedTickDelay(20))
