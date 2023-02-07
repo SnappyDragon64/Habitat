@@ -80,6 +80,8 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 				this.body.xRot = -0.3927F;
 				this.rightWing.xRot = -0.5236F;
 				this.leftWing.xRot = -0.5236F;
+				this.rightWing.zRot = 0.2618F;
+				this.leftWing.zRot = -0.2618F;
 				this.rightFoot.xRot = -0.5236F;
 				this.leftFoot.xRot = -0.5236F;
 				this.rightFoot.yRot = 0.1571F;
@@ -115,17 +117,18 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 			this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
 			if (getState(passerine) == State.FLYING) {
 				float f = ageInTicks * 0.2F;
-				this.head.y = 20.0F + f;
-				this.body.y = 21.5F + f;
-				this.rightWing.y = 21.0F + f;
-				this.leftWing.y = 21.0F + f;
-				this.rightFoot.y = 23.0F + f;
-				this.leftFoot.y = 23.0F + f;
+				this.head.y += f;
+				this.body.y += f;
+				this.rightWing.y += f;
+				this.leftWing.y += f;
+				this.rightFoot.y += f;
+				this.leftFoot.y += f;
 
-				this.tail.xRot += Mth.cos(limbSwing * 0.6662F) * 0.35F * limbSwingAmount;
+				this.head.xRot -= ageInTicks * 0.0349F;
+				this.tail.xRot -= ageInTicks * 0.1309F;
 
-				this.rightWing.zRot = 0.2618F + ageInTicks;
-				this.leftWing.zRot = -0.2618F - ageInTicks;
+				this.rightWing.zRot += ageInTicks;
+				this.leftWing.zRot -= ageInTicks;
 			} else {
 				this.rightFoot.xRot += Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
 				this.leftFoot.xRot += Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
