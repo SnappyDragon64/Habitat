@@ -35,7 +35,7 @@
                 "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
-                  "nbt": "{Variant:0}"
+                  "nbt": "{Variant:\"habitat:american_goldfinch\"}"
                 }
               }
             }
@@ -60,7 +60,7 @@
                 "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
-                  "nbt": "{Variant:1}"
+                  "nbt": "{Variant:\"habitat:bali_myna\"}"
                 }
               }
             }
@@ -85,7 +85,7 @@
                 "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
-                  "nbt": "{Variant:2}"
+                  "nbt": "{Variant:\"habitat:blue_jay\"}"
                 }
               }
             }
@@ -110,7 +110,7 @@
                 "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
-                  "nbt": "{Variant:3}"
+                  "nbt": "{Variant:\"habitat:common_sparrow\"}"
                 }
               }
             }
@@ -135,7 +135,7 @@
                 "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
-                  "nbt": "{Variant:4}"
+                  "nbt": "{Variant:\"habitat:eastern_bluebird\"}"
                 }
               }
             }
@@ -160,7 +160,7 @@
                 "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
-                  "nbt": "{Variant:5}"
+                  "nbt": "{Variant:\"habitat:eurasian_bullfinch\"}"
                 }
               }
             }
@@ -185,7 +185,7 @@
                 "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
-                  "nbt": "{Variant:6}"
+                  "nbt": "{Variant:\"habitat:flame_robin\"}"
                 }
               }
             }
@@ -210,7 +210,7 @@
                 "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
-                  "nbt": "{Variant:7}"
+                  "nbt": "{Variant:\"habitat:northern_cardinal\"}"
                 }
               }
             }
@@ -235,7 +235,7 @@
                 "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
-                  "nbt": "{Variant:8}"
+                  "nbt": "{Variant:\"habitat:red_throated_parrotfinch\"}"
                 }
               }
             }
@@ -260,7 +260,7 @@
                 "type": "player",
                 "looking_at": {
                   "type": "habitat:passerine",
-                  "nbt": "{Variant:9}"
+                  "nbt": "{Variant:\"habitat:violet_backed_starling\"}"
                 }
               }
             }

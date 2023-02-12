@@ -6,8 +6,10 @@ import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
+import mod.schnappdragon.habitat.core.registry.PasserineVariants;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
+import mod.schnappdragon.habitat.core.tags.PasserineVariantTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,10 +18,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -54,13 +58,15 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
-import java.util.Random;
+import java.util.Objects;
+import java.util.Optional;
 
 public class Passerine extends Animal implements FlyingAnimal {
     private static final EntityDataAccessor<Integer> PREEN_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<String> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Boolean> DATA_SLEEPING = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.BOOLEAN);
 
+    private int foodTicks;
     public float flap;
     public float flapSpeed;
     public float initialFlapSpeed;
@@ -112,42 +118,50 @@ public class Passerine extends Animal implements FlyingAnimal {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(PREEN_COUNTER, 0);
-        this.entityData.define(DATA_VARIANT_ID, 0);
+        this.entityData.define(DATA_VARIANT_ID, PasserineVariants.COMMON_SPARROW.getId().toString());
         this.entityData.define(DATA_SLEEPING, false);
     }
 
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putInt("Variant", this.getVariantId());
+        compound.putString("Variant", this.getVariantId());
         compound.putBoolean("Sleeping", this.isAsleep());
+        compound.putInt("FoodTicks", this.foodTicks);
+    }
+
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        this.setVariantId(compound.getString("Variant"));
+        this.setSleeping(compound.getBoolean("Sleeping"));
+        this.foodTicks = compound.getInt("FoodTicks");
     }
 
     public void setPreenCounter(int counter) {
         this.entityData.set(PREEN_COUNTER, counter);
     }
+
     public int getPreenCounter() {
         return this.entityData.get(PREEN_COUNTER);
     }
+
     public boolean isPreening() {
         return this.getPreenCounter() > 0;
     }
 
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        this.setVariantId(compound.getInt("Variant"));
-        this.setSleeping(compound.getBoolean("Sleeping"));
-    }
-
-    public void setVariantId(int id) {
+    public void setVariantId(String id) {
         this.entityData.set(DATA_VARIANT_ID, id);
     }
 
-    public int getVariantId() {
-        return Mth.clamp(this.entityData.get(DATA_VARIANT_ID), 0, 9);
+    public void setVariant(PasserineVariant variant) {
+        this.setVariantId(Objects.requireNonNull(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getKey(variant)).toString());
     }
 
-    public Variant getVariant() {
-        return Variant.getVariantById(this.getVariantId());
+    public String getVariantId() {
+        return this.entityData.get(DATA_VARIANT_ID);
+    }
+
+    public PasserineVariant getVariant() {
+        return Objects.requireNonNullElse(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getValue(new ResourceLocation(this.getVariantId())), PasserineVariants.COMMON_SPARROW.get());
     }
 
     public void setSleeping(boolean isSleeping) {
@@ -166,9 +180,21 @@ public class Passerine extends Animal implements FlyingAnimal {
         return this.entityData.get(DATA_SLEEPING);
     }
 
+    public void setFoodTimer() {
+        this.foodTicks = 6000;
+    }
+
     /*
      * AI Methods
      */
+
+    @Override
+    protected void customServerAiStep() {
+        if (this.foodTicks > 0)
+            foodTicks--;
+
+        super.customServerAiStep();
+    }
 
     public void aiStep() {
         super.aiStep();
@@ -264,16 +290,21 @@ public class Passerine extends Animal implements FlyingAnimal {
         ItemStack stack = player.getItemInHand(hand);
 
         if (stack.is(HabitatItemTags.PASSERINE_FOOD) && this.isNotBusy()) {
-            if (!this.level.isClientSide) {
+            if (!this.level.isClientSide && this.foodTicks == 0) {
+                this.setFoodTimer();
                 this.heal(1.0F);
                 this.usePlayerItem(player, hand, stack);
                 this.level.broadcastEntityEvent(this, (byte) 13);
+                this.level.broadcastEntityEvent(this, (byte) 18);
                 this.gameEvent(GameEvent.ENTITY_INTERACT, this);
                 HabitatCriterionTriggers.FEED_PASSERINE.trigger((ServerPlayer) player);
                 this.playSound(HabitatSoundEvents.PASSERINE_AMBIENT.get(), 1.0F, this.getVoicePitch());
+                return InteractionResult.SUCCESS;
             }
 
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+            if (this.level.isClientSide) {
+                return InteractionResult.CONSUME;
+            }
         }
 
         return super.mobInteract(player, hand);
@@ -286,35 +317,34 @@ public class Passerine extends Animal implements FlyingAnimal {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        int i = this.getVariantByBiome(worldIn).ordinal();
+        PasserineVariant i = this.getVariantByBiome(worldIn);
         if (spawnDataIn instanceof Passerine.PasserineGroupData data)
             i = data.variant;
         else
             spawnDataIn = new Passerine.PasserineGroupData(i);
 
-        this.setVariantId(i);
+        this.setVariant(i);
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
-    public Variant getVariantByBiome(LevelAccessor worldIn) {
+    public PasserineVariant getVariantByBiome(LevelAccessor worldIn) {
         Holder<Biome> biomeHolder = worldIn.getBiome(this.blockPosition());
         Biome biome = biomeHolder.value();
-        VariantCategory category;
+        TagKey<PasserineVariant> tag = PasserineVariantTags.COMMON;;
 
         if (biomeHolder.is(Biomes.FLOWER_FOREST))
-            category = VariantCategory.ALL;
+            tag = PasserineVariantTags.ALL;
         else if (biomeHolder.is(BiomeTags.IS_JUNGLE))
-            category = VariantCategory.JUNGLE;
+            tag = PasserineVariantTags.JUNGLE;
         else if (biome.getBaseTemperature() >= 1.0F)
-            category = VariantCategory.HOT;
+            tag = PasserineVariantTags.HOT;
         else if (biome.getBaseTemperature() < 0.5F)
-            category = VariantCategory.COLD;
+            tag = PasserineVariantTags.COLD;
         else if (biome.getBaseTemperature() <= 0.6F)
-            category = VariantCategory.TEMPERATE;
-        else
-            category = VariantCategory.COMMON;
+            tag = PasserineVariantTags.TEMPERATE;
 
-        return category.getRandomVariant(this.random);
+        Optional<PasserineVariant> variantsInTag = PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().tags().getTag(tag).getRandomElement(this.random);
+        return variantsInTag.orElse(PasserineVariants.COMMON_SPARROW.get());
     }
 
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
@@ -396,11 +426,11 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private ColorableParticleOption getFeather() {
-        return new ColorableParticleOption(HabitatParticleTypes.FEATHER.get(), new Vector3f(Vec3.fromRGB24(this.getVariant().featherColor)));
+        return new ColorableParticleOption(HabitatParticleTypes.FEATHER.get(), new Vector3f(Vec3.fromRGB24(this.getVariant().featherColor())));
     }
 
     private ColorableParticleOption getNote() {
-        return new ColorableParticleOption(HabitatParticleTypes.NOTE.get(), new Vector3f(Vec3.fromRGB24(this.getVariant().noteColor)));
+        return new ColorableParticleOption(HabitatParticleTypes.NOTE.get(), new Vector3f(Vec3.fromRGB24(this.getVariant().noteColor())));
     }
 
     /*
@@ -416,7 +446,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public boolean isGoldfish() {
-        return this.getVariant() == Variant.AMERICAN_GOLDFINCH && "Goldfish".equals(ChatFormatting.stripFormatting(this.getName().getString()));
+        return this.getVariant() == PasserineVariants.AMERICAN_GOLDFINCH.get() && "Goldfish".equals(ChatFormatting.stripFormatting(this.getName().getString()));
     }
 
     public boolean isTurkey() {
@@ -481,62 +511,14 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     public static class PasserineGroupData extends AgeableMob.AgeableMobGroupData {
-        public final int variant;
+        public final PasserineVariant variant;
 
-        public PasserineGroupData(int variantId) {
+        public PasserineGroupData(PasserineVariant variant) {
             super(false);
-            this.variant = variantId;
+            this.variant = variant;
         }
     }
 
-    /*
-     * Variant
-     */
-
-    public enum Variant {
-        AMERICAN_GOLDFINCH(16052497, 16775680),
-        BALI_MYNA(16777215, 8703),
-        BLUE_JAY(4815308, 24063),
-        COMMON_SPARROW(7488818, 16730112),
-        EASTERN_BLUEBIRD(5012138, 16744192),
-        EURASIAN_BULLFINCH(796479, 16711726),
-        FLAME_ROBIN(6248013, 16739840),
-        NORTHERN_CARDINAL(13183262, 16714752),
-        RED_THROATED_PARROTFINCH(4487992, 16713728),
-        VIOLET_BACKED_STARLING(6435209, 9175295);
-
-        private static final Variant[] VARIANTS = Variant.values();
-        private final int featherColor;
-        private final int noteColor;
-
-        Variant(int featherColor, int noteColor) {
-            this.featherColor = featherColor;
-            this.noteColor = noteColor;
-        }
-
-        private static Variant getVariantById(int id) {
-            return VARIANTS[Mth.clamp(id, 0, 9)];
-        }
-    }
-
-    public enum VariantCategory {
-        ALL(Variant.VARIANTS),
-        JUNGLE(Variant.BALI_MYNA, Variant.RED_THROATED_PARROTFINCH),
-        HOT(Variant.COMMON_SPARROW, Variant.FLAME_ROBIN),
-        COLD(Variant.BLUE_JAY, Variant.COMMON_SPARROW, Variant.EURASIAN_BULLFINCH, Variant.NORTHERN_CARDINAL),
-        TEMPERATE(Variant.AMERICAN_GOLDFINCH, Variant.BLUE_JAY, Variant.COMMON_SPARROW, Variant.EASTERN_BLUEBIRD, Variant.EURASIAN_BULLFINCH, Variant.NORTHERN_CARDINAL),
-        COMMON(Variant.AMERICAN_GOLDFINCH, Variant.COMMON_SPARROW, Variant.EURASIAN_BULLFINCH, Variant.FLAME_ROBIN, Variant.NORTHERN_CARDINAL, Variant.VIOLET_BACKED_STARLING);
-
-        private final Variant[] variants;
-
-        VariantCategory(Variant... variants) {
-            this.variants = variants;
-        }
-
-        private Variant getRandomVariant(RandomSource random) {
-            return this.variants[random.nextInt(this.variants.length)];
-        }
-    }
 
     /*
      * Controllers

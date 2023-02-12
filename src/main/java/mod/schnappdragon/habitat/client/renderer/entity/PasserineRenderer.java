@@ -11,18 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Passerine>> {
-    public static final ResourceLocation[] PASSERINE_LOCATIONS = new ResourceLocation[]{
-            new ResourceLocation(Habitat.MODID, "textures/entity/passerine/american_goldfinch.png"),
-            new ResourceLocation(Habitat.MODID, "textures/entity/passerine/bali_myna.png"),
-            new ResourceLocation(Habitat.MODID, "textures/entity/passerine/blue_jay.png"),
-            new ResourceLocation(Habitat.MODID, "textures/entity/passerine/common_sparrow.png"),
-            new ResourceLocation(Habitat.MODID, "textures/entity/passerine/eastern_bluebird.png"),
-            new ResourceLocation(Habitat.MODID, "textures/entity/passerine/eurasian_bullfinch.png"),
-            new ResourceLocation(Habitat.MODID, "textures/entity/passerine/flame_robin.png"),
-            new ResourceLocation(Habitat.MODID, "textures/entity/passerine/northern_cardinal.png"),
-            new ResourceLocation(Habitat.MODID, "textures/entity/passerine/red_throated_parrotfinch.png"),
-            new ResourceLocation(Habitat.MODID, "textures/entity/passerine/violet_backed_starling.png")
-    };
     public static final ResourceLocation PASSERINE_BERDLY_LOCATION = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/berdly.png");
     public static final ResourceLocation PASSERINE_GOLDFISH_LOCATION = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/goldfish.png");
     public static final ResourceLocation PASSERINE_TURKEY_LOCATION = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/turkey.png");
@@ -41,7 +29,7 @@ public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Pas
         else if (passerine.isTurkey())
             return PASSERINE_TURKEY_LOCATION;
 
-        return PASSERINE_LOCATIONS[passerine.getVariantId()];
+        return passerine.getVariant().texture();
     }
 
     @Override

@@ -43,6 +43,7 @@ public class Habitat {
         HabitatPlacedFeatures.PLACED_FEATURES.register(modEventBus);
         HabitatParticleTypes.PARTICLE_TYPES.register(modEventBus);
         HabitatPoiTypes.POI_TYPES.register(modEventBus);
+        PasserineVariants.PASSERINE_VARIANTS.register(modEventBus);
 
         RecipeConditions.registerSerializers();
 
