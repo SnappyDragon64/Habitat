@@ -13,7 +13,7 @@ public class HabitatPlacementModifierTypes {
     public static PlacementModifierType<SlimeChunkFilter> SLIME_CHUNK_FILTER;
 
     public static void registerPlacementModifierTypes() {
-        SLIME_CHUNK_FILTER = register("slime_chunk_filter", SlimeChunkFilter.CODEC);
+        SLIME_CHUNK_FILTER = register("slime_chunk", SlimeChunkFilter.CODEC);
     }
 
     private static <P extends PlacementModifier> PlacementModifierType<P> register(String id, Codec<P> codec) {

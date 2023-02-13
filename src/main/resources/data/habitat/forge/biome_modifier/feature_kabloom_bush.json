@@ -10,6 +10,6 @@
       }
     ]
   },
-  "features": "habitat:kabloom_bush_patch",
+  "features": "habitat:patch_kabloom_bush",
   "step": "vegetal_decoration"
 }

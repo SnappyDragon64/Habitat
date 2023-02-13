@@ -26,12 +26,11 @@ public class SlimeFernFeature extends Feature<NoneFeatureConfiguration> {
         RandomSource rand = context.random();
 
         int i = 0;
-        BlockPos centrePos = pos.offset(7, 0, 7);
         BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
         Direction[] directions = new Direction[]{Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP};
 
         for (int j = 0; j < 64; ++j) {
-            blockpos$mutable.setWithOffset(centrePos, rand.nextInt(4) - rand.nextInt(4), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(4) - rand.nextInt(4));
+            blockpos$mutable.setWithOffset(pos, rand.nextInt(4) - rand.nextInt(4), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(4) - rand.nextInt(4));
 
             if (world.isEmptyBlock(blockpos$mutable)) {
                 for (Direction dir : directions) {

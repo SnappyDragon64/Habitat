@@ -7,6 +7,6 @@
       "#forge:is_desert"
     ]
   },
-  "features": "habitat:ball_cactus_patch",
+  "features": "habitat:patch_ball_cactus",
   "step": "vegetal_decoration"
 }

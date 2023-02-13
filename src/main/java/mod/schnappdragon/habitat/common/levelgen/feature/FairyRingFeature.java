@@ -2,9 +2,11 @@ package mod.schnappdragon.habitat.common.levelgen.feature;
 
 import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.common.block.FairyRingMushroomBlock;
+import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
-import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -66,14 +68,14 @@ public class FairyRingFeature extends Feature<NoneFeatureConfiguration> {
 
         if (world.isEmptyBlock(pos) && base.is(BlockTags.DIRT)) {
             if (!flag[0] && rand.nextInt(8) == 0) {
-                ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM.get();
+                ConfiguredFeature<?, ?> configuredfeature = world.registryAccess().registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY).get(new ResourceLocation(Habitat.MODID, "huge_fairy_ring_mushroom"));
 
                 if (configuredfeature.place(world, generator, rand, pos)) {
                     flag[0] = true;
-                }
-            }
-
-            this.setBlock(world, pos, this.getMushroom(rand));
+                } else
+                    this.setBlock(world, pos, this.getMushroom(rand));
+            } else
+                this.setBlock(world, pos, this.getMushroom(rand));
         }
     }
 

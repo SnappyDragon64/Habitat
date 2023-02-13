@@ -1,13 +1,15 @@
 package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
-import mod.schnappdragon.habitat.core.registry.HabitatConfiguredFeatures;
+import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -151,7 +153,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
 
     private void growHugeMushroom(ServerLevel world, RandomSource rand, BlockPos pos, BlockState state) {
         world.removeBlock(pos, false);
-        ConfiguredFeature<?, ?> configuredfeature = HabitatConfiguredFeatures.HUGE_FAIRY_RING_MUSHROOM.get();
+        ConfiguredFeature<?, ?> configuredfeature = world.registryAccess().registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY).get(new ResourceLocation(Habitat.MODID, "huge_fairy_ring_mushroom"));
 
         if (!configuredfeature.place(world, world.getChunkSource().getGenerator(), rand, pos))
             world.setBlock(pos, state, 3);

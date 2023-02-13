@@ -39,8 +39,6 @@ public class Habitat {
         HabitatPotions.POTIONS.register(modEventBus);
         HabitatRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         HabitatFeatures.FEATURES.register(modEventBus);
-        HabitatConfiguredFeatures.CONFIGURED_FEATURES.register(modEventBus);
-        HabitatPlacedFeatures.PLACED_FEATURES.register(modEventBus);
         HabitatParticleTypes.PARTICLE_TYPES.register(modEventBus);
         HabitatPoiTypes.POI_TYPES.register(modEventBus);
         PasserineVariants.PASSERINE_VARIANTS.register(modEventBus);

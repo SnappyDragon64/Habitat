@@ -10,6 +10,6 @@
       }
     ]
   },
-  "features": "habitat:slime_fern_patch",
+  "features": "habitat:patch_slime_fern",
   "step": "underground_decoration"
 }
