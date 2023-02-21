@@ -31,10 +31,10 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
-		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -3.0F, -2.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.001F)), PartPose.offset(0.0F, 20.0F, -2.0F));
+		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -3.0F, -2.0F, 4.0F, 4.0F, 4.0F), PartPose.offset(0.0F, 20.0F, -2.0F));
 		head.addOrReplaceChild("crest", CubeListBuilder.create().texOffs(22, 2).addBox(0.0F, -6.0F, -2.0F, 0.0F, 5.0F, 5.0F), PartPose.ZERO);
 		head.addOrReplaceChild("beak", CubeListBuilder.create().texOffs(0, 0).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 1.0F, 1.0F), PartPose.ZERO);
-		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(16, 0).addBox(-2.0F, -1.5F, -2.0F, 4.0F, 3.0F, 4.0F), PartPose.offset(0.0F, 21.5F, 0.0F));
+		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(16, 0).addBox(-2.0F, -1.5F, -2.0F, 4.0F, 3.0F, 4.0F, new CubeDeformation(0.001F)), PartPose.offset(0.0F, 21.5F, 0.0F));
 		body.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(5, 8).addBox(-2.0F, 0.0F, 0.0F, 4.0F, 0.0F, 5.0F), PartPose.offset(0.0F, 0.5F, 2.0F));
 		partdefinition.addOrReplaceChild("right_wing", CubeListBuilder.create().texOffs(0, 8).addBox(-1.0F, -1.0F, -1.0F, 1.0F, 3.0F, 4.0F), PartPose.offset(-2.0F, 21.0F, -1.0F));
 		partdefinition.addOrReplaceChild("left_wing", CubeListBuilder.create().texOffs(0, 8).addBox(0.0F, -1.0F, -1.0F, 1.0F, 3.0F, 4.0F), PartPose.offset(2.0F, 21.0F, -1.0F));
@@ -57,6 +57,9 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 		this.rightFoot.y = 23.0F;
 		this.leftFoot.y = 23.0F;
 
+		this.head.xRot = 0.0F;
+		this.head.yRot = 0.0F;
+		this.head.zRot = 0.0F;
 		this.body.xRot = 0.0F;
 		this.rightWing.xRot = 0.0F;
 		this.leftWing.xRot = 0.0F;
@@ -66,7 +69,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 		this.leftFoot.xRot = 0.0F;
 
 		switch (getState(passerine)) {
-			case SLEEPING:
+			case SLEEPING -> {
 				this.head.y = 21.0F;
 				this.head.z = -1.5F;
 				this.body.y = 22.5F;
@@ -75,8 +78,8 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 				this.head.xRot = 0.3491F;
 				this.head.yRot = 2.094F;
 				this.tail.xRot = 0.1745F;
-				break;
-			case FLYING:
+			}
+			case FLYING -> {
 				this.body.xRot = -0.3927F;
 				this.rightWing.xRot = -0.5236F;
 				this.leftWing.xRot = -0.5236F;
@@ -87,22 +90,38 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 				this.rightFoot.yRot = 0.1571F;
 				this.leftFoot.yRot = -0.1571F;
 				this.tail.xRot = 0.1309F;
-				break;
-			case PREENING:
+			}
+			case PREENING -> {
 				this.head.z = -1.0F;
 				this.head.xRot = 0.1745F;
 				this.head.yRot = 1.833F;
 				this.rightWing.xRot = -0.5236F;
 				this.rightWing.zRot = 1.396F;
-			case STANDING:
-				if (getState(passerine) != State.PREENING)
-					this.rightWing.xRot = -0.1963F;
-			default:
 				this.body.xRot = -0.0873F;
 				this.leftWing.xRot = -0.1963F;
 				this.rightFoot.yRot = 0.1745F;
 				this.leftFoot.yRot = -0.1745F;
 				this.tail.xRot = 0.3927F;
+			}
+			case PECKING -> {
+				this.head.y = 21.33F;
+				this.head.z = -2.5F;
+				this.head.xRot = 1.0472F;
+				this.body.xRot = 0.3927F;
+				this.rightWing.xRot = 0.1745F;
+				this.leftWing.xRot = 0.1745F;
+				this.rightFoot.yRot = 0.1745F;
+				this.leftFoot.yRot = -0.1745F;
+				this.tail.xRot = 0.5326F;
+			}
+			case STANDING -> {
+				this.body.xRot = -0.0873F;
+				this.rightWing.xRot = -0.1963F;
+				this.leftWing.xRot = -0.1963F;
+				this.rightFoot.yRot = 0.1745F;
+				this.leftFoot.yRot = -0.1745F;
+				this.tail.xRot = 0.3927F;
+			}
 		}
 	}
 
@@ -110,8 +129,10 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 		if (getState(passerine) == State.SLEEPING) {
 			this.head.zRot = Mth.cos(ageInTicks * 0.027F) / 22.0F;
 		} else if (getState(passerine) == PasserineModel.State.PREENING) {
-			this.head.xRot += 0.1745F * (1.0F - Mth.cos(ageInTicks * 1.5F)) / 2.0F;
-			this.head.yRot += 0.2793F * (1.0F - Mth.cos(ageInTicks)) / 2.0F;
+			this.head.xRot += 0.1745F * Mth.cos(ageInTicks * 1.5F);
+			this.head.yRot += 0.2793F * Mth.cos(ageInTicks);
+		} else if (getState(passerine) == PasserineModel.State.PECKING) {
+			this.head.xRot += 0.1745F * Mth.cos(ageInTicks * 1.2F);
 		} else {
 			this.head.xRot = headPitch * ((float) Math.PI / 180F);
 			this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
@@ -138,6 +159,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 
 	private static State getState(Passerine passerine) {
 		if (passerine.isPreening()) return State.PREENING;
+		if (passerine.isPecking()) return State.PECKING;
 		if (passerine.isAsleep()) return State.SLEEPING;
 		if (passerine.isFlying()) return State.FLYING;
 		return State.STANDING;
@@ -147,6 +169,7 @@ public class PasserineModel<T extends Passerine> extends HierarchicalModel<T> {
 		FLYING,
 		STANDING,
 		SLEEPING,
-		PREENING
+		PREENING,
+		PECKING
 	}
 }

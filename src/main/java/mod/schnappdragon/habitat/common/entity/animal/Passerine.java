@@ -63,6 +63,8 @@ import java.util.Optional;
 
 public class Passerine extends Animal implements FlyingAnimal {
     private static final EntityDataAccessor<Integer> PREEN_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> PECK_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
+
     private static final EntityDataAccessor<String> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Boolean> DATA_SLEEPING = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.BOOLEAN);
 
@@ -90,6 +92,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(3, new Passerine.FindCoverGoal(1.25D));
         this.goalSelector.addGoal(4, new Passerine.SleepGoal());
         this.goalSelector.addGoal(5, new Passerine.PreenGoal());
+        this.goalSelector.addGoal(5, new Passerine.PeckGoal());
         this.goalSelector.addGoal(6, new Passerine.PasserineRandomFlyingGoal(1.0D));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
@@ -118,6 +121,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(PREEN_COUNTER, 0);
+        this.entityData.define(PECK_COUNTER, 0);
         this.entityData.define(DATA_VARIANT_ID, PasserineVariants.COMMON_SPARROW.getId().toString());
         this.entityData.define(DATA_SLEEPING, false);
     }
@@ -146,6 +150,18 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     public boolean isPreening() {
         return this.getPreenCounter() > 0;
+    }
+
+    public void setPeckCounter(int counter) {
+        this.entityData.set(PECK_COUNTER, counter);
+    }
+
+    public int getPeckCounter() {
+        return this.entityData.get(PECK_COUNTER);
+    }
+
+    public boolean isPecking() {
+        return this.getPeckCounter() > 0;
     }
 
     public void setVariantId(String id) {
@@ -230,7 +246,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private boolean isNotBusy() {
-        return !this.isAsleep() && !this.isPreening();
+        return !this.isAsleep() && !this.isPreening() && !this.isPecking();
     }
 
     private boolean canPerch() {
@@ -368,6 +384,8 @@ public class Passerine extends Animal implements FlyingAnimal {
                     this.wakeUp();
                 else if (this.isPreening())
                     this.setPreenCounter(0);
+                else if (this.isPecking())
+                    this.setPeckCounter(0);
             }
 
             return super.hurt(source, amount);
@@ -379,7 +397,7 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     public void playAmbientSound() {
-        if (!this.isPreening() && this.isActive()) {
+        if (!this.isPreening() && !this.isPecking() && this.isActive()) {
             super.playAmbientSound();
 
             if (!this.level.isClientSide)
@@ -459,6 +477,8 @@ public class Passerine extends Animal implements FlyingAnimal {
             this.wakeUp();
         else if (this.isPreening())
             this.setPreenCounter(0);
+        else if (this.isPecking())
+            this.setPeckCounter(0);
 
         if (!this.level.isClientSide && this.dead && this.isBerdly() && source == DamageSource.FREEZE && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES)) {
             this.getCombatTracker().recordDamage(HabitatDamageSources.SNOWGRAVE, this.getHealth(), this.getMaxHealth());
@@ -595,7 +615,7 @@ public class Passerine extends Animal implements FlyingAnimal {
                 this.countdown--;
                 return false;
             } else {
-                if (Passerine.this.isFlying() || Passerine.this.isPreening() || Passerine.this.level.isDay() || Passerine.this.isInPowderSnow)
+                if (Passerine.this.isFlying() || Passerine.this.isPreening() || Passerine.this.isPecking() || Passerine.this.level.isDay() || Passerine.this.isInPowderSnow)
                     return false;
                 else
                     return Passerine.this.canPerch();
@@ -634,25 +654,62 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
 
         private boolean canPreen() {
-            return !Passerine.this.isTurkey() && !Passerine.this.isFlying() && !Passerine.this.isAsleep() && !Passerine.this.isInPowderSnow;
+            return !Passerine.this.isTurkey() && !Passerine.this.isFlying() && !Passerine.this.isAsleep() && !Passerine.this.isPecking() && !Passerine.this.isInPowderSnow;
         }
 
         public void start() {
             Passerine.this.setPreenCounter(this.adjustedTickDelay(40));
             Passerine.this.getNavigation().stop();
-            Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 14);
         }
 
         public void stop() {
             Passerine.this.setPreenCounter(0);
             this.countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
-            Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 15);
         }
 
         public void tick() {
             Passerine.this.setPreenCounter(Math.max(0, Passerine.this.getPreenCounter() - 1));
             if (Passerine.this.getPreenCounter() == this.adjustedTickDelay(20))
                 Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 11);
+        }
+    }
+
+    class PeckGoal extends Goal {
+        private static final int MINIMUM_WAIT_TIME = reducedTickDelay(3000);
+        private int countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
+
+        public PeckGoal() {
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
+        }
+
+        public boolean canUse() {
+            if (this.countdown > 0) {
+                this.countdown--;
+                return false;
+            } else
+                return Passerine.this.xxa == 0.0F && Passerine.this.yya == 0.0F && Passerine.this.zza == 0.0F && this.canPeck();
+        }
+
+        public boolean canContinueToUse() {
+            return Passerine.this.getPeckCounter() > 0 && this.canPeck();
+        }
+
+        private boolean canPeck() {
+            return !Passerine.this.isTurkey() && !Passerine.this.isFlying() && !Passerine.this.isAsleep() && !Passerine.this.isPreening() && !Passerine.this.isInPowderSnow;
+        }
+
+        public void start() {
+            Passerine.this.setPeckCounter(this.adjustedTickDelay(40));
+            Passerine.this.getNavigation().stop();
+        }
+
+        public void stop() {
+            Passerine.this.setPeckCounter(0);
+            this.countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
+        }
+
+        public void tick() {
+            Passerine.this.setPeckCounter(Math.max(0, Passerine.this.getPeckCounter() - 1));
         }
     }
 
