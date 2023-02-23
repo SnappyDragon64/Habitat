@@ -5,9 +5,9 @@ import mod.schnappdragon.habitat.core.registry.HabitatPlacementModifierTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
-import net.minecraft.world.level.levelgen.placement.*;
-
-import java.util.Random;
+import net.minecraft.world.level.levelgen.placement.PlacementContext;
+import net.minecraft.world.level.levelgen.placement.PlacementFilter;
+import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 public class SlimeChunkFilter extends PlacementFilter {
     private static final SlimeChunkFilter FILTER = new SlimeChunkFilter();
