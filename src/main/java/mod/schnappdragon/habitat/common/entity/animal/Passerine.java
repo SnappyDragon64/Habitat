@@ -480,11 +480,6 @@ public class Passerine extends Animal implements FlyingAnimal {
         else if (this.isPecking())
             this.setPeckCounter(0);
 
-        if (!this.level.isClientSide && this.dead && this.isBerdly() && source == DamageSource.FREEZE && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES)) {
-            this.getCombatTracker().recordDamage(HabitatDamageSources.SNOWGRAVE, this.getHealth(), this.getMaxHealth());
-            ((ServerLevel) this.level).getServer().getPlayerList().broadcastSystemMessage(this.getCombatTracker().getDeathMessage(), false);
-        }
-
         super.die(source);
     }
 
