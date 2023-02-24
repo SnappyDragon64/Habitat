@@ -1,12 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "white_dye",
+  "group": "light_gray_dye",
   "ingredients": [
     {
       "item": "habitat:edelweiss"
     }
   ],
   "result": {
-    "item": "minecraft:white_dye"
+    "item": "minecraft:light_gray_dye"
   }
 }
