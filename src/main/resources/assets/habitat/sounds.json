@@ -29,17 +29,17 @@
     "subtitle": "habitat.subtitles.block.kabloom_bush.shear",
     "sounds": [
       {
-        "name": "habitat:block/kabloom_bush/shear",
+        "name": "habitat:random/shear1",
         "volume": 0.8,
         "pitch": 1
       },
       {
-        "name": "habitat:block/kabloom_bush/shear",
+        "name": "habitat:random/shear1",
         "volume": 0.8,
         "pitch": 0.9
       },
       {
-        "name": "habitat:block/kabloom_bush/shear",
+        "name": "habitat:random/shear1",
         "volume": 0.8,
         "pitch": 0.8
       }
@@ -136,17 +136,17 @@
     "subtitle": "habitat.subtitles.block.flowering_ball_cactus.shear",
     "sounds": [
       {
-        "name": "habitat:block/flowering_ball_cactus/shear",
+        "name": "habitat:random/shear2",
         "volume": 0.8,
         "pitch": 1
       },
       {
-        "name": "habitat:block/flowering_ball_cactus/shear",
+        "name": "habitat:random/shear2",
         "volume": 0.8,
         "pitch": 0.9
       },
       {
-        "name": "habitat:block/flowering_ball_cactus/shear",
+        "name": "habitat:random/shear2",
         "volume": 0.8,
         "pitch": 0.8
       }
@@ -156,17 +156,17 @@
     "subtitle": "habitat.subtitles.block.fairy_ring_mushroom.shear",
     "sounds": [
       {
-        "name": "habitat:block/fairy_ring_mushroom/shear",
+        "name": "habitat:random/shear3",
         "volume": 0.8,
         "pitch": 1
       },
       {
-        "name": "habitat:block/fairy_ring_mushroom/shear",
+        "name": "habitat:random/shear3",
         "volume": 0.8,
         "pitch": 0.9
       },
       {
-        "name": "habitat:block/fairy_ring_mushroom/shear",
+        "name": "habitat:random/shear3",
         "volume": 0.8,
         "pitch": 0.8
       }
@@ -301,7 +301,7 @@
   },
   "entity.pooka.shear": {
     "subtitle": "habitat.subtitles.entity.pooka.shear",
-    "sounds": [ "habitat:block/fairy_ring_mushroom/shear" ]
+    "sounds": [ "habitat:random/shear3" ]
   },
   "entity.rabbit.converted_to_pooka": {
     "subtitle": "habitat.subtitles.entity.rabbit.converted_to_pooka",
