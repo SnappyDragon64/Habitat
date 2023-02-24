@@ -22,7 +22,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 
 public class EdelweissShrubBlock extends BushBlock implements BonemealableBlock {
-    protected static final VoxelShape SHAPE = Block.box(5.0, 0.0, 5.0, 11.0, 10.0, 11.0);
+    protected static final VoxelShape SHAPES[] = {
+            Block.box(5.0, 0.0, 5.0, 11.0, 5.0, 11.0),
+            Block.box(5.0, 0.0, 5.0, 11.0, 8.0, 11.0),
+            Block.box(5.0, 0.0, 5.0, 11.0, 10.0, 11.0)
+    };
+
     public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
 
     public EdelweissShrubBlock(Properties properties) {
@@ -32,7 +37,7 @@ public class EdelweissShrubBlock extends BushBlock implements BonemealableBlock 
 
     public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext context) {
         Vec3 vec3 = state.getOffset(blockGetter, pos);
-        return SHAPE.move(vec3.x, vec3.y, vec3.z);
+        return SHAPES[state.getValue(AGE)].move(vec3.x, vec3.y, vec3.z);
     }
 
     @Override
