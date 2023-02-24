@@ -1,0 +1,6 @@
+{
+  "parent": "habitat:block/cross",
+  "textures": {
+    "cross": "habitat:block/edelweiss"
+  }
+}

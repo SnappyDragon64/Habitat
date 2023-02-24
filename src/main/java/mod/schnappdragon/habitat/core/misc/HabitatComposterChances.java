@@ -29,6 +29,9 @@ public class HabitatComposterChances {
         put(HabitatItems.FAIRY_RING_MUSHROOM_BLOCK.get(), 0.65F);
         put(HabitatItems.FAIRY_RING_MUSHROOM_STEM.get(), 0.65F);
         put(HabitatItems.FAIRYLIGHT.get(), 0.65F);
+
+        put(HabitatItems.EDELWEISS_SHRUB.get(), 0.65F);
+        put(HabitatItems.EDELWEISS.get(), 0.65F);
     }
 
     private static void put(ItemLike item, float value) {

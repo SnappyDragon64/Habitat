@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "habitat:block/grown_edelweiss_shrub"
+    }
+  }
+}

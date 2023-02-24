@@ -8,7 +8,8 @@
         "removes": false,
         "effects": {
           "habitat:blast_endurance": {},
-          "habitat:prickling": {}
+          "habitat:prickling": {},
+          "habitat:prolongation": {}
         }
       }
     }

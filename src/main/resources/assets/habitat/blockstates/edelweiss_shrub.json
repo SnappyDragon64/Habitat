@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "habitat:block/edelweiss_shrub_stage0"
+    },
+    "age=1": {
+      "model": "habitat:block/edelweiss_shrub_stage1"
+    },
+    "age=2": {
+      "model": "habitat:block/edelweiss_shrub_stage2"
+    }
+  }
+}

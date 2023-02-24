@@ -93,6 +93,9 @@ public class HabitatItems {
     public static final RegistryObject<Item> PASSERINE_SPAWN_EGG = ITEMS.register("passerine_spawn_egg",
             () -> new ForgeSpawnEggItem(HabitatEntityTypes.PASSERINE, 1259855, 13384789, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 
+    public static final RegistryObject<Item> EDELWEISS_SHRUB = registerBlockItem("edelweiss_shrub", HabitatBlocks.EDELWEISS_SHRUB, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> EDELWEISS = registerBlockItem("edelweiss", HabitatBlocks.EDELWEISS, CreativeModeTab.TAB_DECORATIONS);
+
     private static Item.Properties getProperties(CreativeModeTab group) {
         return new Item.Properties().tab(group);
     }

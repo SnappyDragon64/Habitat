@@ -16,4 +16,7 @@ public class HabitatEffects {
 
     public static final RegistryObject<MobEffect> PRICKLING = EFFECTS.register("prickling",
             () -> new HabitatEffect(MobEffectCategory.BENEFICIAL, 5794588));
+
+    public static final RegistryObject<MobEffect> PROLONGATION = EFFECTS.register("prolongation",
+            () -> new HabitatEffect(MobEffectCategory.BENEFICIAL, 5756537));
 }

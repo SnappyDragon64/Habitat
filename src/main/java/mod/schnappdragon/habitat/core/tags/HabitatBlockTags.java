@@ -18,6 +18,8 @@ public class HabitatBlockTags {
     public static final TagKey<Block> PASSERINES_PERCHABLE_ON = makeTag("passerines_perchable_on");
     public static final TagKey<Block> PASSERINES_SPAWNABLE_ON = makeTag("passerines_spawnable_on");
 
+    public static final TagKey<Block> EDELWEISS_PLANTABLE_ON = makeTag("edelweiss_plantable_on");
+
     private static TagKey<Block> makeTag(String id) {
         return BlockTags.create(new ResourceLocation(Habitat.MODID, id));
     }

@@ -1,6 +1,7 @@
 package mod.schnappdragon.habitat.core.registry;
 
 import mod.schnappdragon.habitat.common.block.*;
+import mod.schnappdragon.habitat.common.effect.HabitatEffect;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.*;
@@ -83,4 +84,9 @@ public class HabitatBlocks {
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_TRAPPED_CHEST = BLOCKS.register("fairy_ring_mushroom_trapped_chest", () -> new HabitatTrappedChestBlock(ChestVariant.FAIY_RING_MUSHROOM_TRAPPED, BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).strength(2.5F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_BEEHIVE = BLOCKS.register("fairy_ring_mushroom_beehive", () -> new HabitatBeehiveBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).strength(0.3F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_CABINET = BLOCKS.register("fairy_ring_mushroom_cabinet", () -> new HabitatCabinetBlock(BlockBehaviour.Properties.copy(Blocks.BARREL)));
+
+    public static final RegistryObject<Block> EDELWEISS_SHRUB = BLOCKS.register("edelweiss_shrub", () -> new EdelweissShrubBlock(BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.GRASS).noCollission().noOcclusion().randomTicks().offsetType(BlockBehaviour.OffsetType.XZ)));
+    public static final RegistryObject<Block> GROWN_EDELWEISS_SHRUB = BLOCKS.register("grown_edelweiss_shrub", () -> new GrownEdelweissShrubBlock(BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.GRASS).noCollission().noOcclusion().offsetType(BlockBehaviour.OffsetType.XZ)));
+    public static final RegistryObject<Block> EDELWEISS = BLOCKS.register("edelweiss", () -> new EdelweissBlock(HabitatEffects.PROLONGATION, 8, BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.GRASS).noCollission().noOcclusion().offsetType(BlockBehaviour.OffsetType.XZ)));
+    public static final RegistryObject<Block> POTTED_EDELWEISS = BLOCKS.register("potted_edelweiss", () -> new FlowerPotBlock(EDELWEISS.get(), BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
 }

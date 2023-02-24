@@ -46,6 +46,8 @@ public class HabitatSoundEvents {
     public static final RegistryObject<SoundEvent> PASSERINE_HURT = register("entity.passerine.hurt");
     public static final RegistryObject<SoundEvent> PASSERINE_STEP = register("entity.passerine.step");
 
+    public static final RegistryObject<SoundEvent> GROWN_EDELWEISS_SHRUB_SHEAR = register("block.grown_edelweiss_shrub.shear");
+
     private static RegistryObject<SoundEvent> register(String name) {
         return SOUND_EVENTS.register(name, () -> new SoundEvent((new ResourceLocation(Habitat.MODID, name))));
     }

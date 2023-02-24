@@ -1,0 +1,6 @@
+{
+  "parent": "habitat:block/cross",
+  "textures": {
+    "cross": "habitat:block/edelweiss_shrub_stage0"
+  }
+}

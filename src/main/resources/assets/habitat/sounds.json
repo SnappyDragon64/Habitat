@@ -412,5 +412,25 @@
       "habitat:mob/passerine/step3",
       "habitat:mob/passerine/step4"
     ]
+  },
+  "block.grown_edelweiss_shrub.shear": {
+    "subtitle": "habitat.subtitles.block.grown_edelweiss_shrub.shear",
+    "sounds": [
+      {
+        "name": "habitat:random/shear1",
+        "volume": 0.8,
+        "pitch": 1
+      },
+      {
+        "name": "habitat:random/shear1",
+        "volume": 0.8,
+        "pitch": 0.9
+      },
+      {
+        "name": "habitat:random/shear1",
+        "volume": 0.8,
+        "pitch": 0.8
+      }
+    ]
   }
 }

@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -32,7 +34,20 @@ import java.util.HashSet;
 public class HabitatEvents {
 
     /*
-     * Used to goals to vanilla entities
+     * Used to registry replace Beehive PoiType
+     */
+
+    @SubscribeEvent
+    public static void addToBeehivePoiType(RegisterEvent event) {
+        ResourceLocation beePOIRL = new ResourceLocation("minecraft:bee_nest");
+        PoiType beePOI = ForgeRegistries.POI_TYPES.getValue(beePOIRL);
+        HashSet<BlockState> newSet = new HashSet<>(beePOI.matchingStates());
+        newSet.addAll(HabitatBlocks.FAIRY_RING_MUSHROOM_BEEHIVE.get().getStateDefinition().getPossibleStates());
+        event.register(Registry.POINT_OF_INTEREST_TYPE_REGISTRY, beePOIRL, () -> new PoiType(newSet, beePOI.validRange(),  beePOI.maxTickets()));
+    }
+
+    /*
+     * Used to add goals to vanilla entities
      */
 
     @SubscribeEvent
@@ -45,7 +60,7 @@ public class HabitatEvents {
     }
 
     /*
-     * Used to reduce explosion damage if livingentity has Blast Endurance effect.
+     * Used to reduce explosion damage if LivingEntity has Blast Endurance effect.
      */
 
     @SubscribeEvent
@@ -69,7 +84,7 @@ public class HabitatEvents {
     }
 
     /*
-     * Used to inflict damage if livingentity has Prickling effect.
+     * Used to inflict damage to attacker if LivingEntity has Prickling effect.
      */
 
     @SubscribeEvent
@@ -85,12 +100,16 @@ public class HabitatEvents {
         }
     }
 
+    /*
+     * Used to increase the duration of the incoming effect if livingentity has Prolongation.
+     */
+
     @SubscribeEvent
-    public static void addToBeehivePoiType(RegisterEvent event) {
-        ResourceLocation beePOIRL = new ResourceLocation("minecraft:bee_nest");
-        PoiType beePOI = ForgeRegistries.POI_TYPES.getValue(beePOIRL);
-        HashSet<BlockState> newSet = new HashSet<>(beePOI.matchingStates());
-        newSet.addAll(HabitatBlocks.FAIRY_RING_MUSHROOM_BEEHIVE.get().getStateDefinition().getPossibleStates());
-        event.register(Registry.POINT_OF_INTEREST_TYPE_REGISTRY, beePOIRL, () -> new PoiType(newSet, beePOI.validRange(),  beePOI.maxTickets()));
+    public static void prolongEffectDuration(MobEffectEvent.Added event) {
+        if (event.getEntity().hasEffect(HabitatEffects.PROLONGATION.get())) {
+            MobEffectInstance incoming = event.getEffectInstance();
+            MobEffectInstance prolonged = new MobEffectInstance(incoming.getEffect(), Mth.ceil(incoming.getDuration() * 1.2));
+            incoming.update(prolonged);
+        }
     }
 }

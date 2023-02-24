@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#habitat:ball_cactus_flowers"
+    "#habitat:ball_cactus_flowers",
+    "habitat:edelweiss"
   ]
 }
