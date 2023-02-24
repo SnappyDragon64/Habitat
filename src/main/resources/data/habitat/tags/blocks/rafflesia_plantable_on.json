@@ -3,6 +3,9 @@
   "values": [
     "#minecraft:logs_that_burn",
     "minecraft:grass_block",
-    "minecraft:moss_block"
+    "minecraft:moss_block",
+    "minecraft:farmland",
+    "minecraft:muddy_mangrove_roots",
+    "minecraft:rooted_dirt"
   ]
 }
