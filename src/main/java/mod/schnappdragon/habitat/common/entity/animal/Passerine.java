@@ -2,7 +2,6 @@ package mod.schnappdragon.habitat.common.entity.animal;
 
 import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.core.misc.HabitatCriterionTriggers;
-import mod.schnappdragon.habitat.core.misc.HabitatDamageSources;
 import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
@@ -44,7 +43,6 @@ import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -169,7 +167,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public void setVariant(PasserineVariant variant) {
-        this.setVariantId(Objects.requireNonNull(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getKey(variant)).toString());
+        this.setVariantId(Objects.requireNonNull(this.level.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey()).get().getKey(variant)).toString());
     }
 
     public String getVariantId() {
@@ -177,7 +175,8 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public PasserineVariant getVariant() {
-        return Objects.requireNonNullElse(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getValue(new ResourceLocation(this.getVariantId())), PasserineVariants.COMMON_SPARROW.get());
+
+        return Objects.requireNonNullElse(this.level.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey()).get().get(new ResourceLocation(this.getVariantId())), PasserineVariants.COMMON_SPARROW.get());
     }
 
     public void setSleeping(boolean isSleeping) {
@@ -359,8 +358,8 @@ public class Passerine extends Animal implements FlyingAnimal {
         else if (biome.getBaseTemperature() <= 0.6F)
             tag = PasserineVariantTags.TEMPERATE;
 
-        Optional<PasserineVariant> variantsInTag = PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().tags().getTag(tag).getRandomElement(this.random);
-        return variantsInTag.orElse(PasserineVariants.COMMON_SPARROW.get());
+        Optional<Holder<PasserineVariant>> variantsInTag = worldIn.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey()).get().getTag(tag).get().getRandomElement(this.random);;
+        return variantsInTag.orElse(PasserineVariants.COMMON_SPARROW.getHolder().get()).get();
     }
 
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
