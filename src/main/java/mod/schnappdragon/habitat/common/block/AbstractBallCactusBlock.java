@@ -54,6 +54,8 @@ public abstract class AbstractBallCactusBlock extends BushBlock {
         if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
             entityIn.hurt(DamageSource.CACTUS, 1.0F);
         }
+
+        super.entityInside(state, worldIn, pos, entityIn);
     }
 
     /*

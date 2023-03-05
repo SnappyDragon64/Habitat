@@ -103,6 +103,8 @@ public abstract class AbstractSlimeFernBlock extends Block implements Bonemealab
                 entityIn.setDeltaMovement(entityIn.getDeltaMovement().multiply(slowedMotion, 1.0D, slowedMotion));
             }
         }
+
+        super.entityInside(state, worldIn, pos, entityIn);
     }
 
     /*

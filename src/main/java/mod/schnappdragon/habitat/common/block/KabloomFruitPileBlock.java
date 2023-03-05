@@ -50,6 +50,7 @@ public class KabloomFruitPileBlock extends Block {
     @Override
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         explode(worldIn, pos, true, false);
+        super.entityInside(state, worldIn, pos, entityIn);
     }
 
     @Override

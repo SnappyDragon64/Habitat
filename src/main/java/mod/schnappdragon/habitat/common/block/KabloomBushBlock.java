@@ -67,6 +67,8 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (state.getValue(AGE) == 7 && entityIn.getType() != EntityType.BEE)
             dropFruit(state, worldIn, pos, true, false);
+
+        super.entityInside(state, worldIn, pos, entityIn);
     }
 
     @Override
