@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "habitat:block/flowering_red_ball_cactus_block"
+  }
+}

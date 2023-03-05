@@ -1,0 +1,41 @@
+{
+  "type": "habitat:huge_ball_cactus",
+  "config": {
+    "cactus_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "habitat:ball_cactus_block"
+      }
+    },
+    "flowering_cactus_provider": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "weight": 3,
+          "data": {
+            "Name": "habitat:flowering_orange_ball_cactus_block"
+          }
+        },
+        {
+          "weight": 3,
+          "data": {
+            "Name": "habitat:flowering_pink_ball_cactus_block"
+          }
+        },
+        {
+          "weight": 2,
+          "data": {
+            "Name": "habitat:flowering_red_ball_cactus_block"
+          }
+        },
+        {
+          "weight": 1,
+          "data": {
+            "Name": "habitat:flowering_yellow_ball_cactus_block"
+          }
+        }
+      ]
+    },
+    "flowering_cactus_chance": 0.4
+  }
+}

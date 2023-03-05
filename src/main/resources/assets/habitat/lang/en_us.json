@@ -52,6 +52,11 @@
   "block.habitat.fairy_ring_mushroom_cabinet": "Fairy Ring Mushroom Cabinet",
   "block.habitat.edelweiss": "Edelweiss",
   "block.habitat.edelweiss_shrub": "Edelweiss Shrub",
+  "block.habitat.ball_cactus_block": "Ball Cactus Block",
+  "block.habitat.flowering_orange_ball_cactus_block": "Flowering Orange Ball Cactus Block",
+  "block.habitat.flowering_pink_ball_cactus_block": "Flowering Pink Ball Cactus Block",
+  "block.habitat.flowering_red_ball_cactus_block": "Flowering Red Ball Cactus Block",
+  "block.habitat.flowering_yellow_ball_cactus_block": "Flowering Yellow Ball Cactus Block",
 
   "item.habitat.rafflesia": "Rafflesia",
   "item.habitat.kabloom_pulp": "Kabloom Pulp",
@@ -139,11 +144,13 @@
   "habitat.advancements.husbandry.feathered_friend.title": "Feathered Friend",
   "habitat.advancements.husbandry.beginner_birdwatcher.title": "Beginner Birdwatcher",
   "habitat.advancements.husbandry.ornithologist.title": "Ornithologist",
+  "habitat.advancements.husbandry.floriculture.title": "Floriculture",
 
   "habitat.advancements.husbandry.suspicious.description": "Feed suspicious stew to a rafflesia",
   "habitat.advancements.husbandry.bloom_defused.description": "Shear a kabloom Bush to harvest the fruit",
   "habitat.advancements.husbandry.fae_whisperer.description": "Lure a pooka away from the rest and pacify it with golden carrots",
   "habitat.advancements.husbandry.feathered_friend.description": "Feed a passerine seeds",
   "habitat.advancements.husbandry.beginner_birdwatcher.description": "Look at a passerine through a spyglass",
-  "habitat.advancements.husbandry.ornithologist.description": "Look at all passerine variants through a spyglass!"
+  "habitat.advancements.husbandry.ornithologist.description": "Look at all passerine variants through a spyglass!",
+  "habitat.advancements.husbandry.floriculture.description": "Shear a grown edelweiss shrub to harvest the flower"
 }

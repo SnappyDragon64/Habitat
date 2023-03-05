@@ -11,33 +11,25 @@
               {
                 "weight": 3,
                 "data": {
-                  "Name": "habitat:flowering_orange_ball_cactus",
-                  "Properties": {
-                  }
+                  "Name": "habitat:flowering_orange_ball_cactus"
                 }
               },
               {
                 "weight": 3,
                 "data": {
-                  "Name": "habitat:flowering_pink_ball_cactus",
-                  "Properties": {
-                  }
+                  "Name": "habitat:flowering_pink_ball_cactus"
                 }
               },
               {
                 "weight": 2,
                 "data": {
-                  "Name": "habitat:flowering_red_ball_cactus",
-                  "Properties": {
-                  }
+                  "Name": "habitat:flowering_red_ball_cactus"
                 }
               },
               {
                 "weight": 1,
                 "data": {
-                  "Name": "habitat:flowering_yellow_ball_cactus",
-                  "Properties": {
-                  }
+                  "Name": "habitat:flowering_yellow_ball_cactus"
                 }
               }
             ]

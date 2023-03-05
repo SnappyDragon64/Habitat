@@ -1,9 +1,9 @@
 {
-  "feature": "habitat:patch_ball_cactus",
+  "feature": "habitat:huge_ball_cactus",
   "placement": [
     {
       "type": "minecraft:rarity_filter",
-      "chance": 16
+      "chance": 36
     },
     {
       "type": "minecraft:in_square"

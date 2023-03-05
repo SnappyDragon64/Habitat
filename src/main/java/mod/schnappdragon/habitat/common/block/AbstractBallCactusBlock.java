@@ -63,6 +63,6 @@ public abstract class AbstractBallCactusBlock extends BushBlock {
     @Nullable
     @Override
     public BlockPathTypes getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
-        return BlockPathTypes.DAMAGE_OTHER;
+        return BlockPathTypes.DAMAGE_CACTUS;
     }
 }

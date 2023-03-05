@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "#minecraft:dirt",
+    "#habitat:ball_cactus_blocks",
     "minecraft:farmland",
     "minecraft:cactus"
   ]
