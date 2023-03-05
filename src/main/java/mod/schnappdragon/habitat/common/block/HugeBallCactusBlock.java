@@ -9,14 +9,23 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 
 public class HugeBallCactusBlock extends Block {
+    protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
+
     public HugeBallCactusBlock(Properties properties) {
         super(properties);
+    }
+
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entityIn) {
@@ -25,6 +34,14 @@ public class HugeBallCactusBlock extends Block {
         }
 
         super.stepOn(level, pos, state, entityIn);
+    }
+
+    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+        if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE) {
+            entityIn.hurt(DamageSource.CACTUS, 1.0F);
+        }
+
+        super.entityInside(state, worldIn, pos, entityIn);
     }
 
     /*
