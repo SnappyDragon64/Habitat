@@ -32,8 +32,6 @@ public class HabitatFlammables {
         setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_POST.get(), 5, 20);
         setFlammable(HabitatBlocks.STRIPPED_FAIRY_RING_MUSHROOM_POST.get(), 5, 20);
 
-        setFlammable(HabitatBlocks.EDELWEISS_SHRUB.get(), 60, 100);
-        setFlammable(HabitatBlocks.GROWN_EDELWEISS_SHRUB.get(), 60, 100);
         setFlammable(HabitatBlocks.EDELWEISS.get(), 60, 100);
     }
 

@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "habitat:fairy_spore_lantern"
+    "habitat:fairy_spore_lantern",
+    "habitat:edelweiss_shrub",
+    "habitat:grown_edelweiss_shrub"
   ]
 }
