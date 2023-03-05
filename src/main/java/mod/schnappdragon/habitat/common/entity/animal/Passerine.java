@@ -310,7 +310,6 @@ public class Passerine extends Animal implements FlyingAnimal {
                 this.heal(1.0F);
                 this.usePlayerItem(player, hand, stack);
                 this.level.broadcastEntityEvent(this, (byte) 13);
-                this.level.broadcastEntityEvent(this, (byte) 18);
                 this.gameEvent(GameEvent.ENTITY_INTERACT, this);
                 HabitatCriterionTriggers.FEED_PASSERINE.trigger((ServerPlayer) player);
                 this.playSound(HabitatSoundEvents.PASSERINE_AMBIENT.get(), 1.0F, this.getVoicePitch());
