@@ -102,9 +102,12 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
      */
 
     public void animateTick(BlockState state, Level worldIn, BlockPos pos, RandomSource rand) {
-        BlockEntity tile = worldIn.getBlockEntity(pos);
-        if (tile instanceof RafflesiaBlockEntity rafflesia && rand.nextInt(128) == 0 && !state.getValue(ON_COOLDOWN))
-            worldIn.addParticle(getParticle(rafflesia.Effects), pos.getX() + 0.5D + (2 * rand.nextDouble() - 1.0F) / 3.0D, pos.getY() + 0.25F + rand.nextDouble() / 2, pos.getZ() + 0.5D + (2 * rand.nextDouble() - 1.0F) / 3.0D, 0.0D, 0.01D, 0.0D);
+        if (!state.getValue(ON_COOLDOWN) && rand.nextInt(8) == 0) {
+            BlockEntity tile = worldIn.getBlockEntity(pos);
+
+            if (tile instanceof RafflesiaBlockEntity rafflesia )
+                worldIn.addParticle(getParticle(rafflesia.Effects), pos.getX() + 0.5D + (2 * rand.nextDouble() - 1.0F) / 3.0D, pos.getY() + 0.25F + rand.nextDouble() / 2, pos.getZ() + 0.5D + (2 * rand.nextDouble() - 1.0F) / 3.0D, rand.nextGaussian() * 0.01D, 0.002D, rand.nextGaussian() * 0.01D);
+        }
     }
 
     /*
