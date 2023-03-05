@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:husbandry/root",
+  "display": {
+    "icon": {
+      "item": "habitat:edelweiss"
+    },
+    "title": {
+      "translate": "habitat.advancements.husbandry.floriculture.title"
+    },
+    "description": {
+      "translate": "habitat.advancements.husbandry.floriculture.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "floriculture": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": {
+          "block": {
+            "blocks": [
+              "habitat:grown_edelweiss_shrub"
+            ]
+          }
+        },
+        "item": {
+          "tag": "forge:shears"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "floriculture"
+    ]
+  ]
+}
