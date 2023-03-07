@@ -175,7 +175,6 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public PasserineVariant getVariant() {
-
         return Objects.requireNonNullElse(this.level.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey()).get().get(new ResourceLocation(this.getVariantId())), PasserineVariants.COMMON_SPARROW.get());
     }
 
@@ -288,7 +287,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.playSound(HabitatSoundEvents.PASSERINE_FLAP.get(), 0.1F, 1.0F);
         this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
 
-        if (!this.isEasterEgg() && random.nextInt(30) == 0)
+        if (this.isRegularVariant() && random.nextInt(30) == 0)
             this.level.broadcastEntityEvent(this, (byte) 11);
     }
 
@@ -344,7 +343,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     public PasserineVariant getVariantByBiome(LevelAccessor worldIn) {
         Holder<Biome> biomeHolder = worldIn.getBiome(this.blockPosition());
         Biome biome = biomeHolder.value();
-        TagKey<PasserineVariant> tag = PasserineVariantTags.COMMON;;
+        TagKey<PasserineVariant> tag;
 
         if (biomeHolder.is(Biomes.FLOWER_FOREST))
             tag = PasserineVariantTags.ALL;
@@ -356,8 +355,10 @@ public class Passerine extends Animal implements FlyingAnimal {
             tag = PasserineVariantTags.COLD;
         else if (biome.getBaseTemperature() <= 0.6F)
             tag = PasserineVariantTags.TEMPERATE;
+        else
+            tag = PasserineVariantTags.COMMON;
 
-        Optional<Holder<PasserineVariant>> variantsInTag = worldIn.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey()).get().getTag(tag).get().getRandomElement(this.random);;
+        Optional<Holder<PasserineVariant>> variantsInTag = worldIn.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey()).flatMap(registry -> registry.getTag(tag)).flatMap(holders -> holders.getRandomElement(this.random));
         return variantsInTag.orElse(PasserineVariants.COMMON_SPARROW.getHolder().get()).get();
     }
 
@@ -375,7 +376,7 @@ public class Passerine extends Animal implements FlyingAnimal {
             return false;
         else {
             if (!this.level.isClientSide) {
-                if (source.getDirectEntity() != null && !this.isEasterEgg())
+                if (source.getDirectEntity() != null && this.isRegularVariant())
                     this.level.broadcastEntityEvent(this, (byte) 12);
 
                 if (this.isAsleep())
@@ -453,8 +454,8 @@ public class Passerine extends Animal implements FlyingAnimal {
      * Easter Egg Methods
      */
 
-    public boolean isEasterEgg() {
-        return this.isBerdly() || this.isGoldfish() || this.isTurkey();
+    public boolean isRegularVariant() {
+        return !(this.isBerdly() || this.isGoldfish() || this.isTurkey());
     }
 
     public boolean isBerdly() {
