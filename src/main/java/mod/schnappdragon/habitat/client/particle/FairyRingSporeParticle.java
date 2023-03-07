@@ -6,11 +6,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 
 public class FairyRingSporeParticle extends TextureSheetParticle {
-    private final SpriteSet spriteSetWithAge;
-
-    private FairyRingSporeParticle(ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ, SpriteSet spriteSetWithAge) {
+    private FairyRingSporeParticle(ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ, SpriteSet spriteSet) {
         super(world, x, y, z);
-        this.spriteSetWithAge = spriteSetWithAge;
         this.lifetime = (int) (60 + random.nextDouble() * 60);
         this.gravity = 0.0001F;
         this.friction = 0.99F;
@@ -22,7 +19,7 @@ public class FairyRingSporeParticle extends TextureSheetParticle {
         this.xd = motionX;
         this.yd = motionY;
         this.zd = motionZ;
-        this.setSpriteFromAge(spriteSetWithAge);
+        this.pickSprite(spriteSet);
     }
 
     public void tick() {
@@ -34,7 +31,6 @@ public class FairyRingSporeParticle extends TextureSheetParticle {
         else {
             this.yd -= this.gravity;
             this.move(this.xd, this.yd, this.zd);
-            this.setSpriteFromAge(this.spriteSetWithAge);
 
             this.xd *= this.friction;
             this.yd *= this.friction;
