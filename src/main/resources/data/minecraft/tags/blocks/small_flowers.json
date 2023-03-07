@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "#habitat:ball_cactus_flowers",
-    "habitat:grown_edelweiss_shrub",
     "habitat:edelweiss"
   ]
 }

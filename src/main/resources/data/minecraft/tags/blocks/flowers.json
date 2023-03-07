@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "#habitat:flowering_ball_cacti",
-    "#habitat:flowering_ball_cactus_blocks"
+    "#habitat:flowering_ball_cactus_blocks",
+    "habitat:grown_edelweiss_shrub"
   ]
 }
