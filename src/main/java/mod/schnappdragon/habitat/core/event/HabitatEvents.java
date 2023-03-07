@@ -1,11 +1,8 @@
 package mod.schnappdragon.habitat.core.event;
 
-import mod.schnappdragon.habitat.common.entity.ai.goal.RabbitAvoidEntityGoal;
-import mod.schnappdragon.habitat.common.entity.animal.Pooka;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.registry.HabitatEffects;
-import mod.schnappdragon.habitat.core.tags.HabitatEntityTypeTags;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,13 +10,9 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
-import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
@@ -47,19 +40,6 @@ public class HabitatEvents {
     }
 
     /*
-     * Used to add goals to vanilla entities
-     */
-
-    @SubscribeEvent
-    public static void addGoals(EntityJoinLevelEvent event) {
-        Entity entity = event.getEntity();
-        if (entity.getType() == EntityType.RABBIT && EntityType.RABBIT.getTags().toList().contains(HabitatEntityTypeTags.POOKA_ATTACK_TARGETS)) {
-            Rabbit rabbit = (Rabbit) entity;
-            rabbit.goalSelector.addGoal(4, new RabbitAvoidEntityGoal<>(rabbit, Pooka.class, 2.25F, 2.2D, 2.2D));
-        }
-    }
-
-    /*
      * Used to reduce explosion damage if LivingEntity has Blast Endurance effect.
      */
 
@@ -69,8 +49,8 @@ public class HabitatEvents {
             LivingEntity livingEntity = event.getEntity();
             DamageSource source = event.getSource();
 
-            int lvl = Math.min(livingEntity.getEffect(HabitatEffects.BLAST_ENDURANCE.get()).getAmplifier(), 5);
-            float dmg = Mth.floor(event.getAmount() * (0.85F - 0.17F * lvl));
+            int lvl = Math.min(livingEntity.getEffect(HabitatEffects.BLAST_ENDURANCE.get()).getAmplifier(), 4);
+            float dmg = Mth.floor(event.getAmount() * (0.80F - 0.20F * lvl));
             int res = (int) (event.getAmount() - dmg);
 
             event.setAmount(dmg);
