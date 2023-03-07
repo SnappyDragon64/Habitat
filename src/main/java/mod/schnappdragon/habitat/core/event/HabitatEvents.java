@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.core.event;
 
 import mod.schnappdragon.habitat.common.entity.ai.goal.RabbitAvoidEntityGoal;
-import mod.schnappdragon.habitat.common.entity.monster.Pooka;
+import mod.schnappdragon.habitat.common.entity.animal.Pooka;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.registry.HabitatEffects;

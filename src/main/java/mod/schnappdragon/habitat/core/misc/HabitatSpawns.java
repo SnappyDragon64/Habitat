@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.core.misc;
 
 import mod.schnappdragon.habitat.common.entity.animal.Passerine;
-import mod.schnappdragon.habitat.common.entity.monster.Pooka;
+import mod.schnappdragon.habitat.common.entity.animal.Pooka;
 import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import net.minecraft.world.entity.EntityType;
