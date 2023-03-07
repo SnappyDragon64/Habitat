@@ -34,7 +34,6 @@ public class HabitatBoatItem extends Item {
             return InteractionResultHolder.pass(itemstack);
         else {
             Vec3 vector3d = playerIn.getViewVector(1.0F);
-            double d0 = 5.0D;
             List<Entity> list = worldIn.getEntities(playerIn, playerIn.getBoundingBox().expandTowards(vector3d.scale(5.0D)).inflate(1.0D), ENTITY_PREDICATE);
             if (!list.isEmpty()) {
                 Vec3 vector3d1 = playerIn.getEyePosition(1.0F);
