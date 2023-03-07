@@ -74,7 +74,7 @@ public class HabitatEvents {
             DamageSource source = event.getSource();
             int lvl = livingEntity.getEffect(HabitatEffects.PRICKLING.get()).getAmplifier();
 
-            if (livingEntity.getRandom().nextInt(5) < 3 + lvl && !source.isMagic() && !source.isExplosion() && source.getDirectEntity() instanceof LivingEntity attacker) {
+            if (livingEntity.getRandom().nextInt(4) < 2 + lvl && !source.isMagic() && !source.isExplosion() && source.getDirectEntity() instanceof LivingEntity attacker) {
                 attacker.hurt(DamageSource.thorns(livingEntity), 1.0F + lvl + livingEntity.getRandom().nextInt(2 + lvl));
             }
         }
