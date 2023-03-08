@@ -9,8 +9,8 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
-public class LandingSlimeParticle extends DripParticle.DripLandParticle {
-    public LandingSlimeParticle(ClientLevel world, double x, double y, double z, Fluid fluid) {
+public class SlimeDripLandParticle extends DripParticle.DripLandParticle {
+    public SlimeDripLandParticle(ClientLevel world, double x, double y, double z, Fluid fluid) {
         super(world, x, y, z, fluid);
     }
 
@@ -22,7 +22,7 @@ public class LandingSlimeParticle extends DripParticle.DripLandParticle {
         }
 
         public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            LandingSlimeParticle slimeparticle = new LandingSlimeParticle(worldIn, x, y, z, Fluids.EMPTY);
+            SlimeDripLandParticle slimeparticle = new SlimeDripLandParticle(worldIn, x, y, z, Fluids.EMPTY);
             slimeparticle.setLifetime((int) (128.0D / (Math.random() * 0.8D + 0.2D)));
             slimeparticle.setColor(0.443F, 0.675F, 0.427F);
             slimeparticle.pickSprite(this.spriteSet);

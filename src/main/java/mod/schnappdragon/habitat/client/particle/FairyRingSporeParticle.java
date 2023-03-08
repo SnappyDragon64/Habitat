@@ -11,10 +11,6 @@ public class FairyRingSporeParticle extends TextureSheetParticle {
         this.lifetime = (int) (60 + random.nextDouble() * 60);
         this.gravity = 0.0001F;
         this.friction = 0.99F;
-        float f = 0.9F + this.random.nextFloat() * 0.1F;
-        this.rCol = f;
-        this.gCol = f * 0.98F;
-        this.bCol = f * 0.98F;
         this.quadSize *= 0.8F;
         this.xd = motionX;
         this.yd = motionY;

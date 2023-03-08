@@ -21,13 +21,12 @@ public class NoteParticle<T extends ColorableParticleOption> extends TextureShee
         this.zd *= 0.01F;
         this.yd += 0.2D;
 
-        float f1 = 0.98F + this.random.nextFloat() * 0.02F;
-        this.rCol = particle.getColor().x() * f1;
-        this.gCol = particle.getColor().y() * f1;
-        this.bCol = particle.getColor().z() * f1;
-
         this.quadSize *= 0.8F;
         this.lifetime = 5;
+
+        this.rCol = particle.getColor().x();
+        this.gCol = particle.getColor().y();
+        this.bCol = particle.getColor().z();
     }
 
     public ParticleRenderType getRenderType() {

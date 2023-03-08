@@ -13,8 +13,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
-public class FallingSlimeParticle extends DripParticle.FallAndLandParticle {
-    private FallingSlimeParticle(ClientLevel world, double x, double y, double z, Fluid fluid, ParticleOptions particleData) {
+public class SlimeFallAndLandParticle extends DripParticle.FallAndLandParticle {
+    private SlimeFallAndLandParticle(ClientLevel world, double x, double y, double z, Fluid fluid, ParticleOptions particleData) {
         super(world, x, y, z, fluid, particleData);
     }
 
@@ -34,7 +34,7 @@ public class FallingSlimeParticle extends DripParticle.FallAndLandParticle {
         }
 
         public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            FallingSlimeParticle slimeparticle = new FallingSlimeParticle(worldIn, x, y, z, Fluids.EMPTY, HabitatParticleTypes.LANDING_SLIME.get());
+            SlimeFallAndLandParticle slimeparticle = new SlimeFallAndLandParticle(worldIn, x, y, z, Fluids.EMPTY, HabitatParticleTypes.LANDING_SLIME.get());
             slimeparticle.gravity = 0.01F;
             slimeparticle.setColor(0.463F, 0.745F, 0.427F);
             slimeparticle.pickSprite(this.spriteSet);
