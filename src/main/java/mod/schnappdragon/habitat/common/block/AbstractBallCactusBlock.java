@@ -1,6 +1,7 @@
 package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
+import mod.schnappdragon.habitat.core.tags.HabitatEntityTypeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -51,7 +52,7 @@ public abstract class AbstractBallCactusBlock extends BushBlock {
      */
 
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
+        if (entityIn instanceof LivingEntity && !entityIn.getType().is(HabitatEntityTypeTags.POLLINATORS) && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
             entityIn.hurt(DamageSource.CACTUS, 1.0F);
         }
 

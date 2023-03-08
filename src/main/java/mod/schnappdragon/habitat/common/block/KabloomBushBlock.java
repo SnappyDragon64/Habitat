@@ -3,6 +3,7 @@ package mod.schnappdragon.habitat.common.block;
 import mod.schnappdragon.habitat.common.entity.projectile.ThrownKabloomFruit;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
+import mod.schnappdragon.habitat.core.tags.HabitatEntityTypeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -65,7 +66,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
 
     @Override
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-        if (state.getValue(AGE) == 7 && entityIn.getType() != EntityType.BEE)
+        if (state.getValue(AGE) == 7 && !entityIn.getType().is(HabitatEntityTypeTags.POLLINATORS))
             dropFruit(state, worldIn, pos, true, false);
 
         super.entityInside(state, worldIn, pos, entityIn);

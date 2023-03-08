@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.common.block;
 
+import mod.schnappdragon.habitat.core.tags.HabitatEntityTypeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -43,7 +44,7 @@ public class GrowingBallCactusBlock extends AbstractBallCactusBlock implements B
      */
 
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
+        if (entityIn instanceof LivingEntity && !entityIn.getType().is(HabitatEntityTypeTags.POLLINATORS) && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
             entityIn.hurt(DamageSource.CACTUS, 1.0F);
         }
     }

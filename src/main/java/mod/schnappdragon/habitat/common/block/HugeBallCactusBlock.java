@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.common.block;
 
+import mod.schnappdragon.habitat.core.tags.HabitatEntityTypeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -29,7 +30,7 @@ public class HugeBallCactusBlock extends Block {
     }
 
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entityIn) {
-        if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE) {
+        if (entityIn instanceof LivingEntity && !entityIn.getType().is(HabitatEntityTypeTags.POLLINATORS)) {
             entityIn.hurt(DamageSource.CACTUS, 1.0F);
         }
 
@@ -37,7 +38,7 @@ public class HugeBallCactusBlock extends Block {
     }
 
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.BEE) {
+        if (entityIn instanceof LivingEntity && !entityIn.getType().is(HabitatEntityTypeTags.POLLINATORS)) {
             entityIn.hurt(DamageSource.CACTUS, 1.0F);
         }
 
