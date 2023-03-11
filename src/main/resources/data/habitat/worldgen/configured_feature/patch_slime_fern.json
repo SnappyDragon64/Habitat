@@ -1,4 +1,29 @@
 {
   "type": "habitat:slime_fern",
-  "config": {}
+  "config": {
+    "base_state_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "habitat:slime_fern"
+      }
+    },
+    "ceiling_state_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "habitat:slime_fern",
+        "Properties": {
+          "on_ceiling": "true"
+        }
+      }
+    },
+    "walL_state_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "habitat:wall_slime_fern"
+      }
+    },
+    "tries": 64,
+    "xz_spread": 4,
+    "y_spread": 4
+  }
 }
