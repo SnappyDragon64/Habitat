@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#habitat:edelweiss_plantable_on",
+    "#minecraft:base_stone_overworld"
+  ]
+}

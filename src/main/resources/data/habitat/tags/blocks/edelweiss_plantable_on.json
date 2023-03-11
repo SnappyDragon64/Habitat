@@ -2,9 +2,7 @@
   "replace": false,
   "values": [
     "#minecraft:dirt",
-    "#minecraft:base_stone_overworld",
     "minecraft:farmland",
-    "minecraft:cactus",
     "minecraft:snow_block",
     "minecraft:powder_snow"
   ]
