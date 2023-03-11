@@ -8,15 +8,10 @@
       }
     },
     "flowering_cactus_provider": {
-      "type": "minecraft:weighted_state_provider",
-      "entries": [
-        {
-          "weight": 1,
-          "data": {
-            "Name": "habitat:flowering_red_ball_cactus_block"
-          }
-        }
-      ]
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "habitat:flowering_red_ball_cactus_block"
+      }
     },
     "flowering_cactus_chance": 0.4
   }
