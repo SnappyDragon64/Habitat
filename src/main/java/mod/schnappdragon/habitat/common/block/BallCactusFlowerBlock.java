@@ -26,10 +26,6 @@ public class BallCactusFlowerBlock extends HabitatFlowerBlock implements Bonemea
         this.color = colorIn;
     }
 
-    public BallCactusColor getColor() {
-        return color;
-    }
-
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return SHAPE;
