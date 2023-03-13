@@ -56,7 +56,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
         WeightedStateProvider mushroomProvider = new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState(), 1).add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState().setValue(FairyRingMushroomBlock.MUSHROOMS, 2), 2).add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState().setValue(FairyRingMushroomBlock.MUSHROOMS, 3), 3).add(HabitatBlocks.FAIRY_RING_MUSHROOM.get().defaultBlockState().setValue(FairyRingMushroomBlock.MUSHROOMS, 4), 3));
 
         BlockState stem = config.stemProvider.getState(rand, pos);
-        if (CompatHelper.checkMods("enhanced_mushrooms"))
+        if (CompatHelper.checkMods("enhanced_mushrooms") && stem.is(HabitatBlocks.FAIRY_RING_MUSHROOM_STEM.get()))
             stem = HabitatBlocks.ENHANCED_FAIRY_RING_MUSHROOM_STEM.get().defaultBlockState();
 
         for (int i = 0; i < i0; ++i) {
@@ -93,7 +93,7 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
                 if (!world.getBlockState(blockpos$mutable).isSolidRender(world, blockpos$mutable) && world.getBlockState(blockpos$mutable.below()).isSolidRender(world, blockpos$mutable.below())) {
                     if (i < len) {
                         BlockState stemState = stem;
-                        if (stemState.getBlock() instanceof HugeMushroomBlock) {
+                        if (stemState.hasProperty(HugeMushroomBlock.WEST) && stemState.hasProperty(HugeMushroomBlock.EAST) && stemState.hasProperty(HugeMushroomBlock.NORTH) && stemState.hasProperty(HugeMushroomBlock.SOUTH) && stemState.hasProperty(HugeMushroomBlock.UP)) {
                             stemState = stemState.setValue(HugeMushroomBlock.UP, i == len - 1);
                             if (world.getBlockState(blockpos$mutable.relative(dir.getOpposite())).is(stemState.getBlock())) {
                                 stemState = stemState.setValue(getPropertyFromDirection(dir.getOpposite()), false);
@@ -148,7 +148,12 @@ public class HugeFairyRingMushroomFeature extends AbstractHugeMushroomFeature {
                     if (i >= i0 || flag4 != flag5) {
                         blockpos$mutable.setWithOffset(pos, l, i, i1);
                         if (!world.getBlockState(blockpos$mutable).isSolidRender(world, blockpos$mutable)) {
-                            this.setBlock(world, blockpos$mutable, config.capProvider.getState(rand, pos).setValue(HugeMushroomBlock.UP, i >= i0 - 1).setValue(HugeMushroomBlock.WEST, l < -k).setValue(HugeMushroomBlock.EAST, l > k).setValue(HugeMushroomBlock.NORTH, i1 < -k).setValue(HugeMushroomBlock.SOUTH, i1 > k));
+                            BlockState blockstate = config.capProvider.getState(rand, pos);
+                            if (blockstate.hasProperty(HugeMushroomBlock.WEST) && blockstate.hasProperty(HugeMushroomBlock.EAST) && blockstate.hasProperty(HugeMushroomBlock.NORTH) && blockstate.hasProperty(HugeMushroomBlock.SOUTH) && blockstate.hasProperty(HugeMushroomBlock.UP)) {
+                                blockstate = blockstate.setValue(HugeMushroomBlock.UP, i >= i0 - 1).setValue(HugeMushroomBlock.WEST, l < -k).setValue(HugeMushroomBlock.EAST, l > k).setValue(HugeMushroomBlock.NORTH, i1 < -k).setValue(HugeMushroomBlock.SOUTH, i1 > k);
+                            }
+
+                            this.setBlock(world, blockpos$mutable, blockstate);
                         }
                     }
                 }
