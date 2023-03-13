@@ -1,4 +1,24 @@
 {
   "type": "habitat:fairy_ring",
-  "config": {}
+  "config": {
+    "radius": 8,
+    "mushroom_provider": {
+      "type": "randomized_int_state_provider",
+      "source": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "habitat:fairy_ring_mushroom"
+        }
+      },
+      "property": "mushrooms",
+      "values": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": 1,
+          "max_inclusive": 4
+        }
+      }
+    },
+    "feature": "habitat:huge_fairy_ring_mushroom"
+  }
 }
