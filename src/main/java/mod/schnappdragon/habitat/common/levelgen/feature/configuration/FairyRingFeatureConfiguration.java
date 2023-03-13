@@ -8,5 +8,5 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public record FairyRingFeatureConfiguration(int radius, BlockStateProvider mushroomProvider, Holder<PlacedFeature> feature) implements FeatureConfiguration {
-    public static final Codec<FairyRingFeatureConfiguration> CODEC = RecordCodecBuilder.create(instance -> instance.group(Codec.INT.fieldOf("radius").forGetter(FairyRingFeatureConfiguration::radius),BlockStateProvider.CODEC.fieldOf("mushroom_provider").forGetter(FairyRingFeatureConfiguration::mushroomProvider), PlacedFeature.CODEC.fieldOf("feature").forGetter(FairyRingFeatureConfiguration::feature)).apply(instance, FairyRingFeatureConfiguration::new));
+    public static final Codec<FairyRingFeatureConfiguration> CODEC = RecordCodecBuilder.create(instance -> instance.group(Codec.INT.fieldOf("radius").orElse(8).forGetter(FairyRingFeatureConfiguration::radius),BlockStateProvider.CODEC.fieldOf("mushroom_provider").forGetter(FairyRingFeatureConfiguration::mushroomProvider), PlacedFeature.CODEC.fieldOf("feature").forGetter(FairyRingFeatureConfiguration::feature)).apply(instance, FairyRingFeatureConfiguration::new));
 }
