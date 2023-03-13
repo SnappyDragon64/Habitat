@@ -40,21 +40,16 @@ public class HugeBallCactusFeature extends Feature<HugeBallCactusFeatureConfigur
 
     private boolean canPlace(WorldGenLevel world, BlockPos pos) {
         BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
+        blockpos$mutable.setWithOffset(pos, 0, -1, 0);
+
+        if (!world.getBlockState(blockpos$mutable).is(HabitatBlockTags.BALL_CACTUS_GROWS_ON))
+            return false;
 
         for (int i = 0; i <= 2; i++) {
             blockpos$mutable.setWithOffset(pos, 0, i, 0);
 
             if (!world.getBlockState(blockpos$mutable).getMaterial().isReplaceable())
                 return false;
-        }
-
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                blockpos$mutable.setWithOffset(pos, i, -1, j);
-
-                if (!world.getBlockState(blockpos$mutable).is(HabitatBlockTags.BALL_CACTUS_GROWS_ON))
-                    return false;
-            }
         }
 
         return true;
