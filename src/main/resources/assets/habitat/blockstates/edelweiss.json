@@ -1,10 +1,7 @@
 {
   "variants": {
-    "snowy=false": {
+    "": {
       "model": "habitat:block/edelweiss"
-    },
-    "snowy=true": {
-      "model": "habitat:block/snowy_edelweiss"
     }
   }
 }

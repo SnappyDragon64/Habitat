@@ -87,7 +87,7 @@ public class HabitatBlocks {
 
     public static final RegistryObject<Block> EDELWEISS_SHRUB = BLOCKS.register("edelweiss_shrub", () -> new EdelweissShrubBlock(BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.GRASS).noCollission().noOcclusion().randomTicks().offsetType(BlockBehaviour.OffsetType.XZ)));
     public static final RegistryObject<Block> GROWN_EDELWEISS_SHRUB = BLOCKS.register("grown_edelweiss_shrub", () -> new GrownEdelweissShrubBlock(BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.GRASS).noCollission().noOcclusion().offsetType(BlockBehaviour.OffsetType.XZ)));
-    public static final RegistryObject<Block> EDELWEISS = BLOCKS.register("edelweiss", () -> new EdelweissBlock(HabitatEffects.PROLONGATION, 8, BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.GRASS).noCollission().noOcclusion().offsetType(BlockBehaviour.OffsetType.XZ)));
+    public static final RegistryObject<Block> EDELWEISS = BLOCKS.register("edelweiss", () -> new HabitatFlowerBlock(HabitatEffects.PROLONGATION, 8, BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.GRASS).noCollission().noOcclusion().offsetType(BlockBehaviour.OffsetType.XZ)));
     public static final RegistryObject<Block> POTTED_EDELWEISS = BLOCKS.register("potted_edelweiss", () -> new FlowerPotBlock(EDELWEISS.get(), BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
 
     public static final RegistryObject<Block> BALL_CACTUS_BLOCK = BLOCKS.register("ball_cactus_block", () -> new HugeBallCactusBlock(BlockBehaviour.Properties.of(Material.CACTUS).strength(0.4F).sound(SoundType.WOOL)));

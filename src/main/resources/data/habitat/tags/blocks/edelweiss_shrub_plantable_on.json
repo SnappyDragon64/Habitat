@@ -1,7 +1,10 @@
 {
   "replace": false,
   "values": [
-    "#habitat:edelweiss_plantable_on",
-    "#minecraft:base_stone_overworld"
+    "#minecraft:base_stone_overworld",
+    "#minecraft:dirt",
+    "minecraft:farmland",
+    "minecraft:snow_block",
+    "minecraft:powder_snow"
   ]
 }

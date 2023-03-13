@@ -18,7 +18,6 @@ public class HabitatBlockTags {
     public static final TagKey<Block> PASSERINES_PERCHABLE_ON = makeTag("passerines_perchable_on");
     public static final TagKey<Block> PASSERINES_SPAWNABLE_ON = makeTag("passerines_spawnable_on");
     public static final TagKey<Block> EDELWEISS_SHRUB_PLANTABLE_ON = makeTag("edelweiss_shrub_plantable_on");
-    public static final TagKey<Block> EDELWEISS_PLANTABLE_ON = makeTag("edelweiss_plantable_on");
     // public static final TagKey<Block> BALL_CACTUS_BLOCKS = makeTag("ball_cactus_blocks");
     // public static final TagKey<Block> FLOWERING_BALL_CACTUS_BLOCKS = makeTag("flowering_ball_cactus_blocks");
     public static final TagKey<Block> POOKA_SPAWNABLE_ON = makeTag("pooka_spawnable_on");
