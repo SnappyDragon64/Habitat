@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "speed",
+    "slowness",
+    "strength",
+    "jump_boost",
+    "regeneration",
+    "blindness",
+    "hunger",
+    "weakness",
+    "night_vision",
+    "poison"
+  ]
+}
