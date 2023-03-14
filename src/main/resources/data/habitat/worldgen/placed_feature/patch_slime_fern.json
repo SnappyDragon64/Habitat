@@ -2,11 +2,11 @@
   "feature": "habitat:patch_slime_fern",
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": 4
+      "type": "habitat:slime_chunk"
     },
     {
-      "type": "habitat:slime_chunk"
+      "type": "minecraft:count",
+      "count": 4
     },
     {
       "type": "minecraft:in_square"

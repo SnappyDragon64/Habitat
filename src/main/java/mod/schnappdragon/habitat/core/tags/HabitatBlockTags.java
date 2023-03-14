@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Block;
 
 public class HabitatBlockTags {
     public static final TagKey<Block> RAFFLESIA_PLACEABLE_ON = makeTag("rafflesia_placeable_on");
+    public static final TagKey<Block> SLIME_FERN_PLACEABLE_ON_WORLD_GEN = makeTag("slime_fern_placeable_on_world_gen");
     // public static final TagKey<Block> BALL_CACTUS_FLOWERS = makeTag("ball_cactus_flowers");
     // public static final TagKey<Block> GROWING_BALL_CACTI = makeTag("growing_ball_cacti");
     // public static final TagKey<Block> BALL_CACTI = makeTag("ball_cacti");

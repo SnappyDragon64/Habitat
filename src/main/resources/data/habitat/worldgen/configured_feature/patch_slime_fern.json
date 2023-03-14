@@ -1,26 +1,52 @@
 {
-  "type": "habitat:slime_fern",
+  "type": "minecraft:random_patch",
   "config": {
-    "base_state_provider": {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "habitat:slime_fern"
-      }
-    },
-    "ceiling_state_provider": {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "habitat:slime_fern",
-        "Properties": {
-          "on_ceiling": "true"
+    "feature": {
+      "feature": {
+        "type": "habitat:slime_fern",
+        "config": {
+          "base_state_provider": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "habitat:slime_fern",
+              "Properties": {
+                "slimy": "true"
+              }
+            }
+          },
+          "ceiling_state_provider": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "habitat:slime_fern",
+              "Properties": {
+                "slimy": "true",
+                "on_ceiling": "true"
+              }
+            }
+          },
+          "walL_state_provider": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "habitat:wall_slime_fern",
+              "Properties": {
+                "slimy": "true"
+              }
+            }
+          }
         }
-      }
-    },
-    "walL_state_provider": {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "habitat:wall_slime_fern"
-      }
+      },
+      "placement": [
+        {
+          "type": "minecraft:block_predicate_filter",
+          "predicate": {
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:air"
+          }
+        },
+        {
+          "type": "habitat:slime_chunk"
+        }
+      ]
     },
     "tries": 64,
     "xz_spread": 4,
