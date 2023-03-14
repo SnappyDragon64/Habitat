@@ -6,11 +6,9 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.resources.ResourceLocation;
 
 public class HabitatCriterionTriggers {
-    public static final HabitatCriterionTrigger PACIFY_POOKA = new HabitatCriterionTrigger(get("pacify_pooka"));
     public static final HabitatCriterionTrigger FEED_PASSERINE = new HabitatCriterionTrigger(get("feed_passerine"));
 
     public static void registerCriteriaTriggers() {
-        CriteriaTriggers.register(PACIFY_POOKA);
         CriteriaTriggers.register(FEED_PASSERINE);
     }
 
