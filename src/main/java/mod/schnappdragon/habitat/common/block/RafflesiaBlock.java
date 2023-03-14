@@ -84,7 +84,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
      */
 
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.RAFFLESIA_PLANTABLE_ON);
+        return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.RAFFLESIA_PLACEABLE_ON);
     }
 
     /*
@@ -250,7 +250,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
             for (int j = 0; j < 8; ++j) {
                 blockpos$mutable.setWithOffset(pos, Mth.nextInt(rand, 1, 2) - Mth.nextInt(rand, 1, 2), Mth.nextInt(rand, 1, 2) - Mth.nextInt(rand, 1, 2), Mth.nextInt(rand, 1, 2) - Mth.nextInt(rand, 1, 2));
 
-                if ((worldIn.isEmptyBlock(blockpos$mutable) || worldIn.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) && worldIn.getBlockState(blockpos$mutable.below()).is(HabitatBlockTags.RAFFLESIA_PLANTABLE_ON)) {
+                if ((worldIn.isEmptyBlock(blockpos$mutable) || worldIn.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) && worldIn.getBlockState(blockpos$mutable.below()).is(HabitatBlockTags.RAFFLESIA_PLACEABLE_ON)) {
                     worldIn.setBlock(blockpos$mutable, state, 3);
                     break;
                 }

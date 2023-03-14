@@ -26,13 +26,8 @@
                 ]
               },
               {
-                "type": "minecraft:matching_blocks",
-                "blocks": [
-                  "minecraft:grass_block",
-                  "minecraft:snow_block",
-                  "minecraft:stone",
-                  "minecraft:powder_snow"
-                ],
+                "type": "minecraft:matching_block_tag",
+                "tag": "habitat:edelweiss_shrub_placeable_on",
                 "offset": [
                   0,
                   -1,

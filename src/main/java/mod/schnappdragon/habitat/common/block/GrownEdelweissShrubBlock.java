@@ -36,7 +36,7 @@ public class GrownEdelweissShrubBlock extends BushBlock {
     }
 
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.EDELWEISS_SHRUB_PLANTABLE_ON);
+        return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.EDELWEISS_SHRUB_PLACEABLE_ON);
     }
 
     @Override

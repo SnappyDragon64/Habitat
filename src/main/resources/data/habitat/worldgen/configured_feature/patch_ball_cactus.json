@@ -48,7 +48,7 @@
               },
               {
                 "type": "minecraft:matching_block_tag",
-                "tag": "forge:sand",
+                "tag": "habitat:ball_cactus_grows_on",
                 "offset": [
                   0,
                   -1,

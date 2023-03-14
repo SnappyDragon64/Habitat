@@ -41,7 +41,7 @@ public class BallCactusFlowerBlock extends HabitatFlowerBlock implements Bonemea
      */
 
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.BALL_CACTUS_FLOWER_PLACEABLE) || worldIn.getBlockState(pos.below()).is(HabitatBlockTags.BALL_CACTUS_GROWS_ON);
+        return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.BALL_CACTUS_FLOWER_PLACEABLE_ON) || worldIn.getBlockState(pos.below()).is(HabitatBlockTags.BALL_CACTUS_GROWS_ON);
     }
 
     /*
@@ -72,6 +72,6 @@ public class BallCactusFlowerBlock extends HabitatFlowerBlock implements Bonemea
     }
 
     public boolean canGrow(Level worldIn, BlockPos pos) {
-        return !worldIn.getBlockState(pos.below()).is(HabitatBlockTags.BALL_CACTUS_FLOWER_PLACEABLE);
+        return !worldIn.getBlockState(pos.below()).is(HabitatBlockTags.BALL_CACTUS_FLOWER_PLACEABLE_ON);
     }
 }

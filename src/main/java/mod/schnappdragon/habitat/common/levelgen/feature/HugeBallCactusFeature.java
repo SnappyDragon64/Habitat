@@ -42,9 +42,6 @@ public class HugeBallCactusFeature extends Feature<HugeBallCactusFeatureConfigur
         BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
         blockpos$mutable.setWithOffset(pos, 0, -1, 0);
 
-        if (!world.getBlockState(blockpos$mutable).is(HabitatBlockTags.BALL_CACTUS_GROWS_ON))
-            return false;
-
         for (int i = 0; i <= 2; i++) {
             blockpos$mutable.setWithOffset(pos, 0, i, 0);
 
