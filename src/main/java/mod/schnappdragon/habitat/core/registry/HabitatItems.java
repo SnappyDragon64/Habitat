@@ -24,8 +24,8 @@ public class HabitatItems {
             () -> new ItemNameBlockItem(HabitatBlocks.KABLOOM_BUSH.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(HabitatFoods.KABLOOM_PULP)));
     public static final RegistryObject<Item> KABLOOM_FRUIT = ITEMS.register("kabloom_fruit",
             () -> new KabloomFruitItem(new Item.Properties().stacksTo(16).tab(CreativeModeTab.TAB_COMBAT)));
-    public static final RegistryObject<Item> KABLOOM_FRUIT_PILE = ITEMS.register("kabloom_fruit_pile", () -> new BlockItem(HabitatBlocks.KABLOOM_FRUIT_PILE.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
-    public static final RegistryObject<Item> KABLOOM_PULP_BLOCK = ITEMS.register("kabloom_pulp_block", () -> new BlockItem(HabitatBlocks.KABLOOM_PULP_BLOCK.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+    public static final RegistryObject<Item> KABLOOM_FRUIT_PILE = registerBlockItem("kabloom_fruit_pile", HabitatBlocks.KABLOOM_FRUIT_PILE, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> KABLOOM_PULP_BLOCK = registerBlockItem("kabloom_pulp_block", HabitatBlocks.KABLOOM_PULP_BLOCK, CreativeModeTab.TAB_DECORATIONS);
 
     public static final RegistryObject<Item> SLIME_FERN = ITEMS.register("slime_fern",
             () -> new WallOrBaseItem(HabitatBlocks.SLIME_FERN.get(), HabitatBlocks.WALL_SLIME_FERN.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
