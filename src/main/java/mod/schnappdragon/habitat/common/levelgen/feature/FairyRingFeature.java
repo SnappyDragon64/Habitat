@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.common.levelgen.feature;
 
 import com.mojang.serialization.Codec;
-import mod.schnappdragon.habitat.common.levelgen.feature.configuration.FairyRingFeatureConfiguration;
+import mod.schnappdragon.habitat.common.levelgen.feature.configuration.FairyRingConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -12,17 +12,17 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
-public class FairyRingFeature extends Feature<FairyRingFeatureConfiguration> {
-    public FairyRingFeature(Codec<FairyRingFeatureConfiguration> codec) {
+public class FairyRingFeature extends Feature<FairyRingConfiguration> {
+    public FairyRingFeature(Codec<FairyRingConfiguration> codec) {
         super(codec);
     }
 
-    public boolean place(FeaturePlaceContext<FairyRingFeatureConfiguration> context) {
+    public boolean place(FeaturePlaceContext<FairyRingConfiguration> context) {
         ChunkGenerator generator = context.chunkGenerator();
         WorldGenLevel world = context.level();
         BlockPos pos = context.origin();
         RandomSource rand = context.random();
-        FairyRingFeatureConfiguration config = context.config();
+        FairyRingConfiguration config = context.config();
         boolean[] flag = { false };
         int rad = config.radius();
         int x = 0;
@@ -49,7 +49,7 @@ public class FairyRingFeature extends Feature<FairyRingFeatureConfiguration> {
         return true;
     }
 
-    public void setMushrooms(WorldGenLevel world, BlockPos pos, int x, int z, FairyRingFeatureConfiguration config, RandomSource rand, ChunkGenerator generator, boolean[] flag) {
+    public void setMushrooms(WorldGenLevel world, BlockPos pos, int x, int z, FairyRingConfiguration config, RandomSource rand, ChunkGenerator generator, boolean[] flag) {
         this.setMushroom(world, pos.offset(-x, 0 , z), config, rand, generator, flag);
         this.setMushroom(world, pos.offset(-z, 0 , x), config, rand, generator, flag);
         this.setMushroom(world, pos.offset(-z, 0, -x), config, rand, generator, flag);
@@ -60,7 +60,7 @@ public class FairyRingFeature extends Feature<FairyRingFeatureConfiguration> {
         this.setMushroom(world, pos.offset(x, 0 , z), config, rand, generator, flag);
     }
 
-    public void setMushroom(WorldGenLevel world, BlockPos pos, FairyRingFeatureConfiguration config, RandomSource rand, ChunkGenerator generator, boolean[] flag) {
+    public void setMushroom(WorldGenLevel world, BlockPos pos, FairyRingConfiguration config, RandomSource rand, ChunkGenerator generator, boolean[] flag) {
         pos = pos.below();
         BlockState base = world.getBlockState(pos.below());
 

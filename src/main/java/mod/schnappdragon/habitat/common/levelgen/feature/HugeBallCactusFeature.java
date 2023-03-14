@@ -1,7 +1,7 @@
 package mod.schnappdragon.habitat.common.levelgen.feature;
 
 import com.mojang.serialization.Codec;
-import mod.schnappdragon.habitat.common.levelgen.feature.configuration.HugeBallCactusFeatureConfiguration;
+import mod.schnappdragon.habitat.common.levelgen.feature.configuration.HugeBallCactusConfiguration;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -11,19 +11,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-public class HugeBallCactusFeature extends Feature<HugeBallCactusFeatureConfiguration> {
-    public HugeBallCactusFeature(Codec<HugeBallCactusFeatureConfiguration> codec) {
+public class HugeBallCactusFeature extends Feature<HugeBallCactusConfiguration> {
+    public HugeBallCactusFeature(Codec<HugeBallCactusConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<HugeBallCactusFeatureConfiguration> context) {
+    public boolean place(FeaturePlaceContext<HugeBallCactusConfiguration> context) {
         WorldGenLevel world = context.level();
         BlockPos pos = context.origin();
         RandomSource rand = context.random();
 
         if (canPlace(world, pos)) {
-            HugeBallCactusFeatureConfiguration config = context.config();
+            HugeBallCactusConfiguration config = context.config();
             BlockState cactusState = config.cactusProvider().getState(rand, pos);
             BlockState floweringCactusState = config.floweringCactusProvider().getState(rand, pos);
             float floweringCactusChance = config.floweringCactusChance();

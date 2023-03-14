@@ -4,9 +4,8 @@ import mod.schnappdragon.habitat.common.levelgen.feature.FairyRingFeature;
 import mod.schnappdragon.habitat.common.levelgen.feature.HugeBallCactusFeature;
 import mod.schnappdragon.habitat.common.levelgen.feature.HugeFairyRingMushroomFeature;
 import mod.schnappdragon.habitat.common.levelgen.feature.SlimeFernFeature;
-import mod.schnappdragon.habitat.common.levelgen.feature.configuration.FairyRingFeatureConfiguration;
-import mod.schnappdragon.habitat.common.levelgen.feature.configuration.HugeBallCactusFeatureConfiguration;
-import mod.schnappdragon.habitat.common.levelgen.feature.configuration.SlimeFernFeatureConfiguration;
+import mod.schnappdragon.habitat.common.levelgen.feature.configuration.FairyRingConfiguration;
+import mod.schnappdragon.habitat.common.levelgen.feature.configuration.HugeBallCactusConfiguration;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
@@ -21,12 +20,12 @@ public class HabitatFeatures {
     public final static RegistryObject<Feature<SlimeFernFeatureConfiguration>> SLIME_FERN_FEATURE = FEATURES.register("slime_fern",
             () -> new SlimeFernFeature(SlimeFernFeatureConfiguration.CODEC));
 
-    public final static RegistryObject<Feature<FairyRingFeatureConfiguration>> FAIRY_RING_FEATURE = FEATURES.register("fairy_ring",
-            () -> new FairyRingFeature(FairyRingFeatureConfiguration.CODEC));
+    public final static RegistryObject<Feature<FairyRingConfiguration>> FAIRY_RING_FEATURE = FEATURES.register("fairy_ring",
+            () -> new FairyRingFeature(FairyRingConfiguration.CODEC));
 
     public final static RegistryObject<Feature<HugeMushroomFeatureConfiguration>> HUGE_FAIRY_RING_MUSHROOM_FEATURE = FEATURES.register("huge_fairy_ring_mushroom",
             () -> new HugeFairyRingMushroomFeature(HugeMushroomFeatureConfiguration.CODEC));
 
-    public final static RegistryObject<Feature<HugeBallCactusFeatureConfiguration>> HUGE_BALL_CACTUS_FEATURE = FEATURES.register("huge_ball_cactus",
-            () -> new HugeBallCactusFeature(HugeBallCactusFeatureConfiguration.CODEC));
+    public final static RegistryObject<Feature<HugeBallCactusConfiguration>> HUGE_BALL_CACTUS_FEATURE = FEATURES.register("huge_ball_cactus",
+            () -> new HugeBallCactusFeature(HugeBallCactusConfiguration.CODEC));
 }
