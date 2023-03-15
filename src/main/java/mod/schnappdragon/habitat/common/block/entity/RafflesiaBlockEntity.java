@@ -5,7 +5,6 @@ import mod.schnappdragon.habitat.core.registry.HabitatBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -50,11 +49,6 @@ public class RafflesiaBlockEntity extends BlockEntity {
     @Override
     public void handleUpdateTag(CompoundTag compound) {
         this.load(compound);
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(pkt.getTag());
     }
 
     public void onChange(Level worldIn, BlockState newState) {
