@@ -13,6 +13,7 @@
         "Name": "habitat:flowering_orange_ball_cactus_block"
       }
     },
-    "flowering_cactus_chance": 0.4
+    "flowering_cactus_chance": 0.4,
+    "can_be_placed_on": "#habitat:ball_cactus_grows_on"
   }
 }

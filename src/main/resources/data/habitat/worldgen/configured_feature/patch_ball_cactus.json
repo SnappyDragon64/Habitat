@@ -1,67 +1,11 @@
 {
-  "type": "minecraft:random_patch",
+  "type": "simple_random_selector",
   "config": {
-    "feature": {
-      "feature": {
-        "type": "minecraft:simple_block",
-        "config": {
-          "to_place": {
-            "type": "minecraft:weighted_state_provider",
-            "entries": [
-              {
-                "weight": 3,
-                "data": {
-                  "Name": "habitat:flowering_orange_ball_cactus"
-                }
-              },
-              {
-                "weight": 3,
-                "data": {
-                  "Name": "habitat:flowering_pink_ball_cactus"
-                }
-              },
-              {
-                "weight": 2,
-                "data": {
-                  "Name": "habitat:flowering_red_ball_cactus"
-                }
-              },
-              {
-                "weight": 1,
-                "data": {
-                  "Name": "habitat:flowering_yellow_ball_cactus"
-                }
-              }
-            ]
-          }
-        }
-      },
-      "placement": [
-        {
-          "type": "minecraft:block_predicate_filter",
-          "predicate": {
-            "type": "minecraft:all_of",
-            "predicates": [
-              {
-                "type": "minecraft:matching_blocks",
-                "blocks": "minecraft:air"
-              },
-              {
-                "type": "minecraft:matching_block_tag",
-                "tag": "habitat:ball_cactus_grows_on",
-                "offset": [
-                  0,
-                  -1,
-                  0
-                ]
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "tries": 4,
-    "xz_spread": 5,
-    "y_spread": 1
+    "features": [
+      "habitat:patch_orange_ball_cactus",
+      "habitat:patch_pink_ball_cactus",
+      "habitat:patch_red_ball_cactus",
+      "habitat:patch_yellow_ball_cactus"
+    ]
   }
 }
