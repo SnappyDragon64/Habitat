@@ -44,6 +44,7 @@ public class FairyRingFeature extends Feature<FairyRingConfiguration> {
             this.setMushrooms(world, pos, x, z, config, rand, generator, flag);
         }
 
+        config.surfaceFeature().get().place(world, generator, rand, pos.below());
         config.mobGroupFeature().get().place(world, generator, rand, pos);
 
         return true;
