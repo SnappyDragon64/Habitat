@@ -3,10 +3,8 @@ package mod.schnappdragon.habitat.common.levelgen.feature;
 import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.common.levelgen.feature.configuration.FairyRingConfiguration;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -46,6 +44,8 @@ public class FairyRingFeature extends Feature<FairyRingConfiguration> {
             this.setMushrooms(world, pos, x, z, config, rand, generator, flag);
         }
 
+        config.mobGroupFeature().get().place(world, generator, rand, pos);
+
         return true;
     }
 
@@ -61,12 +61,9 @@ public class FairyRingFeature extends Feature<FairyRingConfiguration> {
     }
 
     public void setMushroom(WorldGenLevel world, BlockPos pos, FairyRingConfiguration config, RandomSource rand, ChunkGenerator generator, boolean[] flag) {
-        pos = pos.below();
-        BlockState base = world.getBlockState(pos.below());
-
-        if (world.isEmptyBlock(pos) && base.is(BlockTags.DIRT)) {
+        if (world.isEmptyBlock(pos) && world.getBlockState(pos.below()).is(config.canBePlacedOn())) {
             if (!flag[0] && rand.nextInt(8) == 0) {
-                PlacedFeature placedFeature = config.feature().get();
+                PlacedFeature placedFeature = config.hugeMushroomFeature().get();
 
                 if (placedFeature.place(world, generator, rand, pos)) {
                     flag[0] = true;

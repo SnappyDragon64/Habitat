@@ -1,4 +1,9 @@
 {
   "feature": "habitat:fairy_ring",
-  "placement": []
+  "placement": [
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "WORLD_SURFACE_WG"
+    }
+  ]
 }

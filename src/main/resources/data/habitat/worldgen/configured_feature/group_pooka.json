@@ -1,0 +1,9 @@
+{
+  "type": "habitat:mob_group",
+  "config": {
+    "entity_types": "habitat:pooka",
+    "min_count": 4,
+    "max_count": 8,
+    "xz_spread": 4
+  }
+}

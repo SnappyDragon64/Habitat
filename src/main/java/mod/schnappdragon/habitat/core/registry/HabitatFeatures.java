@@ -1,11 +1,9 @@
 package mod.schnappdragon.habitat.core.registry;
 
-import mod.schnappdragon.habitat.common.levelgen.feature.FairyRingFeature;
-import mod.schnappdragon.habitat.common.levelgen.feature.HugeBallCactusFeature;
-import mod.schnappdragon.habitat.common.levelgen.feature.HugeFairyRingMushroomFeature;
-import mod.schnappdragon.habitat.common.levelgen.feature.SlimeFernFeature;
+import mod.schnappdragon.habitat.common.levelgen.feature.*;
 import mod.schnappdragon.habitat.common.levelgen.feature.configuration.FairyRingConfiguration;
 import mod.schnappdragon.habitat.common.levelgen.feature.configuration.HugeBallCactusConfiguration;
+import mod.schnappdragon.habitat.common.levelgen.feature.configuration.MobGroupConfiguration;
 import mod.schnappdragon.habitat.common.levelgen.feature.configuration.SlimeFernConfiguration;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -28,4 +26,7 @@ public class HabitatFeatures {
 
     public final static RegistryObject<Feature<HugeBallCactusConfiguration>> HUGE_BALL_CACTUS_FEATURE = FEATURES.register("huge_ball_cactus",
             () -> new HugeBallCactusFeature(HugeBallCactusConfiguration.CODEC));
+
+    public final static RegistryObject<Feature<MobGroupConfiguration>> MOB_GROUP_FEATURE = FEATURES.register("mob_group",
+            () -> new MobGroupFeature(MobGroupConfiguration.CODEC));
 }
