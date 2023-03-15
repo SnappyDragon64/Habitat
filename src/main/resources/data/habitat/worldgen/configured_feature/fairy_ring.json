@@ -19,6 +19,8 @@
         }
       }
     },
-    "feature": "habitat:huge_fairy_ring_mushroom"
+    "huge_mushroom_feature": "habitat:huge_fairy_ring_mushroom",
+    "mob_group_feature": "habitat:group_pooka",
+    "can_be_placed_on": "#minecraft:dirt"
   }
 }

@@ -1,20 +1,13 @@
 {
   "type": "minecraft:jigsaw",
-  "start_pool": "habitat:fairy_ring/start_pool",
-  "size": 1,
+  "biomes": "#habitat:has_structure/fairy_ring",
   "max_distance_from_center": 16,
   "valid_biome_radius_check": 1,
-  "biomes": "#habitat:has_structure/fairy_ring",
-  "step": "surface_structures",
-  "terrain_adaptation": "beard_thin",
   "project_start_to_heightmap": "WORLD_SURFACE_WG",
-  "use_expansion_hack": false,
-  "start_height": {
-    "absolute": 0
-  },
+  "size": 1,
   "spawn_overrides": {
-    "monster": {
-      "bounding_box": "piece",
+    "creature": {
+      "bounding_box": "full",
       "spawns": [
         {
           "type": "habitat:pooka",
@@ -24,5 +17,12 @@
         }
       ]
     }
-  }
+  },
+  "start_height": {
+    "absolute": 1
+  },
+  "start_pool": "habitat:fairy_ring/start_pool",
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin",
+  "use_expansion_hack": false
 }
