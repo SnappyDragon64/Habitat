@@ -27,7 +27,7 @@ public class SlimeFernFeature extends Feature<SlimeFernConfiguration> {
         for (Direction dir : Direction.values()) {
             blockpos$mutableblockpos.setWithOffset(pos, dir);
 
-            if (world.getBlockState(blockpos$mutableblockpos).is(HabitatBlockTags.SLIME_FERN_PLACEABLE_ON_WORLD_GEN)) {
+            if (world.getBlockState(blockpos$mutableblockpos).is(config.canBePlacedOn())) {
                 BlockState state = switch (dir) {
                     case DOWN -> config.baseStateProvider().getState(rand, pos);
                     case UP -> config.ceilingStateProvider().getState(rand, pos);

@@ -32,7 +32,8 @@
                 "slimy": "true"
               }
             }
-          }
+          },
+          "can_be_placed_on": "#minecraft:base_stone_overworld"
         }
       },
       "placement": [
