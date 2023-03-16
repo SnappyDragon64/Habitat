@@ -18,5 +18,5 @@ public class HabitatEffects {
             () -> new HabitatEffect(MobEffectCategory.BENEFICIAL, 5794588));
 
     public static final RegistryObject<MobEffect> PROLONGATION = EFFECTS.register("prolongation",
-            () -> new HabitatEffect(MobEffectCategory.BENEFICIAL, 5756537));
+            () -> new HabitatEffect(MobEffectCategory.BENEFICIAL, 13386072));
 }
