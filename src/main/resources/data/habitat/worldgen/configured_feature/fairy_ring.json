@@ -20,38 +20,6 @@
       }
     },
     "huge_mushroom_feature": "habitat:huge_fairy_ring_mushroom",
-    "surface_feature": {
-      "feature": {
-        "type": "minecraft:random_patch",
-        "config": {
-          "feature": {
-            "feature": {
-              "type": "minecraft:simple_block",
-              "config": {
-                "to_place": {
-                  "type": "minecraft:simple_state_provider",
-                  "state": {
-                    "Name": "minecraft:coarse_dirt"
-                  }
-                }
-              }
-            },
-            "placement": [
-              {
-                "type": "minecraft:block_predicate_filter",
-                "predicate": {
-                  "type": "minecraft:solid"
-                }
-              }
-            ]
-          },
-          "tries": 64,
-          "xz_spread": 8,
-          "y_spread": 0
-        }
-      },
-      "placement": []
-    },
     "mob_group_feature": "habitat:group_pooka",
     "can_be_placed_on": "#minecraft:dirt"
   }
