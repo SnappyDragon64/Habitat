@@ -3,7 +3,7 @@
   "group": "ball_cactus",
   "ingredients": [
     {
-      "item": "habitat:orange_ball_cactus_block"
+      "tag": "habitat:orange_ball_cactus_blocks"
     }
   ],
   "result": {

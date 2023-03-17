@@ -1,10 +1,9 @@
 {
   "replace": false,
   "values": [
-    "#habitat:flowering_ball_cactus_blocks",
-    "habitat:orange_ball_cactus_block",
-    "habitat:pink_ball_cactus_block",
-    "habitat:red_ball_cactus_block",
-    "habitat:yellow_ball_cactus_block"
+    "#habitat:orange_ball_cactus_blocks",
+    "#habitat:pink_ball_cactus_blocks",
+    "#habitat:red_ball_cactus_blocks",
+    "#habitat:yellow_ball_cactus_blocks"
   ]
 }
