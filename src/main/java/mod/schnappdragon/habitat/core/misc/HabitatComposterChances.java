@@ -30,7 +30,6 @@ public class HabitatComposterChances {
         put(HabitatItems.FAIRY_RING_MUSHROOM_STEM.get(), 0.65F);
         put(HabitatItems.FAIRYLIGHT.get(), 0.65F);
 
-        put(HabitatItems.EDELWEISS_SHRUB.get(), 0.65F);
         put(HabitatItems.EDELWEISS.get(), 0.65F);
 
         put(HabitatItems.ORANGE_BALL_CACTUS_BLOCK.get(), 0.5F);
