@@ -54,6 +54,7 @@ public class HabitatFlammables {
         setFlammable(HabitatBlocks.FLOWERING_PINK_BALL_CACTUS_BLOCK.get(), 5, 60);
         setFlammable(HabitatBlocks.FLOWERING_RED_BALL_CACTUS_BLOCK.get(), 5, 60);
         setFlammable(HabitatBlocks.FLOWERING_YELLOW_BALL_CACTUS_BLOCK.get(), 5, 60);
+        setFlammable(HabitatBlocks.DRIED_BALL_CACTUS_BLOCK.get(), 5, 60);
     }
 
     private static void setFlammable(Block block, int flameOdds, int burnOdds) {

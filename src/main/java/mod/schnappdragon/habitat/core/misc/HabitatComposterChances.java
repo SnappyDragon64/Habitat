@@ -41,6 +41,7 @@ public class HabitatComposterChances {
         put(HabitatItems.FLOWERING_PINK_BALL_CACTUS_BLOCK.get(), 0.5F);
         put(HabitatItems.FLOWERING_RED_BALL_CACTUS_BLOCK.get(), 0.5F);
         put(HabitatItems.FLOWERING_YELLOW_BALL_CACTUS_BLOCK.get(), 0.5F);
+        put(HabitatItems.DRIED_BALL_CACTUS_BLOCK.get(), 0.5F);
     }
 
     private static void put(ItemLike item, float value) {
