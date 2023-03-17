@@ -30,7 +30,10 @@ public class HabitatTrades {
         helper.addTrade(2, 5, HabitatItems.YELLOW_BALL_CACTUS);
         helper.addTrade(5, 8, HabitatItems.FAIRY_RING_MUSHROOM);
         helper.addTrade(1, 8, HabitatItems.EDELWEISS);
-        helper.addTrade(3, 8, HabitatItems.BALL_CACTUS_BLOCK);
+        helper.addTrade(3, 8, HabitatItems.ORANGE_BALL_CACTUS_BLOCK);
+        helper.addTrade(3, 8, HabitatItems.PINK_BALL_CACTUS_BLOCK);
+        helper.addTrade(3, 8, HabitatItems.RED_BALL_CACTUS_BLOCK);
+        helper.addTrade(3, 8, HabitatItems.YELLOW_BALL_CACTUS_BLOCK);
         helper.addTrade(3, 8, HabitatItems.FLOWERING_ORANGE_BALL_CACTUS_BLOCK);
         helper.addTrade(3, 8, HabitatItems.FLOWERING_PINK_BALL_CACTUS_BLOCK);
         helper.addTrade(3, 8, HabitatItems.FLOWERING_RED_BALL_CACTUS_BLOCK);

@@ -19,6 +19,18 @@ public class HabitatFlammables {
         setFlammable(HabitatBlocks.PINK_BALL_CACTUS_FLOWER.get(), 60, 100);
         setFlammable(HabitatBlocks.RED_BALL_CACTUS_FLOWER.get(), 60, 100);
         setFlammable(HabitatBlocks.YELLOW_BALL_CACTUS_FLOWER.get(), 60, 100);
+        setFlammable(HabitatBlocks.GROWING_ORANGE_BALL_CACTUS.get(), 5, 60);
+        setFlammable(HabitatBlocks.GROWING_PINK_BALL_CACTUS.get(), 5, 60);
+        setFlammable(HabitatBlocks.GROWING_RED_BALL_CACTUS.get(), 5, 60);
+        setFlammable(HabitatBlocks.GROWING_YELLOW_BALL_CACTUS.get(), 5, 60);
+        setFlammable(HabitatBlocks.ORANGE_BALL_CACTUS.get(), 5, 60);
+        setFlammable(HabitatBlocks.PINK_BALL_CACTUS.get(), 5, 60);
+        setFlammable(HabitatBlocks.RED_BALL_CACTUS.get(), 5, 60);
+        setFlammable(HabitatBlocks.YELLOW_BALL_CACTUS.get(), 5, 60);
+        setFlammable(HabitatBlocks.FLOWERING_ORANGE_BALL_CACTUS.get(), 5, 60);
+        setFlammable(HabitatBlocks.FLOWERING_PINK_BALL_CACTUS.get(), 5, 60);
+        setFlammable(HabitatBlocks.FLOWERING_RED_BALL_CACTUS.get(), 5, 60);
+        setFlammable(HabitatBlocks.FLOWERING_YELLOW_BALL_CACTUS.get(), 5, 60);
 
         setFlammable(HabitatBlocks.ENHANCED_FAIRY_RING_MUSHROOM_STEM.get(), 5, 5);
         setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_HYPHAE.get(), 5, 5);
@@ -33,6 +45,15 @@ public class HabitatFlammables {
         setFlammable(HabitatBlocks.STRIPPED_FAIRY_RING_MUSHROOM_POST.get(), 5, 20);
 
         setFlammable(HabitatBlocks.EDELWEISS.get(), 60, 100);
+
+        setFlammable(HabitatBlocks.ORANGE_BALL_CACTUS_BLOCK.get(), 5, 60);
+        setFlammable(HabitatBlocks.PINK_BALL_CACTUS_BLOCK.get(), 5, 60);
+        setFlammable(HabitatBlocks.RED_BALL_CACTUS_BLOCK.get(), 5, 60);
+        setFlammable(HabitatBlocks.YELLOW_BALL_CACTUS_BLOCK.get(), 5, 60);
+        setFlammable(HabitatBlocks.FLOWERING_ORANGE_BALL_CACTUS_BLOCK.get(), 5, 60);
+        setFlammable(HabitatBlocks.FLOWERING_PINK_BALL_CACTUS_BLOCK.get(), 5, 60);
+        setFlammable(HabitatBlocks.FLOWERING_RED_BALL_CACTUS_BLOCK.get(), 5, 60);
+        setFlammable(HabitatBlocks.FLOWERING_YELLOW_BALL_CACTUS_BLOCK.get(), 5, 60);
     }
 
     private static void setFlammable(Block block, int flameOdds, int burnOdds) {

@@ -96,11 +96,15 @@ public class HabitatItems {
     public static final RegistryObject<Item> EDELWEISS_SHRUB = registerBlockItem("edelweiss_shrub", HabitatBlocks.EDELWEISS_SHRUB, CreativeModeTab.TAB_DECORATIONS);
     public static final RegistryObject<Item> EDELWEISS = registerBlockItem("edelweiss", HabitatBlocks.EDELWEISS, CreativeModeTab.TAB_DECORATIONS);
 
-    public static final RegistryObject<Item> BALL_CACTUS_BLOCK = registerBlockItem("ball_cactus_block", HabitatBlocks.BALL_CACTUS_BLOCK, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> ORANGE_BALL_CACTUS_BLOCK = registerBlockItem("orange_ball_cactus_block", HabitatBlocks.ORANGE_BALL_CACTUS_BLOCK, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> PINK_BALL_CACTUS_BLOCK = registerBlockItem("pink_ball_cactus_block", HabitatBlocks.PINK_BALL_CACTUS_BLOCK, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> RED_BALL_CACTUS_BLOCK = registerBlockItem("red_ball_cactus_block", HabitatBlocks.RED_BALL_CACTUS_BLOCK, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> YELLOW_BALL_CACTUS_BLOCK = registerBlockItem("yellow_ball_cactus_block", HabitatBlocks.YELLOW_BALL_CACTUS_BLOCK, CreativeModeTab.TAB_DECORATIONS);
     public static final RegistryObject<Item> FLOWERING_ORANGE_BALL_CACTUS_BLOCK = registerBlockItem("flowering_orange_ball_cactus_block", HabitatBlocks.FLOWERING_ORANGE_BALL_CACTUS_BLOCK, CreativeModeTab.TAB_DECORATIONS);
     public static final RegistryObject<Item> FLOWERING_PINK_BALL_CACTUS_BLOCK = registerBlockItem("flowering_pink_ball_cactus_block", HabitatBlocks.FLOWERING_PINK_BALL_CACTUS_BLOCK, CreativeModeTab.TAB_DECORATIONS);
     public static final RegistryObject<Item> FLOWERING_RED_BALL_CACTUS_BLOCK = registerBlockItem("flowering_red_ball_cactus_block", HabitatBlocks.FLOWERING_RED_BALL_CACTUS_BLOCK, CreativeModeTab.TAB_DECORATIONS);
     public static final RegistryObject<Item> FLOWERING_YELLOW_BALL_CACTUS_BLOCK = registerBlockItem("flowering_yellow_ball_cactus_block", HabitatBlocks.FLOWERING_YELLOW_BALL_CACTUS_BLOCK, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> DRIED_BALL_CACTUS_BLOCK = registerBlockItem("dried_ball_cactus_block", HabitatBlocks.DRIED_BALL_CACTUS_BLOCK, CreativeModeTab.TAB_DECORATIONS);
 
     private static Item.Properties getProperties(CreativeModeTab group) {
         return new Item.Properties().tab(group);

@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "habitat:ball_cactus_block"
+          "name": "habitat:pink_ball_cactus_block"
         }
       ],
       "conditions": [

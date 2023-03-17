@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "tag": "habitat:ball_cactus_blocks"
+  },
+  "result": "habitat:dried_ball_cactus_block",
+  "experience": 0.35,
+  "cookingtime": 600
+}

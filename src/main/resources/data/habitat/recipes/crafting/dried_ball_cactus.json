@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ball_cactus",
+  "ingredients": [
+    {
+      "item": "habitat:dried_ball_cactus_block"
+    }
+  ],
+  "result": {
+    "item": "habitat:dried_ball_cactus",
+    "count": 4
+  }
+}

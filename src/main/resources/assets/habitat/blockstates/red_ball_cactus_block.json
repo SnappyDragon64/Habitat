@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "habitat:block/ball_cactus_block"
+    }
+  }
+}

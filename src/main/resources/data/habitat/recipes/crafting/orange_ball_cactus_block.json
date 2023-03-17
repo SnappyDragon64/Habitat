@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ball_cactus_block",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "habitat:orange_ball_cactus"
+    }
+  },
+  "result": {
+    "item": "habitat:orange_ball_cactus_block"
+  }
+}
