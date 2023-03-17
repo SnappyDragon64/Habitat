@@ -29,8 +29,7 @@ public class KabloomPulpBlock extends HalfTransparentBlock {
     public void stepOn(Level worldIn, BlockPos pos, BlockState state, Entity entityIn) {
         entityIn.makeStuckInBlock(worldIn.getBlockState(pos), new Vec3(0.95F, 0.9F, 0.95F));
 
-        if (entityIn instanceof LivingEntity) {
-            LivingEntity living = (LivingEntity) entityIn;
+        if (entityIn instanceof LivingEntity living) {
             living.addEffect(new MobEffectInstance(HabitatEffects.BLAST_ENDURANCE.get(), 100));
         }
     }
