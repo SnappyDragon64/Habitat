@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -17,7 +18,7 @@ import net.minecraftforge.common.ForgeHooks;
 
 import java.util.function.Supplier;
 
-public class BallCactusFlowerBlock extends HabitatFlowerBlock implements BonemealableBlock {
+public class BallCactusFlowerBlock extends FlowerBlock implements BonemealableBlock {
     protected static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 3.0D, 11.0D);
     private final BallCactusColor color;
 
