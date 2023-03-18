@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "habitat:block/edelweiss_shrub_stage0"
+    "layer0": "habitat:item/edelweiss_shrub"
   }
 }
