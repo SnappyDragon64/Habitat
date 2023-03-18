@@ -14,6 +14,7 @@ public class HabitatBlockTags {
     public static final TagKey<Block> PASSERINES_SPAWNABLE_ON = makeTag("passerines_spawnable_on");
     public static final TagKey<Block> EDELWEISS_SHRUB_PLACEABLE_ON = makeTag("edelweiss_shrub_placeable_on");
     public static final TagKey<Block> POOKA_SPAWNABLE_ON = makeTag("pooka_spawnable_on");
+    public static final TagKey<Block> KABLOOM_PULP_BLOCK_DOES_NOT_STICK_TO = makeTag("kabloom_pulp_block_does_not_stick_to");
 
     private static TagKey<Block> makeTag(String id) {
         return BlockTags.create(new ResourceLocation(Habitat.MODID, id));

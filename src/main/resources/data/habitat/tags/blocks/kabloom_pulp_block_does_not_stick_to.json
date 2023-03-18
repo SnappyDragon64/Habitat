@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:slime_block",
+    "minecraft:honey_block",
+    {
+      "id":"atmospheric:aloe_gel_block",
+      "required":false
+    },
+    {
+      "id":"autumnity:snail_goo_block",
+      "required":false
+    },
+    {
+      "id":"upgrade_aquatic:mulberry_jam_block",
+      "required":false
+    }
+  ]
+}
