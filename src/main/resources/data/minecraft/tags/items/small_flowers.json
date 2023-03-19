@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     "#habitat:ball_cactus_flowers",
-    "habitat:edelweiss"
+    "habitat:edelweiss",
+    "habitat:purple_anthurium",
+    "habitat:red_anthurium",
+    "habitat:white_anthurium",
+    "habitat:yellow_anthurium"
   ]
 }

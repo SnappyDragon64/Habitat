@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "habitat:tall_purple_anthurium",
+    "habitat:tall_red_anthurium",
+    "habitat:tall_white_anthurium",
+    "habitat:tall_yellow_anthurium"
+  ]
+}
