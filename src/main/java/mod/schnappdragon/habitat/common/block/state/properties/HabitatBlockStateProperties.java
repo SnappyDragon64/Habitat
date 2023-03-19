@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 public class HabitatBlockStateProperties {
     public static final BooleanProperty ON_COOLDOWN = BooleanProperty.create("on_cooldown");
     public static final BooleanProperty HAS_STEW = BooleanProperty.create("has_stew");
-    public static final BooleanProperty ON_CEILING = BooleanProperty.create("on_ceiling");
+    public static final BooleanProperty SLIMY = BooleanProperty.create("slimy");
     public static final IntegerProperty MUSHROOMS_1_4 = IntegerProperty.create("mushrooms", 1, 4);
     public static final BooleanProperty DUSTED = BooleanProperty.create("dusted");
     public static final EnumProperty<VerticalSlabType> VERTICAL_SLAB_TYPE = EnumProperty.create("type", VerticalSlabType.class);

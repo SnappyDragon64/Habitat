@@ -25,7 +25,6 @@ public class HabitatBlocks {
     public static final RegistryObject<Block> KABLOOM_PULP_BLOCK = BLOCKS.register("kabloom_pulp_block", () -> new KabloomPulpBlock(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.GRASS).noOcclusion().sound(SoundType.SLIME_BLOCK)));
 
     public static final RegistryObject<Block> SLIME_FERN = BLOCKS.register("slime_fern", () -> new SlimeFernBlock(BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.GRASS).noCollission().noOcclusion()));
-    public static final RegistryObject<Block> WALL_SLIME_FERN = BLOCKS.register("wall_slime_fern", () -> new WallSlimeFernBlock(BlockBehaviour.Properties.of(Material.PLANT).instabreak().lootFrom(SLIME_FERN).sound(SoundType.GRASS).noCollission().noOcclusion()));
     public static final RegistryObject<Block> POTTED_SLIME_FERN = BLOCKS.register("potted_slime_fern", () -> new FlowerPotBlock(SLIME_FERN.get(), BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
 
     public static final RegistryObject<Block> ORANGE_BALL_CACTUS_FLOWER = BLOCKS.register("orange_ball_cactus_flower", () -> new BallCactusFlowerBlock(BallCactusColor.ORANGE, HabitatEffects.PRICKLING, 5, BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.GRASS).noCollission().noOcclusion().randomTicks()));

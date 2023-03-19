@@ -27,8 +27,7 @@ public class HabitatItems {
     public static final RegistryObject<Item> KABLOOM_FRUIT_PILE = registerBlockItem("kabloom_fruit_pile", HabitatBlocks.KABLOOM_FRUIT_PILE, CreativeModeTab.TAB_DECORATIONS);
     public static final RegistryObject<Item> KABLOOM_PULP_BLOCK = registerBlockItem("kabloom_pulp_block", HabitatBlocks.KABLOOM_PULP_BLOCK, CreativeModeTab.TAB_DECORATIONS);
 
-    public static final RegistryObject<Item> SLIME_FERN = ITEMS.register("slime_fern",
-            () -> new WallOrBaseItem(HabitatBlocks.SLIME_FERN.get(), HabitatBlocks.WALL_SLIME_FERN.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+    public static final RegistryObject<Item> SLIME_FERN = registerBlockItem("slime_fern", HabitatBlocks.SLIME_FERN, CreativeModeTab.TAB_DECORATIONS);
 
     public static final RegistryObject<Item> ORANGE_BALL_CACTUS_FLOWER = registerBlockItem("orange_ball_cactus_flower", HabitatBlocks.ORANGE_BALL_CACTUS_FLOWER, CreativeModeTab.TAB_DECORATIONS);
     public static final RegistryObject<Item> PINK_BALL_CACTUS_FLOWER = registerBlockItem("pink_ball_cactus_flower", HabitatBlocks.PINK_BALL_CACTUS_FLOWER, CreativeModeTab.TAB_DECORATIONS);

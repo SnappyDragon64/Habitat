@@ -1,11 +1,26 @@
 {
   "variants": {
-    "on_ceiling=false": {
+    "facing=up": {
       "model": "habitat:block/slime_fern"
     },
-    "on_ceiling=true": {
+    "facing=down": {
       "model": "habitat:block/slime_fern",
       "x": 180
+    },
+    "facing=east": {
+      "model": "habitat:block/wall_slime_fern",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "habitat:block/wall_slime_fern"
+    },
+    "facing=south": {
+      "model": "habitat:block/wall_slime_fern",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "habitat:block/wall_slime_fern",
+      "y": 270
     }
   }
 }
