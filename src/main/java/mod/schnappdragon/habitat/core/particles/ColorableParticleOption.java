@@ -5,11 +5,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.math.Vector3f;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.Mth;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
