@@ -376,7 +376,7 @@ public class Passerine extends Animal implements FlyingAnimal {
             return false;
         else {
             if (!this.level.isClientSide) {
-                if (source.getDirectEntity() != null && this.isRegularVariant())
+                if (this.isRegularVariant() && source.getDirectEntity() != null && !source.isMagic())
                     this.level.broadcastEntityEvent(this, (byte) 12);
 
                 if (this.isAsleep())

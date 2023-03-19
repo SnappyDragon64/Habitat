@@ -22,9 +22,8 @@ public class FeatherParticle<T extends ColorableParticleOption> extends TextureS
 
         this.lifetime = 360 + this.random.nextInt(40);
 
-        float f = 0.09F + this.random.nextFloat() * 0.01F;
-        this.scale(f / 0.3F);
-        this.quadSize = f;
+        this.scale(0.3F);
+        this.quadSize = 0.09F;
 
         this.rCol = particle.getColor().x();
         this.gCol = particle.getColor().y();
