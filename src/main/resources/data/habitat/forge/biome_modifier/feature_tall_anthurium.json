@@ -1,0 +1,9 @@
+{
+  "type": "forge:add_features",
+  "biomes": [
+    "minecraft:jungle",
+    "minecraft:sparse_jungle"
+  ],
+  "features": "habitat:patch_tall_anthurium",
+  "step": "vegetal_decoration"
+}
