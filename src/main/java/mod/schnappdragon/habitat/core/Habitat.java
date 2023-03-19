@@ -56,8 +56,9 @@ public class Habitat {
 
             HabitatPlacementModifierTypes.registerPlacementModifierTypes();
 
-            HabitatComposterChances.registerComposterChances();
             HabitatDispenseItemBehavior.registerDispenserBehaviors();
+            HabitatComposterChances.registerComposterChances();
+            HabitatFlowerPots.addPlantsToFlowerPot();
             HabitatFlammables.registerFlammables();
 
             HabitatBrewingMixes.registerBrewingMixes();
