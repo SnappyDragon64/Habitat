@@ -1,0 +1,6 @@
+{
+  "parent": "habitat:block/flower_pot_cross",
+  "textures": {
+    "plant": "habitat:block/red_anthurium"
+  }
+}

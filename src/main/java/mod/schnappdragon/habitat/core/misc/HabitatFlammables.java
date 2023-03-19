@@ -56,6 +56,15 @@ public class HabitatFlammables {
         setFlammable(HabitatBlocks.FLOWERING_RED_BALL_CACTUS_BLOCK, 5, 60);
         setFlammable(HabitatBlocks.FLOWERING_YELLOW_BALL_CACTUS_BLOCK, 5, 60);
         setFlammable(HabitatBlocks.DRIED_BALL_CACTUS_BLOCK, 5, 60);
+
+        setFlammable(HabitatBlocks.PURPLE_ANTHURIUM, 60, 100);
+        setFlammable(HabitatBlocks.RED_ANTHURIUM, 60, 100);
+        setFlammable(HabitatBlocks.WHITE_ANTHURIUM, 60, 100);
+        setFlammable(HabitatBlocks.YELLOW_ANTHURIUM, 60, 100);
+        setFlammable(HabitatBlocks.TALL_PURPLE_ANTHURIUM, 60, 100);
+        setFlammable(HabitatBlocks.TALL_RED_ANTHURIUM, 60, 100);
+        setFlammable(HabitatBlocks.TALL_WHITE_ANTHURIUM, 60, 100);
+        setFlammable(HabitatBlocks.TALL_YELLOW_ANTHURIUM, 60, 100);
     }
 
     private static void setFlammable(Supplier<Block> block, int flameOdds, int burnOdds) {

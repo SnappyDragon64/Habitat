@@ -24,6 +24,14 @@ public class HabitatFlowerPots {
         addPlantToFlowerPot("yellow_ball_cactus", HabitatBlocks.POTTED_YELLOW_BALL_CACTUS);
         addPlantToFlowerPot("fairy_ring_mushroom", HabitatBlocks.POTTED_FAIRY_RING_MUSHROOM);
         addPlantToFlowerPot("edelweiss", HabitatBlocks.POTTED_EDELWEISS);
+        addPlantToFlowerPot("purple_anthurium", HabitatBlocks.POTTED_PURPLE_ANTHURIUM);
+        addPlantToFlowerPot("red_anthurium", HabitatBlocks.POTTED_RED_ANTHURIUM);
+        addPlantToFlowerPot("white_anthurium", HabitatBlocks.POTTED_WHITE_ANTHURIUM);
+        addPlantToFlowerPot("yellow_anthurium", HabitatBlocks.POTTED_YELLOW_ANTHURIUM);
+        addPlantToFlowerPot("tall_purple_anthurium", HabitatBlocks.POTTED_TALL_PURPLE_ANTHURIUM);
+        addPlantToFlowerPot("tall_red_anthurium", HabitatBlocks.POTTED_TALL_RED_ANTHURIUM);
+        addPlantToFlowerPot("tall_white_anthurium", HabitatBlocks.POTTED_TALL_WHITE_ANTHURIUM);
+        addPlantToFlowerPot("tall_yellow_anthurium", HabitatBlocks.POTTED_TALL_YELLOW_ANTHURIUM);
     }
 
     private static void addPlantToFlowerPot(String id, Supplier<Block> flowerPot) {

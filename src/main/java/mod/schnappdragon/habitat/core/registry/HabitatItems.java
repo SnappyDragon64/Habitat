@@ -105,6 +105,15 @@ public class HabitatItems {
     public static final RegistryObject<Item> FLOWERING_YELLOW_BALL_CACTUS_BLOCK = registerBlockItem("flowering_yellow_ball_cactus_block", HabitatBlocks.FLOWERING_YELLOW_BALL_CACTUS_BLOCK, CreativeModeTab.TAB_DECORATIONS);
     public static final RegistryObject<Item> DRIED_BALL_CACTUS_BLOCK = registerBlockItem("dried_ball_cactus_block", HabitatBlocks.DRIED_BALL_CACTUS_BLOCK, CreativeModeTab.TAB_DECORATIONS);
 
+    public static final RegistryObject<Item> PURPLE_ANTHURIUM = registerBlockItem("purple_anthurium", HabitatBlocks.PURPLE_ANTHURIUM, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> RED_ANTHURIUM = registerBlockItem("red_anthurium", HabitatBlocks.RED_ANTHURIUM, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> WHITE_ANTHURIUM = registerBlockItem("white_anthurium", HabitatBlocks.WHITE_ANTHURIUM, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> YELLOW_ANTHURIUM = registerBlockItem("yellow_anthurium", HabitatBlocks.YELLOW_ANTHURIUM, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> TALL_PURPLE_ANTHURIUM = registerBlockItem("tall_purple_anthurium", HabitatBlocks.TALL_PURPLE_ANTHURIUM, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> TALL_RED_ANTHURIUM = registerBlockItem("tall_red_anthurium", HabitatBlocks.TALL_RED_ANTHURIUM, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> TALL_WHITE_ANTHURIUM = registerBlockItem("tall_white_anthurium", HabitatBlocks.TALL_WHITE_ANTHURIUM, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> TALL_YELLOW_ANTHURIUM = registerBlockItem("tall_yellow_anthurium", HabitatBlocks.TALL_YELLOW_ANTHURIUM, CreativeModeTab.TAB_DECORATIONS);
+
     private static Item.Properties getProperties(CreativeModeTab group) {
         return new Item.Properties().tab(group);
     }

@@ -1,0 +1,129 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "habitat:tall_purple_anthurium",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "half": "lower"
+          }
+        },
+        {
+          "condition": "minecraft:location_check",
+          "offsetY": 1,
+          "predicate": {
+            "block": {
+              "blocks": [
+                "habitat:tall_purple_anthurium"
+              ],
+              "state": {
+                "half": "upper"
+              }
+            }
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "tag": "forge:shears"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 2.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "habitat:purple_anthurium"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                }
+              ],
+              "name": "habitat:tall_purple_anthurium"
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "habitat:tall_purple_anthurium",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "half": "upper"
+          }
+        },
+        {
+          "condition": "minecraft:location_check",
+          "offsetY": -1,
+          "predicate": {
+            "block": {
+              "blocks": [
+                "habitat:tall_purple_anthurium"
+              ],
+              "state": {
+                "half": "lower"
+              }
+            }
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "tag": "forge:shears"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": 2.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "habitat:purple_anthurium"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                }
+              ],
+              "name": "habitat:tall_purple_anthurium"
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

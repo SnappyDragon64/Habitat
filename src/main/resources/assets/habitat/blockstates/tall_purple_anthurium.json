@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "habitat:block/tall_purple_anthurium_bottom"
+    },
+    "half=upper": {
+      "model": "habitat:block/tall_purple_anthurium_top"
+    }
+  }
+}

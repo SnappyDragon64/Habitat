@@ -1,7 +1,6 @@
 package mod.schnappdragon.habitat.core.registry;
 
 import mod.schnappdragon.habitat.common.block.*;
-import mod.schnappdragon.habitat.common.effect.HabitatEffect;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.core.Direction;
 import net.minecraft.world.effect.MobEffects;
@@ -65,7 +64,7 @@ public class HabitatBlocks {
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_HYPHAE = BLOCKS.register("fairy_ring_mushroom_hyphae", () -> new LogBlock(STRIPPED_FAIRY_RING_MUSHROOM_HYPHAE, BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.QUARTZ).strength(2.0F).sound(SoundType.STEM)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_PLANKS = BLOCKS.register("fairy_ring_mushroom_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_SLAB = BLOCKS.register("fairy_ring_mushroom_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
-    public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_STAIRS = BLOCKS.register("fairy_ring_mushroom_stairs", () -> new StairBlock(FAIRY_RING_MUSHROOM_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_STAIRS = BLOCKS.register("fairy_ring_mushroom_stairs", () -> new StairBlock(() -> FAIRY_RING_MUSHROOM_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_PRESSURE_PLATE = BLOCKS.register("fairy_ring_mushroom_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).noCollission().strength(0.5F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_FENCE = BLOCKS.register("fairy_ring_mushroom_fence", () -> new FenceBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> FAIRY_RING_MUSHROOM_FENCE_GATE = BLOCKS.register("fairy_ring_mushroom_fence_gate", () -> new FenceGateBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_YELLOW).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
@@ -99,4 +98,22 @@ public class HabitatBlocks {
     public static final RegistryObject<Block> FLOWERING_RED_BALL_CACTUS_BLOCK = BLOCKS.register("flowering_red_ball_cactus_block", () -> new HugeFloweringBallCactusBlock(BallCactusColor.RED, BlockBehaviour.Properties.of(Material.CACTUS).strength(0.4F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> FLOWERING_YELLOW_BALL_CACTUS_BLOCK = BLOCKS.register("flowering_yellow_ball_cactus_block", () -> new HugeFloweringBallCactusBlock(BallCactusColor.YELLOW, BlockBehaviour.Properties.of(Material.CACTUS).strength(0.4F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> DRIED_BALL_CACTUS_BLOCK = BLOCKS.register("dried_ball_cactus_block", () -> new Block(Block.Properties.of(Material.CACTUS).strength(0.4F).sound(SoundType.WOOL)));
+
+    public static final RegistryObject<Block> TALL_PURPLE_ANTHURIUM = BLOCKS.register("tall_purple_anthurium", () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+    public static final RegistryObject<Block> TALL_RED_ANTHURIUM = BLOCKS.register("tall_red_anthurium", () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+    public static final RegistryObject<Block> TALL_WHITE_ANTHURIUM = BLOCKS.register("tall_white_anthurium", () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+    public static final RegistryObject<Block> TALL_YELLOW_ANTHURIUM = BLOCKS.register("tall_yellow_anthurium", () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+    public static final RegistryObject<Block> PURPLE_ANTHURIUM = BLOCKS.register("purple_anthurium", () -> new GrowableFlowerBlock(TALL_PURPLE_ANTHURIUM, () -> MobEffects.POISON, 12, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+    public static final RegistryObject<Block> RED_ANTHURIUM = BLOCKS.register("red_anthurium", () -> new GrowableFlowerBlock(TALL_RED_ANTHURIUM, () -> MobEffects.POISON, 12, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+    public static final RegistryObject<Block> WHITE_ANTHURIUM = BLOCKS.register("white_anthurium", () -> new GrowableFlowerBlock(TALL_WHITE_ANTHURIUM, () -> MobEffects.POISON, 12, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+    public static final RegistryObject<Block> YELLOW_ANTHURIUM = BLOCKS.register("yellow_anthurium", () -> new GrowableFlowerBlock(TALL_YELLOW_ANTHURIUM, () -> MobEffects.POISON, 12, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+
+    public static final RegistryObject<Block> POTTED_PURPLE_ANTHURIUM = BLOCKS.register("potted_purple_anthurium", () -> new FlowerPotBlock(null, PURPLE_ANTHURIUM, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
+    public static final RegistryObject<Block> POTTED_RED_ANTHURIUM = BLOCKS.register("potted_red_anthurium", () -> new FlowerPotBlock(null, RED_ANTHURIUM, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
+    public static final RegistryObject<Block> POTTED_WHITE_ANTHURIUM = BLOCKS.register("potted_white_anthurium", () -> new FlowerPotBlock(null, WHITE_ANTHURIUM, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
+    public static final RegistryObject<Block> POTTED_YELLOW_ANTHURIUM = BLOCKS.register("potted_yellow_anthurium", () -> new FlowerPotBlock(null, YELLOW_ANTHURIUM, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
+    public static final RegistryObject<Block> POTTED_TALL_PURPLE_ANTHURIUM = BLOCKS.register("potted_tall_purple_anthurium", () -> new FlowerPotBlock(null, TALL_PURPLE_ANTHURIUM, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
+    public static final RegistryObject<Block> POTTED_TALL_RED_ANTHURIUM = BLOCKS.register("potted_tall_red_anthurium", () -> new FlowerPotBlock(null, TALL_RED_ANTHURIUM, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
+    public static final RegistryObject<Block> POTTED_TALL_WHITE_ANTHURIUM = BLOCKS.register("potted_tall_white_anthurium", () -> new FlowerPotBlock(null, TALL_WHITE_ANTHURIUM, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
+    public static final RegistryObject<Block> POTTED_TALL_YELLOW_ANTHURIUM = BLOCKS.register("potted_tall_yellow_anthurium", () -> new FlowerPotBlock(null, TALL_YELLOW_ANTHURIUM, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
 }

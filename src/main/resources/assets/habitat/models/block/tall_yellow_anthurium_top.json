@@ -1,0 +1,6 @@
+{
+  "parent": "habitat:block/cross",
+  "textures": {
+    "cross": "habitat:block/tall_yellow_anthurium_top"
+  }
+}
