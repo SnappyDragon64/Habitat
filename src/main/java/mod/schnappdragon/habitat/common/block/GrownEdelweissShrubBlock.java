@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -28,6 +29,11 @@ public class GrownEdelweissShrubBlock extends BushBlock {
 
     public GrownEdelweissShrubBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public Item asItem() {
+        return HabitatItems.EDELWEISS_SHRUB.get();
     }
 
     public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext context) {
