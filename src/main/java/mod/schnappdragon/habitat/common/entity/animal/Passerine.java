@@ -455,7 +455,7 @@ public class Passerine extends Animal implements FlyingAnimal {
      */
 
     public boolean isRegularVariant() {
-        return !(this.isBerdly() || this.isGoldfish() || this.isTurkey());
+        return !(this.isBerdly() || this.isGoldfish() || this.isTurkey() || this.isFlapjack());
     }
 
     public boolean isBerdly() {
@@ -463,11 +463,15 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public boolean isGoldfish() {
-        return this.getVariant() == PasserineVariants.AMERICAN_GOLDFINCH.get() && "Goldfish".equals(ChatFormatting.stripFormatting(this.getName().getString()));
+        return this.getVariantId().equals(PasserineVariants.AMERICAN_GOLDFINCH.getId().toString()) && "Goldfish".equals(ChatFormatting.stripFormatting(this.getName().getString()));
     }
 
     public boolean isTurkey() {
         return "Turkey".equals(ChatFormatting.stripFormatting(this.getName().getString()));
+    }
+
+    public boolean isFlapjack() {
+        return this.getVariantId().equals(PasserineVariants.NORTHERN_CARDINAL.getId().toString()) && "Flapjack".equals(ChatFormatting.stripFormatting(this.getName().getString()));
     }
 
     @Override
