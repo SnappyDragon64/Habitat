@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "habitat:edelweiss"
+    "habitat:edelweiss",
+    "habitat:blooming_dreadbud"
   ]
 }

@@ -17,8 +17,7 @@ import java.util.function.Supplier;
 public class HabitatItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Habitat.MODID);
 
-    public static final RegistryObject<Item> RAFFLESIA = ITEMS.register("rafflesia",
-            () -> new ItemNameBlockItem(HabitatBlocks.RAFFLESIA.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+    public static final RegistryObject<Item> RAFFLESIA = registerBlockItem("rafflesia", HabitatBlocks.RAFFLESIA, CreativeModeTab.TAB_DECORATIONS);
 
     public static final RegistryObject<Item> KABLOOM_PULP = ITEMS.register("kabloom_pulp",
             () -> new ItemNameBlockItem(HabitatBlocks.KABLOOM_BUSH.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(HabitatFoods.KABLOOM_PULP)));
@@ -113,6 +112,10 @@ public class HabitatItems {
     public static final RegistryObject<Item> TALL_RED_ANTHURIUM = registerBlockItem("tall_red_anthurium", HabitatBlocks.TALL_RED_ANTHURIUM, CreativeModeTab.TAB_DECORATIONS);
     public static final RegistryObject<Item> TALL_WHITE_ANTHURIUM = registerBlockItem("tall_white_anthurium", HabitatBlocks.TALL_WHITE_ANTHURIUM, CreativeModeTab.TAB_DECORATIONS);
     public static final RegistryObject<Item> TALL_YELLOW_ANTHURIUM = registerBlockItem("tall_yellow_anthurium", HabitatBlocks.TALL_YELLOW_ANTHURIUM, CreativeModeTab.TAB_DECORATIONS);
+
+    public static final RegistryObject<Item> DREADBUD = ITEMS.register("dreadbud",
+            () -> new ItemNameBlockItem(HabitatBlocks.BLOOMING_DREADBUD.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+
 
     private static Item.Properties getProperties(CreativeModeTab group) {
         return new Item.Properties().tab(group);

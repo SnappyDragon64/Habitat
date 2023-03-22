@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "habitat:blooming_dreadbud",
+    "habitat:fading_dreadbud",
+    "habitat:unnerving_dreadbud",
+    "habitat:haunting_dreadbud"
+  ]
+}

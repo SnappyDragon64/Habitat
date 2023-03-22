@@ -53,6 +53,8 @@ public class HabitatComposterChances {
         put(HabitatItems.TALL_RED_ANTHURIUM, 0.65F);
         put(HabitatItems.TALL_WHITE_ANTHURIUM, 0.65F);
         put(HabitatItems.TALL_YELLOW_ANTHURIUM, 0.65F);
+
+        put(HabitatItems.DREADBUD, 0.65F);
     }
 
     private static void put(Supplier<Item> item, float value) {
