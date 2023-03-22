@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#habitat:flowering_ball_cacti",
+    "#habitat:growing_ball_cacti",
+    "habitat:orange_ball_cactus",
+    "habitat:pink_ball_cactus",
+    "habitat:red_ball_cactus",
+    "habitat:yellow_ball_cactus"
+  ]
+}
