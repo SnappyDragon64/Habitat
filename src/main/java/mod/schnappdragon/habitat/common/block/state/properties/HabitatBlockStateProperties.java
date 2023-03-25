@@ -9,7 +9,6 @@ public class HabitatBlockStateProperties {
     public static final BooleanProperty HAS_STEW = BooleanProperty.create("has_stew");
     public static final BooleanProperty SLIMY = BooleanProperty.create("slimy");
     public static final IntegerProperty MUSHROOMS_1_4 = IntegerProperty.create("mushrooms", 1, 4);
-    public static final BooleanProperty DUSTED = BooleanProperty.create("dusted");
     public static final EnumProperty<VerticalSlabType> VERTICAL_SLAB_TYPE = EnumProperty.create("type", VerticalSlabType.class);
     public static final BooleanProperty CHAINED_UP = BooleanProperty.create("chained_up");
     public static final BooleanProperty CHAINED_DOWN = BooleanProperty.create("chained_down");

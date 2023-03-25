@@ -45,13 +45,11 @@ public class HabitatDispenseItemBehavior {
     private static DispenseItemBehavior SuspiciousStewBehavior;
     private static DispenseItemBehavior BowlItemBehavior;
     private static DispenseItemBehavior ShearsBehavior;
-    private static DispenseItemBehavior RedstoneBehavior;
 
     public static void registerDispenserBehaviors() {
         SuspiciousStewBehavior = DispenserBlock.DISPENSER_REGISTRY.get(Items.SUSPICIOUS_STEW);
         BowlItemBehavior = DispenserBlock.DISPENSER_REGISTRY.get(Items.BOWL);
         ShearsBehavior = DispenserBlock.DISPENSER_REGISTRY.get(Items.SHEARS);
-        RedstoneBehavior = DispenserBlock.DISPENSER_REGISTRY.get(Items.REDSTONE);
 
         DispenserBlock.registerBehavior(HabitatItems.FAIRY_RING_MUSHROOM_BOAT.get(), new HabitatDispenseBoatBehavior(HabitatBoat.Type.FAIRY_RING_MUSHROOM));
 
@@ -169,26 +167,6 @@ public class HabitatDispenseItemBehavior {
 
             protected float getPower() {
                 return super.getPower() * 0.5F;
-            }
-        });
-
-        DispenserBlock.registerBehavior(Items.REDSTONE, new OptionalDispenseItemBehavior() {
-            protected ItemStack execute(BlockSource source, ItemStack stack) {
-                ServerLevel worldIn = source.getLevel();
-                BlockPos pos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
-                BlockState state = worldIn.getBlockState(pos);
-                if (state.is(HabitatBlocks.FAIRY_RING_MUSHROOM.get()) && !state.getValue(FairyRingMushroomBlock.DUSTED)) {
-                    worldIn.setBlockAndUpdate(pos, state.setValue(FairyRingMushroomBlock.DUSTED, true));
-                    worldIn.addParticle(DustParticleOptions.REDSTONE, pos.getX() + 0.5D, pos.getY() + 0.125D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
-                    worldIn.playSound(null, pos, HabitatSoundEvents.FAIRY_RING_MUSHROOM_DUST.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
-                    worldIn.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(state));
-                    stack.shrink(1);
-                    this.setSuccess(true);
-                    return stack;
-                } else if (RedstoneBehavior != null)
-                    RedstoneBehavior.dispense(source, stack);
-                this.setSuccess(false);
-                return stack;
             }
         });
     }

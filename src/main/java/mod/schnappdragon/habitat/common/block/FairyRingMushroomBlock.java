@@ -43,16 +43,15 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
     protected static final VoxelShape[] SHAPE = {Block.box(6.0D, 0.0D, 6.0D, 10.0D, 13.0D, 10.0D), Block.box(3.0D, 0.0D, 3.0D, 13.0D, 14.0D, 13.0D), Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)};
 
     public static final IntegerProperty MUSHROOMS = HabitatBlockStateProperties.MUSHROOMS_1_4;
-    public static final BooleanProperty DUSTED = HabitatBlockStateProperties.DUSTED;
 
     public FairyRingMushroomBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(MUSHROOMS, 1).setValue(DUSTED, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(MUSHROOMS, 1));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(MUSHROOMS, DUSTED);
+        builder.add(MUSHROOMS);
     }
 
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
@@ -69,9 +68,6 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
      */
 
     public void animateTick(BlockState state, Level worldIn, BlockPos pos, RandomSource rand) {
-        if (state.getValue(DUSTED) && rand.nextInt(18 - 2 * state.getValue(MUSHROOMS)) == 0)
-            worldIn.addParticle(DustParticleOptions.REDSTONE, pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), 0.0D, 0.0D, 0.0D);
-
         if (rand.nextInt(9 - state.getValue(MUSHROOMS)) == 0)
             worldIn.addParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), rand.nextGaussian() * 0.01D, 0.0D, rand.nextGaussian() * 0.01D);
     }
@@ -91,8 +87,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
             worldIn.setBlock(pos, state.setValue(MUSHROOMS, state.getValue(MUSHROOMS) - 1), 2);
             worldIn.playSound(null, pos, HabitatSoundEvents.FAIRY_RING_MUSHROOM_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
-        }
-        if (player.getItemInHand(handIn).getItem() == HabitatItems.FAIRY_RING_MUSHROOM.get() && state.getValue(MUSHROOMS) < 4) {
+        } else if (player.getItemInHand(handIn).getItem() == HabitatItems.FAIRY_RING_MUSHROOM.get() && state.getValue(MUSHROOMS) < 4) {
             if (!player.getAbilities().instabuild)
                 player.getItemInHand(handIn).shrink(1);
             worldIn.setBlock(pos, state.setValue(MUSHROOMS, state.getValue(MUSHROOMS) + 1), 2);
@@ -100,25 +95,8 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
             worldIn.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
-        if (player.getItemInHand(handIn).getItem() == Items.REDSTONE && !state.getValue(DUSTED)) {
-            if (!player.getAbilities().instabuild)
-                player.getItemInHand(handIn).shrink(1);
-            worldIn.setBlock(pos, state.setValue(DUSTED, true), 2);
-            worldIn.addParticle(DustParticleOptions.REDSTONE, pos.getX() + 0.5D, pos.getY() + 0.125D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
-            worldIn.playSound(null, pos, HabitatSoundEvents.FAIRY_RING_MUSHROOM_DUST.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
-            worldIn.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
-            return InteractionResult.sidedSuccess(worldIn.isClientSide);
-        }
+
         return super.use(state, worldIn, pos, player, handIn, hit);
-    }
-
-    /*
-     * Redstone Power Method
-     */
-
-    @Override
-    public int getSignal(BlockState state, BlockGetter worldIn, BlockPos pos, Direction side) {
-        return state.getValue(DUSTED) ? state.getValue(MUSHROOMS) : 0;
     }
 
     /*
@@ -126,7 +104,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
      */
 
     public boolean isRandomlyTicking(BlockState state) {
-        return state.getValue(MUSHROOMS) < 4 && !state.getValue(DUSTED);
+        return state.getValue(MUSHROOMS) < 4;
     }
 
     public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
@@ -137,11 +115,11 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
     }
 
     public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return !state.getValue(DUSTED);
+        return true;
     }
 
     public boolean isBonemealSuccess(Level worldIn, RandomSource rand, BlockPos pos, BlockState state) {
-        return !state.getValue(DUSTED) && (state.getValue(MUSHROOMS) != 4 || rand.nextFloat() < (worldIn.getBlockState(pos.below()).is(BlockTags.MUSHROOM_GROW_BLOCK) ? 0.8F : 0.4F));
+        return state.getValue(MUSHROOMS) != 4 || rand.nextFloat() < (worldIn.getBlockState(pos.below()).is(BlockTags.MUSHROOM_GROW_BLOCK) ? 0.8F : 0.4F);
     }
 
     public void performBonemeal(ServerLevel worldIn, RandomSource rand, BlockPos pos, BlockState state) {

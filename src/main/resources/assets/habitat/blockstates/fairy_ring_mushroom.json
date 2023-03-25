@@ -1,28 +1,16 @@
 {
   "variants": {
-    "mushrooms=1,dusted=false": {
+    "mushrooms=1": {
       "model": "habitat:block/one_fairy_ring_mushroom"
     },
-    "mushrooms=1,dusted=true": {
-      "model": "habitat:block/one_dusted_fairy_ring_mushroom"
-    },
-    "mushrooms=2,dusted=false": {
+    "mushrooms=2": {
       "model": "habitat:block/two_fairy_ring_mushrooms"
     },
-    "mushrooms=2,dusted=true": {
-      "model": "habitat:block/two_dusted_fairy_ring_mushrooms"
-    },
-    "mushrooms=3,dusted=false": {
+    "mushrooms=3": {
       "model": "habitat:block/three_fairy_ring_mushrooms"
     },
-    "mushrooms=3,dusted=true": {
-      "model": "habitat:block/three_dusted_fairy_ring_mushrooms"
-    },
-    "mushrooms=4,dusted=false": {
+    "mushrooms=4": {
       "model": "habitat:block/four_fairy_ring_mushrooms"
-    },
-    "mushrooms=4,dusted=true": {
-      "model": "habitat:block/four_dusted_fairy_ring_mushrooms"
     }
   }
 }
