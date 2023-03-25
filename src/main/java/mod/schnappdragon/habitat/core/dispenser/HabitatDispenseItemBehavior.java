@@ -191,28 +191,6 @@ public class HabitatDispenseItemBehavior {
                 return stack;
             }
         });
-
-        DispenserBlock.registerBehavior(HabitatItems.FAIRY_RING_MUSHROOM.get(), new OptionalDispenseItemBehavior() {
-            protected ItemStack execute(BlockSource source, ItemStack stack) {
-                ServerLevel worldIn = source.getLevel();
-                BlockPos pos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
-                for (LivingEntity livingentity : worldIn.getEntitiesOfClass(LivingEntity.class, new AABB(pos), EntitySelector.NO_SPECTATORS)) {
-                    if (livingentity.getType() == EntityType.RABBIT) {
-                        Rabbit rabbit = (Rabbit) livingentity;
-                        worldIn.gameEvent(rabbit, GameEvent.ENTITY_INTERACT, rabbit.position());
-                        rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
-                        rabbit.discard();
-                        worldIn.addFreshEntity(Pooka.convertRabbitToPooka(rabbit));
-                        stack.shrink(1);
-                        for (int j = 0; j < 8; ++j)
-                            worldIn.sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), rabbit.getRandomX(0.5D), rabbit.getY(0.5D), rabbit.getRandomZ(0.5D), 0, rabbit.getRandom().nextGaussian(), 0.0D, rabbit.getRandom().nextGaussian(), 0.01D);
-                        this.setSuccess(true);
-                        return stack;
-                    }
-                }
-                return stack;
-            }
-        });
     }
 
     private static <T extends Entity & IHabitatShearable> boolean shearEntity(Class<T> entityClass, ServerLevel worldIn, ItemStack stack, BlockPos pos) {

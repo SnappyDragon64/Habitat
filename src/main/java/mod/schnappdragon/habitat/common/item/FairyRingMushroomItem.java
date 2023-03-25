@@ -58,21 +58,6 @@ public class FairyRingMushroomItem extends BlockItem {
             }
 
             return InteractionResult.sidedSuccess(playerIn.level.isClientSide);
-        } else if (target.getType() == EntityType.RABBIT && target.isAlive()) {
-            if (!playerIn.level.isClientSide) {
-                Rabbit rabbit = (Rabbit) target;
-                playerIn.level.gameEvent(rabbit, GameEvent.ENTITY_INTERACT, rabbit.position());
-                rabbit.playSound(HabitatSoundEvents.RABBIT_CONVERTED_TO_POOKA.get(), 1.0F, rabbit.isBaby() ? (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.5F : (rabbit.getRandom().nextFloat() - rabbit.getRandom().nextFloat()) * 0.2F + 1.0F);
-                rabbit.discard();
-                Pooka pooka = Pooka.convertRabbitToPooka(rabbit);
-                playerIn.level.addFreshEntity(pooka);
-                playerIn.level.broadcastEntityEvent(pooka, (byte) 15);
-
-                if (!playerIn.getAbilities().instabuild)
-                    stack.shrink(1);
-            }
-
-            return InteractionResult.sidedSuccess(playerIn.level.isClientSide);
         }
 
         return super.interactLivingEntity(stack, playerIn, target, hand);

@@ -3,6 +3,7 @@ package mod.schnappdragon.habitat.common.entity.animal;
 import mod.schnappdragon.habitat.common.entity.IHabitatShearable;
 import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
+import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
@@ -181,54 +182,30 @@ public class Pooka extends Rabbit implements Enemy, IHabitatShearable {
     public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune, SoundSource source) {
         this.level.gameEvent(player, GameEvent.SHEAR, pos);
         world.playSound(null, this, HabitatSoundEvents.POOKA_SHEAR.get(), source, 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
+
         if (!this.level.isClientSide()) {
             ((ServerLevel) this.level).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
             this.discard();
-            world.addFreshEntity(convertPookaToRabbit(this));
-        }
-        return Collections.emptyList();
-    }
 
-    public static Rabbit convertPookaToRabbit(Pooka pooka) {
-        Rabbit rabbit = EntityType.RABBIT.create(pooka.level);
-        rabbit.moveTo(pooka.getX(), pooka.getY(), pooka.getZ(), pooka.getYRot(), pooka.getXRot());
-        rabbit.setHealth(pooka.getHealth());
-        rabbit.yBodyRot = pooka.yBodyRot;
-        if (pooka.hasCustomName()) {
-            rabbit.setCustomName(pooka.getCustomName());
-            rabbit.setCustomNameVisible(pooka.isCustomNameVisible());
-        }
+            Rabbit rabbit = EntityType.RABBIT.create(this.level);
+            rabbit.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
+            rabbit.setHealth(this.getHealth());
+            rabbit.yBodyRot = this.yBodyRot;
+            if (this.hasCustomName()) {
+                rabbit.setCustomName(this.getCustomName());
+                rabbit.setCustomNameVisible(this.isCustomNameVisible());
+            }
 
-        if (pooka.isPersistenceRequired())
-            rabbit.setPersistenceRequired();
+            if (this.isPersistenceRequired())
+                rabbit.setPersistenceRequired();
 
-        rabbit.setRabbitType(pooka.getRabbitType());
-        rabbit.setBaby(pooka.isBaby());
-        rabbit.setInvulnerable(pooka.isInvulnerable());
-        return rabbit;
-    }
-
-    public static Pooka convertRabbitToPooka(Rabbit rabbit) {
-        Pooka pooka = HabitatEntityTypes.POOKA.get().create(rabbit.level);
-        pooka.moveTo(rabbit.getX(), rabbit.getY(), rabbit.getZ(), rabbit.getYRot(), rabbit.getXRot());
-        pooka.setHealth(rabbit.getHealth());
-        pooka.yBodyRot = rabbit.yBodyRot;
-        if (rabbit.hasCustomName()) {
-            pooka.setCustomName(rabbit.getCustomName());
-            pooka.setCustomNameVisible(rabbit.isCustomNameVisible());
+            rabbit.setRabbitType(this.getRabbitType());
+            rabbit.setBaby(this.isBaby());
+            rabbit.setInvulnerable(this.isInvulnerable());
+            world.addFreshEntity(rabbit);
         }
 
-        pooka.setPersistenceRequired();
-        pooka.setForgiveTimer();
-
-        Pair<Integer, Integer> aid = pooka.getRandomAid();
-        Pair<Integer, Integer> ailment = pooka.getRandomAilment();
-        pooka.setAidAndAilment(aid.getLeft(), aid.getRight(), ailment.getLeft(), ailment.getRight());
-
-        pooka.setRabbitType(rabbit.getRabbitType());
-        pooka.setBaby(rabbit.isBaby());
-        pooka.setInvulnerable(rabbit.isInvulnerable());
-        return pooka;
+        return List.of(new ItemStack(HabitatItems.FAIRY_RING_MUSHROOM.get(), 2));
     }
 
     /*
