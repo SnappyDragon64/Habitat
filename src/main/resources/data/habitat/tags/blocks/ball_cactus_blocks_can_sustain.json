@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:cactus",
+    {
+      "id":"atmospheric:barrel_cactus",
+      "required":false
+    }
+  ]
+}

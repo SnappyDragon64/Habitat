@@ -1,7 +1,9 @@
 package mod.schnappdragon.habitat.common.block;
 
+import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import mod.schnappdragon.habitat.core.tags.HabitatEntityTypeTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.IPlantable;
 
 import javax.annotation.Nullable;
 
@@ -31,6 +34,15 @@ public abstract class AbstractHugeBallCactusBlock extends Block {
 
     public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return SHAPE;
+    }
+
+    @Override
+    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
+        BlockState plant = plantable.getPlant(world, pos.relative(facing));
+        if (plant.is(HabitatBlockTags.BALL_CACTUS_BLOCKS_CAN_SUSTAIN))
+            return true;
+
+        return super.canSustainPlant(state, world, pos, facing, plantable);
     }
 
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entityIn) {
