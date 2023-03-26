@@ -37,6 +37,7 @@ public class MobGroupFeature extends Feature<MobGroupConfiguration> {
                 if (entity != null) {
                     entity.moveTo(pos.getX() + 0.5D + rand.nextInt(i) - rand.nextInt(i), pos.getY(), pos.getZ() + 0.5D + rand.nextInt(i) - rand.nextInt(i));
                     entity.finalizeSpawn(world, world.getCurrentDifficultyAt(pos), MobSpawnType.SPAWNER, null, null);
+                    entity.setPersistenceRequired();
                     world.addFreshEntity(entity);
                 } else
                     return false;
