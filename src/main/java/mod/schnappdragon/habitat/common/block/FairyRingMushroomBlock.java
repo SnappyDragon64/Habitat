@@ -2,13 +2,10 @@ package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
 import mod.schnappdragon.habitat.core.Habitat;
-import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -19,17 +16,15 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.BushBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -38,6 +33,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ToolActions;
+
+import javax.annotation.Nullable;
 
 public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlock {
     protected static final VoxelShape[] SHAPE = {Block.box(6.0D, 0.0D, 6.0D, 10.0D, 13.0D, 10.0D), Block.box(3.0D, 0.0D, 3.0D, 13.0D, 14.0D, 13.0D), Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D), Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D)};
@@ -58,23 +55,28 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
         return SHAPE[state.getValue(MUSHROOMS) - 1];
     }
 
-    @Override
-    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.below()).isSolidRender(worldIn, pos.below());
-    }
-
-    /*
-     * Particle Animation Method
-     */
-
     public void animateTick(BlockState state, Level worldIn, BlockPos pos, RandomSource rand) {
         if (rand.nextInt(9 - state.getValue(MUSHROOMS)) == 0)
             worldIn.addParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), rand.nextGaussian() * 0.01D, 0.0D, rand.nextGaussian() * 0.01D);
     }
 
-    /*
-     * Right Click Method
-     */
+    @Nullable
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState blockstate = context.getLevel().getBlockState(context.getClickedPos());
+        if (blockstate.is(this))
+            return blockstate.setValue(MUSHROOMS, Math.min(4, blockstate.getValue(MUSHROOMS) + 1));
+
+        return super.getStateForPlacement(context);
+    }
+
+    public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
+        return !context.isSecondaryUseActive() && context.getItemInHand().is(this.asItem()) && state.getValue(MUSHROOMS) < 4 || super.canBeReplaced(state, context);
+    }
+
+    @Override
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+        return worldIn.getBlockState(pos.below()).isSolidRender(worldIn, pos.below());
+    }
 
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
@@ -87,21 +89,11 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
             worldIn.setBlock(pos, state.setValue(MUSHROOMS, state.getValue(MUSHROOMS) - 1), 2);
             worldIn.playSound(null, pos, HabitatSoundEvents.FAIRY_RING_MUSHROOM_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
             return InteractionResult.sidedSuccess(worldIn.isClientSide);
-        } else if (player.getItemInHand(handIn).getItem() == HabitatItems.FAIRY_RING_MUSHROOM.get() && state.getValue(MUSHROOMS) < 4) {
-            if (!player.getAbilities().instabuild)
-                player.getItemInHand(handIn).shrink(1);
-            worldIn.setBlock(pos, state.setValue(MUSHROOMS, state.getValue(MUSHROOMS) + 1), 2);
-            worldIn.playSound(null, pos, SoundType.GRASS.getPlaceSound(), SoundSource.BLOCKS, SoundType.GRASS.getVolume() + 1.0F / 2.0F, SoundType.GRASS.getPitch() * 0.8F);
-            worldIn.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
-            return InteractionResult.sidedSuccess(worldIn.isClientSide);
         }
 
         return super.use(state, worldIn, pos, player, handIn, hit);
     }
 
-    /*
-     * Growth Methods
-     */
 
     public boolean isRandomlyTicking(BlockState state) {
         return state.getValue(MUSHROOMS) < 4;
