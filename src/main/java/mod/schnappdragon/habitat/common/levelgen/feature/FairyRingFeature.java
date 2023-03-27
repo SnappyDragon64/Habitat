@@ -21,16 +21,15 @@ public class FairyRingFeature extends Feature<FairyRingConfiguration> {
         BlockPos pos = context.origin();
         RandomSource rand = context.random();
         FairyRingConfiguration config = context.config();
-        boolean[] flag = { false };
         int rad = config.radius();
         int x = 0;
         int z = rad;
         int p = 1 - rad;
 
-        this.setMushroom(world, pos.offset(rad, 0, 0), config, rand, generator, flag);
-        this.setMushroom(world, pos.offset(-rad, 0, 0), config, rand, generator, flag);
-        this.setMushroom(world, pos.offset(0, 0, rad), config, rand, generator, flag);
-        this.setMushroom(world, pos.offset(0, 0, -rad), config, rand, generator, flag);
+        this.setMushroom(world, pos.offset(rad, 0, 0), config, rand, generator);
+        this.setMushroom(world, pos.offset(-rad, 0, 0), config, rand, generator);
+        this.setMushroom(world, pos.offset(0, 0, rad), config, rand, generator);
+        this.setMushroom(world, pos.offset(0, 0, -rad), config, rand, generator);
 
         while (x < z - 1) {
             x++;
@@ -41,36 +40,29 @@ public class FairyRingFeature extends Feature<FairyRingConfiguration> {
             } else
                 p = p + 2 * x + 1;
 
-            this.setMushrooms(world, pos, x, z, config, rand, generator, flag);
+            this.setMushrooms(world, pos, x, z, config, rand, generator);
         }
 
         config.mobGroupFeature().get().place(world, generator, rand, pos);
+        config.hugeMushroomFeature().get().place(world, generator, rand, pos);
 
         return true;
     }
 
-    public void setMushrooms(WorldGenLevel world, BlockPos pos, int x, int z, FairyRingConfiguration config, RandomSource rand, ChunkGenerator generator, boolean[] flag) {
-        this.setMushroom(world, pos.offset(-x, 0 , z), config, rand, generator, flag);
-        this.setMushroom(world, pos.offset(-z, 0 , x), config, rand, generator, flag);
-        this.setMushroom(world, pos.offset(-z, 0, -x), config, rand, generator, flag);
-        this.setMushroom(world, pos.offset(-x, 0 , -z), config, rand, generator, flag);
-        this.setMushroom(world, pos.offset(x, 0 , -z), config, rand, generator, flag);
-        this.setMushroom(world, pos.offset(z, 0 , -x), config, rand, generator, flag);
-        this.setMushroom(world, pos.offset(z, 0 , x), config, rand, generator, flag);
-        this.setMushroom(world, pos.offset(x, 0 , z), config, rand, generator, flag);
+    public void setMushrooms(WorldGenLevel world, BlockPos pos, int x, int z, FairyRingConfiguration config, RandomSource rand, ChunkGenerator generator) {
+        this.setMushroom(world, pos.offset(-x, 0 , z), config, rand, generator);
+        this.setMushroom(world, pos.offset(-z, 0 , x), config, rand, generator);
+        this.setMushroom(world, pos.offset(-z, 0, -x), config, rand, generator);
+        this.setMushroom(world, pos.offset(-x, 0 , -z), config, rand, generator);
+        this.setMushroom(world, pos.offset(x, 0 , -z), config, rand, generator);
+        this.setMushroom(world, pos.offset(z, 0 , -x), config, rand, generator);
+        this.setMushroom(world, pos.offset(z, 0 , x), config, rand, generator);
+        this.setMushroom(world, pos.offset(x, 0 , z), config, rand, generator);
     }
 
-    public void setMushroom(WorldGenLevel world, BlockPos pos, FairyRingConfiguration config, RandomSource rand, ChunkGenerator generator, boolean[] flag) {
+    public void setMushroom(WorldGenLevel world, BlockPos pos, FairyRingConfiguration config, RandomSource rand, ChunkGenerator generator) {
         if (world.isEmptyBlock(pos) && world.getBlockState(pos.below()).is(config.canBePlacedOn())) {
-            if (!flag[0] && rand.nextInt(8) == 0) {
-                PlacedFeature placedFeature = config.hugeMushroomFeature().get();
-
-                if (placedFeature.place(world, generator, rand, pos)) {
-                    flag[0] = true;
-                } else
-                    this.setBlock(world, pos, config.mushroomProvider().getState(rand, pos));
-            } else
-                this.setBlock(world, pos, config.mushroomProvider().getState(rand, pos));
+            this.setBlock(world, pos, config.mushroomProvider().getState(rand, pos));
         }
     }
 }
