@@ -3,6 +3,7 @@ package mod.schnappdragon.habitat.common.block;
 import mod.schnappdragon.habitat.core.registry.HabitatEffects;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -52,6 +53,15 @@ public class KabloomPulpBlock extends HalfTransparentBlock {
 
         if (entity instanceof LivingEntity living) {
             living.addEffect(new MobEffectInstance(HabitatEffects.BLAST_ENDURANCE.get(), 100));
+        }
+    }
+
+    @Override
+    public void fallOn(Level world, BlockState state, BlockPos pos, Entity entity, float distance) {
+        if (distance >= 4.0F && entity instanceof LivingEntity livingentity) {
+            LivingEntity.Fallsounds fallSounds = livingentity.getFallSounds();
+            SoundEvent soundevent = distance < 7.0F ? fallSounds.small() : fallSounds.big();
+            entity.playSound(soundevent, 1.0F, 1.0F);
         }
     }
 }
