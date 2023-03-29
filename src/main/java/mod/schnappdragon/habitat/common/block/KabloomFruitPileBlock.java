@@ -15,7 +15,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
@@ -47,10 +46,22 @@ public class KabloomFruitPileBlock extends Block {
      * Kabloom Fruit Pile Function Methods
      */
 
+    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState state1, boolean isMoving) {
+        if (!state1.is(state.getBlock())) {
+            if (world.hasNeighborSignal(pos)) {
+                explode(world, pos, true, false);
+            }
+        }
+    }
+
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        if (world.hasNeighborSignal(pos))
+            explode(world, pos, true, false);
+    }
+
     @Override
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         explode(worldIn, pos, true, false);
-        super.entityInside(state, worldIn, pos, entityIn);
     }
 
     @Override
@@ -78,7 +89,7 @@ public class KabloomFruitPileBlock extends Block {
     public void spawnAfterBreak(BlockState state, ServerLevel worldIn, BlockPos pos, ItemStack stack, boolean flag) {
         super.spawnAfterBreak(state, worldIn, pos, stack, flag);
 
-        if (worldIn.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) && (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) == 0))
+        if (worldIn.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) && stack.getEnchantmentLevel(Enchantments.SILK_TOUCH) == 0)
             explode(worldIn, pos, false, false);
     }
 
