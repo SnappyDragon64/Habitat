@@ -26,6 +26,6 @@ public class HabitatEntityTypes {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(POOKA.get(), Pooka.registerAttributes().build());
-        event.put(PASSERINE.get(), Passerine.registerAttributes().build());
+        event.put(PASSERINE.get(), Passerine.createAttributes().build());
     }
 }

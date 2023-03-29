@@ -97,7 +97,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(8, new Passerine.PasserineFollowMobGoal(1.0D, 3.0F, 7.0F));
     }
 
-    public static AttributeSupplier.Builder registerAttributes() {
+    public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 4.0D)
                 .add(Attributes.FLYING_SPEED, 0.8F)
