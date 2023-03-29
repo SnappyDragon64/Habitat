@@ -123,22 +123,16 @@
   "habitat.subtitles.block.slime_fern.coat": "Slimeball squishes",
   "habitat.subtitles.block.flowering_ball_cactus.shear": "Shears pluck",
   "habitat.subtitles.block.fairy_ring_mushroom.shear": "Shears chop",
-  "habitat.subtitles.block.fairy_ring_mushroom.dust": "Redstone disperses",
   "habitat.subtitles.block.grown_edelweiss_shrub.shear": "Shears pluck",
 
   "habitat.subtitles.entity.kabloom_fruit.throw": "Kabloom Fruit flies",
   "habitat.subtitles.entity.kabloom_fruit.explosion": "Kabloom",
 
   "habitat.subtitles.entity.pooka.ambient": "Pooka squeaks",
-  "habitat.subtitles.entity.pooka.attack": "Pooka attacks",
   "habitat.subtitles.entity.pooka.death": "Pooka dies",
-  "habitat.subtitles.entity.pooka.eat": "Pooka eats",
   "habitat.subtitles.entity.pooka.hurt": "Pooka hurts",
   "habitat.subtitles.entity.pooka.jump": "Pooka hops",
-  "habitat.subtitles.entity.pooka.pacify": "Pooka relaxes",
   "habitat.subtitles.entity.pooka.shear": "Shears chop",
-  "habitat.subtitles.entity.rabbit.converted_to_pooka": "Rabbit changes",
-  "habitat.subtitles.entity.parrot.imitate.pooka": "Parrot squeaks",
 
   "habitat.subtitles.entity.passerine.ambient": "Passerine sings",
   "habitat.subtitles.entity.passerine.death": "Passerine dies",

@@ -1,9 +1,6 @@
 package mod.schnappdragon.habitat.common.item;
 
-import mod.schnappdragon.habitat.common.entity.animal.Pooka;
-import mod.schnappdragon.habitat.core.HabitatConfig;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
-import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -11,20 +8,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.MushroomCow;
-import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.gameevent.GameEvent;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class FairyRingMushroomItem extends BlockItem {
     public FairyRingMushroomItem(Block blockIn, Properties builder) {
@@ -36,7 +26,7 @@ public class FairyRingMushroomItem extends BlockItem {
         if (target instanceof MushroomCow mooshroom && ((MushroomCow) target).getMushroomType() == MushroomCow.MushroomType.BROWN) {
             if (!playerIn.level.isClientSide) {
                 if (mooshroom.effect == null) {
-                    Pair<MobEffect, Integer> effect = getStewEffect();
+                    Pair<MobEffect, Integer> effect = Pair.of(MobEffects.GLOWING, 8);
 
                     mooshroom.effect = effect.getLeft();
                     mooshroom.effectDuration = effect.getRight();
@@ -61,13 +51,5 @@ public class FairyRingMushroomItem extends BlockItem {
         }
 
         return super.interactLivingEntity(stack, playerIn, target, hand);
-    }
-
-    public static Pair<MobEffect, Integer> getStewEffect() {
-        List<String> stewEffectPairs = Arrays.asList(StringUtils.deleteWhitespace(HabitatConfig.COMMON.suspiciousStewEffects.get()).split(","));
-        String[] pair = stewEffectPairs.get((int) (Math.random() * stewEffectPairs.size())).split(":");
-        MobEffect effect = MobEffect.byId(Integer.parseInt(pair[0]));
-
-        return Pair.of(effect != null ? effect : MobEffects.GLOWING, Integer.parseInt(pair[1]) * 20);
     }
 }

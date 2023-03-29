@@ -172,10 +172,6 @@
       }
     ]
   },
-  "block.fairy_ring_mushroom.dust": {
-    "subtitle": "habitat.subtitles.block.fairy_ring_mushroom.dust",
-    "sounds": [ "habitat:block/fairy_ring_mushroom/dust" ]
-  },
   "entity.kabloom_fruit.throw": {
     "subtitle": "habitat.subtitles.entity.kabloom_fruit.throw",
     "sounds": [ "minecraft:random/bow" ]
@@ -203,15 +199,6 @@
         "name": "mob/rabbit/idle4",
         "volume": 0.5
       }
-    ]
-  },
-  "entity.pooka.attack": {
-    "subtitle": "habitat.subtitles.entity.pooka.attack",
-    "sounds": [
-      "entity/rabbit/attack1",
-      "entity/rabbit/attack2",
-      "entity/rabbit/attack3",
-      "entity/rabbit/attack4"
     ]
   },
   "entity.pooka.death": {
