@@ -35,10 +35,7 @@ public class HabitatComposterChances {
 
         put(HabitatItems.EDELWEISS, 0.65F);
 
-        put(HabitatItems.ORANGE_BALL_CACTUS_BLOCK, 0.5F);
-        put(HabitatItems.PINK_BALL_CACTUS_BLOCK, 0.5F);
-        put(HabitatItems.RED_BALL_CACTUS_BLOCK, 0.5F);
-        put(HabitatItems.YELLOW_BALL_CACTUS_BLOCK, 0.5F);
+        put(HabitatItems.BALL_CACTUS_BLOCK, 0.5F);
         put(HabitatItems.FLOWERING_ORANGE_BALL_CACTUS_BLOCK, 0.5F);
         put(HabitatItems.FLOWERING_PINK_BALL_CACTUS_BLOCK, 0.5F);
         put(HabitatItems.FLOWERING_RED_BALL_CACTUS_BLOCK, 0.5F);

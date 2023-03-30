@@ -34,14 +34,6 @@ public enum BallCactusColor {
         return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(Habitat.MODID, "flowering_" + this.color + "_ball_cactus"));
     }
 
-    public Block getBallCactusBlock() {
-        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(Habitat.MODID, this.color + "_ball_cactus_block"));
-    }
-
-    public Block getFloweringBallCactusBlock() {
-        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(Habitat.MODID, "flowering_" + this.color + "_ball_cactus_block"));
-    }
-
     public ResourceLocation getHugeBallCactus() {
         return new ResourceLocation(Habitat.MODID, "huge_" + this.color + "_ball_cactus");
     }

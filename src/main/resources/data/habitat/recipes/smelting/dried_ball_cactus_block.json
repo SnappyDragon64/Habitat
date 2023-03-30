@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "tag": "habitat:ball_cactus_blocks"
+    "item": "habitat:ball_cactus_block"
   },
   "result": "habitat:dried_ball_cactus_block",
   "experience": 0.35,

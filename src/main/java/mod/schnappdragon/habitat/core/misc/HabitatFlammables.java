@@ -47,10 +47,7 @@ public class HabitatFlammables {
 
         setFlammable(HabitatBlocks.EDELWEISS, 60, 100);
 
-        setFlammable(HabitatBlocks.ORANGE_BALL_CACTUS_BLOCK, 5, 60);
-        setFlammable(HabitatBlocks.PINK_BALL_CACTUS_BLOCK, 5, 60);
-        setFlammable(HabitatBlocks.RED_BALL_CACTUS_BLOCK, 5, 60);
-        setFlammable(HabitatBlocks.YELLOW_BALL_CACTUS_BLOCK, 5, 60);
+        setFlammable(HabitatBlocks.BALL_CACTUS_BLOCK, 5, 60);
         setFlammable(HabitatBlocks.FLOWERING_ORANGE_BALL_CACTUS_BLOCK, 5, 60);
         setFlammable(HabitatBlocks.FLOWERING_PINK_BALL_CACTUS_BLOCK, 5, 60);
         setFlammable(HabitatBlocks.FLOWERING_RED_BALL_CACTUS_BLOCK, 5, 60);
