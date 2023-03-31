@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 public class HabitatBlockStateProperties {
-    public static final BooleanProperty ON_COOLDOWN = BooleanProperty.create("on_cooldown");
+    public static final BooleanProperty READY = BooleanProperty.create("ready");
     public static final BooleanProperty HAS_STEW = BooleanProperty.create("has_stew");
     public static final BooleanProperty SLIMY = BooleanProperty.create("slimy");
     public static final IntegerProperty MUSHROOMS_1_4 = IntegerProperty.create("mushrooms", 1, 4);

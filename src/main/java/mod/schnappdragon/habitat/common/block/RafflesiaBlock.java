@@ -55,26 +55,26 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 public class RafflesiaBlock extends BushBlock implements IForgeBlock, BonemealableBlock, EntityBlock {
-    protected static final VoxelShape DEFAULT_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
-    protected static final VoxelShape COOLDOWN_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+    protected static final VoxelShape DEFAULT_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+    protected static final VoxelShape READY_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
     protected static final AABB TOUCH_AABB = new AABB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
 
-    public static final BooleanProperty ON_COOLDOWN = HabitatBlockStateProperties.ON_COOLDOWN;
+    public static final BooleanProperty READY = HabitatBlockStateProperties.READY;
     public static final BooleanProperty HAS_STEW = HabitatBlockStateProperties.HAS_STEW;
 
     public RafflesiaBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(ON_COOLDOWN, false).setValue(HAS_STEW, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(READY, false).setValue(HAS_STEW, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(ON_COOLDOWN, HAS_STEW);
+        builder.add(READY, HAS_STEW);
     }
 
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        if (state.getValue(ON_COOLDOWN))
-            return COOLDOWN_SHAPE;
+        if (state.getValue(READY))
+            return READY_SHAPE;
         else
             return DEFAULT_SHAPE;
     }
@@ -102,7 +102,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
      */
 
     public void animateTick(BlockState state, Level worldIn, BlockPos pos, RandomSource rand) {
-        if (!state.getValue(ON_COOLDOWN) && rand.nextInt(8) == 0) {
+        if (state.getValue(READY) && rand.nextInt(8) == 0) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
 
             if (tile instanceof RafflesiaBlockEntity rafflesia )
@@ -159,11 +159,11 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (!worldIn.isClientSide) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof RafflesiaBlockEntity rafflesia && !state.getValue(ON_COOLDOWN) && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
+            if (tile instanceof RafflesiaBlockEntity rafflesia && state.getValue(READY) && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
                 worldIn.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
                 Entity owner = entityIn instanceof Projectile projectile ? projectile.getOwner() : entityIn;
                 createCloud(worldIn, pos, rafflesia.Effects, owner instanceof LivingEntity living ? living : null);
-                worldIn.setBlockAndUpdate(pos, state.setValue(ON_COOLDOWN, true).setValue(HAS_STEW, false));
+                worldIn.setBlockAndUpdate(pos, state.setValue(READY, false).setValue(HAS_STEW, false));
                 rafflesia.Effects = getDefault();
                 rafflesia.onChange(worldIn, worldIn.getBlockState(pos));
             }
@@ -223,18 +223,18 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
      */
 
     public boolean isRandomlyTicking(BlockState state) {
-        return state.getValue(ON_COOLDOWN);
+        return !state.getValue(READY);
     }
 
     public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
-        if (state.getValue(ON_COOLDOWN) && ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(2) == 0)) {
+        if (!state.getValue(READY) && ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(2) == 0)) {
             cooldownReset(worldIn, pos, state);
             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
     }
 
     public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return !state.getValue(HAS_STEW) || state.getValue(ON_COOLDOWN);
+        return !(state.getValue(HAS_STEW) && state.getValue(READY));
     }
 
     public boolean isBonemealSuccess(Level worldIn, RandomSource rand, BlockPos pos, BlockState state) {
@@ -242,7 +242,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
     }
 
     public void performBonemeal(ServerLevel worldIn, RandomSource rand, BlockPos pos, BlockState state) {
-        if (state.getValue(ON_COOLDOWN))
+        if (!state.getValue(READY))
             cooldownReset(worldIn, pos, state);
         else if (!state.getValue(HAS_STEW)) {
             BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
@@ -260,7 +260,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
 
     private void cooldownReset(ServerLevel worldIn, BlockPos pos, BlockState state) {
         worldIn.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));
-        worldIn.setBlockAndUpdate(pos, state.setValue(ON_COOLDOWN, false));
+        worldIn.setBlockAndUpdate(pos, state.setValue(READY, true));
         worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_POP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
     }
 
