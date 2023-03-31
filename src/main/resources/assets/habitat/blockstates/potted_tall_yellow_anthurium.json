@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "habitat:block/potted_yellow_anthurium"
+      "model": "habitat:block/potted_tall_yellow_anthurium"
     }
   }
 }

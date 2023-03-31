@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "habitat:block/potted_white_anthurium"
+      "model": "habitat:block/potted_tall_white_anthurium"
     }
   }
 }
