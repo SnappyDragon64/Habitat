@@ -13,7 +13,7 @@ public class HabitatFlowerPots {
     public static void addPlantsToFlowerPot() {
         addPlantToFlowerPot("rafflesia", HabitatBlocks.POTTED_RAFFLESIA);
         addPlantToFlowerPot("kabloom_bush", HabitatBlocks.POTTED_KABLOOM_BUSH);
-        addPlantToFlowerPot("slime_fern", HabitatBlocks.POTTED_KABLOOM_BUSH);
+        addPlantToFlowerPot("slime_fern", HabitatBlocks.POTTED_SLIME_FERN);
         addPlantToFlowerPot("orange_ball_cactus_flower", HabitatBlocks.POTTED_ORANGE_BALL_CACTUS_FLOWER);
         addPlantToFlowerPot("pink_ball_cactus_flower", HabitatBlocks.POTTED_PINK_BALL_CACTUS_FLOWER);
         addPlantToFlowerPot("red_ball_cactus_flower", HabitatBlocks.POTTED_RED_BALL_CACTUS_FLOWER);
