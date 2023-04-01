@@ -16,7 +16,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class KabloomPulpBlock extends HalfTransparentBlock {
-    protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
+    protected static final VoxelShape SHAPE = Block.box(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D);
 
     public KabloomPulpBlock(Properties properties) {
         super(properties);
@@ -43,11 +43,14 @@ public class KabloomPulpBlock extends HalfTransparentBlock {
     @Override
     public void stepOn(Level world, BlockPos pos, BlockState state, Entity entity) {
         entity.makeStuckInBlock(state, new Vec3(0.85F, 0.8F, 0.85F));
-
-        if (entity instanceof LivingEntity living) {
-            living.addEffect(new MobEffectInstance(HabitatEffects.BLAST_ENDURANCE.get(), 100));
-        }
-
         super.stepOn(world, pos, state, entity);
+    }
+
+    @Override
+    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+        if (entity instanceof LivingEntity living)
+            living.addEffect(new MobEffectInstance(HabitatEffects.BLAST_ENDURANCE.get(), 100));
+
+        super.entityInside(state, world, pos, entity);
     }
 }
