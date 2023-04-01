@@ -42,16 +42,9 @@ public class KabloomFruitPileBlock extends Block {
         return SHAPE;
     }
 
-    /*
-     * Kabloom Fruit Pile Function Methods
-     */
-
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState state1, boolean isMoving) {
-        if (!state1.is(state.getBlock())) {
-            if (world.hasNeighborSignal(pos)) {
-                explode(world, pos, true, false);
-            }
-        }
+        if (!state1.is(state.getBlock()) && world.hasNeighborSignal(pos))
+            explode(world, pos, true, false);
     }
 
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
@@ -114,10 +107,6 @@ public class KabloomFruitPileBlock extends Block {
             }
         }
     }
-
-    /*
-     * Pathfinding Method
-     */
 
     @Nullable
     @Override

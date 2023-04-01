@@ -59,10 +59,6 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
         return SHAPES[state.getValue(AGE)];
     }
 
-    /*
-     * Kabloom Bush Function Methods
-     */
-
     @Override
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (state.getValue(AGE) == 7 && !entityIn.getType().is(HabitatEntityTypeTags.POLLINATORS))
@@ -123,10 +119,6 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
         }
     }
 
-    /*
-     * Growth Methods
-     */
-
     public boolean isRandomlyTicking(BlockState state) {
         return state.getValue(AGE) < 7;
     }
@@ -150,18 +142,10 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
         worldIn.setBlock(pos, state.setValue(AGE, Math.min(7, state.getValue(AGE) + Mth.nextInt(rand, 2, 4))), 2);
     }
 
-    /*
-     * Plant Method
-     */
-
     @Override
     public PlantType getPlantType(BlockGetter world, BlockPos pos) {
         return PlantType.PLAINS;
     }
-
-    /*
-     * Pathfinding Method
-     */
 
     @Nullable
     @Override
