@@ -79,27 +79,25 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
             return DEFAULT_SHAPE;
     }
 
-    /*
-     * Position Validity Method
-     */
-
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         return worldIn.getBlockState(pos.below()).is(HabitatBlockTags.RAFFLESIA_PLACEABLE_ON);
     }
 
-    /*
-     * Tile Entity Methods
-     */
+    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState state1, boolean isMoving) {
+        if (!state1.is(state.getBlock()) && world.hasNeighborSignal(pos))
+            cooldownReset(world, pos, state);
+    }
+
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        if (world.hasNeighborSignal(pos))
+            cooldownReset(world, pos, state);
+    }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new RafflesiaBlockEntity(pos, state);
     }
-
-    /*
-     * Particle Animation Method
-     */
 
     public void animateTick(BlockState state, Level worldIn, BlockPos pos, RandomSource rand) {
         if (state.getValue(READY) && rand.nextInt(8) == 0) {
@@ -109,10 +107,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
                 worldIn.addParticle(getParticle(rafflesia.Effects), pos.getX() + 0.5D + (2 * rand.nextDouble() - 1.0F) / 3.0D, pos.getY() + 0.25F + rand.nextDouble() / 2, pos.getZ() + 0.5D + (2 * rand.nextDouble() - 1.0F) / 3.0D, rand.nextGaussian() * 0.01D, 0.002D, rand.nextGaussian() * 0.01D);
         }
     }
-
-    /*
-     * Cloud and Particle Helper Methods
-     */
 
     private void createCloud(Level worldIn, BlockPos pos, ListTag effects, @Nullable LivingEntity owner) {
         AreaEffectCloud cloud = new AreaEffectCloud(worldIn, pos.getX() + 0.5D, pos.getY() + 0.25D, pos.getZ() + 0.5D);
@@ -150,10 +144,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
 
         return new DustParticleOptions(new Vector3f(Vec3.fromRGB24(PotionUtils.getColor(effectInstances))), 1.0F);
     }
-
-    /*
-     * Rafflesia Function Methods
-     */
 
     @Override
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
@@ -218,10 +208,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
         return Effects;
     }
 
-    /*
-     * Growth Methods
-     */
-
     public boolean isRandomlyTicking(BlockState state) {
         return !state.getValue(READY);
     }
@@ -258,15 +244,11 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
         }
     }
 
-    private void cooldownReset(ServerLevel worldIn, BlockPos pos, BlockState state) {
+    private void cooldownReset(Level worldIn, BlockPos pos, BlockState state) {
         worldIn.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));
         worldIn.setBlockAndUpdate(pos, state.setValue(READY, true));
         worldIn.playSound(null, pos, HabitatSoundEvents.RAFFLESIA_POP.get(), SoundSource.BLOCKS, 1.0F, 0.8F + worldIn.random.nextFloat() * 0.4F);
     }
-
-    /*
-     * Comparator Methods
-     */
 
     @Override
     public boolean hasAnalogOutputSignal(BlockState state) {
@@ -277,10 +259,6 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
     public int getAnalogOutputSignal(BlockState state, Level worldIn, BlockPos pos) {
         return 1;
     }
-
-    /*
-     * Pathfinding Method
-     */
 
     @Nullable
     @Override

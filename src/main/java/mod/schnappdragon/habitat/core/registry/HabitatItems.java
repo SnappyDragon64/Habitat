@@ -17,13 +17,13 @@ import java.util.function.Supplier;
 public class HabitatItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Habitat.MODID);
 
-    public static final RegistryObject<Item> RAFFLESIA = registerBlockItem("rafflesia", HabitatBlocks.RAFFLESIA, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> RAFFLESIA = registerBlockItem("rafflesia", HabitatBlocks.RAFFLESIA, CreativeModeTab.TAB_REDSTONE);
 
     public static final RegistryObject<Item> KABLOOM_PULP = ITEMS.register("kabloom_pulp",
             () -> new ItemNameBlockItem(HabitatBlocks.KABLOOM_BUSH.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(HabitatFoods.KABLOOM_PULP)));
     public static final RegistryObject<Item> KABLOOM_FRUIT = ITEMS.register("kabloom_fruit",
             () -> new KabloomFruitItem(new Item.Properties().stacksTo(16).tab(CreativeModeTab.TAB_COMBAT)));
-    public static final RegistryObject<Item> KABLOOM_FRUIT_PILE = registerBlockItem("kabloom_fruit_pile", HabitatBlocks.KABLOOM_FRUIT_PILE, CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Item> KABLOOM_FRUIT_PILE = registerBlockItem("kabloom_fruit_pile", HabitatBlocks.KABLOOM_FRUIT_PILE, CreativeModeTab.TAB_REDSTONE);
     public static final RegistryObject<Item> KABLOOM_PULP_BLOCK = registerBlockItem("kabloom_pulp_block", HabitatBlocks.KABLOOM_PULP_BLOCK, CreativeModeTab.TAB_DECORATIONS);
 
     public static final RegistryObject<Item> SLIME_FERN = registerBlockItem("slime_fern", HabitatBlocks.SLIME_FERN, CreativeModeTab.TAB_DECORATIONS);
