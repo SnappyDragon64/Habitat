@@ -2,7 +2,8 @@
   "parent": "minecraft:block/block",
   "render_type": "translucent",
   "textures": {
-    "all": "habitat:block/kabloom_pulp_block"
+    "all": "habitat:block/kabloom_pulp_block",
+    "particle": "#all"
   },
   "elements": [
     {
