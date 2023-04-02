@@ -108,27 +108,6 @@
           "count": 4
         }
       ]
-    },
-    {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:redstone"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "habitat:fairy_ring_mushroom",
-          "properties": {
-            "dusted": true
-          }
-        },
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
     }
   ]
 }
