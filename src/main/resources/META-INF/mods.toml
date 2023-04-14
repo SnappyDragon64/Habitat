@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/SnappyDragon18/Habitat/issues"
 
 [[mods]]
   modId="habitat"
-  version="1.2.1"
+  version="1.2.2"
   displayName="Habitat"
   displayURL="https://www.curseforge.com/minecraft/mc-mods/habitat"
   logoFile="logo.png"
