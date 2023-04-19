@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Passerine>> {
+    public static final ResourceLocation FALLBACK_LOCATION = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/common_sparrow.png");
     public static final ResourceLocation PASSERINE_BERDLY_LOCATION = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/berdly.png");
     public static final ResourceLocation PASSERINE_GOLDFISH_LOCATION = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/goldfish.png");
     public static final ResourceLocation PASSERINE_TURKEY_LOCATION = new ResourceLocation(Habitat.MODID, "textures/entity/passerine/turkey.png");
@@ -29,7 +30,7 @@ public class PasserineRenderer extends MobRenderer<Passerine, PasserineModel<Pas
         else if (passerine.isTurkey())
             return PASSERINE_TURKEY_LOCATION;
 
-        return passerine.getVariant().texture();
+        return passerine.getVariant() == null ? FALLBACK_LOCATION : passerine.getVariant().texture();
     }
 
     @Override

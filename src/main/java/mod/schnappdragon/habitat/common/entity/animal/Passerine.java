@@ -13,6 +13,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -120,7 +121,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         super.defineSynchedData();
         this.entityData.define(PREEN_COUNTER, 0);
         this.entityData.define(PECK_COUNTER, 0);
-        this.entityData.define(DATA_VARIANT_ID, PasserineVariants.COMMON_SPARROW.getId().toString());
+        this.entityData.define(DATA_VARIANT_ID, "habitat:common_sparrow");
         this.entityData.define(DATA_SLEEPING, false);
     }
 
@@ -174,8 +175,16 @@ public class Passerine extends Animal implements FlyingAnimal {
         return this.entityData.get(DATA_VARIANT_ID);
     }
 
+    @Nullable
     public PasserineVariant getVariant() {
-        return Objects.requireNonNullElse(this.level.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey()).get().get(new ResourceLocation(this.getVariantId())), PasserineVariants.COMMON_SPARROW.get());
+        Optional<? extends Registry<PasserineVariant>> optionalRegistry = this.level.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey());
+        if (optionalRegistry.isPresent()) {
+            Registry<PasserineVariant> registry = optionalRegistry.get();
+            ResourceLocation variant = new ResourceLocation(this.getVariantId());
+            return registry.get(variant);
+        } else {
+            return null;
+        }
     }
 
     public void setSleeping(boolean isSleeping) {
@@ -358,8 +367,14 @@ public class Passerine extends Animal implements FlyingAnimal {
         else
             tag = PasserineVariantTags.COMMON;
 
-        Optional<Holder<PasserineVariant>> variantsInTag = worldIn.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey()).flatMap(registry -> registry.getTag(tag)).flatMap(holders -> holders.getRandomElement(this.random));
-        return variantsInTag.orElse(PasserineVariants.COMMON_SPARROW.getHolder().get()).get();
+        Optional<Holder<PasserineVariant>> optionalVariant = worldIn.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey()).flatMap(registry -> registry.getTag(tag)).flatMap(holders -> holders.getRandomElement(this.random));
+
+        if (optionalVariant.isPresent()) {
+            Holder<PasserineVariant> variant = optionalVariant.get();
+            return variant.get();
+        } else {
+            return null;
+        }
     }
 
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
@@ -443,11 +458,19 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private ColorableParticleOption getFeather() {
-        return new ColorableParticleOption(HabitatParticleTypes.FEATHER.get(), new Vector3f(Vec3.fromRGB24(this.getVariant().featherColor())));
+        return new ColorableParticleOption(HabitatParticleTypes.FEATHER.get(), new Vector3f(Vec3.fromRGB24(this.getFeatherColor())));
+    }
+
+    private int getFeatherColor() {
+        return this.getVariant() == null ? 7488818 : this.getVariant().featherColor();
     }
 
     private ColorableParticleOption getNote() {
-        return new ColorableParticleOption(HabitatParticleTypes.NOTE.get(), new Vector3f(Vec3.fromRGB24(this.getVariant().noteColor())));
+        return new ColorableParticleOption(HabitatParticleTypes.NOTE.get(), new Vector3f(Vec3.fromRGB24(this.getNoteColor())));
+    }
+
+    private int getNoteColor() {
+        return this.getVariant() == null ? 16730112 : this.getVariant().featherColor();
     }
 
     /*
@@ -463,7 +486,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public boolean isGoldfish() {
-        return this.getVariantId().equals(PasserineVariants.AMERICAN_GOLDFINCH.getId().toString()) && "Goldfish".equals(ChatFormatting.stripFormatting(this.getName().getString()));
+        return this.getVariantId().equals("habitat:american_goldfinch") && "Goldfish".equals(ChatFormatting.stripFormatting(this.getName().getString()));
     }
 
     public boolean isTurkey() {
@@ -471,7 +494,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public boolean isFlapjack() {
-        return this.getVariantId().equals(PasserineVariants.NORTHERN_CARDINAL.getId().toString()) && "Flapjack".equals(ChatFormatting.stripFormatting(this.getName().getString()));
+        return this.getVariantId().equals("habitat:northern_cardinal") && "Flapjack".equals(ChatFormatting.stripFormatting(this.getName().getString()));
     }
 
     @Override
