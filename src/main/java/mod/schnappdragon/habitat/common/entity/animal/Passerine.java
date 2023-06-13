@@ -59,6 +59,8 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class Passerine extends Animal implements FlyingAnimal {
     private static final EntityDataAccessor<Integer> PREEN_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
@@ -654,12 +656,18 @@ public class Passerine extends Animal implements FlyingAnimal {
         }
     }
 
-    class PreenGoal extends Goal {
-        private static final int MINIMUM_WAIT_TIME = reducedTickDelay(3000);
+    abstract class IdleGoal extends Goal {
+        private static final int MINIMUM_WAIT_TIME = reducedTickDelay(1200);
         private int countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
+        private final Supplier<Integer> getCounter;
+        private final Consumer<Integer> setCounter;
+        private final Supplier<Boolean> isIdling;
 
-        public PreenGoal() {
+        public IdleGoal(Supplier<Integer> getCounter, Consumer<Integer> setCounter, Supplier<Boolean> isIdling) {
             this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
+            this.getCounter = getCounter;
+            this.setCounter = setCounter;
+            this.isIdling = isIdling;
         }
 
         public boolean canUse() {
@@ -667,70 +675,48 @@ public class Passerine extends Animal implements FlyingAnimal {
                 this.countdown--;
                 return false;
             } else
-                return Passerine.this.xxa == 0.0F && Passerine.this.yya == 0.0F && Passerine.this.zza == 0.0F && this.canPreen();
+                return Passerine.this.xxa == 0.0F && Passerine.this.yya == 0.0F && Passerine.this.zza == 0.0F && this.canIdle();
         }
 
         public boolean canContinueToUse() {
-            return Passerine.this.getPreenCounter() > 0 && this.canPreen();
+            return this.getCounter.get() > 0 && this.canIdle();
         }
 
-        private boolean canPreen() {
-            return !Passerine.this.isTurkey() && !Passerine.this.isFlying() && !Passerine.this.isAsleep() && !Passerine.this.isPecking() && !Passerine.this.isInPowderSnow;
+        private boolean canIdle() {
+            return !Passerine.this.isTurkey() && !Passerine.this.isFlying() && (Passerine.this.isNotBusy() || this.isIdling.get()) && !Passerine.this.isInPowderSnow;
         }
 
         public void start() {
-            Passerine.this.setPreenCounter(this.adjustedTickDelay(40));
+            this.setCounter.accept(this.adjustedTickDelay(40));
             Passerine.this.getNavigation().stop();
         }
 
         public void stop() {
-            Passerine.this.setPreenCounter(0);
+            this.setCounter.accept(0);
             this.countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
         }
 
         public void tick() {
-            Passerine.this.setPreenCounter(Math.max(0, Passerine.this.getPreenCounter() - 1));
+            this.setCounter.accept(Math.max(0, this.getCounter.get() - 1));
+        }
+    }
+
+    class PreenGoal extends IdleGoal {
+        public PreenGoal() {
+            super(Passerine.this::getPreenCounter, Passerine.this::setPreenCounter, Passerine.this::isPreening);
+        }
+
+        public void tick() {
+            super.tick();
+
             if (Passerine.this.getPreenCounter() == this.adjustedTickDelay(20))
                 Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 11);
         }
     }
 
-    class PeckGoal extends Goal {
-        private static final int MINIMUM_WAIT_TIME = reducedTickDelay(3000);
-        private int countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
-
+    class PeckGoal extends IdleGoal {
         public PeckGoal() {
-            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
-        }
-
-        public boolean canUse() {
-            if (this.countdown > 0) {
-                this.countdown--;
-                return false;
-            } else
-                return Passerine.this.xxa == 0.0F && Passerine.this.yya == 0.0F && Passerine.this.zza == 0.0F && this.canPeck();
-        }
-
-        public boolean canContinueToUse() {
-            return Passerine.this.getPeckCounter() > 0 && this.canPeck();
-        }
-
-        private boolean canPeck() {
-            return !Passerine.this.isTurkey() && !Passerine.this.isFlying() && !Passerine.this.isAsleep() && !Passerine.this.isPreening() && !Passerine.this.isInPowderSnow;
-        }
-
-        public void start() {
-            Passerine.this.setPeckCounter(this.adjustedTickDelay(40));
-            Passerine.this.getNavigation().stop();
-        }
-
-        public void stop() {
-            Passerine.this.setPeckCounter(0);
-            this.countdown = MINIMUM_WAIT_TIME + Passerine.this.random.nextInt(MINIMUM_WAIT_TIME);
-        }
-
-        public void tick() {
-            Passerine.this.setPeckCounter(Math.max(0, Passerine.this.getPeckCounter() - 1));
+            super(Passerine.this::getPeckCounter, Passerine.this::setPeckCounter, Passerine.this::isPecking);
         }
     }
 
