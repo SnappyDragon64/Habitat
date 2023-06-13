@@ -76,6 +76,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     public float initialFlap;
     private float flapping = 1.0F;
     private float nextFlap = 1.0F;
+    private boolean isWet;
 
     public Passerine(EntityType<? extends Passerine> passerine, Level worldIn) {
         super(passerine, worldIn);
@@ -234,6 +235,10 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     public void tick() {
         super.tick();
+
+        if (this.isInWaterRainOrBubble() || this.isInPowderSnow) {
+            this.isWet = true;
+        }
 
         if (!this.level.isClientSide) {
             if (this.isAsleep() && (this.isFlying() || this.level.isDay() || this.isInPowderSnow || this.isUnsafeAt(this.blockPosition()) || !this.canPerch()))
@@ -501,13 +506,9 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     @Override
     public void die(DamageSource source) {
-        if (this.isAsleep())
-            this.wakeUp();
-        else if (this.isPreening())
-            this.setPreenCounter(0);
-        else if (this.isPecking())
-            this.setPeckCounter(0);
-
+        this.wakeUp();
+        this.setPreenCounter(0);
+        this.setPeckCounter(0);
         super.die(source);
     }
 
@@ -699,11 +700,24 @@ public class Passerine extends Animal implements FlyingAnimal {
         public void tick() {
             this.setCounter.accept(Math.max(0, this.getCounter.get() - 1));
         }
+
+        public void setCountdown(int countdown) {
+            this.countdown = countdown;
+        }
     }
 
     class PreenGoal extends IdleGoal {
         public PreenGoal() {
             super(Passerine.this::getPreenCounter, Passerine.this::setPreenCounter, Passerine.this::isPreening);
+        }
+
+        public boolean canUse() {
+            if (Passerine.this.isWet) {
+                this.setCountdown(0);
+                Passerine.this.isWet = false;
+            }
+
+            return super.canUse();
         }
 
         public void tick() {
