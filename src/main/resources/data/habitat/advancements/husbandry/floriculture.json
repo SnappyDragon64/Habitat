@@ -22,7 +22,8 @@
         "location": {
           "block": {
             "blocks": [
-              "habitat:grown_edelweiss_shrub"
+              "habitat:grown_edelweiss_shrub",
+              "habitat:edelweiss_shrub"
             ]
           }
         },
