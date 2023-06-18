@@ -20,7 +20,7 @@ mixin {
     config 'habitat.mixins.json'
 }
 
-version = '1.2.3'
+version = '1.2.4'
 group = 'mod.schnappdragon.habitat'
 archivesBaseName = 'habitat'
 
