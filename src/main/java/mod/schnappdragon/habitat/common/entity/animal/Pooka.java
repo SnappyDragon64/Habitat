@@ -32,8 +32,8 @@ public class Pooka extends Rabbit implements IHabitatShearable {
 
     @Override
     public void jumpFromGround() {
-        if (!this.level.isClientSide)
-            this.level.broadcastEntityEvent(this, (byte) 14);
+        if (!this.level().isClientSide)
+            this.level().broadcastEntityEvent(this, (byte) 14);
 
         super.jumpFromGround();
     }
@@ -56,14 +56,14 @@ public class Pooka extends Rabbit implements IHabitatShearable {
     @Nonnull
     @Override
     public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune, SoundSource source) {
-        this.level.gameEvent(player, GameEvent.SHEAR, pos);
+        this.level().gameEvent(player, GameEvent.SHEAR, pos);
         world.playSound(null, this, HabitatSoundEvents.POOKA_SHEAR.get(), source, 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
 
-        if (!this.level.isClientSide()) {
-            ((ServerLevel) this.level).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+        if (!this.level().isClientSide()) {
+            ((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
             this.discard();
 
-            Rabbit rabbit = EntityType.RABBIT.create(this.level);
+            Rabbit rabbit = EntityType.RABBIT.create(this.level());
             rabbit.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
             rabbit.setHealth(this.getHealth());
             rabbit.yBodyRot = this.yBodyRot;
@@ -75,7 +75,7 @@ public class Pooka extends Rabbit implements IHabitatShearable {
             if (this.isPersistenceRequired())
                 rabbit.setPersistenceRequired();
 
-            rabbit.setRabbitType(this.getRabbitType());
+            rabbit.setVariant(this.getVariant());
             rabbit.setBaby(this.isBaby());
             rabbit.setInvulnerable(this.isInvulnerable());
             world.addFreshEntity(rabbit);
@@ -106,7 +106,7 @@ public class Pooka extends Rabbit implements IHabitatShearable {
 
     public void handleEntityEvent(byte id) {
         if (id == 14) {
-            this.level.addParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), this.random.nextGaussian() * (0.01D), 0.0D, this.random.nextGaussian() * (0.01D));
+            this.level().addParticle(HabitatParticleTypes.FAIRY_RING_SPORE.get(), this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), this.random.nextGaussian() * (0.01D), 0.0D, this.random.nextGaussian() * (0.01D));
         } else {
             super.handleEntityEvent(id);
         }

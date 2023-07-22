@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -27,7 +28,7 @@ public class HabitatChestItem extends FuelBlockItem {
         consumer.accept(new IClientItemExtensions() {
             static final NonNullLazy<BlockEntityWithoutLevelRenderer> renderer = NonNullLazy.of(() -> new BlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels()) {
                 @Override
-                public void renderByItem(ItemStack itemStackIn, ItemTransforms.TransformType transformType, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+                public void renderByItem(ItemStack itemStackIn, ItemDisplayContext transformType, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
                     HabitatChestRenderer.block = ((BlockItem) itemStackIn.getItem()).getBlock();
                     HabitatChestRenderer.INSTANCE.render((HabitatChestBlockEntity) ((EntityBlock) HabitatChestRenderer.block).newBlockEntity(BlockPos.ZERO, HabitatChestRenderer.block.defaultBlockState()), 0, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
                     HabitatChestRenderer.block = null;

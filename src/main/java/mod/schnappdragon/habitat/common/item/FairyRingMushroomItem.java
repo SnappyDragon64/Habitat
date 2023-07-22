@@ -23,8 +23,8 @@ public class FairyRingMushroomItem extends BlockItem {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
-        if (target instanceof MushroomCow mooshroom && ((MushroomCow) target).getMushroomType() == MushroomCow.MushroomType.BROWN) {
-            if (!playerIn.level.isClientSide) {
+        if (target instanceof MushroomCow mooshroom && ((MushroomCow) target).getVariant() == MushroomCow.MushroomType.BROWN) {
+            if (!playerIn.level().isClientSide) {
                 if (mooshroom.effect == null) {
                     Pair<MobEffect, Integer> effect = Pair.of(MobEffects.GLOWING, 8);
 
@@ -35,19 +35,19 @@ public class FairyRingMushroomItem extends BlockItem {
                         stack.shrink(1);
 
                     for (int i = 0; i < 4; ++i) {
-                        ((ServerLevel) playerIn.level).sendParticles(ParticleTypes.EFFECT, mooshroom.getRandomX(0.5D), mooshroom.getY(0.5D), mooshroom.getRandomZ(0.5D), 0, 0.0D, mooshroom.getRandom().nextDouble(), 0.0D, 0.2D);
-                        ((ServerLevel) playerIn.level).sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), mooshroom.getX() + mooshroom.getRandom().nextDouble() / 2.0D, mooshroom.getY(0.5D), mooshroom.getZ() + mooshroom.getRandom().nextDouble() / 2.0D, 0, mooshroom.getRandom().nextGaussian(), 0.0D, mooshroom.getRandom().nextGaussian(), 0.01D);
+                        ((ServerLevel) playerIn.level()).sendParticles(ParticleTypes.EFFECT, mooshroom.getRandomX(0.5D), mooshroom.getY(0.5D), mooshroom.getRandomZ(0.5D), 0, 0.0D, mooshroom.getRandom().nextDouble(), 0.0D, 0.2D);
+                        ((ServerLevel) playerIn.level()).sendParticles(HabitatParticleTypes.FAIRY_RING_SPORE.get(), mooshroom.getX() + mooshroom.getRandom().nextDouble() / 2.0D, mooshroom.getY(0.5D), mooshroom.getZ() + mooshroom.getRandom().nextDouble() / 2.0D, 0, mooshroom.getRandom().nextGaussian(), 0.0D, mooshroom.getRandom().nextGaussian(), 0.01D);
                     }
 
-                    playerIn.level.playSound(null, mooshroom, SoundEvents.MOOSHROOM_EAT, mooshroom.getSoundSource(), 2.0F, 1.0F);
+                    playerIn.level().playSound(null, mooshroom, SoundEvents.MOOSHROOM_EAT, mooshroom.getSoundSource(), 2.0F, 1.0F);
                     return InteractionResult.SUCCESS;
                 }
 
                 for (int i = 0; i < 2; ++i)
-                    ((ServerLevel) playerIn.level).sendParticles(ParticleTypes.SMOKE, mooshroom.getX() + mooshroom.getRandom().nextDouble() / 2.0D, mooshroom.getY(0.5D), mooshroom.getZ() + mooshroom.getRandom().nextDouble() / 2.0D, 0, 0.0D, mooshroom.getRandom().nextDouble(), 0.0D, 0.2D);
+                    ((ServerLevel) playerIn.level()).sendParticles(ParticleTypes.SMOKE, mooshroom.getX() + mooshroom.getRandom().nextDouble() / 2.0D, mooshroom.getY(0.5D), mooshroom.getZ() + mooshroom.getRandom().nextDouble() / 2.0D, 0, 0.0D, mooshroom.getRandom().nextDouble(), 0.0D, 0.2D);
             }
 
-            return InteractionResult.sidedSuccess(playerIn.level.isClientSide);
+            return InteractionResult.sidedSuccess(playerIn.level().isClientSide);
         }
 
         return super.interactLivingEntity(stack, playerIn, target, hand);
