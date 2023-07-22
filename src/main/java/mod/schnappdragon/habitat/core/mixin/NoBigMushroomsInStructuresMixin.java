@@ -2,6 +2,7 @@ package mod.schnappdragon.habitat.core.mixin;
 
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.StructureManager;
@@ -27,7 +28,7 @@ public class NoBigMushroomsInStructuresMixin {
         if (!(context.level() instanceof WorldGenRegion))
             return;
 
-        Registry<Structure> structureRegistry = context.level().registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
+        Registry<Structure> structureRegistry = context.level().registryAccess().registryOrThrow(Registries.STRUCTURE);
         StructureManager structureManager = ((WorldGenRegionAccessor) context.level()).getStructureManager();
 
         Optional<Structure> optionalFairyRing = structureRegistry.getOptional(new ResourceLocation(Habitat.MODID, "fairy_ring"));
