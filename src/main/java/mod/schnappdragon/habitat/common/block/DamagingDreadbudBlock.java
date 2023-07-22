@@ -24,7 +24,7 @@ public class DamagingDreadbudBlock extends DreadbudBlock {
 
     public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
         if (!world.isClientSide && entity instanceof LivingEntity && (entity.xOld != entity.getX() || entity.zOld != entity.getZ()) && (Math.abs(entity.getX() - entity.xOld) >= 0.003D || Math.abs(entity.getZ() - entity.zOld) >= 0.003D)) {
-            entity.hurt(HabitatDamageSources.DREADBUD, this.damage);
+            entity.hurt(HabitatDamageSources.dread(world), this.damage);
         }
     }
 

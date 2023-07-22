@@ -7,6 +7,7 @@ import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -54,12 +55,12 @@ public class ThrownKabloomFruit extends ThrowableItemProjectile {
     @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte id) {
         if (id == 3) {
-            this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), HabitatSoundEvents.KABLOOM_FRUIT_EXPLODE.get(), SoundSource.NEUTRAL, 1.0F, (1.0F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.2F), true);
+            this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), HabitatSoundEvents.KABLOOM_FRUIT_EXPLODE.get(), SoundSource.NEUTRAL, 1.0F, (1.0F + (this.level().random.nextFloat() - this.level().random.nextFloat()) * 0.2F), true);
 
             for (int i = 0; i < 8; ++i)
-                this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), (this.random.nextFloat() - 0.5D) * 0.08D, (this.random.nextFloat() - 0.5D) * 0.8D, (this.random.nextFloat() - 0.5D) * 0.08D);
+                this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), (this.random.nextFloat() - 0.5D) * 0.08D, (this.random.nextFloat() - 0.5D) * 0.8D, (this.random.nextFloat() - 0.5D) * 0.08D);
 
-            this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 1.0D, 0.0D, 0.0D);
+            this.level().addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 1.0D, 0.0D, 0.0D);
         }
     }
 
@@ -80,7 +81,7 @@ public class ThrownKabloomFruit extends ThrowableItemProjectile {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -91,14 +92,14 @@ public class ThrownKabloomFruit extends ThrowableItemProjectile {
     }
 
     private void explode(Vec3 vector3d) {
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             this.gameEvent(GameEvent.EXPLODE, this.getOwner());
 
-            for (Entity entity : this.level.getEntities(null, this.getBoundingBox().inflate(0.8D))) {
+            for (Entity entity : this.level().getEntities(null, this.getBoundingBox().inflate(0.8D))) {
                 boolean flag = false;
 
                 for (int i = 0; i < 2; ++i) {
-                    HitResult raytraceresult = this.level.clip(new ClipContext(vector3d, new Vec3(entity.getX(), entity.getY(0.5D * (double) i), entity.getZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+                    HitResult raytraceresult = this.level().clip(new ClipContext(vector3d, new Vec3(entity.getX(), entity.getY(0.5D * (double) i), entity.getZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
                     if (raytraceresult.getType() == HitResult.Type.MISS) {
                         flag = true;
                         break;
@@ -131,26 +132,28 @@ public class ThrownKabloomFruit extends ThrowableItemProjectile {
                         }
                     }
 
-                    if (entity instanceof LivingEntity)
-                        entity.hurt(HabitatDamageSources.causeKabloomDamage(this, this.getOwner(), true), dmg);
-                    else if (entity.isAttackable())
-                        entity.hurt(HabitatDamageSources.causeKabloomDamage(this, this.getOwner(), false), dmg);
+                    if (entity instanceof LivingEntity) {
+                        entity.hurt(HabitatDamageSources.kabloom(this, this.getOwner(), this.level(), true), dmg);
+                    }
+                    else if (entity.isAttackable()) {
+                        entity.hurt(HabitatDamageSources.kabloom(this, this.getOwner(), this.level(), false), dmg);
+                    }
 
                     if (this.isOnFire() && !entity.fireImmune())
                         entity.setSecondsOnFire(1);
                 }
             }
 
-            if (this.level.getGameRules().getRule(GameRules.RULE_DOENTITYDROPS).get()) {
-                ItemEntity item = new ItemEntity(this.level, vector3d.x() + this.random.nextDouble() * (this.random.nextBoolean() ? 1 : -1) * 0.5F, vector3d.y() + this.random.nextDouble() / 2, vector3d.z() + this.random.nextDouble() * (this.random.nextBoolean() ? 1 : -1) * 0.5F, new ItemStack(HabitatItems.KABLOOM_PULP.get()));
+            if (this.level().getGameRules().getRule(GameRules.RULE_DOENTITYDROPS).get()) {
+                ItemEntity item = new ItemEntity(this.level(), vector3d.x() + this.random.nextDouble() * (this.random.nextBoolean() ? 1 : -1) * 0.5F, vector3d.y() + this.random.nextDouble() / 2, vector3d.z() + this.random.nextDouble() * (this.random.nextBoolean() ? 1 : -1) * 0.5F, new ItemStack(HabitatItems.KABLOOM_PULP.get()));
                 item.setDefaultPickUpDelay();
                 if (this.isOnFire() && !item.fireImmune())
                     item.setSecondsOnFire(1);
-                this.level.addFreshEntity(item);
+                this.level().addFreshEntity(item);
             }
 
-            if (!this.level.isClientSide) {
-                this.level.broadcastEntityEvent(this, (byte) 3);
+            if (!this.level().isClientSide) {
+                this.level().broadcastEntityEvent(this, (byte) 3);
                 this.discard();
             }
         }
