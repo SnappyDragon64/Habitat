@@ -86,11 +86,6 @@ public class KabloomFruitPileBlock extends Block {
             explode(worldIn, pos, false, false);
     }
 
-    @Override
-    public PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.DESTROY;
-    }
-
     private void explode(Level worldIn, BlockPos pos, boolean destroyBlock, boolean setFire) {
         if (!worldIn.isClientSide) {
             if (destroyBlock)

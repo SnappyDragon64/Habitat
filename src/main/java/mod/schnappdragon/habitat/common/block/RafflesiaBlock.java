@@ -1,7 +1,6 @@
 package mod.schnappdragon.habitat.common.block;
 
 import com.google.common.collect.Lists;
-import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.common.block.entity.RafflesiaBlockEntity;
 import mod.schnappdragon.habitat.common.block.state.properties.HabitatBlockStateProperties;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
@@ -156,7 +155,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
                 effectInstances.add(new MobEffectInstance(effect, 160));
         }
 
-        return new DustParticleOptions(new Vector3f(Vec3.fromRGB24(PotionUtils.getColor(effectInstances))), 1.0F);
+        return new DustParticleOptions(Vec3.fromRGB24(PotionUtils.getColor(effectInstances)).toVector3f(), 1.0F);
     }
 
     @Override
@@ -224,7 +223,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
         return Effects;
     }
 
-    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return !(state.getValue(HAS_STEW) && state.getValue(READY));
     }
 

@@ -22,6 +22,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.BushBlock;
@@ -99,11 +100,6 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
             dropFruit(state, worldIn, pos, false, false);
     }
 
-    @Override
-    public PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.DESTROY;
-    }
-
     private void dropFruit(BlockState state, Level worldIn, BlockPos pos, boolean replaceBush, boolean setFire) {
         if (!worldIn.isClientSide) {
             if (replaceBush) {
@@ -130,7 +126,7 @@ public class KabloomBushBlock extends BushBlock implements BonemealableBlock {
         }
     }
 
-    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return state.getValue(AGE) < 7;
     }
 

@@ -150,7 +150,7 @@ public class SlimeFernBlock extends DirectionalBlock implements BonemealableBloc
         super.entityInside(state, worldIn, pos, entityIn);
     }
 
-    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state, boolean flag) {
         return true;
     }
 

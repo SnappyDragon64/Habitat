@@ -53,7 +53,7 @@ public abstract class AbstractBallCactusBlock extends BushBlock {
 
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof LivingEntity && !entityIn.getType().is(HabitatEntityTypeTags.POLLINATORS) && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
-            entityIn.hurt(DamageSource.CACTUS, 1.0F);
+            entityIn.hurt(entityIn.damageSources().cactus(), 1.0F);
         }
 
         super.entityInside(state, worldIn, pos, entityIn);
@@ -66,6 +66,6 @@ public abstract class AbstractBallCactusBlock extends BushBlock {
     @Nullable
     @Override
     public BlockPathTypes getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
-        return BlockPathTypes.DAMAGE_CACTUS;
+        return BlockPathTypes.DAMAGE_OTHER;
     }
 }

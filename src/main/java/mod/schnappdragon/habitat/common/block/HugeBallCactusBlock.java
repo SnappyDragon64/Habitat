@@ -41,7 +41,7 @@ public class HugeBallCactusBlock extends Block {
 
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entityIn) {
         if (entityIn instanceof LivingEntity && !entityIn.getType().is(HabitatEntityTypeTags.POLLINATORS)) {
-            entityIn.hurt(DamageSource.CACTUS, 1.0F);
+            entityIn.hurt(entityIn.damageSources().cactus(), 1.0F);
         }
 
         super.stepOn(level, pos, state, entityIn);
@@ -49,7 +49,7 @@ public class HugeBallCactusBlock extends Block {
 
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof LivingEntity && !entityIn.getType().is(HabitatEntityTypeTags.POLLINATORS)) {
-            entityIn.hurt(DamageSource.CACTUS, 1.0F);
+            entityIn.hurt(entityIn.damageSources().cactus(), 1.0F);
         }
 
         super.entityInside(state, worldIn, pos, entityIn);
@@ -62,6 +62,6 @@ public class HugeBallCactusBlock extends Block {
     @Nullable
     @Override
     public BlockPathTypes getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
-        return BlockPathTypes.DAMAGE_CACTUS;
+        return BlockPathTypes.DAMAGE_OTHER;
     }
 }

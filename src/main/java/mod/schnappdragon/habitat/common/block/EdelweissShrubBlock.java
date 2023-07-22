@@ -63,7 +63,7 @@ public class EdelweissShrubBlock extends BushBlock implements BonemealableBlock 
         }
     }
 
-    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return true;
     }
 

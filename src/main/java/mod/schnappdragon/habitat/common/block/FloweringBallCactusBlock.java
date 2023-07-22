@@ -4,6 +4,7 @@ import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -52,7 +54,7 @@ public class FloweringBallCactusBlock extends AbstractBallCactusBlock implements
     }
 
     @Override
-    public boolean isValidBonemealTarget(BlockGetter level, BlockPos pos, BlockState state, boolean flag) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean flag) {
         return true;
     }
 
@@ -65,7 +67,7 @@ public class FloweringBallCactusBlock extends AbstractBallCactusBlock implements
     public void performBonemeal(ServerLevel level, RandomSource rand, BlockPos pos, BlockState state) {
         level.removeBlock(pos, false);
         ResourceLocation hugeBallCactusFeature = this.getColor().getHugeBallCactus();
-        ConfiguredFeature<?, ?> configuredfeature = level.registryAccess().registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY).get(hugeBallCactusFeature);
+        ConfiguredFeature<?, ?> configuredfeature = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).get(hugeBallCactusFeature);
 
         if (!configuredfeature.place(level, level.getChunkSource().getGenerator(), rand, pos))
             level.setBlock(pos, state, 3);

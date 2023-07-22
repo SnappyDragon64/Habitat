@@ -4,14 +4,13 @@ import mod.schnappdragon.habitat.core.tags.HabitatEntityTypeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -45,7 +44,7 @@ public class GrowingBallCactusBlock extends AbstractBallCactusBlock implements B
 
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof LivingEntity && !entityIn.getType().is(HabitatEntityTypeTags.POLLINATORS) && worldIn.getEntities(null, TOUCH_AABB.move(pos)).contains(entityIn)) {
-            entityIn.hurt(DamageSource.CACTUS, 1.0F);
+            entityIn.hurt(entityIn.damageSources().cactus(), 1.0F);
         }
     }
 
@@ -64,7 +63,7 @@ public class GrowingBallCactusBlock extends AbstractBallCactusBlock implements B
         }
     }
 
-    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return true;
     }
 

@@ -6,6 +6,7 @@ import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -106,7 +107,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
         }
     }
 
-    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return true;
     }
 
@@ -123,7 +124,7 @@ public class FairyRingMushroomBlock extends BushBlock implements BonemealableBlo
 
     private void growHugeMushroom(ServerLevel world, RandomSource rand, BlockPos pos, BlockState state) {
         world.removeBlock(pos, false);
-        ConfiguredFeature<?, ?> configuredfeature = world.registryAccess().registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY).get(new ResourceLocation(Habitat.MODID, "huge_fairy_ring_mushroom"));
+        ConfiguredFeature<?, ?> configuredfeature = world.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).get(new ResourceLocation(Habitat.MODID, "huge_fairy_ring_mushroom"));
 
         if (!configuredfeature.place(world, world.getChunkSource().getGenerator(), rand, pos))
             world.setBlock(pos, state, 3);
