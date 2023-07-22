@@ -139,8 +139,8 @@
   "death.attack.habitat.kabloom": "%1$s went kabloom",
   "death.attack.habitat.kabloom.player": "%1$s went kabloom whilst fighting %2$s",
   "death.attack.habitat.kabloom.item": "%1$s went kabloom due to %3$s whilst fighting %2$s",
-  "death.attack.habitat.dreadbud": "%1$s was consumed by dread",
-  "death.attack.habitat.dreadbud.player": "%1$s was consumed by dread whilst trying to escape %2$s",
+  "death.attack.habitat.dread": "%1$s was consumed by dread",
+  "death.attack.habitat.dread.player": "%1$s was consumed by dread whilst trying to escape %2$s",
 
   "effect.habitat.blast_endurance": "Blast Endurance",
   "effect.habitat.prickling": "Prickling",
