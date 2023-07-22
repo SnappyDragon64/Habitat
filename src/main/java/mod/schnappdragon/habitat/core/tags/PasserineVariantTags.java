@@ -2,7 +2,7 @@ package mod.schnappdragon.habitat.core.tags;
 
 import mod.schnappdragon.habitat.common.entity.animal.PasserineVariant;
 import mod.schnappdragon.habitat.core.Habitat;
-import mod.schnappdragon.habitat.core.registry.PasserineVariants;
+import mod.schnappdragon.habitat.core.registry.HabitatRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 
@@ -15,6 +15,6 @@ public class PasserineVariantTags {
     public static final TagKey<PasserineVariant> COMMON = makeTag("common");
 
     private static TagKey<PasserineVariant> makeTag(String id) {
-        return PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().tags().createTagKey(new ResourceLocation(Habitat.MODID, id));
+        return TagKey.create(HabitatRegistries.Keys.PASSERINE_VARIANTS, new ResourceLocation(Habitat.MODID, id));
     }
 }

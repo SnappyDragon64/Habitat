@@ -1,9 +1,9 @@
 package mod.schnappdragon.habitat.common.entity.animal;
 
-import com.mojang.math.Vector3f;
 import mod.schnappdragon.habitat.core.misc.HabitatCriterionTriggers;
 import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
+import mod.schnappdragon.habitat.core.registry.HabitatRegistries;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.registry.PasserineVariants;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
@@ -23,6 +23,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -171,7 +172,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     public void setVariant(PasserineVariant variant) {
-        this.setVariantId(Objects.requireNonNull(this.level.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey()).get().getKey(variant)).toString());
+        this.setVariantId(Objects.requireNonNull(this.level().registryAccess().registryOrThrow(HabitatRegistries.Keys.PASSERINE_VARIANTS).getKey(variant)).toString());
     }
 
     public String getVariantId() {
@@ -180,14 +181,9 @@ public class Passerine extends Animal implements FlyingAnimal {
 
     @Nullable
     public PasserineVariant getVariant() {
-        Optional<? extends Registry<PasserineVariant>> optionalRegistry = this.level.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey());
-        if (optionalRegistry.isPresent()) {
-            Registry<PasserineVariant> registry = optionalRegistry.get();
-            ResourceLocation variant = new ResourceLocation(this.getVariantId());
-            return registry.get(variant);
-        } else {
-            return null;
-        }
+        Registry<PasserineVariant> registry = this.level().registryAccess().registryOrThrow(HabitatRegistries.Keys.PASSERINE_VARIANTS);
+        ResourceLocation variant = new ResourceLocation(this.getVariantId());
+        return registry.get(variant);
     }
 
     public void setSleeping(boolean isSleeping) {
@@ -240,23 +236,23 @@ public class Passerine extends Animal implements FlyingAnimal {
             this.isWet = true;
         }
 
-        if (!this.level.isClientSide) {
-            if (this.isAsleep() && (this.isFlying() || this.level.isDay() || this.isInPowderSnow || this.isUnsafeAt(this.blockPosition()) || !this.canPerch()))
+        if (!this.level().isClientSide) {
+            if (this.isAsleep() && (this.isFlying() || this.level().isDay() || this.isInPowderSnow || this.isUnsafeAt(this.blockPosition()) || !this.canPerch()))
                 this.wakeUp();
         }
     }
 
     private boolean isUnsafeAt(BlockPos pos) {
-        if (this.isGoldfish() || !this.level.isRaining() || !this.level.canSeeSky(pos))
+        if (this.isGoldfish() || !this.level().isRaining() || !this.level().canSeeSky(pos))
             return false;
-        else if (this.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).getY() > pos.getY())
+        else if (this.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).getY() > pos.getY())
             return false;
         else
-            return this.level.getBiome(pos).value().getPrecipitation() != Biome.Precipitation.NONE;
+            return this.level().getBiome(pos).value().hasPrecipitation();
     }
 
     private boolean isActive() {
-        return this.level.isDay() && !this.level.isRaining();
+        return this.level().isDay() && !this.level().isRaining();
     }
 
     private boolean isNotBusy() {
@@ -264,7 +260,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private boolean canPerch() {
-        return this.level.getBlockState(this.getOnPos()).is(HabitatBlockTags.PASSERINES_PERCHABLE_ON);
+        return this.level().getBlockState(this.getOnPos()).is(HabitatBlockTags.PASSERINES_PERCHABLE_ON);
     }
 
     /*
@@ -282,14 +278,14 @@ public class Passerine extends Animal implements FlyingAnimal {
     private void calculateFlapping() {
         this.initialFlap = this.flap;
         this.initialFlapSpeed = this.flapSpeed;
-        this.flapSpeed = (float) ((double) this.flapSpeed + (double) (!this.onGround && !this.isPassenger() ? 4 : -1) * 0.3D);
+        this.flapSpeed = (float) ((double) this.flapSpeed + (double) (!this.onGround() && !this.isPassenger() ? 4 : -1) * 0.3D);
         this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
-        if (!this.onGround && this.flapping < 1.0F)
+        if (!this.onGround() && this.flapping < 1.0F)
             this.flapping = 1.0F;
 
         this.flapping = (float) ((double) this.flapping * 0.9D);
         Vec3 vec3 = this.getDeltaMovement();
-        if (!this.onGround && vec3.y < 0.0D)
+        if (!this.onGround() && vec3.y < 0.0D)
             this.setDeltaMovement(vec3.multiply(1.0D, 0.6D, 1.0D));
 
         this.flap += this.flapping * 2.0F;
@@ -304,11 +300,11 @@ public class Passerine extends Animal implements FlyingAnimal {
         this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
 
         if (this.isRegularVariant() && random.nextInt(30) == 0)
-            this.level.broadcastEntityEvent(this, (byte) 11);
+            this.level().broadcastEntityEvent(this, (byte) 11);
     }
 
     public boolean isFlying() {
-        return !this.onGround;
+        return !this.onGround();
     }
 
     /*
@@ -320,18 +316,18 @@ public class Passerine extends Animal implements FlyingAnimal {
         ItemStack stack = player.getItemInHand(hand);
 
         if (stack.is(HabitatItemTags.PASSERINE_FOOD) && this.isNotBusy()) {
-            if (!this.level.isClientSide && this.foodTicks == 0) {
+            if (!this.level().isClientSide && this.foodTicks == 0) {
                 this.setFoodTimer();
                 this.heal(1.0F);
                 this.usePlayerItem(player, hand, stack);
-                this.level.broadcastEntityEvent(this, (byte) 13);
+                this.level().broadcastEntityEvent(this, (byte) 13);
                 this.gameEvent(GameEvent.ENTITY_INTERACT, this);
                 HabitatCriterionTriggers.FEED_PASSERINE.trigger((ServerPlayer) player);
                 this.playSound(HabitatSoundEvents.PASSERINE_AMBIENT.get(), 1.0F, this.getVoicePitch());
                 return InteractionResult.SUCCESS;
             }
 
-            if (this.level.isClientSide) {
+            if (this.level().isClientSide) {
                 return InteractionResult.CONSUME;
             }
         }
@@ -374,7 +370,7 @@ public class Passerine extends Animal implements FlyingAnimal {
         else
             tag = PasserineVariantTags.COMMON;
 
-        Optional<Holder<PasserineVariant>> optionalVariant = worldIn.registryAccess().registry(PasserineVariants.PASSERINE_VARIANT_REGISTRY.get().getRegistryKey()).flatMap(registry -> registry.getTag(tag)).flatMap(holders -> holders.getRandomElement(this.random));
+        Optional<Holder<PasserineVariant>> optionalVariant = worldIn.registryAccess().registry(HabitatRegistries.Keys.PASSERINE_VARIANTS).flatMap(registry -> registry.getTag(tag)).flatMap(holders -> holders.getRandomElement(this.random));
 
         if (optionalVariant.isPresent()) {
             Holder<PasserineVariant> variant = optionalVariant.get();
@@ -397,9 +393,9 @@ public class Passerine extends Animal implements FlyingAnimal {
         if (this.isInvulnerableTo(source))
             return false;
         else {
-            if (!this.level.isClientSide) {
-                if (this.isRegularVariant() && source.getDirectEntity() != null && !source.isMagic())
-                    this.level.broadcastEntityEvent(this, (byte) 12);
+            if (!this.level().isClientSide) {
+                if (this.isRegularVariant() && source.getDirectEntity() != null)// && !source.isMagic())
+                    this.level().broadcastEntityEvent(this, (byte) 12);
 
                 if (this.isAsleep())
                     this.wakeUp();
@@ -421,8 +417,8 @@ public class Passerine extends Animal implements FlyingAnimal {
         if (!this.isPreening() && !this.isPecking() && this.isActive()) {
             super.playAmbientSound();
 
-            if (!this.level.isClientSide)
-                this.level.broadcastEntityEvent(this, (byte) 13);
+            if (!this.level().isClientSide)
+                this.level().broadcastEntityEvent(this, (byte) 13);
         }
     }
 
@@ -454,18 +450,18 @@ public class Passerine extends Animal implements FlyingAnimal {
         switch (id) {
             case 11 -> spawnFeathers(this.getFeather(), 1);
             case 12 -> spawnFeathers(this.getFeather(), 2);
-            case 13 -> this.level.addParticle(this.getNote(), this.getRandomX(0.5D), 0.6D + this.getY(), this.getRandomZ(0.5D), this.random.nextDouble(), 0.0D, 0.0D);
+            case 13 -> this.level().addParticle(this.getNote(), this.getRandomX(0.5D), 0.6D + this.getY(), this.getRandomZ(0.5D), this.random.nextDouble(), 0.0D, 0.0D);
             default -> super.handleEntityEvent(id);
         }
     }
 
     protected void spawnFeathers(ColorableParticleOption feather, int number) {
         for (int i = 0; i < number; i++)
-            this.level.addParticle(feather, this.getRandomX(0.5D), this.getY(this.random.nextDouble() * 0.75D), this.getRandomZ(0.5D), this.random.nextGaussian() * 0.01D, 0.0D, this.random.nextGaussian() * 0.01D);
+            this.level().addParticle(feather, this.getRandomX(0.5D), this.getY(this.random.nextDouble() * 0.75D), this.getRandomZ(0.5D), this.random.nextGaussian() * 0.01D, 0.0D, this.random.nextGaussian() * 0.01D);
     }
 
     private ColorableParticleOption getFeather() {
-        return new ColorableParticleOption(HabitatParticleTypes.FEATHER.get(), new Vector3f(Vec3.fromRGB24(this.getFeatherColor())));
+        return new ColorableParticleOption(HabitatParticleTypes.FEATHER.get(), Vec3.fromRGB24(this.getFeatherColor()).toVector3f());
     }
 
     private int getFeatherColor() {
@@ -473,7 +469,7 @@ public class Passerine extends Animal implements FlyingAnimal {
     }
 
     private ColorableParticleOption getNote() {
-        return new ColorableParticleOption(HabitatParticleTypes.NOTE.get(), new Vector3f(Vec3.fromRGB24(this.getNoteColor())));
+        return new ColorableParticleOption(HabitatParticleTypes.NOTE.get(), Vec3.fromRGB24(this.getNoteColor()).toVector3f());
     }
 
     private int getNoteColor() {
@@ -639,7 +635,7 @@ public class Passerine extends Animal implements FlyingAnimal {
                 this.countdown--;
                 return false;
             } else {
-                if (Passerine.this.isFlying() || Passerine.this.isPreening() || Passerine.this.isPecking() || Passerine.this.level.isDay() || Passerine.this.isInPowderSnow)
+                if (Passerine.this.isFlying() || Passerine.this.isPreening() || Passerine.this.isPecking() || Passerine.this.level().isDay() || Passerine.this.isInPowderSnow)
                     return false;
                 else
                     return Passerine.this.canPerch();
@@ -724,7 +720,7 @@ public class Passerine extends Animal implements FlyingAnimal {
             super.tick();
 
             if (Passerine.this.getPreenCounter() == this.adjustedTickDelay(20))
-                Passerine.this.level.broadcastEntityEvent(Passerine.this, (byte) 11);
+                Passerine.this.level().broadcastEntityEvent(Passerine.this, (byte) 11);
         }
     }
 
@@ -744,10 +740,10 @@ public class Passerine extends Animal implements FlyingAnimal {
             if (Passerine.this.isInWater() || Passerine.this.isUnsafeAt(Passerine.this.blockPosition()))
                 return LandRandomPos.getPos(Passerine.this, 15, 15);
 
-            float probability = Passerine.this.level.isDay() ? this.probability : 0.0F;
+            float probability = Passerine.this.level().isDay() ? this.probability : 0.0F;
             Vec3 vec3 = Passerine.this.getRandom().nextFloat() >= probability ? this.getPerchablePos() : null;
             vec3 = vec3 == null ? super.getPosition() : vec3;
-            return vec3 != null && !Passerine.this.isUnsafeAt(new BlockPos(vec3)) ? vec3 : null;
+            return vec3 != null && !Passerine.this.isUnsafeAt(new BlockPos((int) vec3.x(), (int) vec3.y(), (int) vec3.z())) ? vec3 : null;
         }
 
         @Nullable
@@ -758,10 +754,10 @@ public class Passerine extends Animal implements FlyingAnimal {
 
             for (BlockPos blockpos1 : BlockPos.betweenClosed(Mth.floor(Passerine.this.getX() - 3.0D), Mth.floor(Passerine.this.getY() - 6.0D), Mth.floor(Passerine.this.getZ() - 3.0D), Mth.floor(Passerine.this.getX() + 3.0D), Mth.floor(Passerine.this.getY() + 6.0D), Mth.floor(Passerine.this.getZ() + 3.0D))) {
                 if (!blockpos.equals(blockpos1)) {
-                    BlockState state = Passerine.this.level.getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
+                    BlockState state = Passerine.this.level().getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
                     boolean flag = state.is(HabitatBlockTags.PASSERINES_PERCHABLE_ON);
 
-                    if (flag && Passerine.this.level.isEmptyBlock(blockpos1) && Passerine.this.level.isEmptyBlock(blockpos$mutableblockpos.setWithOffset(blockpos1, Direction.UP)))
+                    if (flag && Passerine.this.level().isEmptyBlock(blockpos1) && Passerine.this.level().isEmptyBlock(blockpos$mutableblockpos.setWithOffset(blockpos1, Direction.UP)))
                         return Vec3.atBottomCenterOf(blockpos1);
                 }
             }
