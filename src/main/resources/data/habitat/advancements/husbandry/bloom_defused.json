@@ -19,16 +19,24 @@
     "bloom_defused": {
       "trigger": "minecraft:item_used_on_block",
       "conditions": {
-        "location": {
-          "block": {
-            "blocks": [
-              "habitat:kabloom_bush"
-            ]
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": [
+                  "habitat:kabloom_bush"
+                ]
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "tag": "forge:shears"
+            }
           }
-        },
-        "item": {
-          "tag": "forge:shears"
-        }
+        ]
       }
     }
   },

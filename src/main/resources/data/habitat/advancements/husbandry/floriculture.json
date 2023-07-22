@@ -19,17 +19,25 @@
     "floriculture": {
       "trigger": "minecraft:item_used_on_block",
       "conditions": {
-        "location": {
-          "block": {
-            "blocks": [
-              "habitat:grown_edelweiss_shrub",
-              "habitat:edelweiss_shrub"
-            ]
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": [
+                  "habitat:grown_edelweiss_shrub",
+                  "habitat:edelweiss_shrub"
+                ]
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "tag": "forge:shears"
+            }
           }
-        },
-        "item": {
-          "tag": "forge:shears"
-        }
+        ]
       }
     }
   },
