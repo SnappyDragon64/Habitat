@@ -51,10 +51,11 @@ public class FeatherParticle<T extends ColorableParticleOption> extends TextureS
         this.yo = y;
         this.zo = z;
         this.oRoll = this.roll;
+        BlockPos pos = new BlockPos((int) this.x, (int) this.y, (int) this.z);
 
-        if (this.age++ >= this.lifetime || this.level.getFluidState(new BlockPos(this.x, this.y, this.z)).is(FluidTags.LAVA))
+        if (this.age++ >= this.lifetime || this.level.getFluidState(pos).is(FluidTags.LAVA))
             this.remove();
-        else if (!this.level.getFluidState(new BlockPos(this.x, this.y, this.z)).isEmpty()) {
+        else if (!this.level.getFluidState(pos).isEmpty()) {
             this.xd *= 0.99D;
             this.yd = 0.0D;
             this.zd *= 0.99D;

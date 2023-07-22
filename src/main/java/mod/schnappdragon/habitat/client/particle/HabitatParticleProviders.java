@@ -12,10 +12,10 @@ import net.minecraftforge.fml.common.Mod;
 public class HabitatParticleProviders {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
-        event.register(HabitatParticleTypes.FALLING_SLIME.get(), SlimeFallAndLandParticle.FallingSlimeProvider::new);
-        event.register(HabitatParticleTypes.LANDING_SLIME.get(), SlimeDripLandParticle.LandingSlimeProvider::new);
-        event.register(HabitatParticleTypes.FAIRY_RING_SPORE.get(), FairyRingSporeParticle.Provider::new);
-        event.register(HabitatParticleTypes.FEATHER.get(), FeatherParticle.Provider::new);
-        event.register(HabitatParticleTypes.NOTE.get(), NoteParticle.Provider::new);
+        event.registerSpriteSet(HabitatParticleTypes.FALLING_SLIME.get(), SlimeFallAndLandParticle.FallingSlimeProvider::new);
+        event.registerSpriteSet(HabitatParticleTypes.LANDING_SLIME.get(), SlimeDripLandParticle.LandingSlimeProvider::new);
+        event.registerSpriteSet(HabitatParticleTypes.FAIRY_RING_SPORE.get(), FairyRingSporeParticle.Provider::new);
+        event.registerSpriteSet(HabitatParticleTypes.FEATHER.get(), FeatherParticle.Provider::new);
+        event.registerSpriteSet(HabitatParticleTypes.NOTE.get(), NoteParticle.Provider::new);
     }
 }
