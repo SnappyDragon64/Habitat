@@ -43,6 +43,6 @@ public class HabitatSoundEvents {
     public static final RegistryObject<SoundEvent> GROWN_EDELWEISS_SHRUB_SHEAR = register("block.grown_edelweiss_shrub.shear");
 
     private static RegistryObject<SoundEvent> register(String name) {
-        return SOUND_EVENTS.register(name, () -> new SoundEvent((new ResourceLocation(Habitat.MODID, name))));
+        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent((new ResourceLocation(Habitat.MODID, name))));
     }
 }

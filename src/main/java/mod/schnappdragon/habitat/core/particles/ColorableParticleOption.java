@@ -2,13 +2,14 @@ package mod.schnappdragon.habitat.core.particles;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.math.Vector3f;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.joml.Vector3f;
 
 import java.util.Locale;
 
@@ -27,7 +28,7 @@ public class ColorableParticleOption implements ParticleOptions {
     protected final Vector3f color;
 
     public static Codec<ColorableParticleOption> codec(ParticleType<ColorableParticleOption> type) {
-        return RecordCodecBuilder.create((builder) -> builder.group(Vector3f.CODEC.fieldOf("color").forGetter((codec) -> codec.color)).apply(builder, (color) -> new ColorableParticleOption(type, color)));
+        return RecordCodecBuilder.create((builder) -> builder.group(ExtraCodecs.VECTOR3F.fieldOf("color").forGetter((codec) -> codec.color)).apply(builder, (color) -> new ColorableParticleOption(type, color)));
     }
 
     public ColorableParticleOption(ParticleType<ColorableParticleOption> type, Vector3f color) {

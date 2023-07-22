@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec;
 import mod.schnappdragon.habitat.common.levelgen.placement.SlimeChunkFilter;
 import mod.schnappdragon.habitat.core.Habitat;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
@@ -17,6 +19,6 @@ public class HabitatPlacementModifierTypes {
     }
 
     private static <P extends PlacementModifier> PlacementModifierType<P> register(String id, Codec<P> codec) {
-        return Registry.register(Registry.PLACEMENT_MODIFIERS, new ResourceLocation(Habitat.MODID, id), () -> codec);
+        return Registry.register(BuiltInRegistries.PLACEMENT_MODIFIER_TYPE, new ResourceLocation(Habitat.MODID, id), () -> codec);
     }
 }

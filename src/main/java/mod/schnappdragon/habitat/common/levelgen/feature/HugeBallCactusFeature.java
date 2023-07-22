@@ -49,7 +49,7 @@ public class HugeBallCactusFeature extends Feature<HugeBallCactusConfiguration> 
         for (int i = 0; i <= 2; i++) {
             blockpos$mutable.setWithOffset(pos, 0, i, 0);
 
-            if (!world.getBlockState(blockpos$mutable).getMaterial().isReplaceable())
+            if (!world.getBlockState(blockpos$mutable).canBeReplaced())
                 return false;
         }
 
@@ -70,7 +70,7 @@ public class HugeBallCactusFeature extends Feature<HugeBallCactusConfiguration> 
     }
 
     protected void setBlock(WorldGenLevel world, BlockPos.MutableBlockPos pos, RandomSource rand, HugeBallCactusConfiguration config) {
-        if (world.getBlockState(pos).getMaterial().isReplaceable()) {
+        if (world.getBlockState(pos).canBeReplaced()) {
             BlockState state = (rand.nextFloat() < config.floweringCactusChance() ? config.floweringCactusProvider() : config.cactusProvider()).getState(rand, pos);
             this.setBlock(world, pos, state);
         }
