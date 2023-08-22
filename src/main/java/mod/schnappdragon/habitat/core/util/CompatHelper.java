@@ -28,8 +28,4 @@ public class CompatHelper {
         }
         return Habitat.DEV;
     }
-
-    public static CreativeModeTab compatItemGroup(CreativeModeTab group, String... modids) {
-        return checkMods(modids) ? group : null;
-    }
 }
