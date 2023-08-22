@@ -20,7 +20,7 @@ public class HabitatRenderers {
     public static void rendererSetup(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(HabitatBlockEntityTypes.CHEST.get(), HabitatChestRenderer::new);
         event.registerBlockEntityRenderer(HabitatBlockEntityTypes.TRAPPED_CHEST.get(), HabitatChestRenderer::new);
-        //event.registerBlockEntityRenderer(HabitatBlockEntityTypes.SIGN.get(), SignRenderer::new);
+        event.registerBlockEntityRenderer(HabitatBlockEntityTypes.SIGN.get(), SignRenderer::new);
 
         event.registerEntityRenderer(HabitatEntityTypes.KABLOOM_FRUIT.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(HabitatEntityTypes.BOAT.get(), HabitatBoatRenderer::new);

@@ -41,7 +41,7 @@ public class HabitatFlammables {
         setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_SLAB, 5, 20);
         setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_STAIRS, 5, 20);
         setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_FENCE, 5, 20);
-        //setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_FENCE_GATE, 5, 20);
+        setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_FENCE_GATE, 5, 20);
         setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_POST, 5, 20);
         setFlammable(HabitatBlocks.STRIPPED_FAIRY_RING_MUSHROOM_POST, 5, 20);
 

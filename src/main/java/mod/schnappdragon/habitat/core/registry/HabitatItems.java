@@ -53,23 +53,23 @@ public class HabitatItems {
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_PLANKS = registerBlockItem("fairy_ring_mushroom_planks", HabitatBlocks.FAIRY_RING_MUSHROOM_PLANKS);
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_SLAB = registerBlockItem("fairy_ring_mushroom_slab", HabitatBlocks.FAIRY_RING_MUSHROOM_SLAB);
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_STAIRS = registerBlockItem("fairy_ring_mushroom_stairs", HabitatBlocks.FAIRY_RING_MUSHROOM_STAIRS);
-    //public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_PRESSURE_PLATE = registerBlockItem("fairy_ring_mushroom_pressure_plate", HabitatBlocks.FAIRY_RING_MUSHROOM_PRESSURE_PLATE);
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_PRESSURE_PLATE = registerBlockItem("fairy_ring_mushroom_pressure_plate", HabitatBlocks.FAIRY_RING_MUSHROOM_PRESSURE_PLATE);
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_FENCE = ITEMS.register("fairy_ring_mushroom_fence",
             () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_FENCE.get(), 300, getProperties()));
-    //public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_FENCE_GATE = ITEMS.register("fairy_ring_mushroom_fence_gate",
-    //        () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_FENCE_GATE.get(), 300, getProperties()));
-    //public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BUTTON = registerBlockItem("fairy_ring_mushroom_button", HabitatBlocks.FAIRY_RING_MUSHROOM_BUTTON);
-    //public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_TRAPDOOR = registerBlockItem("fairy_ring_mushroom_trapdoor", HabitatBlocks.FAIRY_RING_MUSHROOM_TRAPDOOR);
-    //public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_DOOR = registerBlockItem("fairy_ring_mushroom_door", HabitatBlocks.FAIRY_RING_MUSHROOM_DOOR);
-    //public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_SIGN = ITEMS.register("fairy_ring_mushroom_sign",
-    //        () -> new SignItem(getProperties().stacksTo(16), HabitatBlocks.FAIRY_RING_MUSHROOM_SIGN.get(), HabitatBlocks.FAIRY_RING_MUSHROOM_WALL_SIGN.get()));
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_FENCE_GATE = ITEMS.register("fairy_ring_mushroom_fence_gate",
+            () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_FENCE_GATE.get(), 300, getProperties()));
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BUTTON = registerBlockItem("fairy_ring_mushroom_button", HabitatBlocks.FAIRY_RING_MUSHROOM_BUTTON);
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_TRAPDOOR = registerBlockItem("fairy_ring_mushroom_trapdoor", HabitatBlocks.FAIRY_RING_MUSHROOM_TRAPDOOR);
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_DOOR = registerBlockItem("fairy_ring_mushroom_door", HabitatBlocks.FAIRY_RING_MUSHROOM_DOOR);
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_SIGN = ITEMS.register("fairy_ring_mushroom_sign",
+            () -> new SignItem(getProperties().stacksTo(16), HabitatBlocks.FAIRY_RING_MUSHROOM_SIGN.get(), HabitatBlocks.FAIRY_RING_MUSHROOM_WALL_SIGN.get()));
 
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_VERTICAL_SLAB = ITEMS.register("fairy_ring_mushroom_vertical_slab",
             () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_VERTICAL_SLAB.get(), 150, getProperties()));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_BOOKSHELF = ITEMS.register("fairy_ring_mushroom_bookshelf",
             () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_BOOKSHELF.get(), 300, getProperties()));
-    //public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_LADDER = ITEMS.register("fairy_ring_mushroom_ladder",
-    //        () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_LADDER.get(), 300, getProperties()));
+    public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_LADDER = ITEMS.register("fairy_ring_mushroom_ladder",
+            () -> new FuelBlockItem(HabitatBlocks.FAIRY_RING_MUSHROOM_LADDER.get(), 300, getProperties()));
     public static final RegistryObject<Item> STRIPPED_FAIRY_RING_MUSHROOM_POST = ITEMS.register("stripped_fairy_ring_mushroom_post",
             () -> new FuelBlockItem(HabitatBlocks.STRIPPED_FAIRY_RING_MUSHROOM_POST.get(), 300, getProperties()));
     public static final RegistryObject<Item> FAIRY_RING_MUSHROOM_POST = ITEMS.register("fairy_ring_mushroom_post",
