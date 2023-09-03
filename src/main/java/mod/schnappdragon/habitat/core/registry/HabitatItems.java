@@ -8,12 +8,16 @@ import mod.schnappdragon.habitat.core.util.CompatHelper;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
+@Mod.EventBusSubscriber(modid = Habitat.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class HabitatItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Habitat.MODID);
 
@@ -113,6 +117,64 @@ public class HabitatItems {
     public static final RegistryObject<Item> DREADBUD = ITEMS.register("dreadbud",
             () -> new ItemNameBlockItem(HabitatBlocks.BLOOMING_DREADBUD.get(), new Item.Properties()));
 
+    @SubscribeEvent
+    public static void registerCreativeTabsItem(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+        } else if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
+            event.accept(RAFFLESIA);
+            event.accept(KABLOOM_PULP);
+            event.accept(KABLOOM_FRUIT_PILE);
+            event.accept(KABLOOM_PULP_BLOCK);
+            event.accept(SLIME_FERN);
+            event.accept(ORANGE_BALL_CACTUS_FLOWER);
+            event.accept(PINK_BALL_CACTUS_FLOWER);
+            event.accept(RED_BALL_CACTUS_FLOWER);
+            event.accept(YELLOW_BALL_CACTUS_FLOWER);
+            event.accept(ORANGE_BALL_CACTUS);
+            event.accept(PINK_BALL_CACTUS);
+            event.accept(RED_BALL_CACTUS);
+            event.accept(YELLOW_BALL_CACTUS);
+            event.accept(FAIRY_RING_MUSHROOM);
+            event.accept(FAIRY_RING_MUSHROOM_BLOCK);
+            event.accept(FAIRY_RING_MUSHROOM_STEM);
+            event.accept(FAIRYLIGHT);
+            event.accept(EDELWEISS_SHRUB);
+            event.accept(EDELWEISS);
+            event.accept(BALL_CACTUS_BLOCK);
+            event.accept(FLOWERING_ORANGE_BALL_CACTUS_BLOCK);
+            event.accept(FLOWERING_PINK_BALL_CACTUS_BLOCK);
+            event.accept(FLOWERING_RED_BALL_CACTUS_BLOCK);
+            event.accept(FLOWERING_YELLOW_BALL_CACTUS_BLOCK);
+            event.accept(DRIED_BALL_CACTUS_BLOCK);
+            event.accept(PURPLE_ANTHURIUM);
+            event.accept(RED_ANTHURIUM);
+            event.accept(WHITE_ANTHURIUM);
+            event.accept(YELLOW_ANTHURIUM);
+            event.accept(TALL_PURPLE_ANTHURIUM);
+            event.accept(TALL_RED_ANTHURIUM);
+            event.accept(TALL_WHITE_ANTHURIUM);
+            event.accept(TALL_YELLOW_ANTHURIUM);
+        } else if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            event.accept(FAIRY_RING_MUSHROOM);
+            event.accept(FAIRYLIGHT);
+            event.accept(FAIRY_SPORE_LANTERN);
+        } else if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
+            event.accept(RAFFLESIA);
+            event.accept(KABLOOM_FRUIT_PILE);
+            event.accept(KABLOOM_PULP_BLOCK);
+        } else if (event.getTabKey() == CreativeModeTabs.COMBAT) {
+            event.accept(KABLOOM_FRUIT);
+        } else if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
+            event.accept(KABLOOM_PULP);
+            event.accept(DRIED_BALL_CACTUS);
+        } else if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(KABLOOM_PULP);
+            event.accept(DRIED_BALL_CACTUS);
+        } else if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
+            event.accept(POOKA_SPAWN_EGG);
+            event.accept(PASSERINE_SPAWN_EGG);
+        }
+    }
 
     private static Item.Properties getProperties() {
         return new Item.Properties();
