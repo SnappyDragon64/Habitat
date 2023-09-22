@@ -20,6 +20,7 @@ public class HabitatParticleTypes {
     public static final RegistryObject<SimpleParticleType> FAIRY_RING_SPORE = register("fairy_ring_spore", false);
     public static final RegistryObject<ParticleType<ColorableParticleOption>> FEATHER = register("feather", ColorableParticleOption.DESERIALIZER, ColorableParticleOption::codec);
     public static final RegistryObject<ParticleType<ColorableParticleOption>> NOTE = register("note", ColorableParticleOption.DESERIALIZER, ColorableParticleOption::codec);
+    public static final RegistryObject<SimpleParticleType> BLOWBALL_PUFF = register("blowball_puff", false);
 
     private static RegistryObject<SimpleParticleType> register(String name, Boolean alwaysShow) {
         return PARTICLE_TYPES.register(name, () -> new SimpleParticleType(alwaysShow));

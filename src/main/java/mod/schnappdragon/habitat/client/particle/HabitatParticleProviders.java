@@ -17,5 +17,6 @@ public class HabitatParticleProviders {
         event.registerSpriteSet(HabitatParticleTypes.FAIRY_RING_SPORE.get(), FairyRingSporeParticle.Provider::new);
         event.registerSpriteSet(HabitatParticleTypes.FEATHER.get(), FeatherParticle.Provider::new);
         event.registerSpriteSet(HabitatParticleTypes.NOTE.get(), NoteParticle.Provider::new);
+        event.registerSpriteSet(HabitatParticleTypes.BLOWBALL_PUFF.get(), BlowballPuffParticle.Provider::new);
     }
 }

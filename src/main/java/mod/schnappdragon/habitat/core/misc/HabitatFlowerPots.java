@@ -33,6 +33,7 @@ public class HabitatFlowerPots {
         addPlantToFlowerPot("tall_white_anthurium", HabitatBlocks.POTTED_TALL_WHITE_ANTHURIUM);
         addPlantToFlowerPot("tall_yellow_anthurium", HabitatBlocks.POTTED_TALL_YELLOW_ANTHURIUM);
         addPlantToFlowerPot("blooming_dreadbud", HabitatBlocks.POTTED_BLOOMING_DREADBUD);
+        addPlantToFlowerPot("blowball", HabitatBlocks.POTTED_BLOWBALL);
     }
 
     private static void addPlantToFlowerPot(String id, Supplier<Block> flowerPot) {

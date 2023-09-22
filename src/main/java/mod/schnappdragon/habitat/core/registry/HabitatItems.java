@@ -114,6 +114,8 @@ public class HabitatItems {
     public static final RegistryObject<Item> TALL_WHITE_ANTHURIUM = registerBlockItem("tall_white_anthurium", HabitatBlocks.TALL_WHITE_ANTHURIUM);
     public static final RegistryObject<Item> TALL_YELLOW_ANTHURIUM = registerBlockItem("tall_yellow_anthurium", HabitatBlocks.TALL_YELLOW_ANTHURIUM);
 
+    public static final RegistryObject<Item> BLOWBALL = registerBlockItem("blowball", HabitatBlocks.BLOWBALL);
+
     public static final RegistryObject<Item> DREADBUD = ITEMS.register("dreadbud",
             () -> new ItemNameBlockItem(HabitatBlocks.BLOOMING_DREADBUD.get(), new Item.Properties()));
 
@@ -154,6 +156,7 @@ public class HabitatItems {
             event.accept(TALL_RED_ANTHURIUM);
             event.accept(TALL_WHITE_ANTHURIUM);
             event.accept(TALL_YELLOW_ANTHURIUM);
+            event.accept(BLOWBALL);
         } else if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(FAIRY_RING_MUSHROOM);
             event.accept(FAIRYLIGHT);

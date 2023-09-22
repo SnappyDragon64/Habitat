@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "minecraft:plains",
+  "features": "habitat:patch_blowball",
+  "step": "vegetal_decoration"
+}

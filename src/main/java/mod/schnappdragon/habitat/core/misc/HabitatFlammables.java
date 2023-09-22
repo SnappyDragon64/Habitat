@@ -67,6 +67,8 @@ public class HabitatFlammables {
         setFlammable(HabitatBlocks.FADING_DREADBUD, 60, 100);
         setFlammable(HabitatBlocks.UNNERVING_DREADBUD, 60, 100);
         setFlammable(HabitatBlocks.HAUNTING_DREADBUD, 60, 100);
+
+        setFlammable(HabitatBlocks.BLOWBALL, 60, 100);
     }
 
     private static void setFlammable(Supplier<Block> block, int flameOdds, int burnOdds) {
