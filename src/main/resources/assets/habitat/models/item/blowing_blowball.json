@@ -1,0 +1,32 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "habitat:block/blowball"
+  },
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [
+        -5,
+        0,
+        5
+      ],
+      "translation": [
+        0.5,
+        -5,
+        -14
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        -5,
+        0,
+        5
+      ],
+      "translation": [
+        -0.5,
+        -5,
+        -14
+      ]
+    }
+  }
+}

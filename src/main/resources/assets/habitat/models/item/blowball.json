@@ -2,5 +2,13 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "habitat:block/blowball"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "blowing": 1
+      },
+      "model": "habitat:item/blowing_blowball"
+    }
+  ]
 }

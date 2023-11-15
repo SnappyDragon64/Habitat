@@ -114,7 +114,8 @@ public class HabitatItems {
     public static final RegistryObject<Item> TALL_WHITE_ANTHURIUM = registerBlockItem("tall_white_anthurium", HabitatBlocks.TALL_WHITE_ANTHURIUM);
     public static final RegistryObject<Item> TALL_YELLOW_ANTHURIUM = registerBlockItem("tall_yellow_anthurium", HabitatBlocks.TALL_YELLOW_ANTHURIUM);
 
-    public static final RegistryObject<Item> BLOWBALL = registerBlockItem("blowball", HabitatBlocks.BLOWBALL);
+    public static final RegistryObject<Item> BLOWBALL = ITEMS.register("blowball",
+            () -> new BlowballItem(HabitatBlocks.BLOWBALL.get(), getProperties()));
 
     public static final RegistryObject<Item> DREADBUD = ITEMS.register("dreadbud",
             () -> new ItemNameBlockItem(HabitatBlocks.BLOOMING_DREADBUD.get(), new Item.Properties()));

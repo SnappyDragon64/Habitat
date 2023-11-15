@@ -1,5 +1,6 @@
 package mod.schnappdragon.habitat.core;
 
+import mod.schnappdragon.habitat.client.HabitatClient;
 import mod.schnappdragon.habitat.core.api.conditions.RecipeConditions;
 import mod.schnappdragon.habitat.core.dispenser.HabitatDispenseItemBehavior;
 import mod.schnappdragon.habitat.core.misc.*;
@@ -7,6 +8,7 @@ import mod.schnappdragon.habitat.core.registry.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLLoader;
@@ -23,6 +25,7 @@ public class Habitat {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::clientSetup);
 
         HabitatBlocks.BLOCKS.register(modEventBus);
         HabitatItems.ITEMS.register(modEventBus);
@@ -56,5 +59,9 @@ public class Habitat {
 
             HabitatBrewingMixes.registerBrewingMixes();
         });
+    }
+
+    private void clientSetup(FMLClientSetupEvent event) {
+        HabitatClient.setup();
     }
 }
