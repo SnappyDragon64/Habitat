@@ -2,8 +2,8 @@
   "feature": "habitat:patch_blowball",
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": 2
+      "type": "minecraft:rarity_filter",
+      "chance": 32
     },
     {
       "type": "minecraft:in_square"
