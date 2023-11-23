@@ -5,11 +5,11 @@ import mod.schnappdragon.habitat.common.block.FloweringBallCactusBlock;
 import mod.schnappdragon.habitat.common.block.KabloomBushBlock;
 import mod.schnappdragon.habitat.common.block.RafflesiaBlock;
 import mod.schnappdragon.habitat.common.block.entity.RafflesiaBlockEntity;
-import mod.schnappdragon.habitat.common.entity.IHabitatShearable;
-import mod.schnappdragon.habitat.common.entity.animal.Pooka;
 import mod.schnappdragon.habitat.common.entity.projectile.ThrownKabloomFruit;
 import mod.schnappdragon.habitat.common.entity.vehicle.HabitatBoat;
-import mod.schnappdragon.habitat.core.registry.*;
+import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
+import mod.schnappdragon.habitat.core.registry.HabitatItems;
+import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
@@ -18,17 +18,10 @@ import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Rabbit;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -39,7 +32,6 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.AABB;
 
 public class HabitatDispenseItemBehavior {
     private static DispenseItemBehavior SuspiciousStewBehavior;
@@ -117,11 +109,6 @@ public class HabitatDispenseItemBehavior {
                 ServerLevel worldIn = source.getLevel();
                 BlockPos pos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
 
-                if (shearEntity(Pooka.class, worldIn, stack, pos)) {
-                    this.setSuccess(true);
-                    return stack;
-                }
-
                 BlockState state = worldIn.getBlockState(pos);
 
                 if (state.is(HabitatBlocks.KABLOOM_BUSH.get()) && state.getValue(KabloomBushBlock.AGE) == 7) {
@@ -169,21 +156,5 @@ public class HabitatDispenseItemBehavior {
                 return super.getPower() * 0.5F;
             }
         });
-    }
-
-    private static <T extends Entity & IHabitatShearable> boolean shearEntity(Class<T> entityClass, ServerLevel worldIn, ItemStack stack, BlockPos pos) {
-        boolean flag = false;
-
-        for (T entity : worldIn.getEntitiesOfClass(entityClass, new AABB(pos), EntitySelector.NO_SPECTATORS)) {
-            if (entity.isShearable(ItemStack.EMPTY, worldIn, pos)) {
-                entity.onSheared(null, stack, worldIn, pos, 0, SoundSource.BLOCKS).forEach(drop -> worldIn.addFreshEntity(new ItemEntity(worldIn, entity.getX(), entity.getY(1.0D), entity.getZ(), drop)));
-
-                if (stack.hurt(1, worldIn.getRandom(), null))
-                    stack.setCount(0);
-                flag = true;
-            }
-        }
-
-        return flag;
     }
 }
