@@ -63,11 +63,11 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class Passerine extends Animal implements FlyingAnimal {
+public class Passerine extends Animal implements FlyingAnimal, VariantHolder<PasserineVariant> {
+    private static final EntityDataAccessor<String> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.STRING);
+
     private static final EntityDataAccessor<Integer> PREEN_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> PECK_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
-
-    private static final EntityDataAccessor<String> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Boolean> DATA_SLEEPING = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.BOOLEAN);
 
     private int foodTicks;
