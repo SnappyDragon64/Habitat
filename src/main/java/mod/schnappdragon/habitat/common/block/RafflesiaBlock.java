@@ -53,8 +53,7 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 public class RafflesiaBlock extends BushBlock implements IForgeBlock, BonemealableBlock, EntityBlock {
-    protected static final VoxelShape DEFAULT_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
-    protected static final VoxelShape READY_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
+    protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D);
     protected static final AABB TOUCH_AABB = new AABB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
 
     public static final BooleanProperty READY = HabitatBlockStateProperties.READY;
@@ -71,10 +70,7 @@ public class RafflesiaBlock extends BushBlock implements IForgeBlock, Bonemealab
     }
 
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        if (state.getValue(READY))
-            return READY_SHAPE;
-        else
-            return DEFAULT_SHAPE;
+        return SHAPE;
     }
 
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {

@@ -1,6 +1,6 @@
 {
   "parent": "habitat:block/template_rafflesia_on_cooldown",
   "textures": {
-    "rafflesia": "habitat:block/rafflesia_with_stew"
+    "rafflesia": "habitat:block/rafflesia_stew"
   }
 }
