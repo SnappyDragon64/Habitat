@@ -20,4 +20,21 @@ public class PasserineVariants {
             new RegistryBuilder<PasserineVariant>()
                     .hasTags()
     );
+
+    public static final class Ids {
+        public static final ResourceLocation AMERICAN_GOLDFINCH = id("american_goldfinch");
+        public static final ResourceLocation BALI_MYNA = id("bali_myna");
+        public static final ResourceLocation COMMON_SPARROW = id("common_sparrow");
+        public static final ResourceLocation EASTERN_BLUEBIRD = id("eastern_bluebird");
+        public static final ResourceLocation EURASIAN_BULLFINCH = id("eurasian_bullfinch");
+        public static final ResourceLocation FLAME_ROBIN = id("flame_robin");
+        public static final ResourceLocation NORTHERN_CARDINAL = id("northern_cardinal");
+        public static final ResourceLocation RED_THROATED_PARROTFINCH = id("red_throated_parrotfinch");
+        public static final ResourceLocation VIOLET_BACKED_STARLING = id("violet_backed_starling");
+
+    }
+
+    private static ResourceLocation id(String path) {
+        return new ResourceLocation(Habitat.MODID, path);
+    }
 }

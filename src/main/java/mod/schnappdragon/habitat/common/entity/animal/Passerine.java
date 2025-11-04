@@ -5,6 +5,7 @@ import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatRegistries;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
+import mod.schnappdragon.habitat.core.registry.PasserineVariants;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import mod.schnappdragon.habitat.core.tags.PasserineVariantTags;
@@ -56,13 +57,13 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
-import java.util.EnumSet;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class Passerine extends Animal implements FlyingAnimal, VariantHolder<PasserineVariant> {
+    private static final ResourceLocation DEFAULT_VARIANT_ID = PasserineVariants.Ids.COMMON_SPARROW;
+
     private static final EntityDataAccessor<String> DATA_VARIANT_ID = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.STRING);
 
     private static final EntityDataAccessor<Integer> PREEN_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
@@ -125,7 +126,7 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         super.defineSynchedData();
         this.entityData.define(PREEN_COUNTER, 0);
         this.entityData.define(PECK_COUNTER, 0);
-        this.entityData.define(DATA_VARIANT_ID, "habitat:common_sparrow");
+        this.entityData.define(DATA_VARIANT_ID, DEFAULT_VARIANT_ID.toString());
         this.entityData.define(DATA_SLEEPING, false);
     }
 
@@ -489,7 +490,7 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     }
 
     public boolean isGoldfish() {
-        return this.getVariantId().equals("habitat:american_goldfinch") && "Goldfish".equals(ChatFormatting.stripFormatting(this.getName().getString()));
+        return this.getVariantId().equals(PasserineVariants.Ids.AMERICAN_GOLDFINCH.toString()) && "Goldfish".equals(ChatFormatting.stripFormatting(this.getName().getString()));
     }
 
     public boolean isTurkey() {
@@ -497,7 +498,7 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     }
 
     public boolean isFlapjack() {
-        return this.getVariantId().equals("habitat:northern_cardinal") && "Flapjack".equals(ChatFormatting.stripFormatting(this.getName().getString()));
+        return this.getVariantId().equals(PasserineVariants.Ids.NORTHERN_CARDINAL.toString()) && "Flapjack".equals(ChatFormatting.stripFormatting(this.getName().getString()));
     }
 
     @Override
