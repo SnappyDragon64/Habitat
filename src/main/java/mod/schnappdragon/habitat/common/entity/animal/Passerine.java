@@ -731,6 +731,12 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     }
 
     class PasserineRandomFlyingGoal extends WaterAvoidingRandomStrollGoal {
+        private static final int PERCH_SEARCH_RANGE_HORIZONTAL = 3;
+        private static final int PERCH_SEARCH_DOWNWARD = 3;
+        private static final int PERCH_SEARCH_UPWARD = 6;
+        private static final int PERCH_SEARCH_ATTEMPTS_DAY = 16;
+        private static final int PERCH_SEARCH_ATTEMPTS_NIGHT = 64;
+
         public PasserineRandomFlyingGoal(double speedModifier) {
             super(Passerine.this, speedModifier);
         }
@@ -748,17 +754,28 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
 
         @Nullable
         private Vec3 getPerchablePos() {
-            BlockPos blockpos = Passerine.this.blockPosition();
-            BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-            BlockPos.MutableBlockPos blockpos$mutableblockpos1 = new BlockPos.MutableBlockPos();
+            BlockPos origin = Passerine.this.blockPosition();
+            BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
-            for (BlockPos blockpos1 : BlockPos.betweenClosed(Mth.floor(Passerine.this.getX() - 3.0D), Mth.floor(Passerine.this.getY() - 6.0D), Mth.floor(Passerine.this.getZ() - 3.0D), Mth.floor(Passerine.this.getX() + 3.0D), Mth.floor(Passerine.this.getY() + 6.0D), Mth.floor(Passerine.this.getZ() + 3.0D))) {
-                if (!blockpos.equals(blockpos1)) {
-                    BlockState state = Passerine.this.level().getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
-                    boolean flag = state.is(HabitatBlockTags.PASSERINES_PERCHABLE_ON);
+            int trials = Passerine.this.level().isNight() ? PERCH_SEARCH_ATTEMPTS_NIGHT : PERCH_SEARCH_ATTEMPTS_DAY;
+            int verticalRange = PERCH_SEARCH_DOWNWARD + PERCH_SEARCH_UPWARD + 1;
 
-                    if (flag && Passerine.this.level().isEmptyBlock(blockpos1) && Passerine.this.level().isEmptyBlock(blockpos$mutableblockpos.setWithOffset(blockpos1, Direction.UP)))
-                        return Vec3.atBottomCenterOf(blockpos1);
+            for (int i = 0; i < trials; ++i) {
+                int x = origin.getX() + Passerine.this.getRandom().nextInt(PERCH_SEARCH_RANGE_HORIZONTAL * 2 + 1) - PERCH_SEARCH_RANGE_HORIZONTAL;
+                int y = origin.getY() + Passerine.this.getRandom().nextInt(verticalRange) - PERCH_SEARCH_DOWNWARD;
+                int z = origin.getZ() + Passerine.this.getRandom().nextInt(PERCH_SEARCH_RANGE_HORIZONTAL * 2 + 1) - PERCH_SEARCH_RANGE_HORIZONTAL;
+                mutablePos.set(x, y, z);
+
+                if (origin.equals(mutablePos)) {
+                    continue;
+                }
+
+                BlockState belowState = Passerine.this.level().getBlockState(mutablePos.below());
+                
+                if (belowState.is(HabitatBlockTags.PASSERINES_PERCHABLE_ON) &&
+                        Passerine.this.level().isEmptyBlock(mutablePos) &&
+                        Passerine.this.level().isEmptyBlock(mutablePos.above())) {
+                    return Vec3.atBottomCenterOf(mutablePos);
                 }
             }
 
