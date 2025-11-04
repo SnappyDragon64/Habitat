@@ -1,21 +1,10 @@
 {
   "block.habitat.slime_fern": "Helecho de Slime",
 
-  "item.habitat.rafflesia": "Rafflesia",
   "item.habitat.kabloom_pulp": "Pulpa de Kabloom",
   "item.habitat.kabloom_fruit": "Fruta de Kabloom",
 
   "entity.habitat.kabloom_fruit": "Fruta de Kabloom Tirada",
-
-  "habitat.subtitle.block.rafflesia.spew": "Rafflesia escupe",
-  "habitat.subtitle.block.rafflesia.pop": "Rafflesia suelta",
-  "habitat.subtitle.block.rafflesia.slurp": "Rafflesia traga",
-  "habitat.subtitle.block.kabloom_bush.rustle": "Arbusto Kabloom cruje",
-  "habitat.subtitle.block.kabloom_bush.shear": "Tijeras desactivan",
-  "habitat.subtitle.block.slime_fern.drip": "Helecho de Slime gotea",
-
-  "habitat.subtitle.entity.kabloom_fruit.throw": "Moscas de la Fruta de Kabloom",
-  "habitat.subtitle.entity.kabloom_fruit.explosion": "Kabloom",
 
   "death.attack.habitat.kabloom": "%1$s hizo kabloom",
 

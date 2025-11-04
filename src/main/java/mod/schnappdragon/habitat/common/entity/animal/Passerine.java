@@ -5,7 +5,6 @@ import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatRegistries;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import mod.schnappdragon.habitat.core.registry.PasserineVariants;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import mod.schnappdragon.habitat.core.tags.PasserineVariantTags;

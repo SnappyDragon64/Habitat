@@ -1,9 +1,0 @@
-{
-  "parent": "block/ladder",
-  "render_type": "cutout",
-  "ambientocclusion": false,
-  "textures": {
-    "particle": "habitat:block/fairy_ring_mushroom_ladder",
-    "texture": "habitat:block/fairy_ring_mushroom_ladder"
-  }
-}

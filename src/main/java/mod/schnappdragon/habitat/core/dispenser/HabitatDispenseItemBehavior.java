@@ -6,7 +6,6 @@ import mod.schnappdragon.habitat.common.block.KabloomBushBlock;
 import mod.schnappdragon.habitat.common.block.RafflesiaBlock;
 import mod.schnappdragon.habitat.common.block.entity.RafflesiaBlockEntity;
 import mod.schnappdragon.habitat.common.entity.projectile.ThrownKabloomFruit;
-import mod.schnappdragon.habitat.common.entity.vehicle.HabitatBoat;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
@@ -42,8 +41,6 @@ public class HabitatDispenseItemBehavior {
         SuspiciousStewBehavior = DispenserBlock.DISPENSER_REGISTRY.get(Items.SUSPICIOUS_STEW);
         BowlItemBehavior = DispenserBlock.DISPENSER_REGISTRY.get(Items.BOWL);
         ShearsBehavior = DispenserBlock.DISPENSER_REGISTRY.get(Items.SHEARS);
-
-        DispenserBlock.registerBehavior(HabitatItems.FAIRY_RING_MUSHROOM_BOAT.get(), new HabitatDispenseBoatBehavior(HabitatBoat.Type.FAIRY_RING_MUSHROOM));
 
         DispenserBlock.registerBehavior(Items.SUSPICIOUS_STEW, new OptionalDispenseItemBehavior() {
             protected ItemStack execute(BlockSource source, ItemStack stack) {

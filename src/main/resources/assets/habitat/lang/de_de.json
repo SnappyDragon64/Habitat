@@ -2,7 +2,6 @@
   "block.habitat.rafflesia": "Rafflesie",
   "block.habitat.kabloom_bush": "Knallbusch",
   "block.habitat.slime_fern": "Schleimfarn",
-  "block.habitat.wall_slime_fern": "Schleimfarn",
   "block.habitat.orange_ball_cactus_flower": "Orange Kugelkaktusblume",
   "block.habitat.pink_ball_cactus_flower": "Pinke Kugelkaktusblume",
   "block.habitat.red_ball_cactus_flower": "Rote Kugelkaktusblume",
@@ -24,7 +23,6 @@
   "block.habitat.fairy_ring_mushroom_stem": "Hexenringstängel",
   "block.habitat.fairylight": "Feenlicht",
 
-  "item.habitat.rafflesia": "Rafflesia",
   "item.habitat.kabloom_pulp": "Knallblumenfleisch",
   "item.habitat.kabloom_fruit": "Knallblumenfrucht",
   "item.habitat.dried_ball_cactus": "Getrockneter Kugelkaktus",
@@ -55,18 +53,6 @@
   "item.minecraft.tipped_arrow.effect.strong_prickling": "Pfeil des Prickelns",
 
   "entity.habitat.kabloom_fruit": "Geworfene Knallfrucht",
-
-  "habitat.subtitle.block.rafflesia.spew": "Rafflesia spuckt",
-  "habitat.subtitle.block.rafflesia.pop": "Rafflesie knallt",
-  "habitat.subtitle.block.rafflesia.slurp": "Rafflesia schlürft",
-  "habitat.subtitle.block.kabloom_bush.rustle": "Knallbusch raschelt",
-  "habitat.subtitle.block.kabloom_bush.shear": "Schere entschärft",
-  "habitat.subtitle.block.slime_fern.drip": "Schleim tropft",
-  "habitat.subtitle.block.flowering_ball_cactus.shear": "Schere zupft",
-  "habitat.subtitle.block.fairy_ring_mushroom.shear": "Schere schneidet",
-
-  "habitat.subtitle.entity.kabloom_fruit.throw": "Knallfrucht fliegt",
-  "habitat.subtitle.entity.kabloom_fruit.explosion": "Knall",
 
   "death.attack.habitat.kabloom": "%1$s ging blumig in die Luft",
 

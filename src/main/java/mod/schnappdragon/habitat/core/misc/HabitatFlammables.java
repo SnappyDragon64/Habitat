@@ -33,18 +33,6 @@ public class HabitatFlammables {
         setFlammable(HabitatBlocks.FLOWERING_RED_BALL_CACTUS, 5, 60);
         setFlammable(HabitatBlocks.FLOWERING_YELLOW_BALL_CACTUS, 5, 60);
 
-        setFlammable(HabitatBlocks.ENHANCED_FAIRY_RING_MUSHROOM_STEM, 5, 5);
-        setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_HYPHAE, 5, 5);
-        setFlammable(HabitatBlocks.STRIPPED_FAIRY_RING_MUSHROOM_STEM, 5, 5);
-        setFlammable(HabitatBlocks.STRIPPED_FAIRY_RING_MUSHROOM_HYPHAE, 5, 5);
-        setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_PLANKS, 5, 20);
-        setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_SLAB, 5, 20);
-        setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_STAIRS, 5, 20);
-        setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_FENCE, 5, 20);
-        setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_FENCE_GATE, 5, 20);
-        setFlammable(HabitatBlocks.FAIRY_RING_MUSHROOM_POST, 5, 20);
-        setFlammable(HabitatBlocks.STRIPPED_FAIRY_RING_MUSHROOM_POST, 5, 20);
-
         setFlammable(HabitatBlocks.EDELWEISS, 60, 100);
 
         setFlammable(HabitatBlocks.BALL_CACTUS_BLOCK, 5, 60);

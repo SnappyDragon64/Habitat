@@ -36,7 +36,6 @@ public class Habitat {
         HabitatPotions.POTIONS.register(modEventBus);
         HabitatFeatures.FEATURES.register(modEventBus);
         HabitatParticleTypes.PARTICLE_TYPES.register(modEventBus);
-        HabitatPoiTypes.POI_TYPES.register(modEventBus);
 
         RecipeConditions.registerSerializers();
 
