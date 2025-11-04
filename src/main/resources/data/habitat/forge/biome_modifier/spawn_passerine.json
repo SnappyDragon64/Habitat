@@ -1,0 +1,19 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": {
+    "type": "forge:and",
+    "values": [
+      "#habitat:spawns_passerines",
+      {
+        "type": "forge:not",
+        "value": "#habitat:without_passerine_spawns"
+      }
+    ]
+  },
+  "spawners": {
+    "type": "habitat:passerine",
+    "weight": 20,
+    "minCount": 2,
+    "maxCount": 4
+  }
+}

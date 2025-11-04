@@ -118,6 +118,24 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         return size.height * 0.5F;
     }
 
+    public boolean shouldDropExperience() {
+        return false;
+    }
+
+    /*
+     * Despawning Methods
+     */
+
+    @Override
+    public boolean requiresCustomPersistence() {
+        return super.requiresCustomPersistence();
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return !this.isPersistenceRequired();
+    }
+
     /*
      * Data Methods
      */
