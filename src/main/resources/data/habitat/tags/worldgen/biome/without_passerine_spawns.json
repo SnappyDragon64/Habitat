@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#forge:is_spooky",
-    "minecraft:flower_forest"
+    "#forge:is_spooky"
   ]
 }
