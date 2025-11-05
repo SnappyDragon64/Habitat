@@ -3,11 +3,7 @@
   "biomes": {
     "type": "forge:and",
     "values": [
-      "#habitat:spawns_passerines",
-      {
-        "type": "forge:not",
-        "value": "#habitat:without_passerine_spawns"
-      }
+      "#habitat:spawns_passerines"
     ]
   },
   "spawners": {

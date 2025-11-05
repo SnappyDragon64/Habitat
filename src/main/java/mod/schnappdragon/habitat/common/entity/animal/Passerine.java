@@ -6,6 +6,7 @@ import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatRegistries;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import mod.schnappdragon.habitat.core.registry.PasserineVariants;
+import mod.schnappdragon.habitat.core.tags.HabitatBiomeTags;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
 import mod.schnappdragon.habitat.core.tags.PasserineVariantTags;
@@ -405,32 +406,28 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
-    public PasserineVariant getVariantByBiome(LevelAccessor worldIn) {
-        Holder<Biome> biomeHolder = worldIn.getBiome(this.blockPosition());
-        Biome biome = biomeHolder.value();
+    public PasserineVariant getVariantByBiome(LevelAccessor world) {
+        Holder<Biome> biome = world.getBiome(this.blockPosition());
         TagKey<PasserineVariant> tag;
 
-        if (biomeHolder.is(Biomes.FLOWER_FOREST))
-            tag = PasserineVariantTags.ALL;
-        else if (biomeHolder.is(BiomeTags.IS_JUNGLE))
+        if (biome.is(HabitatBiomeTags.SPAWNS_JUNGLE_PASSERINES)) {
             tag = PasserineVariantTags.JUNGLE;
-        else if (biome.getBaseTemperature() >= 1.0F)
-            tag = PasserineVariantTags.HOT;
-        else if (biome.getBaseTemperature() < 0.5F)
-            tag = PasserineVariantTags.COLD;
-        else if (biome.getBaseTemperature() <= 0.6F)
+        } else if (biome.is(HabitatBiomeTags.SPAWNS_WARM_PASSERINES)) {
+            tag = PasserineVariantTags.WARM;
+        } else if (biome.is(HabitatBiomeTags.SPAWNS_BOREAL_PASSERINES)) {
+            tag = PasserineVariantTags.BOREAL;
+        } else if (biome.is(HabitatBiomeTags.SPAWNS_TEMPERATE_PASSERINES)) {
             tag = PasserineVariantTags.TEMPERATE;
-        else
-            tag = PasserineVariantTags.COMMON;
-
-        Optional<Holder<PasserineVariant>> optionalVariant = worldIn.registryAccess().registry(HabitatRegistries.Keys.PASSERINE_VARIANTS).flatMap(registry -> registry.getTag(tag)).flatMap(holders -> holders.getRandomElement(this.random));
-
-        if (optionalVariant.isPresent()) {
-            Holder<PasserineVariant> variant = optionalVariant.get();
-            return variant.get();
         } else {
-            return null;
+            tag = PasserineVariantTags.FOREST;
         }
+
+        return world.registryAccess()
+                .registryOrThrow(HabitatRegistries.Keys.PASSERINE_VARIANTS)
+                .getTag(tag)
+                .flatMap(h -> h.getRandomElement(this.random))
+                .map(Holder::get)
+                .orElse(null);
     }
 
     public static boolean checkPasserineSpawnRules(EntityType<Passerine> type, LevelAccessor worldIn, MobSpawnType spawnType, BlockPos pos, RandomSource random) {

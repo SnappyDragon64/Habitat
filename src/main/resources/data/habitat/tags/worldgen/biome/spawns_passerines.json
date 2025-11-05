@@ -1,12 +1,10 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:is_forest",
-    "#minecraft:is_taiga",
-    "#minecraft:is_savanna",
-    "minecraft:jungle",
-    "minecraft:bamboo_jungle",
-    "minecraft:sparse_jungle",
-    "minecraft:cherry_grove"
+    "#habitat:spawns_forest_passerines",
+    "#habitat:spawns_temperate_passerines",
+    "#habitat:spawns_warm_passerines",
+    "#habitat:spawns_boreal_passerines",
+    "#habitat:spawns_jungle_passerines"
   ]
 }
