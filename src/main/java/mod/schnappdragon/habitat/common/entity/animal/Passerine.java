@@ -22,7 +22,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
@@ -49,7 +48,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -115,26 +113,33 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
                 .add(Attributes.MOVEMENT_SPEED, 0.16F);
     }
 
+    @Override
     public Vec3 getLeashOffset() {
         return new Vec3(0.0D, 0.5F * this.getEyeHeight(), this.getBbWidth() * 0.3F);
     }
 
+    @Override
     protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
         return size.height * 0.5F;
     }
 
+    @Override
     public boolean shouldDropExperience() {
         return false;
+    }
+
+    @Override
+    public void setLeashedTo(Entity entity, boolean sendAttachNotification) {
+        super.setLeashedTo(entity, sendAttachNotification);
+
+        if (entity instanceof Player) {
+            this.setPersistenceRequired();
+        }
     }
 
     /*
      * Despawning Methods
      */
-
-    @Override
-    public boolean requiresCustomPersistence() {
-        return super.requiresCustomPersistence();
-    }
 
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
@@ -375,6 +380,7 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
                 this.heal(1.0F);
                 this.usePlayerItem(player, hand, stack);
                 this.level().broadcastEntityEvent(this, (byte) 13);
+                this.setPersistenceRequired();
                 this.gameEvent(GameEvent.ENTITY_INTERACT, this);
                 HabitatCriterionTriggers.FEED_PASSERINE.trigger((ServerPlayer) player);
                 this.playSound(HabitatSoundEvents.PASSERINE_AMBIENT.get(), 1.0F, this.getVoicePitch());
