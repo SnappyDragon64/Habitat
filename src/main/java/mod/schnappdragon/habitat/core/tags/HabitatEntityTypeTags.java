@@ -6,9 +6,9 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 
 public class HabitatEntityTypeTags {
-    public static final TagKey<EntityType<?>> POLLINATORS = makeTag("pollinators");
+    public static final TagKey<EntityType<?>> POLLINATORS = tag("pollinators");
 
-    private static TagKey<EntityType<?>> makeTag(String id) {
+    private static TagKey<EntityType<?>> tag(String id) {
         return EntityTypeTags.create(new ResourceLocation(Habitat.MODID, id).toString());
     }
 }

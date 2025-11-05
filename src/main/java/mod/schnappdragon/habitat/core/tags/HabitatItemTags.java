@@ -7,10 +7,10 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
 public class HabitatItemTags {
-    public static final TagKey<Item> POOKA_FOOD = makeTag("pooka_food");
-    public static final TagKey<Item> PASSERINE_FOOD = makeTag("passerine_food");
+    public static final TagKey<Item> POOKA_FOOD = tag("pooka_food");
+    public static final TagKey<Item> PASSERINE_FOOD = tag("passerine_food");
 
-    private static TagKey<Item> makeTag(String id) {
+    private static TagKey<Item> tag(String id) {
         return ItemTags.create(new ResourceLocation(Habitat.MODID, id));
     }
 }

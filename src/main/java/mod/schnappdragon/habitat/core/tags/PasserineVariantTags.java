@@ -14,7 +14,7 @@ public class PasserineVariantTags {
     public static final TagKey<PasserineVariant> TEMPERATE = makeTag("temperate");
     public static final TagKey<PasserineVariant> COMMON = makeTag("common");
 
-    private static TagKey<PasserineVariant> makeTag(String id) {
+    private static TagKey<PasserineVariant> tag(String id) {
         return TagKey.create(HabitatRegistries.Keys.PASSERINE_VARIANTS, new ResourceLocation(Habitat.MODID, id));
     }
 }
