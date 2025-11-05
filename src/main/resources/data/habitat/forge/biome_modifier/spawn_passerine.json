@@ -1,11 +1,6 @@
 {
   "type": "forge:add_spawns",
-  "biomes": {
-    "type": "forge:and",
-    "values": [
-      "#habitat:spawns_passerines"
-    ]
-  },
+  "biomes": "#habitat:spawns_passerines",
   "spawners": {
     "type": "habitat:passerine",
     "weight": 20,

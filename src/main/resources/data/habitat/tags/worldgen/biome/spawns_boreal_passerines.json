@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "#minecraft:is_taiga",
-    "minecraft:grove"
+    "minecraft:grove",
+    "minecraft:windswept_forest"
   ]
 }
