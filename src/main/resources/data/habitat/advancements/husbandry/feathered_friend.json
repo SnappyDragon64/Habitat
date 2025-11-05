@@ -2,7 +2,7 @@
   "parent": "minecraft:husbandry/root",
   "display": {
     "icon": {
-      "item": "minecraft:wheat_seeds"
+      "item": "habitat:passerine_in_a_pot"
     },
     "title": {
       "translate": "habitat.advancements.husbandry.feathered_friend.title"
@@ -16,13 +16,23 @@
     "hidden": false
   },
   "criteria": {
-    "feathered_friend": {
-      "trigger": "habitat:feed_passerine"
+    "picked_up_passerine": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "habitat:passerine"
+        },
+        "item": {
+          "items": [
+            "minecraft:flower_pot"
+          ]
+        }
+      }
     }
   },
   "requirements": [
     [
-      "feathered_friend"
+      "picked_up_passerine"
     ]
   ]
 }

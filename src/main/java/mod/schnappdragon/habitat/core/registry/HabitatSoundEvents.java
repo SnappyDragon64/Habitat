@@ -39,6 +39,8 @@ public class HabitatSoundEvents {
     public static final RegistryObject<SoundEvent> PASSERINE_FLAP = register("entity.passerine.flap");
     public static final RegistryObject<SoundEvent> PASSERINE_HURT = register("entity.passerine.hurt");
     public static final RegistryObject<SoundEvent> PASSERINE_STEP = register("entity.passerine.step");
+    public static final RegistryObject<SoundEvent> PASSERINE_PICKUP = register("entity.passerine.pickup");
+    public static final RegistryObject<SoundEvent> PASSERINE_PLACE = register("entity.passerine.place");
 
     public static final RegistryObject<SoundEvent> GROWN_EDELWEISS_SHRUB_SHEAR = register("block.grown_edelweiss_shrub.shear");
 

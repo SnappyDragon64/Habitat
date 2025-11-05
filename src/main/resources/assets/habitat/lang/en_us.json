@@ -53,6 +53,7 @@
   "item.habitat.fairy_ring_mushroom_boat": "Fairy Ring Mushroom Boat",
   "item.habitat.pooka_spawn_egg": "Pooka Spawn Egg",
   "item.habitat.passerine_spawn_egg": "Passerine Spawn Egg",
+  "item.habitat.passerine_in_a_pot": "Passerine in a Pot",
   "item.habitat.dreadbud": "Dreadbud",
 
   "item.minecraft.potion.effect.blast_endurance": "Potion of Blast Endurance",
@@ -110,6 +111,8 @@
   "habitat.subtitles.entity.passerine.death": "Passerine dies",
   "habitat.subtitles.entity.passerine.flap": "Passerine flutters",
   "habitat.subtitles.entity.passerine.hurt": "Passerine hurts",
+  "habitat.subtitles.entity.passerine.pickup": "Passerine picked up",
+  "habitat.subtitles.entity.passerine.place": "Passerine placed",
 
   "death.attack.habitat.kabloom": "%1$s went kabloom",
   "death.attack.habitat.kabloom.player": "%1$s went kabloom whilst fighting %2$s",
@@ -125,15 +128,24 @@
   "habitat.advancements.husbandry.bloom_defused.title": "The Bloom Has Been Defused",
   "habitat.advancements.husbandry.fae_whisperer.title": "Fae Whisperer",
   "habitat.advancements.husbandry.feathered_friend.title": "Feathered Friend",
-  "habitat.advancements.husbandry.beginner_birdwatcher.title": "Beginner Birdwatcher",
   "habitat.advancements.husbandry.ornithologist.title": "Ornithologist",
   "habitat.advancements.husbandry.floriculture.title": "Floriculture",
 
   "habitat.advancements.husbandry.suspicious.description": "Feed suspicious stew to a rafflesia",
   "habitat.advancements.husbandry.bloom_defused.description": "Shear a kabloom Bush to harvest the fruit",
   "habitat.advancements.husbandry.fae_whisperer.description": "Lure a pooka away from the rest and pacify it with golden carrots",
-  "habitat.advancements.husbandry.feathered_friend.description": "Feed a passerine seeds",
-  "habitat.advancements.husbandry.beginner_birdwatcher.description": "Look at a passerine through a spyglass",
-  "habitat.advancements.husbandry.ornithologist.description": "Look at all passerine variants through a spyglass!",
-  "habitat.advancements.husbandry.floriculture.description": "Shear a grown edelweiss shrub to harvest the flower"
+  "habitat.advancements.husbandry.feathered_friend.description": "Catch a Passerine in a pot",
+  "habitat.advancements.husbandry.ornithologist.description": "Catch every Passerine variant in a pot!",
+  "habitat.advancements.husbandry.floriculture.description": "Shear a grown edelweiss shrub to harvest the flower",
+
+  "passerine.variant.habitat.american_goldfinch": "American Goldfinch",
+  "passerine.variant.habitat.bali_myna": "Bali Myna",
+  "passerine.variant.habitat.blue_jay": "Blue Jay",
+  "passerine.variant.habitat.common_sparrow": "Common Sparrow",
+  "passerine.variant.habitat.eastern_bluebird": "Eastern Bluebird",
+  "passerine.variant.habitat.eurasian_bullfinch": "Eurasian Bullfinch",
+  "passerine.variant.habitat.flame_robin": "Flame Robin",
+  "passerine.variant.habitat.northern_cardinal": "Northern Cardinal",
+  "passerine.variant.habitat.red_throated_parrotfinch": "Red-throated Parrotfinch",
+  "passerine.variant.habitat.violet_backed_starling": "Violet-backed Starling"
 }

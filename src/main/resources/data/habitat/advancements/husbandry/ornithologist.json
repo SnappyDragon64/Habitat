@@ -1,8 +1,8 @@
 {
-  "parent": "habitat:husbandry/beginner_birdwatcher",
+  "parent": "habitat:husbandry/feathered_friend",
   "display": {
     "icon": {
-      "item": "minecraft:spyglass"
+      "item": "habitat:passerine_in_a_pot"
     },
     "title": {
       "translate": "habitat.advancements.husbandry.ornithologist.title"
@@ -20,286 +20,136 @@
   },
   "criteria": {
     "american_goldfinch": {
+      "trigger": "minecraft:player_interacted_with_entity",
       "conditions": {
-        "item": {
-          "items": [
-            "minecraft:spyglass"
-          ]
+        "entity": {
+          "type": "habitat:passerine",
+          "nbt": "{Variant:\"habitat:american_goldfinch\"}"
         },
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "player",
-                "looking_at": {
-                  "type": "habitat:passerine",
-                  "nbt": "{Variant:\"habitat:american_goldfinch\"}"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:using_item"
+        "item": {
+          "items": ["minecraft:flower_pot"]
+        }
+      }
     },
     "bali_myna": {
+      "trigger": "minecraft:player_interacted_with_entity",
       "conditions": {
-        "item": {
-          "items": [
-            "minecraft:spyglass"
-          ]
+        "entity": {
+          "type": "habitat:passerine",
+          "nbt": "{Variant:\"habitat:bali_myna\"}"
         },
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "player",
-                "looking_at": {
-                  "type": "habitat:passerine",
-                  "nbt": "{Variant:\"habitat:bali_myna\"}"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:using_item"
+        "item": {
+          "items": ["minecraft:flower_pot"]
+        }
+      }
     },
     "blue_jay": {
+      "trigger": "minecraft:player_interacted_with_entity",
       "conditions": {
-        "item": {
-          "items": [
-            "minecraft:spyglass"
-          ]
+        "entity": {
+          "type": "habitat:passerine",
+          "nbt": "{Variant:\"habitat:blue_jay\"}"
         },
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "player",
-                "looking_at": {
-                  "type": "habitat:passerine",
-                  "nbt": "{Variant:\"habitat:blue_jay\"}"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:using_item"
+        "item": {
+          "items": ["minecraft:flower_pot"]
+        }
+      }
     },
     "common_sparrow": {
+      "trigger": "minecraft:player_interacted_with_entity",
       "conditions": {
-        "item": {
-          "items": [
-            "minecraft:spyglass"
-          ]
+        "entity": {
+          "type": "habitat:passerine",
+          "nbt": "{Variant:\"habitat:common_sparrow\"}"
         },
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "player",
-                "looking_at": {
-                  "type": "habitat:passerine",
-                  "nbt": "{Variant:\"habitat:common_sparrow\"}"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:using_item"
+        "item": {
+          "items": ["minecraft:flower_pot"]
+        }
+      }
     },
     "eastern_bluebird": {
+      "trigger": "minecraft:player_interacted_with_entity",
       "conditions": {
-        "item": {
-          "items": [
-            "minecraft:spyglass"
-          ]
+        "entity": {
+          "type": "habitat:passerine",
+          "nbt": "{Variant:\"habitat:eastern_bluebird\"}"
         },
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "player",
-                "looking_at": {
-                  "type": "habitat:passerine",
-                  "nbt": "{Variant:\"habitat:eastern_bluebird\"}"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:using_item"
+        "item": {
+          "items": ["minecraft:flower_pot"]
+        }
+      }
     },
     "eurasian_bullfinch": {
+      "trigger": "minecraft:player_interacted_with_entity",
       "conditions": {
-        "item": {
-          "items": [
-            "minecraft:spyglass"
-          ]
+        "entity": {
+          "type": "habitat:passerine",
+          "nbt": "{Variant:\"habitat:eurasian_bullfinch\"}"
         },
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "player",
-                "looking_at": {
-                  "type": "habitat:passerine",
-                  "nbt": "{Variant:\"habitat:eurasian_bullfinch\"}"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:using_item"
+        "item": {
+          "items": ["minecraft:flower_pot"]
+        }
+      }
     },
     "flame_robin": {
+      "trigger": "minecraft:player_interacted_with_entity",
       "conditions": {
-        "item": {
-          "items": [
-            "minecraft:spyglass"
-          ]
+        "entity": {
+          "type": "habitat:passerine",
+          "nbt": "{Variant:\"habitat:flame_robin\"}"
         },
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "player",
-                "looking_at": {
-                  "type": "habitat:passerine",
-                  "nbt": "{Variant:\"habitat:flame_robin\"}"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:using_item"
+        "item": {
+          "items": ["minecraft:flower_pot"]
+        }
+      }
     },
     "northern_cardinal": {
+      "trigger": "minecraft:player_interacted_with_entity",
       "conditions": {
-        "item": {
-          "items": [
-            "minecraft:spyglass"
-          ]
+        "entity": {
+          "type": "habitat:passerine",
+          "nbt": "{Variant:\"habitat:northern_cardinal\"}"
         },
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "player",
-                "looking_at": {
-                  "type": "habitat:passerine",
-                  "nbt": "{Variant:\"habitat:northern_cardinal\"}"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:using_item"
+        "item": {
+          "items": ["minecraft:flower_pot"]
+        }
+      }
     },
     "red_throated_parrotfinch": {
+      "trigger": "minecraft:player_interacted_with_entity",
       "conditions": {
-        "item": {
-          "items": [
-            "minecraft:spyglass"
-          ]
+        "entity": {
+          "type": "habitat:passerine",
+          "nbt": "{Variant:\"habitat:red_throated_parrotfinch\"}"
         },
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "player",
-                "looking_at": {
-                  "type": "habitat:passerine",
-                  "nbt": "{Variant:\"habitat:red_throated_parrotfinch\"}"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:using_item"
+        "item": {
+          "items": ["minecraft:flower_pot"]
+        }
+      }
     },
     "violet_backed_starling": {
+      "trigger": "minecraft:player_interacted_with_entity",
       "conditions": {
-        "item": {
-          "items": [
-            "minecraft:spyglass"
-          ]
+        "entity": {
+          "type": "habitat:passerine",
+          "nbt": "{Variant:\"habitat:violet_backed_starling\"}"
         },
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "player",
-                "looking_at": {
-                  "type": "habitat:passerine",
-                  "nbt": "{Variant:\"habitat:violet_backed_starling\"}"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:using_item"
+        "item": {
+          "items": ["minecraft:flower_pot"]
+        }
+      }
     }
   },
   "requirements": [
-    [
-      "american_goldfinch"
-    ],
-    [
-      "bali_myna"
-    ],
-    [
-      "blue_jay"
-    ],
-    [
-      "common_sparrow"
-    ],
-    [
-      "eastern_bluebird"
-    ],
-    [
-      "eurasian_bullfinch"
-    ],
-    [
-      "flame_robin"
-    ],
-    [
-      "northern_cardinal"
-    ],
-    [
-      "red_throated_parrotfinch"
-    ],
-    [
-      "violet_backed_starling"
-    ]
+    ["american_goldfinch"],
+    ["bali_myna"],
+    ["blue_jay"],
+    ["common_sparrow"],
+    ["eastern_bluebird"],
+    ["eurasian_bullfinch"],
+    ["flame_robin"],
+    ["northern_cardinal"],
+    ["red_throated_parrotfinch"],
+    ["violet_backed_starling"]
   ]
 }

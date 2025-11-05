@@ -1,6 +1,6 @@
 package mod.schnappdragon.habitat.common.entity.animal;
 
-import mod.schnappdragon.habitat.core.misc.HabitatCriterionTriggers;
+import mod.schnappdragon.habitat.common.item.PasserinePotItem;
 import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatRegistries;
@@ -20,8 +20,8 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
@@ -43,6 +43,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -374,26 +375,42 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        if (stack.is(HabitatItemTags.PASSERINE_FOOD) && this.isNotBusy()) {
-            if (!this.level().isClientSide && this.foodTicks == 0) {
-                this.setFoodTimer();
-                this.heal(1.0F);
-                this.usePlayerItem(player, hand, stack);
-                this.level().broadcastEntityEvent(this, (byte) 13);
-                this.setPersistenceRequired();
-                this.gameEvent(GameEvent.ENTITY_INTERACT, this);
-                HabitatCriterionTriggers.FEED_PASSERINE.trigger((ServerPlayer) player);
-                this.playSound(HabitatSoundEvents.PASSERINE_AMBIENT.get(), 1.0F, this.getVoicePitch());
+        if (stack.is(Items.FLOWER_POT)) {
+            if (!level().isClientSide) {
+                ItemStack pot = PasserinePotItem.fromPasserine(this);
+
+                if (!player.getAbilities().instabuild) {
+                    stack.shrink(1);
+                }
+
+                player.addItem(pot);
+
+                this.level().broadcastEntityEvent(this, (byte) 12);
+                this.level().playSound(null, getX(), getY(), getZ(), HabitatSoundEvents.PASSERINE_PICKUP.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+
+                discard();
+            }
+            return InteractionResult.sidedSuccess(level().isClientSide);
+        }
+
+        if (stack.is(HabitatItemTags.PASSERINE_FOOD) && isNotBusy()) {
+            if (!level().isClientSide && foodTicks == 0) {
+                setFoodTimer();
+                heal(1.0F);
+                usePlayerItem(player, hand, stack);
+                setPersistenceRequired();
+                level().broadcastEntityEvent(this, (byte) 13);
+                gameEvent(GameEvent.ENTITY_INTERACT, this);
+                playSound(HabitatSoundEvents.PASSERINE_AMBIENT.get(), 1.0F, getVoicePitch());
                 return InteractionResult.SUCCESS;
             }
 
-            if (this.level().isClientSide) {
-                return InteractionResult.CONSUME;
-            }
+            return InteractionResult.sidedSuccess(level().isClientSide);
         }
 
         return super.mobInteract(player, hand);
     }
+
 
     /*
      * Spawn Methods

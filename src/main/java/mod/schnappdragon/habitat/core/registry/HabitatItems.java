@@ -52,6 +52,8 @@ public class HabitatItems {
 
     public static final RegistryObject<Item> PASSERINE_SPAWN_EGG = ITEMS.register("passerine_spawn_egg",
             () -> new ForgeSpawnEggItem(HabitatEntityTypes.PASSERINE, 1259855, 13384789, new Item.Properties()));
+    public static final RegistryObject<Item> PASSERINE_IN_A_POT = ITEMS.register("passerine_in_a_pot",
+            () -> new PasserinePotItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> EDELWEISS_SHRUB = registerBlockItem("edelweiss_shrub", HabitatBlocks.EDELWEISS_SHRUB);
     public static final RegistryObject<Item> EDELWEISS = registerBlockItem("edelweiss", HabitatBlocks.EDELWEISS);

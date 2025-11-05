@@ -400,6 +400,44 @@
       "habitat:mob/passerine/step4"
     ]
   },
+  "entity.passerine.pickup": {
+    "sounds": [
+      {
+        "name": "minecraft:random/pop",
+        "volume": 0.6,
+        "pitch": 0.6
+      },
+      {
+        "name": "minecraft:random/pop",
+        "volume": 0.6,
+        "pitch": 0.7
+      },
+      {
+        "name": "minecraft:random/pop",
+        "volume": 0.6,
+        "pitch": 0.8
+      }
+    ]
+  },
+  "entity.passerine.place": {
+    "sounds": [
+      {
+        "name": "minecraft:random/pop",
+        "volume": 0.6,
+        "pitch": 0.6
+      },
+      {
+        "name": "minecraft:random/pop",
+        "volume": 0.6,
+        "pitch": 0.7
+      },
+      {
+        "name": "minecraft:random/pop",
+        "volume": 0.6,
+        "pitch": 0.8
+      }
+    ]
+  },
   "block.grown_edelweiss_shrub.shear": {
     "subtitle": "habitat.subtitles.block.grown_edelweiss_shrub.shear",
     "sounds": [
