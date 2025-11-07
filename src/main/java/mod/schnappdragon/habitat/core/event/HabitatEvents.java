@@ -78,13 +78,13 @@ public class HabitatEvents {
         }
     }
     
-    @SubscribeEvent
-    public void onSpawn(EntityJoinLevelEvent event) {
-        if (event.getEntity() instanceof Cat
-                || event.getEntity() instanceof Ocelot) {
-            Mob mb = (Mob) event.getEntity();
-            mb.targetSelector.addGoal(6,
-                    new NearestAttackableTargetGoal<>(mb, Passerine.class, 45, true, true, null));
-        }
-    }
+//    @SubscribeEvent
+//    public void onSpawn(EntityJoinLevelEvent event) {
+//        if (event.getEntity() instanceof Cat
+//                || event.getEntity() instanceof Ocelot) {
+//            Mob mb = (Mob) event.getEntity();
+//            mb.targetSelector.addGoal(6,
+//                    new NearestAttackableTargetGoal<>(mb, Passerine.class, 45, true, true, null));
+//        }
+//    }
 }
