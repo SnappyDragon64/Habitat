@@ -788,7 +788,7 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         private static final int PERCH_SEARCH_ATTEMPTS_DAY = 16;
         private static final int PERCH_SEARCH_ATTEMPTS_NIGHT = 64;
 
-        public static final double FLOCK_SEARCH_RANGE = 16.0D;
+        public static final double FLOCK_SEARCH_RANGE = 8.0D;
 
         public static final int LAND_SEARCH_RADIUS = 15;
         public static final int LAND_SEARCH_VERTICAL_RANGE = 15;
