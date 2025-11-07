@@ -38,7 +38,9 @@ import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
@@ -60,6 +62,7 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class Passerine extends Animal implements FlyingAnimal, VariantHolder<PasserineVariant> {
@@ -70,6 +73,9 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     private static final EntityDataAccessor<Integer> PREEN_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> PECK_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_SLEEPING = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_TRUSTING = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.BOOLEAN);
+
+    private static final Predicate<Entity> AVOID_PLAYERS = (p_28463_) -> !p_28463_.isDiscrete() && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(p_28463_);
 
     public static final double ALERT_RANGE = 4.0D;
 
@@ -94,18 +100,20 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     }
 
     protected void registerGoals() {
+
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(0, new ClimbOnTopOfPowderSnowGoal(this, this.level()));
         this.goalSelector.addGoal(0, new Passerine.PasserinePanicGoal(1.5D));
         this.goalSelector.addGoal(1, new Passerine.PasserineTemptGoal(1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
         this.goalSelector.addGoal(2, new Passerine.FindCoverGoal(1.5D));
         this.goalSelector.addGoal(3, new Passerine.SleepGoal());
-        this.goalSelector.addGoal(4, new Passerine.PreenGoal());
-        this.goalSelector.addGoal(4, new Passerine.PeckGoal());
-        this.goalSelector.addGoal(5, new Passerine.FlockAndWanderGoal(1.0D));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(7, new Passerine.PasserineFollowMobGoal(1.0D, 3.0F, 7.0F));
+        this.goalSelector.addGoal(4, new Passerine.PasserineAvoidEntityGoal<>(Player.class, 4.0F, 1.5D, 1.5D, entity -> AVOID_PLAYERS.test(entity) && !this.isTrusting()));
+        this.goalSelector.addGoal(5, new Passerine.PreenGoal());
+        this.goalSelector.addGoal(5, new Passerine.PeckGoal());
+        this.goalSelector.addGoal(6, new Passerine.FlockAndWanderGoal(1.0D));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(8, new Passerine.PasserineFollowMobGoal(1.0D, 3.0F, 7.0F));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -158,12 +166,14 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         this.entityData.define(PECK_COUNTER, 0);
         this.entityData.define(DATA_VARIANT_ID, DEFAULT_VARIANT_ID.toString());
         this.entityData.define(DATA_SLEEPING, false);
+        this.entityData.define(DATA_TRUSTING, false);
     }
 
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putString("Variant", this.getVariantId());
         compound.putBoolean("Sleeping", this.isAsleep());
+        compound.putBoolean("Trusting", this.isTrusting());
         compound.putInt("FoodTicks", this.foodTicks);
     }
 
@@ -171,6 +181,7 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         super.readAdditionalSaveData(compound);
         this.setVariantId(compound.getString("Variant"));
         this.setSleeping(compound.getBoolean("Sleeping"));
+        this.setTrusting(compound.getBoolean("Trusting"));
         this.foodTicks = compound.getInt("FoodTicks");
     }
 
@@ -231,6 +242,14 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
 
     public boolean isAsleep() {
         return this.entityData.get(DATA_SLEEPING);
+    }
+
+    public boolean isTrusting() {
+        return this.entityData.get(DATA_TRUSTING);
+    }
+
+    public void setTrusting(boolean isTrusting) {
+        this.entityData.set(DATA_TRUSTING, isTrusting);
     }
 
     public void setFoodTimer() {
@@ -353,6 +372,7 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
 
         if (stack.is(Items.FLOWER_POT)) {
             if (!level().isClientSide) {
+                this.setTrusting(true);
                 ItemStack pot = PasserinePotItem.fromPasserine(this);
 
                 if (!player.getAbilities().instabuild) {
@@ -372,12 +392,18 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         if (stack.is(HabitatItemTags.PASSERINE_FOOD) && isNotBusy()) {
             if (!level().isClientSide && foodTicks == 0) {
                 setFoodTimer();
+
                 heal(1.0F);
+
                 usePlayerItem(player, hand, stack);
+
                 setPersistenceRequired();
+                this.setTrusting(true);
+
                 level().broadcastEntityEvent(this, (byte) 13);
                 gameEvent(GameEvent.ENTITY_INTERACT, this);
                 playSound(HabitatSoundEvents.PASSERINE_AMBIENT.get(), 1.0F, getVoicePitch());
+
                 return InteractionResult.SUCCESS;
             }
 
@@ -731,6 +757,53 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         public void stop() {
             Passerine.this.wakeUp();
             this.countdown = Passerine.this.random.nextInt(WAIT_TIME_BEFORE_SLEEP);
+        }
+    }
+
+    class PasserineAvoidEntityGoal<T extends LivingEntity> extends AvoidEntityGoal<T> {
+        private final TargetingConditions avoidEntityTargeting;
+
+        public PasserineAvoidEntityGoal(Class<T> entityClassToAvoid, float maxDistance, double walkSpeedModifier, double sprintSpeedModifier, Predicate<LivingEntity> predicateOnAvoidEntity) {
+            this(entityClassToAvoid, e -> true, maxDistance, walkSpeedModifier, sprintSpeedModifier, predicateOnAvoidEntity);
+        }
+
+        private PasserineAvoidEntityGoal(Class<T> entityClassToAvoid, Predicate<LivingEntity> avoidPredicate, float maxDistance, double walkSpeedModifier, double sprintSpeedModifier, Predicate<LivingEntity> predicateOnAvoidEntity) {
+            super(Passerine.this, entityClassToAvoid, avoidPredicate, maxDistance, walkSpeedModifier, sprintSpeedModifier, predicateOnAvoidEntity);
+            this.avoidEntityTargeting = TargetingConditions.forCombat().range(maxDistance).selector(predicateOnAvoidEntity.and(avoidPredicate));
+        }
+
+        public boolean canUse() {
+            this.toAvoid = Passerine.this.level().getNearestEntity(Passerine.this.level().getEntitiesOfClass(this.avoidClass, Passerine.this.getBoundingBox().inflate(this.maxDist, 3.0D, this.maxDist), (p_148078_) -> true), this.avoidEntityTargeting, Passerine.this, Passerine.this.getX(), Passerine.this.getY(), Passerine.this.getZ());
+
+            if (this.toAvoid == null) {
+                return false;
+            }
+
+            Vec3 vec3 = this.getPosition();
+
+            if (vec3 == null) {
+                return false;
+            }
+
+            if (this.toAvoid.distanceToSqr(vec3.x, vec3.y, vec3.z) < this.toAvoid.distanceToSqr(Passerine.this)) {
+                return false;
+            }
+
+            this.path = this.pathNav.createPath(vec3.x, vec3.y, vec3.z, 0);
+            return this.path != null;
+        }
+
+        protected Vec3 getPosition() {
+            Vec3 awayDir = Passerine.this.position().subtract(this.toAvoid.position()).normalize();
+
+            Vec3 fleeToPos = HoverRandomPos.getPos(Passerine.this, 16, 7, awayDir.x, awayDir.z, (float) Math.PI / 2.0F, 3, 1);
+
+            if (fleeToPos == null) {
+                fleeToPos = AirAndWaterRandomPos.getPos(Passerine.this, 16, 7, 0, awayDir.x, awayDir.z, Math.PI / 2.0F);
+            }
+
+            return fleeToPos;
+
         }
     }
 
