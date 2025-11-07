@@ -38,6 +38,8 @@ import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
+import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
@@ -69,6 +71,8 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     private static final EntityDataAccessor<Integer> PECK_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_SLEEPING = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.BOOLEAN);
 
+    public static final double ALERT_RANGE = 4.0D;
+
     private int foodTicks;
 
     public float flap;
@@ -92,9 +96,9 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(0, new ClimbOnTopOfPowderSnowGoal(this, this.level()));
-        this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
+        this.goalSelector.addGoal(0, new Passerine.PasserinePanicGoal(1.5D));
         this.goalSelector.addGoal(1, new Passerine.PasserineTemptGoal(1.0D, Ingredient.of(HabitatItemTags.PASSERINE_FOOD), false));
-        this.goalSelector.addGoal(2, new Passerine.FindCoverGoal(1.25D));
+        this.goalSelector.addGoal(2, new Passerine.FindCoverGoal(1.5D));
         this.goalSelector.addGoal(3, new Passerine.SleepGoal());
         this.goalSelector.addGoal(4, new Passerine.PreenGoal());
         this.goalSelector.addGoal(4, new Passerine.PeckGoal());
@@ -269,11 +273,6 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         }
     }
 
-    public void alert(Entity alerter) {
-        this.lastHurtByPlayer = null;
-        this.setLastHurtByMob(alerter instanceof LivingEntity ? (LivingEntity) alerter : null);
-    }
-
     private boolean isUnsafeAt(BlockPos pos) {
         if (this.isGoldfish() || !this.level().isRaining() || !this.level().canSeeSky(pos))
             return false;
@@ -435,7 +434,7 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     }
 
     /*
-     * Hurt Method
+     * Damage Methods
      */
 
     @Override
@@ -444,6 +443,12 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
             return false;
         else {
             if (!this.level().isClientSide) {
+                if (source.getEntity() instanceof LivingEntity hurtByEntity) {
+                    this.level().getEntitiesOfClass(Passerine.class, this.getBoundingBox().inflate(ALERT_RANGE)).forEach(
+                            p -> p.setLastHurtByMob(hurtByEntity)
+                    );
+                }
+
                 if (this.isRegularVariant() && source.getDirectEntity() != null && !source.is(DamageTypeTags.NO_IMPACT))
                     this.level().broadcastEntityEvent(this, (byte) 12);
 
@@ -457,6 +462,14 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
 
             return super.hurt(source, amount);
         }
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        this.wakeUp();
+        this.setPreenCounter(0);
+        this.setPeckCounter(0);
+        super.die(source);
     }
 
     /*
@@ -550,14 +563,6 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         return this.getVariantId().equals(PasserineVariants.Ids.NORTHERN_CARDINAL.toString()) && "Flapjack".equals(ChatFormatting.stripFormatting(this.getName().getString()));
     }
 
-    @Override
-    public void die(DamageSource source) {
-        this.wakeUp();
-        this.setPreenCounter(0);
-        this.setPeckCounter(0);
-        super.die(source);
-    }
-
     /*
      * Breeding Methods
      */
@@ -639,6 +644,32 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     /*
      * AI Goals
      */
+
+    class PasserinePanicGoal extends PanicGoal {
+        public PasserinePanicGoal(double speedModifier) {
+            super(Passerine.this, speedModifier);
+        }
+
+        @Override
+        protected boolean findRandomPosition() {
+            Vec3 direction = Passerine.this.getViewVector(0.0F);
+
+            Vec3 fleeToPos = HoverRandomPos.getPos(Passerine.this, 16, 7, direction.x, direction.z, (float) Math.PI * 2.0F, 3, 1);
+
+            if (fleeToPos == null) {
+                fleeToPos = AirAndWaterRandomPos.getPos(Passerine.this, 16, 7, 0, direction.x, direction.z, Math.PI * 2.0D);
+            }
+
+            if (fleeToPos != null) {
+                this.posX = fleeToPos.x;
+                this.posY = fleeToPos.y;
+                this.posZ = fleeToPos.z;
+                return true;
+            }
+
+            return false;
+        }
+    }
 
     class PasserineTemptGoal extends TemptGoal {
         public PasserineTemptGoal(double speedModifier, Ingredient items, boolean canScare) {
