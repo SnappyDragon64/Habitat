@@ -46,7 +46,6 @@ public class Habitat {
         event.enqueueWork(() -> {
             HabitatCriterionTriggers.registerCriteriaTriggers();
             HabitatLootConditionTypes.registerLootConditionTypes();
-            HabitatSpawns.registerSpawns();
 
             HabitatPlacementModifierTypes.registerPlacementModifierTypes();
 
