@@ -38,7 +38,7 @@ import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.util.DefaultRandomPos;
+import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -68,9 +68,6 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     private static final EntityDataAccessor<Integer> PREEN_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> PECK_COUNTER = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_SLEEPING = SynchedEntityData.defineId(Passerine.class, EntityDataSerializers.BOOLEAN);
-
-    private final List<Passerine> knownFlockmates = new ArrayList<>();
-    private int timeToUpdateFlockmates = 0;
 
     private int foodTicks;
 
@@ -262,13 +259,6 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     public void tick() {
         super.tick();
 
-        if (!this.level().isClientSide) {
-            if (--this.timeToUpdateFlockmates <= 0) {
-                this.timeToUpdateFlockmates = 80 + this.random.nextInt(40);
-                this.updateKnownFlockmates();
-            }
-        }
-
         if (this.isInWaterRainOrBubble() || this.isInPowderSnow) {
             this.isWet = true;
         }
@@ -308,19 +298,6 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
 
     private boolean canPerch() {
         return this.level().getBlockState(this.getOnPos()).is(HabitatBlockTags.PASSERINES_PERCHABLE_ON);
-    }
-
-    private void updateKnownFlockmates() {
-        this.knownFlockmates.removeIf(mate -> !mate.isAlive() || this.distanceToSqr(mate) > 256.0D);
-
-        List<Passerine> nearbyBirds = this.level().getEntitiesOfClass(Passerine.class, this.getBoundingBox().inflate(16.0D),
-                p -> !p.is(this) && p.getVariantId().equals(this.getVariantId()));
-
-        for (Passerine bird : nearbyBirds) {
-            if (!this.knownFlockmates.contains(bird)) {
-                this.knownFlockmates.add(bird);
-            }
-        }
     }
 
     /*
@@ -803,17 +780,26 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         }
     }
 
-    class FlockAndWanderGoal extends Goal {
+    class FlockAndWanderGoal extends WaterAvoidingRandomFlyingGoal {
         private static final int PERCH_SEARCH_RANGE_HORIZONTAL = 3;
         private static final int PERCH_SEARCH_DOWNWARD = 3;
         private static final int PERCH_SEARCH_UPWARD = 6;
+
         private static final int PERCH_SEARCH_ATTEMPTS_DAY = 16;
         private static final int PERCH_SEARCH_ATTEMPTS_NIGHT = 64;
 
-        private final double speedModifier;
+        public static final double FLOCK_SEARCH_RANGE = 16.0D;
+
+        public static final int LAND_SEARCH_RADIUS = 15;
+        public static final int LAND_SEARCH_VERTICAL_RANGE = 15;
+
+        private static final float CHANCE_WANDER_BASE = 0.1F;
+        private static final float CHANCE_WANDER_PITY = 0.05F;
+
+        private int wanderPity = 0;
 
         public FlockAndWanderGoal(double speedModifier) {
-            this.speedModifier = speedModifier;
+            super(Passerine.this, speedModifier);
             this.setFlags(EnumSet.of(Goal.Flag.MOVE));
         }
 
@@ -823,7 +809,7 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
                 return false;
             }
 
-            return Passerine.this.isNotBusy() && Passerine.this.getRandom().nextInt(reducedTickDelay(20)) == 0;
+            return Passerine.this.isNotBusy() && super.canUse();
         }
 
         @Override
@@ -831,31 +817,32 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
             return Passerine.this.getNavigation().isInProgress() && Passerine.this.isNotBusy();
         }
 
-        @Override
-        public void start() {
-            Vec3 targetPos = this.findPosition();
-            if (targetPos != null) {
-                Passerine.this.getNavigation().moveTo(targetPos.x, targetPos.y, targetPos.z, this.speedModifier);
+        @Nullable
+        protected Vec3 getPosition() {
+            List<Passerine> flock = findFlock();
+            Vec3 center = calculateFlockCenter(flock);
+            Vec3 perch = getPerchPos(center);
+
+            if (perch != null) {
+                wanderPity = 0;
+                return perch;
             }
+
+            if (Passerine.this.isInWater()) {
+                return LandRandomPos.getPos(Passerine.this, LAND_SEARCH_RADIUS, LAND_SEARCH_VERTICAL_RANGE);
+            }
+
+            if (Passerine.this.getRandom().nextFloat() < getWanderOdds()) {
+                wanderPity = 0;
+                return super.getPosition();
+            }
+
+            wanderPity++;
+            return null;
         }
 
         @Nullable
-        private Vec3 findPosition() {
-            if (!Passerine.this.knownFlockmates.isEmpty()) {
-                Vec3 flockCenter = this.calculateFlockCenter();
-                if (flockCenter != null) {
-                    Vec3 perchNearFlock = this.findPerchNear(flockCenter);
-                    if (perchNearFlock != null) {
-                        return perchNearFlock;
-                    }
-                }
-            }
-
-            return this.findPerchNear(Passerine.this.position());
-        }
-
-        @Nullable
-        private Vec3 findPerchNear(Vec3 center) {
+        private Vec3 getPerchPos(Vec3 center) {
             BlockPos origin = new BlockPos((int) center.x(), (int) center.y(), (int) center.z());
             BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
@@ -882,24 +869,28 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
             return null;
         }
 
-        @Nullable
-        private Vec3 calculateFlockCenter() {
-            if (Passerine.this.knownFlockmates.isEmpty()) {
-                return null;
+        private List<Passerine> findFlock() {
+            return Passerine.this.level().getEntitiesOfClass(Passerine.class, Passerine.this.getBoundingBox().inflate(FLOCK_SEARCH_RANGE),
+                    p -> !p.is(Passerine.this) && p.getVariantId().equals(Passerine.this.getVariantId()));
+        }
+
+        private Vec3 calculateFlockCenter(List<Passerine> flock) {
+            if (flock.isEmpty()) {
+                return Passerine.this.position();
             }
 
-            double totalX = Passerine.this.getX();
-            double totalY = Passerine.this.getY();
-            double totalZ = Passerine.this.getZ();
+            Vec3 centroid = Passerine.this.position();
 
-            for (Passerine flockmate : Passerine.this.knownFlockmates) {
-                totalX += flockmate.getX();
-                totalY += flockmate.getY();
-                totalZ += flockmate.getZ();
+            for (Passerine passerine : flock) {
+                centroid = centroid.add(passerine.position());
             }
 
-            int count = Passerine.this.knownFlockmates.size() + 1;
-            return new Vec3(totalX / count, totalY / count, totalZ / count);
+            int count = flock.size() + 1;
+            return centroid.scale(1.0D / count);
+        }
+
+        private float getWanderOdds() {
+            return Math.min(1.0F, CHANCE_WANDER_BASE + wanderPity * CHANCE_WANDER_PITY);
         }
     }
 
