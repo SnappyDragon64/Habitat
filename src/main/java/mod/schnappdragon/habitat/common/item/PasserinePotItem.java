@@ -1,6 +1,7 @@
 package mod.schnappdragon.habitat.common.item;
 
 import mod.schnappdragon.habitat.common.entity.animal.Passerine;
+import mod.schnappdragon.habitat.common.entity.animal.PasserineVariant;
 import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
@@ -37,16 +38,20 @@ public class PasserinePotItem extends Item {
         Player player = ctx.getPlayer();
         CompoundTag tag = stack.getTagElement("Passerine");
 
-        if (tag == null)
-            return InteractionResult.PASS;
-
         BlockPos pos = ctx.getClickedPos().relative(ctx.getClickedFace());
 
         Passerine passerine = HabitatEntityTypes.PASSERINE.get().create(level);
 
         passerine.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
-        passerine.readAdditionalSaveData(tag);
         passerine.setPersistenceRequired();
+
+        if (tag == null) {
+            PasserineVariant variant = passerine.getVariantByBiome(level);
+            passerine.setVariant(variant);
+        } else {
+            passerine.readAdditionalSaveData(tag);
+        }
+
         level.addFreshEntity(passerine);
 
         level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HabitatSoundEvents.PASSERINE_PLACE.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);

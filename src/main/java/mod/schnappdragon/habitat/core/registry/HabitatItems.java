@@ -127,6 +127,8 @@ public class HabitatItems {
             event.accept(RAFFLESIA);
             event.accept(KABLOOM_FRUIT_PILE);
             event.accept(KABLOOM_PULP_BLOCK);
+        } else if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(PASSERINE_IN_A_POT);
         } else if (event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.accept(KABLOOM_FRUIT);
         } else if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
