@@ -18,7 +18,7 @@ public class HabitatSpawns {
     @SubscribeEvent
     public static void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event) {
         registerSpawn(event, HabitatEntityTypes.POOKA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Pooka::checkPookaSpawnRules);
-        registerSpawn(event, HabitatEntityTypes.PASSERINE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, Passerine::checkPasserineSpawnRules);
+        registerSpawn(event, HabitatEntityTypes.PASSERINE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, Passerine::checkPasserineSpawnRules);
     }
 
     private static <T extends Mob> void registerSpawn(SpawnPlacementRegisterEvent event, EntityType<T> entityType, SpawnPlacements.Type placementType, Heightmap.Types heightmapType, SpawnPlacements.SpawnPredicate<T> predicate) {
