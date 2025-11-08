@@ -52,6 +52,6 @@ public class BlowballItem extends BlockItem {
 
     @Override
     public int getUseDuration(ItemStack pStack) {
-        return 50;
+        return 32;
     }
 }

@@ -2,7 +2,6 @@ package mod.schnappdragon.habitat.common.block;
 
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;
@@ -17,12 +16,16 @@ public class BlowballBlock extends FlowerBlock {
     }
 
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
-        if (rand.nextInt(24) == 0) {
-            double xSpeed = Mth.abs((float) rand.nextGaussian()) * 0.01D;
-            double ySpeed = Mth.abs((float) rand.nextGaussian()) * 0.01D;
-            double zSpeed = Mth.abs((float) rand.nextGaussian()) * 0.01D;
+        if (rand.nextInt(8) == 0) {
+            double x = pos.getX() + 0.5D + (rand.nextDouble() * 1.5 - 0.75D);
+            double y = pos.getY() + 0.5D + rand.nextDouble();
+            double z = pos.getZ() + 0.5D + (rand.nextDouble() * 1.5 - 0.75D);
 
-            world.addParticle(HabitatParticleTypes.BLOWBALL_PUFF.get(), pos.getX() + rand.nextDouble() / 2.0F, pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble() / 2.0F, xSpeed, ySpeed, zSpeed);
+            double xSpeed = Math.abs(rand.nextGaussian()) * 0.032D;
+            double ySpeed = rand.nextDouble() * 0.024D;
+            double zSpeed = Math.abs(rand.nextGaussian()) * 0.032D;
+
+            world.addParticle(HabitatParticleTypes.BLOWBALL_PUFF.get(), x, y, z, xSpeed, ySpeed, zSpeed);
         }
     }
 }

@@ -8,13 +8,14 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 
 public class BlowballPuffParticle extends TextureSheetParticle {
-    private final float rollFactor;
+    private float rollFactor;
 
     private BlowballPuffParticle(ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ, SpriteSet spriteSet) {
         super(world, x, y, z);
         this.pickSprite(spriteSet);
 
-        this.lifetime = (int) (320 + random.nextDouble() * 320);
+        this.lifetime = (int) (320 + random.nextDouble() * 80);
+        this.friction = 0.999F;
 
         this.xd = motionX;
         this.yd = motionY;
@@ -41,6 +42,12 @@ public class BlowballPuffParticle extends TextureSheetParticle {
             this.roll = 0.0F;
             this.age++;
         } else {
+            this.xd *= this.friction;
+            this.yd *= this.friction;
+            this.zd *= this.friction;
+
+            this.rollFactor *= this.friction;
+
             if (!this.onGround) {
                 this.roll = -Mth.PI / 4 + Mth.sin(this.age * this.rollFactor) * Mth.PI / 4.0F;
             } else
