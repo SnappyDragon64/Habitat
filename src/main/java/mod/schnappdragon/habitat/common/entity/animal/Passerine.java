@@ -43,8 +43,7 @@ import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -100,7 +99,6 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
     }
 
     protected void registerGoals() {
-
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(0, new ClimbOnTopOfPowderSnowGoal(this, this.level()));
         this.goalSelector.addGoal(0, new Passerine.PasserinePanicGoal(1.5D));
@@ -108,6 +106,9 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         this.goalSelector.addGoal(2, new Passerine.FindCoverGoal(1.5D));
         this.goalSelector.addGoal(3, new Passerine.SleepGoal());
         this.goalSelector.addGoal(4, new Passerine.PasserineAvoidEntityGoal<>(Player.class, 4.0F, 1.5D, 1.5D, entity -> AVOID_PLAYERS.test(entity) && !this.isTrusting()));
+        this.goalSelector.addGoal(4, new Passerine.PasserineAvoidEntityGoal<>(Cat.class, 8.0F, 1.5D, 1.5D, entity -> entity instanceof TamableAnimal tamableAnimal && !(tamableAnimal.isTame() && this.isTrusting())));
+        this.goalSelector.addGoal(4, new Passerine.PasserineAvoidEntityGoal<>(Ocelot.class, 8.0F, 1.5D, 1.5D));
+        this.goalSelector.addGoal(4, new Passerine.PasserineAvoidEntityGoal<>(Fox.class, 8.0F, 1.5D, 1.5D));
         this.goalSelector.addGoal(5, new Passerine.PreenGoal());
         this.goalSelector.addGoal(5, new Passerine.PeckGoal());
         this.goalSelector.addGoal(6, new Passerine.FlockAndWanderGoal(1.0D));
@@ -762,6 +763,10 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
 
     class PasserineAvoidEntityGoal<T extends LivingEntity> extends AvoidEntityGoal<T> {
         private final TargetingConditions avoidEntityTargeting;
+
+        public PasserineAvoidEntityGoal(Class<T> entityClassToAvoid, float maxDistance, double walkSpeedModifier, double sprintSpeedModifier) {
+            this(entityClassToAvoid, e -> true, maxDistance, walkSpeedModifier, sprintSpeedModifier, e -> true);
+        }
 
         public PasserineAvoidEntityGoal(Class<T> entityClassToAvoid, float maxDistance, double walkSpeedModifier, double sprintSpeedModifier, Predicate<LivingEntity> predicateOnAvoidEntity) {
             this(entityClassToAvoid, e -> true, maxDistance, walkSpeedModifier, sprintSpeedModifier, predicateOnAvoidEntity);
