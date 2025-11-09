@@ -5,13 +5,16 @@ import mod.schnappdragon.habitat.common.block.FloweringBallCactusBlock;
 import mod.schnappdragon.habitat.common.block.KabloomBushBlock;
 import mod.schnappdragon.habitat.common.block.RafflesiaBlock;
 import mod.schnappdragon.habitat.common.block.entity.RafflesiaBlockEntity;
+import mod.schnappdragon.habitat.common.entity.animal.Passerine;
 import mod.schnappdragon.habitat.common.entity.projectile.ThrownKabloomFruit;
 import mod.schnappdragon.habitat.core.registry.HabitatBlocks;
+import mod.schnappdragon.habitat.core.registry.HabitatEntityTypes;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
@@ -21,6 +24,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -151,6 +156,24 @@ public class HabitatDispenseItemBehavior {
 
             protected float getPower() {
                 return super.getPower() * 0.5F;
+            }
+        });
+
+        DispenserBlock.registerBehavior(HabitatItems.PASSERINE_IN_A_POT.get(), new DefaultDispenseItemBehavior() {
+            public ItemStack execute(BlockSource source, ItemStack stack) {
+                ServerLevel worldIn = source.getLevel();
+                Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+                EntityType<Passerine> passerineEntityType = HabitatEntityTypes.PASSERINE.get();
+
+                Passerine passerine = passerineEntityType.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), MobSpawnType.BUCKET, direction != Direction.UP, false);
+
+                if (passerine != null) {
+                    source.getLevel().gameEvent(null, GameEvent.ENTITY_PLACE, source.getPos());
+                    worldIn.playSound(null, passerine.getX(), passerine.getY(), passerine.getZ(), HabitatSoundEvents.PASSERINE_PLACE.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+                    return new ItemStack(Items.FLOWER_POT);
+                } else {
+                    return stack;
+                }
             }
         });
     }

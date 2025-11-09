@@ -2,10 +2,7 @@ package mod.schnappdragon.habitat.common.entity.animal;
 
 import mod.schnappdragon.habitat.common.item.PasserinePotItem;
 import mod.schnappdragon.habitat.core.particles.ColorableParticleOption;
-import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
-import mod.schnappdragon.habitat.core.registry.HabitatRegistries;
-import mod.schnappdragon.habitat.core.registry.HabitatSoundEvents;
-import mod.schnappdragon.habitat.core.registry.PasserineVariants;
+import mod.schnappdragon.habitat.core.registry.*;
 import mod.schnappdragon.habitat.core.tags.HabitatBiomeTags;
 import mod.schnappdragon.habitat.core.tags.HabitatBlockTags;
 import mod.schnappdragon.habitat.core.tags.HabitatItemTags;
@@ -15,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -31,11 +29,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -43,6 +43,7 @@ import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
 import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -256,6 +257,35 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
         this.foodTicks = 6000;
     }
 
+    public void saveToPotTag(ItemStack stack) {
+        CompoundTag compound = stack.getOrCreateTag();
+
+        compound.putFloat("Health", this.getHealth());
+
+        if (this.hasCustomName()) stack.setHoverName(this.getCustomName());
+        if (this.isNoAi()) compound.putBoolean("NoAI", this.isNoAi());
+        if (this.isSilent()) compound.putBoolean("Silent", this.isSilent());
+        if (this.isNoGravity()) compound.putBoolean("NoGravity", this.isNoGravity());
+        if (this.hasGlowingTag()) compound.putBoolean("Glowing", this.hasGlowingTag());
+        if (this.isInvulnerable()) compound.putBoolean("Invulnerable", this.isInvulnerable());
+
+        compound.putString("Variant", this.getVariantId());
+        compound.putInt("FoodTicks", this.foodTicks);
+    }
+
+    public void loadFromPotTag(CompoundTag compound) {
+        if (compound.contains("Health", Tag.TAG_FLOAT)) this.setHealth(compound.getFloat("Health"));
+
+        if (compound.contains("NoAI")) this.setNoAi(compound.getBoolean("NoAI"));
+        if (compound.contains("Silent")) this.setSilent(compound.getBoolean("Silent"));
+        if (compound.contains("NoGravity")) this.setNoGravity(compound.getBoolean("NoGravity"));
+        if (compound.contains("Glowing")) this.setGlowingTag(compound.getBoolean("Glowing"));
+        if (compound.contains("Invulnerable")) this.setInvulnerable(compound.getBoolean("Invulnerable"));
+
+        if (compound.contains("Variant")) this.setVariantId(compound.getString("Variant"));
+        if (compound.contains("FoodTicks")) this.foodTicks = compound.getInt("FoodTicks");
+    }
+
     /*
      * AI Methods
      */
@@ -372,14 +402,15 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
 
         if (stack.is(Items.FLOWER_POT)) {
             if (!level().isClientSide) {
-                this.setTrusting(true);
-                ItemStack pot = PasserinePotItem.fromPasserine(this);
+                ItemStack pot = new ItemStack(HabitatItems.PASSERINE_IN_A_POT.get());
+                this.saveToPotTag(pot);
 
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
+                if (!player.getAbilities().instabuild && stack.getCount() == 1) {
+                    player.setItemInHand(hand, pot);
+                } else {
+                    if (!player.getAbilities().instabuild) stack.shrink(1);
+                    player.addItem(pot);
                 }
-
-                player.addItem(pot);
 
                 this.level().broadcastEntityEvent(this, (byte) 12);
                 this.level().playSound(null, getX(), getY(), getZ(), HabitatSoundEvents.PASSERINE_PICKUP.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
@@ -420,15 +451,26 @@ public class Passerine extends Animal implements FlyingAnimal, VariantHolder<Pas
 
     @Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag compound) {
         PasserineVariant i = this.getVariantByBiome(worldIn);
+
         if (spawnDataIn instanceof Passerine.PasserineGroupData data)
             i = data.variant;
         else
             spawnDataIn = new Passerine.PasserineGroupData(i);
 
         this.setVariant(i);
-        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+
+        if (reason == MobSpawnType.BUCKET) {
+            this.setPersistenceRequired();
+            this.setTrusting(true);
+
+            if (compound != null) {
+                this.loadFromPotTag(compound);
+            }
+        }
+
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, compound);
     }
 
     public PasserineVariant getVariantByBiome(LevelAccessor world) {

@@ -10,8 +10,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,27 +36,15 @@ public class PasserinePotItem extends Item {
         if (level.isClientSide)
             return InteractionResult.SUCCESS;
 
-        ItemStack stack = ctx.getItemInHand();
         Player player = ctx.getPlayer();
-        CompoundTag tag = stack.getTagElement("Passerine");
-
         BlockPos pos = ctx.getClickedPos().relative(ctx.getClickedFace());
+        ItemStack stack = ctx.getItemInHand();
 
-        Passerine passerine = HabitatEntityTypes.PASSERINE.get().create(level);
+        Passerine passerine = HabitatEntityTypes.PASSERINE.get().spawn((ServerLevel) level, stack, player, pos, MobSpawnType.BUCKET, true, false);
 
-        passerine.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
-        passerine.setPersistenceRequired();
+        if (passerine == null) return InteractionResult.FAIL;
 
-        if (tag == null) {
-            PasserineVariant variant = passerine.getVariantByBiome(level);
-            passerine.setVariant(variant);
-        } else {
-            passerine.readAdditionalSaveData(tag);
-        }
-
-        level.addFreshEntity(passerine);
-
-        level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HabitatSoundEvents.PASSERINE_PLACE.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+        level.playSound(null, passerine.getX(), passerine.getY(), passerine.getZ(), HabitatSoundEvents.PASSERINE_PLACE.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
 
         stack.shrink(1);
         if (player != null && !player.getAbilities().instabuild) {
@@ -64,25 +54,15 @@ public class PasserinePotItem extends Item {
         return InteractionResult.SUCCESS;
     }
 
-    public static ItemStack fromPasserine(Passerine passerine) {
-        ItemStack stack = new ItemStack(HabitatItems.PASSERINE_IN_A_POT.get());
-        CompoundTag tag = new CompoundTag();
-        passerine.saveWithoutId(tag);
-        stack.getOrCreateTag().put("Passerine", tag);
-        return stack;
-    }
-
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        CompoundTag passerineTag = stack.getTagElement("Passerine");
-        if (passerineTag == null) return;
+        CompoundTag compound = stack.getTag();
+        if (compound == null) return;
 
-        if (!passerineTag.contains("Variant", Tag.TAG_STRING))
+        if (!compound.contains("Variant", Tag.TAG_STRING))
             return;
 
-        String id = passerineTag.getString("Variant");
-        tooltip.add(Component.translatable("passerine.variant." + id.replace(':', '.'))
-                .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        String id = compound.getString("Variant");
+        tooltip.add(Component.translatable("passerine.variant." + id.replace(':', '.')).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
-
 }
