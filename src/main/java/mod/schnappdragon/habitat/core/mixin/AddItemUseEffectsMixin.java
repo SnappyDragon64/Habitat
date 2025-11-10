@@ -1,11 +1,7 @@
 package mod.schnappdragon.habitat.core.mixin;
 
-import mod.schnappdragon.habitat.core.Habitat;
 import mod.schnappdragon.habitat.core.registry.HabitatItems;
 import mod.schnappdragon.habitat.core.registry.HabitatParticleTypes;
-import net.minecraft.core.particles.ItemParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Attackable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -17,7 +13,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(LivingEntity.class)
 public abstract class AddItemUseEffectsMixin extends Entity implements Attackable, net.minecraftforge.common.extensions.IForgeLivingEntity {
@@ -27,8 +22,7 @@ public abstract class AddItemUseEffectsMixin extends Entity implements Attackabl
 
     @Inject(
             method = "triggerItemUseEffects(Lnet/minecraft/world/item/ItemStack;I)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isUsingItem()Z", shift = At.Shift.AFTER),
-            locals = LocalCapture.CAPTURE_FAILHARD
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isUsingItem()Z", shift = At.Shift.AFTER)
     )
     private void habitat_addItemUseEffectsMixin(ItemStack stack, int amount, CallbackInfo ci) {
         if (stack.is(HabitatItems.BLOWBALL.get())) {
