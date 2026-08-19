@@ -22,7 +22,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.JumpControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -33,7 +32,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class Pooka extends TamableAnimal {
-    private static final EntityDataAccessor<Integer> DATA_SOCKS_COLOR = SynchedEntityData.defineId(Wolf.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_SOCKS_COLOR = SynchedEntityData.defineId(Pooka.class, EntityDataSerializers.INT);
     private int jumpTicks;
     private int jumpDuration;
     public boolean wasOnGround;
