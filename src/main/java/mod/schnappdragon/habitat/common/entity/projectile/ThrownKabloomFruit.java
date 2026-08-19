@@ -117,8 +117,8 @@ public class ThrownKabloomFruit extends ThrowableItemProjectile {
                             dx = dx / dres;
                             dy = dy / dres;
                             dz = dz / dres;
-                            double df = this.distanceTo(entity) > 1.0F ? 0.25D : 0.5D;
-                            dmg = 4.0F + 4.0F * (float) df;
+                            double df = this.distanceTo(entity) > 1.2F ? 0.5D : 0.8D;
+                            dmg = 6.0F + 8.0F * (float) df;
                             double dred = df;
                             if (entity instanceof LivingEntity livingEntity)
                                 dred = ProtectionEnchantment.getExplosionKnockbackAfterDampener(livingEntity, df) * (1.0D - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
