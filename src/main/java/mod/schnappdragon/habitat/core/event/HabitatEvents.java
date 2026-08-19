@@ -62,7 +62,7 @@ public class HabitatEvents {
                 DamageSource source = event.getSource();
 
                 int lvl = Math.min(livingEntity.getEffect(HabitatEffects.BLAST_ENDURANCE.get()).getAmplifier(), 4);
-                float dmg = Mth.floor(event.getAmount() * (0.80F - 0.20F * lvl));
+                float dmg = Mth.floor(event.getAmount() * (0.40F - 0.20F * lvl));
                 int res = (int) (event.getAmount() - dmg);
 
                 event.setAmount(dmg);
@@ -80,7 +80,7 @@ public class HabitatEvents {
     public static void onMobEffectAdded(MobEffectEvent.Added event) {
         if (event.getEntity().hasEffect(HabitatEffects.PROLONGATION.get())) {
             MobEffectInstance incoming = event.getEffectInstance();
-            MobEffectInstance prolonged = new MobEffectInstance(incoming.getEffect(), Mth.ceil(incoming.getDuration() * 1.2));
+            MobEffectInstance prolonged = new MobEffectInstance(incoming.getEffect(), Mth.ceil(incoming.getDuration() * 2.0));
             incoming.update(prolonged);
         }
     }
